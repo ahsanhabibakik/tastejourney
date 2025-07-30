@@ -1,40 +1,79 @@
-'use client'
+"use client";
 
-import React, { useState, useRef, useEffect } from 'react'
-import React, { useRef, useEffect, useState } from 'react';
-import { Send, Loader2 } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
+import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import TypingIndicator from "./TypingIndicator";
 import URLForm from "./URLForm";
 import ConfirmationScreen from "./ConfirmationScreen";
 import RecommendationsScreen from "./RecommendationsScreen";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store";
-import { addMessage as addMessageAction, setWebsiteData as setWebsiteDataAction } from "@/store/chatSlice";
 
 interface Message {
   id: string;
   text: string;
   isBot: boolean;
   timestamp: Date;
-  component?: "url-form" | "confirmation" | "recommendations";
+  component?: "url-form" | "confirmation" | "questions" | "recommendations";
 }
 
 type ChatState =
   | "initial"
-  | "url-submitted"
-  | "data-confirmed"
-  | "recommendations-shown";
+  | "analyzing"
+  | "confirmation"
+  | "profiling"
+  | "questions"
+  | "generating"
+  | "recommendations";
 
+interface UserAnswers {
+  budget?: string;
+  duration?: string;
+  style?: string;
+  contentFocus?: string;
+}
+
+const questions = [
+  {
+    id: "budget",
+    text: "What's your budget range for this trip?",
+    options: ["$500-1000", "$1000-2500", "$2500-5000", "$5000+"],
+  },
+  {
+    id: "duration",
+    text: "How long would you like to travel?",
+    options: ["1-3 days", "4-7 days", "1-2 weeks", "2+ weeks"],
+  },
+  {
+    id: "style",
+    text: "What's your preferred travel style?",
+    options: ["Adventure", "Luxury", "Cultural", "Beach", "Urban"],
+  },
+  {
+    id: "contentFocus",
+    text: "What type of content do you focus on?",
+    options: ["Photography", "Food", "Lifestyle", "Adventure"],
+  },
+];
 
 const ChatInterface: React.FC = () => {
-  const dispatch = useDispatch();
-  const messages = useSelector((state: RootState) => state.chat.messages);
-  const websiteData = useSelector((state: RootState) => state.chat.websiteData);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: "1",
+      text: "Hello! I'm your AI travel companion. I'll analyze your website and recommend perfect travel destinations for content creation. Let's start by getting your website URL.",
+      isBot: true,
+      timestamp: new Date(),
+      component: "url-form",
+    },
+  ]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [chatState, setChatState] = useState<ChatState>("initial");
+  const [websiteData, setWebsiteData] = useState<any>(null);
+  const [tasteProfile, setTasteProfile] = useState<any>(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
+  const [recommendations, setRecommendations] = useState<any>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -48,16 +87,16 @@ const ChatInterface: React.FC = () => {
   const addMessage = (
     text: string,
     isBot: boolean,
-    component?: "url-form" | "confirmation" | "recommendations"
+    component?: "url-form" | "confirmation" | "questions" | "recommendations"
   ) => {
-    const newMessage = {
+    const newMessage: Message = {
       id: Date.now().toString(),
       text,
       isBot,
       timestamp: new Date(),
       component,
     };
-    dispatch(addMessageAction(newMessage));
+    setMessages((prev) => [...prev, newMessage]);
   };
 
   const simulateTyping = async (callback: () => void, delay: number = 1500) => {
@@ -69,7 +108,7 @@ const ChatInterface: React.FC = () => {
 
   const handleURLSubmit = async (url: string) => {
     addMessage(url, false);
-    setChatState("url-submitted");
+    setChatState("analyzing");
 
     await simulateTyping(() => {
       addMessage(
@@ -79,72 +118,204 @@ const ChatInterface: React.FC = () => {
     });
 
     try {
-      await simulateTyping(() => {
-        const mockData = {
-          url,
-          contentThemes: [
-            "Travel Photography",
-            "Food & Culture",
-            "Adventure Sports",
-          ],
-          audienceInterests: [
-            "Photography",
-            "Food",
-            "Adventure Travel",
-            "Cultural Experiences",
-          ],
-          postingFrequency: "3-4 posts per week",
-          topPerformingContent: "Video content (65% engagement)",
-          audienceLocation: "North America (45%), Europe (30%), Asia (25%)",
-          preferredDestinations: [
-            "Mountain regions",
-            "Coastal areas",
-            "Urban destinations",
-          ],
-        };
-        dispatch(setWebsiteDataAction(mockData));
-        addMessage(
-          "Great! I've extracted key information from your website. Please confirm if this looks accurate:",
-          true,
-          "confirmation"
-        );
-      }, 2500);
+      const response = await fetch("/api/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setWebsiteData(result.data);
+        setChatState("confirmation");
+        await simulateTyping(() => {
+          addMessage(
+            "Great! I've extracted key information from your website. Please confirm if this looks accurate:",
+            true,
+            "confirmation"
+          );
+        }, 2500);
+      } else {
+        throw new Error(result.error);
+      }
     } catch (error) {
       console.error("Error analyzing website:", error);
       addMessage(
-        "I encountered an issue analyzing your website. Please try again or contact support.",
+        "I encountered an issue analyzing your website. Let me use some sample data to continue the demo.",
         true
       );
+
+      // Fallback to mock data
+      const mockData = {
+        url,
+        themes: ["travel", "photography", "adventure", "culture", "food"],
+        hints: [
+          "visual-content-creator",
+          "photographer",
+          "social-media-creator",
+        ],
+        contentType: "Travel Photography",
+        socialLinks: [
+          { platform: "Instagram", url: "https://instagram.com/example" },
+        ],
+        title: "Creative Portfolio",
+        description: "Travel and lifestyle content creator",
+      };
+      setWebsiteData(mockData);
+      setChatState("confirmation");
+      await simulateTyping(() => {
+        addMessage(
+          "Here's what I found about your content. Please confirm if this looks accurate:",
+          true,
+          "confirmation"
+        );
+      }, 1500);
     }
   };
 
   const handleDataConfirmation = async (confirmed: boolean) => {
     if (confirmed) {
       addMessage("Yes, this information is accurate.", false);
-      setChatState("data-confirmed");
+      setChatState("profiling");
 
       await simulateTyping(() => {
         addMessage(
-          "Excellent! Now I'm generating personalized travel recommendations based on your content style, audience preferences, and monetization opportunities. This involves analyzing taste vectors, brand collaboration potential, and creator communities at each destination...",
+          "Excellent! Now I'm creating your taste profile using AI analysis. This helps me understand your cultural preferences and content style...",
           true
         );
       });
 
-      await simulateTyping(() => {
-        addMessage(
-          "Here are your top travel destination recommendations optimized for content creation and monetization:",
-          true,
-          "recommendations"
-        );
-      }, 3000);
+      try {
+        const response = await fetch("/api/profile-taste", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            themes: websiteData.themes,
+            hints: websiteData.hints,
+            contentType: websiteData.contentType,
+            socialLinks: websiteData.socialLinks,
+          }),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          setTasteProfile(result.data);
+          setChatState("questions");
+          setCurrentQuestionIndex(0);
+          await simulateTyping(() => {
+            addMessage(
+              "Perfect! I've created your taste profile. Now I need to ask you a few quick questions to personalize your recommendations:",
+              true
+            );
+            addMessage(questions[0].text, true, "questions");
+          }, 2000);
+        } else {
+          throw new Error(result.error);
+        }
+      } catch (error) {
+        console.error("Error creating taste profile:", error);
+        // Continue with mock data
+        setChatState("questions");
+        setCurrentQuestionIndex(0);
+        await simulateTyping(() => {
+          addMessage(
+            "Great! Now let me ask you a few questions to personalize your recommendations:",
+            true
+          );
+          addMessage(questions[0].text, true, "questions");
+        }, 1500);
+      }
     } else {
       addMessage("The information needs corrections.", false);
       await simulateTyping(() => {
         addMessage(
-          "No problem! Could you please share what needs to be corrected? I'll adjust my analysis accordingly.",
+          "No problem! For this demo, let me continue with the analysis. In the full version, you'd be able to correct any details.",
           true
         );
       });
+    }
+  };
+
+  const handleQuestionAnswer = async (answer: string) => {
+    const currentQuestion = questions[currentQuestionIndex];
+    addMessage(answer, false);
+
+    // Save the answer
+    setUserAnswers((prev) => ({
+      ...prev,
+      [currentQuestion.id]: answer,
+    }));
+
+    if (currentQuestionIndex < questions.length - 1) {
+      // Move to next question
+      setCurrentQuestionIndex((prev) => prev + 1);
+      await simulateTyping(() => {
+        addMessage(questions[currentQuestionIndex + 1].text, true, "questions");
+      });
+    } else {
+      // All questions answered, generate recommendations
+      setChatState("generating");
+      await simulateTyping(() => {
+        addMessage(
+          "Perfect! I have all the information I need. Now I'm generating your personalized travel recommendations using AI analysis of taste vectors, creator communities, and brand partnerships...",
+          true
+        );
+      });
+
+      try {
+        const finalAnswers = { ...userAnswers, [currentQuestion.id]: answer };
+        const response = await fetch("/api/recommend", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tasteVector: tasteProfile?.tasteVector || {
+              adventure: 0.7,
+              culture: 0.6,
+              luxury: 0.4,
+              food: 0.8,
+              nature: 0.5,
+              urban: 0.3,
+              budget: 0.6,
+            },
+            userPreferences: {
+              budget: finalAnswers.budget?.replace("$", "") || "1000-2500",
+              duration: finalAnswers.duration || "4-7 days",
+              style: finalAnswers.style?.toLowerCase() || "adventure",
+              contentFocus:
+                finalAnswers.contentFocus?.toLowerCase() || "photography",
+            },
+            websiteData: websiteData,
+          }),
+        });
+
+        const result = await response.json();
+
+        if (result.recommendations) {
+          setRecommendations(result);
+          setChatState("recommendations");
+          await simulateTyping(() => {
+            addMessage(
+              "Here are your top travel destination recommendations optimized for content creation and monetization:",
+              true,
+              "recommendations"
+            );
+          }, 3000);
+        } else {
+          throw new Error("No recommendations received");
+        }
+      } catch (error) {
+        console.error("Error generating recommendations:", error);
+        setChatState("recommendations");
+        await simulateTyping(() => {
+          addMessage(
+            "Here are your personalized travel recommendations:",
+            true,
+            "recommendations"
+          );
+        }, 2000);
+      }
     }
   };
 
@@ -191,112 +362,94 @@ const ChatInterface: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-80px)] max-w-6xl mx-auto">
-      {/* Chat Messages Area */}
-      <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`flex ${
-              message.isBot ? "justify-start" : "justify-end"
-            } animate-in slide-in-from-bottom-2 duration-300`}
-          >
+    <div className="max-w-4xl mx-auto h-[calc(100vh-80px)] flex flex-col">
+      <div className="flex-1 overflow-y-auto px-6 py-6">
+        <div className="space-y-6">
+          {messages.map((message) => (
             <div
-              className={`max-w-[85%] sm:max-w-md md:max-w-lg lg:max-w-2xl px-4 sm:px-6 py-3 sm:py-4 rounded-2xl sm:rounded-3xl shadow-soft ${
-                message.isBot
-                  ? "bg-card border border-border/50 text-card-foreground"
-                  : "bg-gradient-to-r from-primary to-accent text-primary-foreground"
+              key={message.id}
+              className={`flex ${
+                message.isBot ? "justify-start" : "justify-end"
               }`}
             >
-              <p className="text-sm sm:text-base leading-relaxed font-medium">
-                {message.text}
-              </p>
+              <div
+                className={`max-w-xs md:max-w-md lg:max-w-lg px-4 py-3 rounded-2xl ${
+                  message.isBot
+                    ? "bg-muted text-foreground"
+                    : "bg-primary text-primary-foreground"
+                }`}
+              >
+                <p className="text-sm leading-relaxed">{message.text}</p>
 
-              {/* Component Rendering */}
-              {message.component === "url-form" && chatState === "initial" && (
-                <div className="mt-4">
-                  <URLForm onSubmit={handleURLSubmit} />
-                </div>
-              )}
-              {message.component === "confirmation" &&
-                chatState === "url-submitted" &&
-                websiteData && (
-                  <div className="mt-4">
+                {message.component === "url-form" &&
+                  chatState === "initial" && (
+                    <URLForm onSubmit={handleURLSubmit} />
+                  )}
+
+                {message.component === "confirmation" &&
+                  chatState === "confirmation" &&
+                  websiteData && (
                     <ConfirmationScreen
                       data={websiteData}
                       onConfirm={handleDataConfirmation}
                     />
-                  </div>
-                )}
-              {message.component === "recommendations" &&
-                chatState === "data-confirmed" && (
-                  <div className="mt-4">
-                    <RecommendationsScreen />
-                  </div>
-                )}
-            </div>
-          </div>
-        ))}
-
-        {/* Typing Indicator */}
-        {isTyping && (
-          <div className="flex justify-start animate-in slide-in-from-bottom-2 duration-300">
-            <div className="max-w-xs sm:max-w-md px-4 sm:px-6 py-3 sm:py-4 rounded-2xl sm:rounded-3xl bg-card border border-border/50 shadow-soft">
-              <TypingIndicator />
-            </div>
-          </div>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
-
-      {/* Input Area */}
-      {chatState === "data-confirmed" && (
-        <div className="border-t border-border/50 bg-card/50 backdrop-blur-sm px-4 sm:px-6 py-3 sm:py-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex items-center space-x-3 sm:space-x-4">
-              <div className="flex-1 relative">
-                <Input
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Ask me anything about these recommendations..."
-                  className="pr-12 sm:pr-14 h-12 sm:h-14 text-sm sm:text-base rounded-xl sm:rounded-2xl border-border/50 bg-background/80 backdrop-blur-sm focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-200"
-                />
-                <Button
-                  onClick={handleSendMessage}
-                  disabled={!inputValue.trim()}
-                  size="icon"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 sm:h-10 sm:w-10 rounded-lg sm:rounded-xl bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-soft"
-                >
-                  {isTyping ? (
-                    <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
-                  ) : (
-                    <Send className="h-4 w-4 sm:h-5 sm:w-5" />
                   )}
-                </Button>
+
+                {message.component === "questions" &&
+                  chatState === "questions" && (
+                    <div className="mt-4 space-y-2">
+                      {questions[currentQuestionIndex].options.map(
+                        (option, index) => (
+                          <Button
+                            key={index}
+                            variant="outline"
+                            size="sm"
+                            className="w-full justify-start"
+                            onClick={() => handleQuestionAnswer(option)}
+                          >
+                            {option}
+                          </Button>
+                        )
+                      )}
+                    </div>
+                  )}
+
+                {message.component === "recommendations" &&
+                  chatState === "recommendations" && <RecommendationsScreen />}
               </div>
             </div>
+          ))}
 
-            {/* Quick Actions */}
-            <div className="flex flex-wrap gap-2 mt-3 sm:mt-4">
-              {[
-                "Budget planning",
-                "More destinations",
-                "Brand collaborations",
-              ].map((action) => (
-                <Button
-                  key={action}
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setInputValue(action);
-                    handleSendMessage();
-                  }}
-                  className="text-xs sm:text-sm rounded-full border-border/50 hover:bg-primary/5 hover:border-primary/50 transition-all duration-200"
-                >
-                  {action}
-                </Button>
-              ))}
+          {isTyping && (
+            <div className="flex justify-start">
+              <div className="max-w-xs md:max-w-md lg:max-w-lg px-4 py-3 rounded-2xl bg-muted">
+                <TypingIndicator />
+              </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+      </div>
+
+      {chatState === "recommendations" && (
+        <div className="border-t border-border px-6 py-4">
+          <div className="flex items-center space-x-3">
+            <div className="flex-1 relative">
+              <Input
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Ask me anything about these recommendations..."
+                className="pr-12"
+              />
+              <Button
+                onClick={handleSendMessage}
+                disabled={!inputValue.trim()}
+                size="icon"
+                className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
             </div>
           </div>
         </div>

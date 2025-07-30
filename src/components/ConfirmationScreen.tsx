@@ -16,12 +16,13 @@ import { Badge } from "@/components/ui/badge";
 interface ConfirmationScreenProps {
   data: {
     url: string;
-    contentThemes: string[];
-    audienceInterests: string[];
-    postingFrequency: string;
-    topPerformingContent: string;
-    audienceLocation: string;
-    preferredDestinations: string[];
+    title: string;
+    description: string;
+    themes: string[];
+    hints: string[];
+    contentType: string;
+    socialLinks: { platform: string; url: string }[];
+    extractedKeywords?: string[];
   };
   onConfirm: (confirmed: boolean) => void;
 }
@@ -44,15 +45,28 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
       </CardHeader>
 
       <CardContent className="pt-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
+        <div className="space-y-4">
+          <div>
+            <h4 className="font-medium text-foreground mb-2">
+              Website Details
+            </h4>
+            <div className="bg-muted/30 rounded-lg p-3 space-y-1">
+              <p className="text-sm font-medium">{data.title}</p>
+              <p className="text-xs text-muted-foreground">
+                {data.description}
+              </p>
+              <p className="text-xs text-primary">{data.url}</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h4 className="font-medium text-foreground mb-2 flex items-center">
                 <TrendingUp className="h-4 w-4 text-primary mr-2" />
                 Content Themes
               </h4>
               <div className="flex flex-wrap gap-2">
-                {data.contentThemes.map((theme, index) => (
+                {data.themes?.map((theme, index) => (
                   <Badge key={index} variant="secondary">
                     {theme}
                   </Badge>
@@ -61,76 +75,57 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
             </div>
 
             <div>
+              <h4 className="font-medium text-foreground mb-2">Content Type</h4>
+              <Badge variant="default" className="text-sm">
+                {data.contentType}
+              </Badge>
+            </div>
+          </div>
+
+          {data.socialLinks && data.socialLinks.length > 0 && (
+            <div>
               <h4 className="font-medium text-foreground mb-2 flex items-center">
                 <Users className="h-4 w-4 text-primary mr-2" />
-                Audience Interests
+                Social Media Presence
               </h4>
               <div className="flex flex-wrap gap-2">
-                {data.audienceInterests.map((interest, index) => (
+                {data.socialLinks.map((link, index) => (
                   <Badge key={index} variant="outline">
-                    {interest}
+                    {link.platform}
                   </Badge>
                 ))}
               </div>
             </div>
+          )}
 
+          {data.hints && data.hints.length > 0 && (
             <div>
               <h4 className="font-medium text-foreground mb-2">
-                Posting Frequency
-              </h4>
-              <p className="text-sm text-muted-foreground">
-                {data.postingFrequency}
-              </p>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <div>
-              <h4 className="font-medium text-foreground mb-2">
-                Top Performing Content
-              </h4>
-              <p className="text-sm text-muted-foreground">
-                {data.topPerformingContent}
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-medium text-foreground mb-2">
-                Audience Location
-              </h4>
-              <p className="text-sm text-muted-foreground">
-                {data.audienceLocation}
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-medium text-foreground mb-2 flex items-center">
-                <MapPin className="h-4 w-4 text-primary mr-2" />
-                Preferred Destinations
+                Creator Profile
               </h4>
               <div className="flex flex-wrap gap-2">
-                {data.preferredDestinations.map((dest, index) => (
-                  <Badge key={index} variant="default">
-                    {dest}
+                {data.hints.map((hint, index) => (
+                  <Badge key={index} variant="secondary" className="text-xs">
+                    {hint.replace("-", " ")}
                   </Badge>
                 ))}
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="flex space-x-3 pt-6 border-t border-border mt-6">
           <Button onClick={() => onConfirm(true)} className="flex-1">
-            <CheckCircle className="h-4 w-4" />
-            <span>Yes, this looks accurate</span>
+            <CheckCircle className="h-4 w-4 mr-2" />
+            Yes, this looks accurate
           </Button>
           <Button
             onClick={() => onConfirm(false)}
             variant="outline"
             className="flex-1"
           >
-            <XCircle className="h-4 w-4" />
-            <span>Needs corrections</span>
+            <XCircle className="h-4 w-4 mr-2" />
+            Needs corrections
           </Button>
         </div>
       </CardContent>
