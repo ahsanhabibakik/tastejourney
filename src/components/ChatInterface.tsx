@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useReducer } fro
+import React, { useRef, useEffect, useState } from 'react';
 import { Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +9,9 @@ import TypingIndicator from "./TypingIndicator";
 import URLForm from "./URLForm";
 import ConfirmationScreen from "./ConfirmationScreen";
 import RecommendationsScreen from "./RecommendationsScreen";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store";
+import { addMessage as addMessageAction, setWebsiteData as setWebsiteDataAction } from "@/store/chatSlice";
 
 interface Message {
   id: string;
@@ -23,28 +27,14 @@ type ChatState =
   | "data-confirmed"
   | "recommendations-shown";
 
+
 const ChatInterface: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      text: "Hello! I'm your AI travel companion. I'll analyze your website and recommend perfect travel destinations for content creation. Let's start by getting your website URL.",
-      isBot: true,
-      timestamp: new Date(),
-      component: "url-form",
-    },
-  ]);
+  const dispatch = useDispatch();
+  const messages = useSelector((state: RootState) => state.chat.messages);
+  const websiteData = useSelector((state: RootState) => state.chat.websiteData);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [chatState, setChatState] = useState<ChatState>("initial");
-  const [websiteData, setWebsiteData] = useState<{
-    url: string;
-    contentThemes: string[];
-    audienceInterests: string[];
-    postingFrequency: string;
-    topPerformingContent: string;
-    audienceLocation: string;
-    preferredDestinations: string[];
-  } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -60,14 +50,14 @@ const ChatInterface: React.FC = () => {
     isBot: boolean,
     component?: "url-form" | "confirmation" | "recommendations"
   ) => {
-    const newMessage: Message = {
+    const newMessage = {
       id: Date.now().toString(),
       text,
       isBot,
       timestamp: new Date(),
       component,
     };
-    setMessages((prev) => [...prev, newMessage]);
+    dispatch(addMessageAction(newMessage));
   };
 
   const simulateTyping = async (callback: () => void, delay: number = 1500) => {
@@ -112,7 +102,7 @@ const ChatInterface: React.FC = () => {
             "Urban destinations",
           ],
         };
-        setWebsiteData(mockData);
+        dispatch(setWebsiteDataAction(mockData));
         addMessage(
           "Great! I've extracted key information from your website. Please confirm if this looks accurate:",
           true,
