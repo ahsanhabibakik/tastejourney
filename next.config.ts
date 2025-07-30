@@ -17,6 +17,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Exclude ref folder from build
+  webpack: (config) => {
+    config.watchOptions = {
+      ...config.watchOptions,
+      ignored: ["**/ref/**", "**/node_modules/**"],
+    };
+    return config;
+  },
 };
 
 export default nextConfig;
