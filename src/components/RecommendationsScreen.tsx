@@ -11,13 +11,34 @@ import {
   TrendingUp,
   Camera,
   Heart,
+  Calendar,
+  Globe,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
+interface Recommendation {
+  id: number;
+  destination: string;
+  matchScore: number;
+  image: string;
+  highlights: string[];
+  budget: {
+    range: string;
+    breakdown: string;
+  };
+  engagement: {
+    potential: string;
+    reason: string;
+  };
+  collaborations: string[];
+  creators: number;
+  bestMonths: string[];
+}
+
 const RecommendationsScreen: React.FC = () => {
-  const recommendations = [
+  const recommendations: Recommendation[] = [
     {
       id: 1,
       destination: "Bali, Indonesia",
@@ -101,210 +122,282 @@ const RecommendationsScreen: React.FC = () => {
     },
   ];
 
+  const handleActionClick = (action: string) => {
+    // This is where you would integrate with your API
+    console.log(`Action clicked: ${action}`);
+    // Example API call structure:
+    // await fetch('/api/recommendations', {
+    //   method: 'POST',
+    //   body: JSON.stringify({ action, userPreferences })
+    // })
+  };
+
   return (
-    <div className="mt-6 space-y-6">
-      <div className="text-center pb-4 border-b border-border">
-        <h3 className="text-lg font-semibold text-foreground mb-2">
-          Your Personalized Travel Recommendations
-        </h3>
-        <p className="text-sm text-muted-foreground">
+    <div className="mt-6 space-y-8">
+      {/* Header Section */}
+      <div className="text-center pb-6 border-b border-border">
+        <div className="flex items-center justify-center mb-4">
+          <Globe className="h-8 w-8 text-primary mr-3" />
+          <h3 className="text-2xl font-bold text-foreground">
+            Your Personalized Travel Recommendations
+          </h3>
+        </div>
+        <p className="text-muted-foreground max-w-2xl mx-auto">
           Optimized for content creation, audience engagement, and monetization
-          opportunities
+          opportunities based on your website analysis
         </p>
       </div>
 
-      {recommendations.map((rec) => (
-        <Card
-          key={rec.id}
-          className="overflow-hidden hover:shadow-lg transition-shadow duration-300"
-        >
-          <div className="relative">
-            <Image
-              src={rec.image}
-              alt={rec.destination}
-              width={400}
-              height={200}
-              className="w-full h-48 object-cover"
-            />
-            <Badge className="absolute top-4 right-4">
-              {rec.matchScore}% Match
-            </Badge>
-          </div>
-
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <CardTitle className="flex items-center">
-                <MapPin className="h-5 w-5 text-primary mr-2" />
-                {rec.destination}
-              </CardTitle>
-              <div className="flex items-center space-x-1">
-                <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                <span className="text-sm font-medium text-foreground">
-                  {rec.matchScore}/100
-                </span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="space-y-4">
-                <div>
-                  <h5 className="font-medium text-foreground mb-2 flex items-center">
-                    <TrendingUp className="h-4 w-4 text-primary mr-2" />
-                    Key Highlights
-                  </h5>
-                  <ul className="space-y-1">
-                    {rec.highlights.map((highlight, index) => (
-                      <li
-                        key={index}
-                        className="text-sm text-muted-foreground flex items-start"
-                      >
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                        {highlight}
-                      </li>
-                    ))}
-                  </ul>
+      {/* Recommendations Grid */}
+      <div className="space-y-8">
+        {recommendations.map((rec) => (
+          <Card
+            key={rec.id}
+            className="overflow-hidden hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
+              {/* Image Section */}
+              <div className="relative lg:col-span-1">
+                <Image
+                  src={rec.image}
+                  alt={rec.destination}
+                  width={400}
+                  height={300}
+                  className="w-full h-64 lg:h-full object-cover"
+                />
+                <div className="absolute top-4 right-4">
+                  <Badge className="bg-primary text-primary-foreground font-bold text-sm px-3 py-1">
+                    {rec.matchScore}% Match
+                  </Badge>
                 </div>
-
-                <div>
-                  <h5 className="font-medium text-foreground mb-2 flex items-center">
-                    <DollarSign className="h-4 w-4 text-primary mr-2" />
-                    Budget Estimate
-                  </h5>
-                  <p className="text-sm font-medium text-foreground">
-                    {rec.budget.range}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {rec.budget.breakdown}
-                  </p>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <h5 className="font-medium text-foreground mb-2 flex items-center">
-                    <Heart className="h-4 w-4 text-primary mr-2" />
-                    Engagement Potential
-                  </h5>
-                  <div className="flex items-center space-x-2 mb-1">
-                    <Badge
-                      variant={
-                        rec.engagement.potential === "Very High"
-                          ? "default"
-                          : "secondary"
-                      }
-                    >
-                      {rec.engagement.potential}
-                    </Badge>
+                <div className="absolute bottom-4 left-4">
+                  <div className="flex items-center space-x-1 bg-black/50 backdrop-blur-sm rounded-full px-3 py-1">
+                    <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                    <span className="text-white text-sm font-medium">
+                      {rec.matchScore}/100
+                    </span>
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    {rec.engagement.reason}
-                  </p>
-                </div>
-
-                <div>
-                  <h5 className="font-medium text-foreground mb-2 flex items-center">
-                    <Users className="h-4 w-4 text-primary mr-2" />
-                    Creator Community
-                  </h5>
-                  <p className="text-sm text-foreground">
-                    {rec.creators}+ active creators
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    Best months: {rec.bestMonths.join(", ")}
-                  </p>
                 </div>
               </div>
-            </div>
 
-            <div className="border-t border-border pt-4">
-              <h5 className="font-medium text-foreground mb-3 flex items-center">
-                <Briefcase className="h-4 w-4 text-primary mr-2" />
-                Top Brand Collaboration Opportunities
-              </h5>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {rec.collaborations.map((brand, index) => (
-                  <Card key={index} className="p-3 text-center">
-                    <div className="w-12 h-12 bg-primary rounded-lg mx-auto mb-2 flex items-center justify-center">
-                      <Camera className="h-6 w-6 text-primary-foreground" />
+              {/* Content Section */}
+              <div className="lg:col-span-2 p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <CardTitle className="flex items-center text-xl">
+                    <MapPin className="h-6 w-6 text-primary mr-2" />
+                    {rec.destination}
+                  </CardTitle>
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground">
+                      Best: {rec.bestMonths.join(", ")}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  {/* Left Column */}
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-semibold text-foreground mb-3 flex items-center">
+                        <TrendingUp className="h-4 w-4 text-primary mr-2" />
+                        Key Highlights
+                      </h5>
+                      <ul className="space-y-2">
+                        {rec.highlights.map((highlight, index) => (
+                          <li
+                            key={index}
+                            className="text-sm text-muted-foreground flex items-start"
+                          >
+                            <div className="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                            {highlight}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <p className="text-sm font-medium text-foreground">
-                      {brand}
-                    </p>
-                    <Button variant="link" size="sm" className="mt-2 text-xs">
-                      Explore Collaboration
-                    </Button>
-                  </Card>
-                ))}
+
+                    <div>
+                      <h5 className="font-semibold text-foreground mb-3 flex items-center">
+                        <DollarSign className="h-4 w-4 text-primary mr-2" />
+                        Budget Estimate
+                      </h5>
+                      <div className="bg-muted/50 rounded-lg p-3">
+                        <p className="text-lg font-bold text-foreground">
+                          {rec.budget.range}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {rec.budget.breakdown}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column */}
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-semibold text-foreground mb-3 flex items-center">
+                        <Heart className="h-4 w-4 text-primary mr-2" />
+                        Engagement Potential
+                      </h5>
+                      <div className="space-y-2">
+                        <Badge
+                          variant={
+                            rec.engagement.potential === "Very High"
+                              ? "default"
+                              : "secondary"
+                          }
+                          className="text-sm px-3 py-1"
+                        >
+                          {rec.engagement.potential}
+                        </Badge>
+                        <p className="text-sm text-muted-foreground">
+                          {rec.engagement.reason}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h5 className="font-semibold text-foreground mb-3 flex items-center">
+                        <Users className="h-4 w-4 text-primary mr-2" />
+                        Creator Community
+                      </h5>
+                      <div className="bg-muted/50 rounded-lg p-3">
+                        <p className="text-lg font-bold text-foreground">
+                          {rec.creators}+
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          Active creators in this destination
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Brand Collaborations */}
+                <div className="border-t border-border pt-4">
+                  <h5 className="font-semibold text-foreground mb-4 flex items-center">
+                    <Briefcase className="h-4 w-4 text-primary mr-2" />
+                    Top Brand Collaboration Opportunities
+                  </h5>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    {rec.collaborations.map((brand, index) => (
+                      <div
+                        key={index}
+                        className="bg-card border border-border rounded-lg p-3 text-center hover:shadow-md transition-shadow"
+                      >
+                        <div className="w-10 h-10 bg-primary/10 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                          <Camera className="h-5 w-5 text-primary" />
+                        </div>
+                        <p className="text-sm font-medium text-foreground mb-1">
+                          {brand}
+                        </p>
+                        <Button
+                          variant="link"
+                          size="sm"
+                          className="text-xs p-0 h-auto"
+                        >
+                          View Details
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
-      ))}
+          </Card>
+        ))}
+      </div>
 
-      <Card className="bg-primary/5 border-primary/20">
-        <CardContent className="p-6 text-center">
-          <h4 className="font-semibold text-primary mb-2">
-            📧 Detailed Report Coming Your Way!
-          </h4>
-          <p className="text-sm text-muted-foreground mb-4">
-            A comprehensive PDF report with detailed cost breakdowns,
-            collaboration contacts, and content creation guides will be sent to
-            your email within the next few minutes.
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Click on any suggestion above or continue chatting to ask questions
-            about these recommendations!
-          </p>
+      {/* Email Report Card */}
+      <Card className="bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
+        <CardContent className="p-8 text-center">
+          <div className="max-w-2xl mx-auto">
+            <h4 className="text-xl font-bold text-primary mb-3">
+              📧 Detailed Report Coming Your Way!
+            </h4>
+            <p className="text-muted-foreground mb-6">
+              A comprehensive PDF report with detailed cost breakdowns,
+              collaboration contacts, and content creation guides will be sent
+              to your email within the next few minutes.
+            </p>
+            <div className="flex items-center justify-center space-x-4 text-sm text-muted-foreground">
+              <div className="flex items-center">
+                <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                Cost Analysis
+              </div>
+              <div className="flex items-center">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                Brand Contacts
+              </div>
+              <div className="flex items-center">
+                <div className="w-2 h-2 bg-purple-500 rounded-full mr-2"></div>
+                Content Guides
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
-      <Card className="bg-muted/50">
-        <CardContent className="p-6">
-          <h4 className="font-semibold text-foreground mb-4 text-center">
-            What would you like to do next?
+      {/* Action Cards */}
+      <Card>
+        <CardContent className="p-8">
+          <h4 className="text-xl font-bold text-foreground mb-6 text-center">
+            What would you like to explore next?
           </h4>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button
-              variant="outline"
-              className="h-auto p-4 flex-col items-start text-left"
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card
+              className="p-6 hover:shadow-lg transition-all duration-300 cursor-pointer border-2 hover:border-primary/50"
+              onClick={() => handleActionClick("more-destinations")}
             >
-              <div className="flex items-center mb-2">
-                <MapPin className="h-5 w-5 text-primary mr-2" />
-                <span className="font-medium">Get More Destinations</span>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-primary/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <MapPin className="h-6 w-6 text-primary" />
+                </div>
+                <h5 className="font-semibold text-foreground mb-2">
+                  Get More Destinations
+                </h5>
+                <p className="text-sm text-muted-foreground">
+                  Explore additional travel recommendations based on different
+                  criteria or seasons
+                </p>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Explore additional travel recommendations based on different
-                criteria or seasons
-              </p>
-            </Button>
+            </Card>
 
-            <Button
-              variant="outline"
-              className="h-auto p-4 flex-col items-start text-left"
+            <Card
+              className="p-6 hover:shadow-lg transition-all duration-300 cursor-pointer border-2 hover:border-primary/50"
+              onClick={() => handleActionClick("budget-planning")}
             >
-              <div className="flex items-center mb-2">
-                <DollarSign className="h-5 w-5 text-primary mr-2" />
-                <span className="font-medium">Budget Planning</span>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-primary/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <DollarSign className="h-6 w-6 text-primary" />
+                </div>
+                <h5 className="font-semibold text-foreground mb-2">
+                  Budget Planning
+                </h5>
+                <p className="text-sm text-muted-foreground">
+                  Get detailed cost breakdowns and budget optimization tips for
+                  your chosen destination
+                </p>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Get detailed cost breakdowns and budget optimization tips for
-                your chosen destination
-              </p>
-            </Button>
+            </Card>
 
-            <Button
-              variant="outline"
-              className="h-auto p-4 flex-col items-start text-left"
+            <Card
+              className="p-6 hover:shadow-lg transition-all duration-300 cursor-pointer border-2 hover:border-primary/50"
+              onClick={() => handleActionClick("brand-collaborations")}
             >
-              <div className="flex items-center mb-2">
-                <Briefcase className="h-5 w-5 text-primary mr-2" />
-                <span className="font-medium">Brand Collaborations</span>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-primary/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <Briefcase className="h-6 w-6 text-primary" />
+                </div>
+                <h5 className="font-semibold text-foreground mb-2">
+                  Brand Collaborations
+                </h5>
+                <p className="text-sm text-muted-foreground">
+                  Learn more about specific brand partnership opportunities and
+                  how to approach them
+                </p>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Learn more about specific brand partnership opportunities and
-                how to approach them
-              </p>
-            </Button>
+            </Card>
           </div>
         </CardContent>
       </Card>
