@@ -180,8 +180,8 @@ export async function getAdditionalRecommendations(
 // Get Budget Planning API
 export async function getBudgetPlanning(
   destination: string,
-  preferences: any
-): Promise<any> {
+  preferences: Record<string, unknown>
+): Promise<RecommendationResponse> {
   try {
     const response = await fetch(`${API_BASE_URL}/budget-planning`, {
       method: "POST",
@@ -206,7 +206,7 @@ export async function getBudgetPlanning(
 export async function getBrandCollaborations(
   destination: string,
   contentType: string
-): Promise<any> {
+): Promise<RecommendationResponse> {
   try {
     const response = await fetch(`${API_BASE_URL}/brand-collaborations`, {
       method: "POST",
