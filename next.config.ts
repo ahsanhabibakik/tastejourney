@@ -86,9 +86,9 @@ const nextConfig: NextConfig = {
   },
 
   // Experimental features for better performance
+
+  serverExternalPackages: ["playwright", "puppeteer", "cheerio"],
   experimental: {
-    // Enable server components optimization
-    serverComponentsExternalPackages: ["playwright", "puppeteer", "cheerio"],
     // Optimize bundle size
     optimizePackageImports: ["lucide-react", "@radix-ui/react-icons"],
   },
