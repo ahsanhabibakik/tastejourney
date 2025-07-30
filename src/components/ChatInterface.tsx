@@ -36,7 +36,15 @@ const ChatInterface: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [chatState, setChatState] = useState<ChatState>("initial");
-  const [websiteData, setWebsiteData] = useState<any>(null);
+  const [websiteData, setWebsiteData] = useState<{
+    url: string;
+    contentThemes: string[];
+    audienceInterests: string[];
+    postingFrequency: string;
+    topPerformingContent: string;
+    audienceLocation: string;
+    preferredDestinations: string[];
+  } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import {
   MapPin,
@@ -26,7 +26,7 @@ import {
   ThumbsUp,
   MessageCircle,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -315,7 +315,11 @@ const RecommendationsScreen: React.FC = () => {
             <span className="text-sm font-medium">Filter:</span>
             <select
               value={filterBy}
-              onChange={(e) => setFilterBy(e.target.value as any)}
+              onChange={(e) =>
+                setFilterBy(
+                  e.target.value as "all" | "budget" | "luxury" | "adventure"
+                )
+              }
               className="bg-background border border-border rounded px-2 py-1 text-sm"
             >
               <option value="all">All Destinations</option>
@@ -332,7 +336,9 @@ const RecommendationsScreen: React.FC = () => {
             <span className="text-sm font-medium">Sort by:</span>
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
+              onChange={(e) =>
+                setSortBy(e.target.value as "match" | "budget" | "engagement")
+              }
               className="bg-background border border-border rounded px-2 py-1 text-sm"
             >
               <option value="match">Match Score</option>

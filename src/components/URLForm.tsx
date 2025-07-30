@@ -71,8 +71,8 @@ const URLForm: React.FC<URLFormProps> = ({ onSubmit }) => {
 
       <div className="mt-3 text-xs text-muted-foreground">
         <p>
-          💡 I'll analyze your content themes, audience insights, and posting
-          patterns to create personalized travel recommendations.
+          💡 I&apos;ll analyze your content themes, audience insights, and
+          posting patterns to create personalized travel recommendations.
         </p>
       </div>
     </div>
