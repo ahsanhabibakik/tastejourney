@@ -9,6 +9,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+import Image from "next/image";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-background p-8">
