@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Send } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import TypingIndicator from "./TypingIndicator";
@@ -80,37 +80,44 @@ const ChatInterface: React.FC = () => {
       );
     });
 
-    // Simulate website analysis
-    await simulateTyping(() => {
-      const mockData = {
-        url,
-        contentThemes: [
-          "Travel Photography",
-          "Food & Culture",
-          "Adventure Sports",
-        ],
-        audienceInterests: [
-          "Photography",
-          "Food",
-          "Adventure Travel",
-          "Cultural Experiences",
-        ],
-        postingFrequency: "3-4 posts per week",
-        topPerformingContent: "Video content (65% engagement)",
-        audienceLocation: "North America (45%), Europe (30%), Asia (25%)",
-        preferredDestinations: [
-          "Mountain regions",
-          "Coastal areas",
-          "Urban destinations",
-        ],
-      };
-      setWebsiteData(mockData);
+    try {
+      await simulateTyping(() => {
+        const mockData = {
+          url,
+          contentThemes: [
+            "Travel Photography",
+            "Food & Culture",
+            "Adventure Sports",
+          ],
+          audienceInterests: [
+            "Photography",
+            "Food",
+            "Adventure Travel",
+            "Cultural Experiences",
+          ],
+          postingFrequency: "3-4 posts per week",
+          topPerformingContent: "Video content (65% engagement)",
+          audienceLocation: "North America (45%), Europe (30%), Asia (25%)",
+          preferredDestinations: [
+            "Mountain regions",
+            "Coastal areas",
+            "Urban destinations",
+          ],
+        };
+        setWebsiteData(mockData);
+        addMessage(
+          "Great! I've extracted key information from your website. Please confirm if this looks accurate:",
+          true,
+          "confirmation"
+        );
+      }, 2500);
+    } catch (error) {
+      console.error("Error analyzing website:", error);
       addMessage(
-        "Great! I've extracted key information from your website. Please confirm if this looks accurate:",
-        true,
-        "confirmation"
+        "I encountered an issue analyzing your website. Please try again or contact support.",
+        true
       );
-    }, 2500);
+    }
   };
 
   const handleDataConfirmation = async (confirmed: boolean) => {
@@ -150,7 +157,6 @@ const ChatInterface: React.FC = () => {
     setInputValue("");
     addMessage(userMessage, false);
 
-    // Simple response logic for continued conversation
     await simulateTyping(() => {
       if (userMessage.toLowerCase().includes("budget")) {
         addMessage(
@@ -187,72 +193,112 @@ const ChatInterface: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto h-[calc(100vh-80px)] flex flex-col">
-      <div className="flex-1 overflow-y-auto px-6 py-6">
-        <div className="space-y-6">
-          {messages.map((message) => (
+    <div className="flex flex-col h-[calc(100vh-80px)] max-w-6xl mx-auto">
+      {/* Chat Messages Area */}
+      <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className={`flex ${
+              message.isBot ? "justify-start" : "justify-end"
+            } animate-in slide-in-from-bottom-2 duration-300`}
+          >
             <div
-              key={message.id}
-              className={`flex ${
-                message.isBot ? "justify-start" : "justify-end"
+              className={`max-w-[85%] sm:max-w-md md:max-w-lg lg:max-w-2xl px-4 sm:px-6 py-3 sm:py-4 rounded-2xl sm:rounded-3xl shadow-soft ${
+                message.isBot
+                  ? "bg-card border border-border/50 text-card-foreground"
+                  : "bg-gradient-to-r from-primary to-accent text-primary-foreground"
               }`}
             >
-              <div
-                className={`max-w-xs md:max-w-md lg:max-w-lg px-4 py-3 rounded-2xl ${
-                  message.isBot
-                    ? "bg-muted text-foreground"
-                    : "bg-primary text-primary-foreground"
-                }`}
-              >
-                <p className="text-sm leading-relaxed">{message.text}</p>
-                {message.component === "url-form" &&
-                  chatState === "initial" && (
-                    <URLForm onSubmit={handleURLSubmit} />
-                  )}
-                {message.component === "confirmation" &&
-                  chatState === "url-submitted" &&
-                  websiteData && (
+              <p className="text-sm sm:text-base leading-relaxed font-medium">
+                {message.text}
+              </p>
+
+              {/* Component Rendering */}
+              {message.component === "url-form" && chatState === "initial" && (
+                <div className="mt-4">
+                  <URLForm onSubmit={handleURLSubmit} />
+                </div>
+              )}
+              {message.component === "confirmation" &&
+                chatState === "url-submitted" &&
+                websiteData && (
+                  <div className="mt-4">
                     <ConfirmationScreen
                       data={websiteData}
                       onConfirm={handleDataConfirmation}
                     />
-                  )}
-                {message.component === "recommendations" &&
-                  chatState === "data-confirmed" && <RecommendationsScreen />}
-              </div>
+                  </div>
+                )}
+              {message.component === "recommendations" &&
+                chatState === "data-confirmed" && (
+                  <div className="mt-4">
+                    <RecommendationsScreen />
+                  </div>
+                )}
             </div>
-          ))}
+          </div>
+        ))}
 
-          {isTyping && (
-            <div className="flex justify-start">
-              <div className="max-w-xs md:max-w-md lg:max-w-lg px-4 py-3 rounded-2xl bg-muted">
-                <TypingIndicator />
-              </div>
+        {/* Typing Indicator */}
+        {isTyping && (
+          <div className="flex justify-start animate-in slide-in-from-bottom-2 duration-300">
+            <div className="max-w-xs sm:max-w-md px-4 sm:px-6 py-3 sm:py-4 rounded-2xl sm:rounded-3xl bg-card border border-border/50 shadow-soft">
+              <TypingIndicator />
             </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
       </div>
 
+      {/* Input Area */}
       {chatState === "data-confirmed" && (
-        <div className="border-t border-border px-6 py-4">
-          <div className="flex items-center space-x-3">
-            <div className="flex-1 relative">
-              <Input
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Ask me anything about these recommendations..."
-                className="pr-12"
-              />
-              <Button
-                onClick={handleSendMessage}
-                disabled={!inputValue.trim()}
-                size="icon"
-                className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8"
-              >
-                <Send className="h-4 w-4" />
-              </Button>
+        <div className="border-t border-border/50 bg-card/50 backdrop-blur-sm px-4 sm:px-6 py-3 sm:py-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className="flex-1 relative">
+                <Input
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Ask me anything about these recommendations..."
+                  className="pr-12 sm:pr-14 h-12 sm:h-14 text-sm sm:text-base rounded-xl sm:rounded-2xl border-border/50 bg-background/80 backdrop-blur-sm focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-200"
+                />
+                <Button
+                  onClick={handleSendMessage}
+                  disabled={!inputValue.trim()}
+                  size="icon"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 sm:h-10 sm:w-10 rounded-lg sm:rounded-xl bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-soft"
+                >
+                  {isTyping ? (
+                    <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
+                  ) : (
+                    <Send className="h-4 w-4 sm:h-5 sm:w-5" />
+                  )}
+                </Button>
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="flex flex-wrap gap-2 mt-3 sm:mt-4">
+              {[
+                "Budget planning",
+                "More destinations",
+                "Brand collaborations",
+              ].map((action) => (
+                <Button
+                  key={action}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setInputValue(action);
+                    handleSendMessage();
+                  }}
+                  className="text-xs sm:text-sm rounded-full border-border/50 hover:bg-primary/5 hover:border-primary/50 transition-all duration-200"
+                >
+                  {action}
+                </Button>
+              ))}
             </div>
           </div>
         </div>

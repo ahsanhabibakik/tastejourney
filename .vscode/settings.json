@@ -1,1 +1,4 @@
-{}
+{
+  "typescript.autoClosingTags": false,
+  "cSpell.words": ["oyager", "Santorini"]
+}
