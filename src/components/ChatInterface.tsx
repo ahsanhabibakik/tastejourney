@@ -68,6 +68,8 @@ const ChatInterface: React.FC = () => {
     },
   ]);
   const [inputValue, setInputValue] = useState("");
+  const [email, setEmail] = useState("");
+  const [reportSent, setReportSent] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [chatState, setChatState] = useState<ChatState>("initial");
   const [websiteData, setWebsiteData] = useState<{
@@ -377,6 +379,26 @@ const ChatInterface: React.FC = () => {
     }
   };
 
+  async function handleSendReport() {
+    if (!email) return;
+    try {
+      const res = await fetch('/api/send-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          recommendations: recommendations?.recommendations,
+          userProfile: userAnswers,
+          websiteData,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) setReportSent(true);
+    } catch (e) {
+      // Optionally show error
+    }
+  }
+
   return (
     <div className="max-w-4xl mx-auto h-[calc(100vh-80px)] flex flex-col">
       <div className="flex-1 overflow-y-auto px-6 py-6">
@@ -447,8 +469,21 @@ const ChatInterface: React.FC = () => {
         </div>
       </div>
 
-      {chatState === "recommendations" && (
+      {chatState === "recommendations" && !reportSent && (
         <div className="border-t border-border px-6 py-4">
+          <div className="mb-2">Want a PDF report? Enter your email:</div>
+          <div className="flex items-center space-x-3 mb-2">
+            <Input
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="Your email"
+              className="w-64"
+              type="email"
+            />
+            <Button onClick={handleSendReport} disabled={!email}>
+              Send PDF Report
+            </Button>
+          </div>
           <div className="flex items-center space-x-3">
             <div className="flex-1 relative">
               <Input
@@ -468,6 +503,11 @@ const ChatInterface: React.FC = () => {
               </Button>
             </div>
           </div>
+        </div>
+      )}
+      {reportSent && (
+        <div className="border-t border-border px-6 py-8 text-center text-green-600 font-semibold">
+          PDF report sent! Check your email.
         </div>
       )}
     </div>
