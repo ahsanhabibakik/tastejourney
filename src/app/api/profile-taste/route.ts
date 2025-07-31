@@ -192,7 +192,7 @@ function generatePersonalityTraits(vector: TasteVector): string[] {
 // Real Qloo API integration
 // See Qloo API docs: https://docs.qloo.com/
 async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
-  // Real Qloo API call using env variables
+  // Qloo Insights API integration (see https://docs.qloo.com/reference/insights-api-deep-dive)
   const response = await fetch(`${process.env.QLOO_API_URL}/v1/taste/profile`, {
     method: 'POST',
     headers: {
@@ -209,16 +209,18 @@ async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
   });
 
   if (!response.ok) {
-    throw new Error(`Qloo API error: ${response.status}`);
+    const errorText = await response.text();
+    throw new Error(`Qloo API error: ${response.status} - ${errorText}`);
   }
 
   const data = await response.json();
+  // Map Qloo API response to local QlooResponse type
   return {
-    tasteVector: data.taste_vector,
-    recommendations: data.recommendations,
-    confidence: data.confidence,
-    culturalAffinities: data.cultural_affinities,
-    personalityTraits: data.personality_traits,
+    tasteVector: data.taste_vector || {},
+    recommendations: data.recommendations || [],
+    confidence: data.confidence || 0,
+    culturalAffinities: data.cultural_affinities || [],
+    personalityTraits: data.personality_traits || [],
     processingTime: data.processing_time || "API call"
   };
 }
