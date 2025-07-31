@@ -719,13 +719,14 @@ const ChatInterface: React.FC = () => {
                         Your Recommended Destinations
                       </h3>
                       
-                      {/* Enhanced Destination Cards */}
-                      <div className="space-y-6">
-                        {recommendations.recommendations.map((rec: Recommendation, i: number) => (
-                          <div
-                            key={i}
-                            className="bg-card border border-border rounded-lg overflow-hidden"
-                          >
+                      {/* Enhanced Destination Cards - Horizontal Scrollable */}
+                      <div className="overflow-x-auto pb-4 scrollbar-hide" style={{scrollBehavior: 'smooth'}}>
+                        <div className="flex gap-6 w-max">
+                          {recommendations.recommendations.map((rec: Recommendation, i: number) => (
+                            <div
+                              key={i}
+                              className="bg-card border border-border rounded-lg overflow-hidden flex-shrink-0 w-80 md:w-96"
+                            >
                             {rec.image && (
                               <Image 
                                 src={rec.image} 
@@ -823,6 +824,26 @@ const ChatInterface: React.FC = () => {
                               )}
                             </div>
                           </div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* Scroll Indicator */}
+                      <div className="flex justify-center mt-4">
+                        <div className="flex items-center gap-2 px-3 py-2 bg-muted/30 rounded-full">
+                          <span className="text-xs text-muted-foreground">
+                            👈 Swipe to explore all {recommendations.recommendations.length} destinations 👉
+                          </span>
+                        </div>
+                      </div>
+                      
+                      {/* Dots indicator */}
+                      <div className="flex justify-center gap-1 mt-2">
+                        {recommendations.recommendations.map((_, idx) => (
+                          <div
+                            key={idx}
+                            className="w-2 h-2 rounded-full bg-muted-foreground/30"
+                          />
                         ))}
                       </div>
                     </div>
