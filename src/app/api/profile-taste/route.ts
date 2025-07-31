@@ -191,9 +191,8 @@ function generatePersonalityTraits(vector: TasteVector): string[] {
 
 // Real Qloo API integration (commented out for development)
 async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
-  // In production, this would make a real API call to Qloo
-  /*
-  const response = await fetch('https://api.qloo.com/v1/taste/profile', {
+  // Real Qloo API call using env variables
+  const response = await fetch(`${process.env.QLOO_API_URL}/v1/taste/profile`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${process.env.QLOO_API_KEY}`,
@@ -206,51 +205,20 @@ async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
       social_profiles: request.socialLinks,
       demographics: request.demographics
     })
-  })
+  });
 
   if (!response.ok) {
-    throw new Error(`Qloo API error: ${response.status}`)
+    throw new Error(`Qloo API error: ${response.status}`);
   }
 
-  const data = await response.json()
+  const data = await response.json();
   return {
     tasteVector: data.taste_vector,
     recommendations: data.recommendations,
     confidence: data.confidence,
     culturalAffinities: data.cultural_affinities,
     personalityTraits: data.personality_traits,
-    processingTime: data.processing_time
-  }
-  */
-
-  // Mock implementation for development
-  const tasteVector = generateMockTasteVector(
-    request.themes,
-    request.hints,
-    request.contentType
-  );
-  const culturalAffinities = generateCulturalAffinities(tasteVector);
-  const personalityTraits = generatePersonalityTraits(tasteVector);
-
-  // Generate recommendations based on highest vector values
-  const recommendations = Object.entries(tasteVector)
-    .sort(([, a], [, b]) => b - a)
-    .slice(0, 3)
-    .map(([key]) => key);
-
-  // Calculate confidence based on vector strength
-  const avgVectorStrength =
-    Object.values(tasteVector).reduce((sum, val) => sum + val, 0) /
-    Object.keys(tasteVector).length;
-  const confidence = Math.min(0.95, Math.max(0.6, avgVectorStrength + 0.2));
-
-  return {
-    tasteVector,
-    recommendations,
-    confidence,
-    culturalAffinities,
-    personalityTraits,
-    processingTime: "1.8s",
+    processingTime: data.processing_time || "API call"
   };
 }
 
