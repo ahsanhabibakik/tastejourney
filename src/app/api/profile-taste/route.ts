@@ -189,7 +189,8 @@ function generatePersonalityTraits(vector: TasteVector): string[] {
   return traits.slice(0, 5); // Limit to top 5
 }
 
-// Real Qloo API integration (commented out for development)
+// Real Qloo API integration
+// See Qloo API docs: https://docs.qloo.com/
 async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
   // Real Qloo API call using env variables
   const response = await fetch(`${process.env.QLOO_API_URL}/v1/taste/profile`, {
