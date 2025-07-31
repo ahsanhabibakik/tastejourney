@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import TypingIndicator from "./TypingIndicator";
 import URLForm from "./URLForm";
 import ConfirmationScreen from "./ConfirmationScreen";
-import RecommendationsScreen from "./RecommendationsScreen";
+
 
 interface Message {
   id: string;
@@ -410,9 +410,9 @@ const ChatInterface: React.FC = () => {
     });
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
       handleSendMessage();
     }
   };
