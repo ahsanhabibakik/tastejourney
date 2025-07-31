@@ -1,3 +1,22 @@
+## Environment Variables
+
+Create a `.env.local` file in the project root with the following keys:
+
+```env
+SCRAPERAPI_KEY=your_scraperapi_key_here
+NUMBEO_API_KEY=your_numbeo_api_key_here
+AMADEUS_API_KEY=your_amadeus_api_key_here
+AMADEUS_API_SECRET=your_amadeus_api_secret_here
+YOUTUBE_API_KEY=your_youtube_api_key_here
+GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
+SERPAPI_KEY=your_serpapi_key_here
+SENDGRID_API_KEY=your_sendgrid_key_here
+QLOO_API_KEY=your_qloo_api_key_here
+OPENAI_API_KEY=your_openai_key_here
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+> **Note:** Never commit your `.env.local` file to version control. See `.gitignore`.
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
