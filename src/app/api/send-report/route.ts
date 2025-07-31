@@ -1,11 +1,21 @@
+// src/app/api/send-report/route.ts
 
-import { NextRequest, NextResponse } from "next/server";
-import sgMail from '@sendgrid/mail';
+export const runtime = 'nodejs';
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+import { NextRequest, NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
+import PDFDocument from 'pdfkit';
+import fs from 'fs';
+import path from 'path';
 
 interface Recommendation {
-  [key: string]: unknown;
+  destination: string;
+  highlights?: string[];
+  budget?: { range: string };
+  bestMonths?: string[];
+  engagement?: { potential: string };
+  tags?: string[];
+  [key: string]: any;
 }
 
 interface UserProfile {
@@ -29,45 +39,111 @@ interface ReportRequest {
   websiteData: WebsiteData;
 }
 
-
 export async function POST(request: NextRequest) {
   try {
-    const { email, recommendations, userProfile, websiteData }: ReportRequest = await request.json();
+    // 1) parse payload
+    const { email, recommendations, userProfile, websiteData } =
+      (await request.json()) as ReportRequest;
+
     if (!email) {
-      return NextResponse.json({ error: "Email is required" }, { status: 400 });
+      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
-    // 1. Generate PDF (mocked as a simple Buffer for now)
-    // In production, use Puppeteer to generate a real PDF
-    const pdfBuffer = Buffer.from(`TasteJourney Report for ${email}\n${JSON.stringify({ recommendations, userProfile, websiteData }, null, 2)}`);
+    // 2) load local Roboto font
+    const fontPath = path.join(process.cwd(), 'src', 'fonts', 'Roboto-Regular.ttf');
+    if (!fs.existsSync(fontPath)) {
+      throw new Error(`Font file not found at ${fontPath}`);
+    }
+    const fontBuffer = fs.readFileSync(fontPath);
 
-    // 2. Send email using SendGrid
-    const msg = {
+    // 3) prepare PDFKit
+    const doc = new PDFDocument({ autoFirstPage: false });
+    doc.registerFont('Roboto', fontBuffer);
+    doc.addPage();
+    doc.font('Roboto');
+
+    // collect chunks
+    const chunks: Buffer[] = [];
+    doc.on('data', (c: Buffer) => chunks.push(c));
+
+    // build the PDF
+    doc.fontSize(20).text('TasteJourney Travel Report', { align: 'center' });
+    doc.moveDown(1);
+    doc.fontSize(14).text(`For: ${email}`);
+    doc.moveDown(1);
+
+    doc.fontSize(16).text('Website Data:', { underline: true });
+    doc.fontSize(12).text(`• Title: ${websiteData.title}`);
+    doc.text(`• Description: ${websiteData.description}`);
+    doc.text(`• URL: ${websiteData.url}`);
+    doc.text(`• Themes: ${websiteData.themes.join(', ')}`);
+    doc.text(`• Hints: ${websiteData.hints.join(', ')}`);
+    doc.moveDown(1);
+
+    doc.fontSize(16).text('User Profile:', { underline: true });
+    Object.entries(userProfile).forEach(([k, v]) => {
+      doc.fontSize(12).text(`• ${k}: ${String(v)}`);
+    });
+    doc.moveDown(1);
+
+    doc.fontSize(16).text('Recommendations:', { underline: true });
+    recommendations.forEach((rec, i) => {
+      doc.moveDown(0.5);
+      doc.fontSize(13).text(`${i + 1}. ${rec.destination}`);
+      if (rec.highlights)
+        doc.fontSize(11).text(`   - Highlights: ${rec.highlights.join(', ')}`);
+      if (rec.budget) doc.text(`   - Budget: ${rec.budget.range}`);
+      if (rec.bestMonths)
+        doc.text(`   - Best Months: ${rec.bestMonths.join(', ')}`);
+      if (rec.engagement)
+        doc.text(`   - Engagement: ${rec.engagement.potential}`);
+      if (rec.tags) doc.text(`   - Tags: ${rec.tags.join(', ')}`);
+    });
+
+    doc.end();
+
+    // wait for PDF buffer
+    const pdfBuffer: Buffer = await new Promise((resolve, reject) => {
+      doc.on('end', () => resolve(Buffer.concat(chunks)));
+      doc.on('error', reject);
+    });
+
+    // 4) send email via Nodemailer
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER!,
+        pass: process.env.GMAIL_PASS!,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.GMAIL_USER,
       to: email,
-      from: 'reports@tastejourney.ai',
-      subject: 'Your Personalized Travel Recommendations',
-      html: `<p>Hi,<br>Your personalized travel recommendations are attached as a PDF.<br>Thank you for using TasteJourney!</p><p><a href="#">Unsubscribe</a></p>`,
+      subject: 'Your TasteJourney Travel Report',
+      html: `
+        <p>Hi there,</p>
+        <p>Attached is your personalized travel report from TasteJourney. Enjoy planning!</p>
+        <p>— The TasteJourney Team</p>
+      `,
       attachments: [
         {
-          content: pdfBuffer.toString('base64'),
-          filename: 'travel-recommendations.pdf',
-          type: 'application/pdf',
-          disposition: 'attachment',
+          filename: 'travel-report.pdf',
+          content: pdfBuffer,
+          contentType: 'application/pdf',
         },
       ],
-    };
-    await sgMail.send(msg);
+    });
 
     return NextResponse.json({
       success: true,
-      message: "Report sent successfully",
-      reportId: `report_${Date.now()}`,
+      message: 'Report sent successfully!',
       timestamp: new Date().toISOString(),
     });
-  } catch (error) {
-    console.error("Error sending report:", error);
+  } catch (err) {
+    console.error('Error in send-report:', err);
     return NextResponse.json(
-      { error: "Failed to send report" },
+      { error: 'Failed to send report', details: String(err) },
       { status: 500 }
     );
   }
