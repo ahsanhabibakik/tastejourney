@@ -1,16 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
 
+interface Recommendation {
+  [key: string]: unknown;
+}
+
+interface UserProfile {
+  [key: string]: unknown;
+}
+
+interface WebsiteData {
+  url: string;
+  themes: string[];
+  hints: string[];
+  contentType: string;
+  socialLinks: { platform: string; url: string }[];
+  title: string;
+  description: string;
+}
+
 interface ReportRequest {
   email: string;
-  recommendations: any[];
-  userProfile: any;
-  websiteData: any;
+  recommendations: Recommendation[];
+  userProfile: UserProfile;
+  websiteData: WebsiteData;
 }
 
 export async function POST(request: NextRequest) {
+
   try {
-    const { email, recommendations, userProfile, websiteData }: ReportRequest =
-      await request.json();
+    const { email }: ReportRequest = await request.json();
+
 
     if (!email) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });

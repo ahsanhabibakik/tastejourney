@@ -70,11 +70,25 @@ const ChatInterface: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [chatState, setChatState] = useState<ChatState>("initial");
-  const [websiteData, setWebsiteData] = useState<any>(null);
-  const [tasteProfile, setTasteProfile] = useState<any>(null);
+  const [websiteData, setWebsiteData] = useState<{
+    url: string;
+    themes: string[];
+    hints: string[];
+    contentType: string;
+    socialLinks: { platform: string; url: string }[];
+    title: string;
+    description: string;
+  } | null>(null);
+  const [tasteProfile, setTasteProfile] = useState<{ tasteVector: Record<string, number> } | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
-  const [recommendations, setRecommendations] = useState<any>(null);
+  const [recommendations, setRecommendations] = useState<
+    | {
+        recommendations: Array<Record<string, unknown>>;
+        [key: string]: unknown;
+      }
+    | null
+  >(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -188,6 +202,7 @@ const ChatInterface: React.FC = () => {
       });
 
       try {
+        if (!websiteData) throw new Error("Website data is missing");
         const response = await fetch("/api/profile-taste", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
