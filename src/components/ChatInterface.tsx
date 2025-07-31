@@ -32,6 +32,7 @@ interface UserAnswers {
   duration?: string;
   style?: string;
   contentFocus?: string;
+  climate?: string;
 }
 
 const questions = [
@@ -54,6 +55,20 @@ const questions = [
     id: "contentFocus",
     text: "What type of content do you focus on?",
     options: ["Photography", "Food", "Lifestyle", "Adventure"],
+  },
+  {
+    id: "climate",
+    text: "Do you have any preferred or avoided climates/regions?",
+    options: [
+      "Tropical/Sunny",
+      "Mild/Temperate",
+      "Cold/Snowy",
+      "Desert/Arid",
+      "No preference",
+      "Avoid hot",
+      "Avoid cold",
+      "Avoid rainy",
+    ],
   },
 ];
 
@@ -303,6 +318,7 @@ const ChatInterface: React.FC = () => {
               style: finalAnswers.style?.toLowerCase() || "adventure",
               contentFocus:
                 finalAnswers.contentFocus?.toLowerCase() || "photography",
+              climate: finalAnswers.climate || "No preference",
             },
             websiteData: websiteData,
           }),
