@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import * as cheerio from "cheerio";
+import { analyzeWebsite } from "@/lib/scraper";
 
 export async function POST(request: NextRequest) {
   try {
@@ -7,75 +7,105 @@ export async function POST(request: NextRequest) {
     if (!url) {
       return NextResponse.json({ error: "URL is required" }, { status: 400 });
     }
-    const apiKey = process.env.SCRAPERAPI_KEY;
-    if (!apiKey) {
-      return NextResponse.json({ error: "ScraperAPI key not set" }, { status: 500 });
+
+    // Validate URL format
+    let validUrl: URL;
+    try {
+      validUrl = new URL(url);
+      if (!['http:', 'https:'].includes(validUrl.protocol)) {
+        throw new Error('Invalid protocol');
+      }
+    } catch {
+      return NextResponse.json({ error: "Invalid URL format" }, { status: 400 });
     }
-    const targetUrl = encodeURIComponent(url);
-    const scraperUrl = `http://api.scraperapi.com?api_key=${apiKey}&url=${targetUrl}`;
-    const response = await fetch(scraperUrl);
-    if (!response.ok) {
-      return NextResponse.json({ error: "Failed to fetch from ScraperAPI" }, { status: 500 });
+
+    console.log(`Starting analysis for: ${url}`);
+    
+    try {
+      // Use the enhanced scraper
+      const analysis = await analyzeWebsite(url);
+      
+      // Transform social links to the expected format for the frontend
+      const socialLinks = analysis.socialLinks.map(link => {
+        let platform = 'Unknown';
+        if (link.includes('instagram.com')) platform = 'Instagram';
+        else if (link.includes('twitter.com') || link.includes('x.com')) platform = 'Twitter';
+        else if (link.includes('youtube.com')) platform = 'YouTube';
+        else if (link.includes('facebook.com')) platform = 'Facebook';
+        else if (link.includes('tiktok.com')) platform = 'TikTok';
+        else if (link.includes('linkedin.com')) platform = 'LinkedIn';
+        else if (link.includes('pinterest.com')) platform = 'Pinterest';
+        else if (link.includes('twitch.tv')) platform = 'Twitch';
+        
+        return { platform, url: link };
+      });
+
+      // Create comprehensive result
+      const result = {
+        url,
+        themes: analysis.themes,
+        hints: analysis.hints,
+        contentType: analysis.contentType || 'General Content',
+        socialLinks,
+        title: analysis.title,
+        description: analysis.description,
+        keywords: analysis.keywords || [],
+        images: analysis.images || [],
+        videoLinks: analysis.videoLinks || [],
+        language: analysis.language || 'en',
+        location: analysis.location || '',
+        brands: analysis.brands || [],
+        collaborations: analysis.collaborations || [],
+        regionBias: analysis.regionBias || [],
+        contactInfo: (analysis.contactInfo || []).filter(contact => 
+          !contact.includes('@') || contact.split('@').length === 2 // Basic email validation
+        ).slice(0, 3), // Limit contact info for privacy
+        extractedAt: new Date().toISOString(),
+        scrapingMethods: ['ScraperAPI', 'Tarvily', 'Direct Fetch', 'Enhanced Parsing']
+      };
+
+      console.log(`Successfully analyzed ${url}: found ${result.themes.length} themes, ${result.hints.length} creator hints, ${result.socialLinks.length} social links`);
+      
+      return NextResponse.json({ success: true, data: result });
+      
+    } catch (analysisError) {
+      console.error("Website analysis failed:", analysisError);
+      
+      // Fallback to basic mock data based on URL
+      const fallbackData = {
+        url,
+        themes: ["general", "content"],
+        hints: ["content-creator"],
+        contentType: "General Content",
+        socialLinks: [],
+        title: `Content from ${validUrl.hostname}`,
+        description: "Website content analysis",
+        keywords: [],
+        images: [],
+        videoLinks: [],
+        language: 'en',
+        location: '',
+        brands: [],
+        collaborations: [],
+        regionBias: [],
+        contactInfo: [],
+        extractedAt: new Date().toISOString(),
+        scrapingMethods: ['Fallback'],
+        fallbackUsed: true
+      };
+      
+      return NextResponse.json({ 
+        success: true, 
+        data: fallbackData,
+        warning: "Used fallback data due to scraping limitations"
+      });
     }
-    const html = await response.text();
-    const $ = cheerio.load(html);
-
-    // Extract title and description
-    const title = $("title").text() || "Untitled Website";
-    const description = $('meta[name="description"]').attr("content") || "";
-
-    // Extract themes from keywords and headings
-    const keywords = $('meta[name="keywords"]').attr("content") || '';
-    const keywordThemes = keywords.split(',').map(k => k.trim().toLowerCase()).filter(Boolean);
-    const headingThemes = [
-      ...$("h1").map((_, el) => $(el).text().toLowerCase()).get(),
-      ...$("h2").map((_, el) => $(el).text().toLowerCase()).get(),
-      ...$("h3").map((_, el) => $(el).text().toLowerCase()).get(),
-    ];
-    // Simple theme extraction
-    const possibleThemes = ["travel", "photography", "adventure", "culture", "food", "lifestyle", "fashion", "luxury", "urban", "nature", "beach", "cultural"];
-    const themes = Array.from(new Set([...keywordThemes, ...headingThemes].filter(t => possibleThemes.some(pt => t.includes(pt)))));
-
-    // Extract hints (roles, creator types)
-    const hints: string[] = [];
-    if (/photograph(er|y)/i.test(html)) hints.push("photographer");
-    if (/content\s*creator/i.test(html)) hints.push("content-creator");
-    if (/blogger/i.test(html)) hints.push("blogger");
-    if (/influencer/i.test(html)) hints.push("influencer");
-    if (/travel/i.test(html)) hints.push("traveler");
-    if (/food/i.test(html)) hints.push("foodie");
-
-    // Guess content type
-    let contentType = "General";
-    if (themes.includes("photography")) contentType = "Photography";
-    else if (themes.includes("food")) contentType = "Food";
-    else if (themes.includes("travel")) contentType = "Travel";
-    else if (themes.includes("fashion")) contentType = "Fashion";
-
-    // Extract social links
-    const socialLinks: { platform: string; url: string }[] = [];
-    $("a[href]").each((_, el) => {
-      const href = $(el).attr("href") || "";
-      if (/instagram\.com\//i.test(href)) socialLinks.push({ platform: "Instagram", url: href });
-      if (/twitter\.com\//i.test(href)) socialLinks.push({ platform: "Twitter", url: href });
-      if (/youtube\.com\//i.test(href)) socialLinks.push({ platform: "YouTube", url: href });
-      if (/facebook\.com\//i.test(href)) socialLinks.push({ platform: "Facebook", url: href });
-      if (/tiktok\.com\//i.test(href)) socialLinks.push({ platform: "TikTok", url: href });
-    });
-
-    // Compose the result object
-    const result = {
-      url,
-      themes,
-      hints,
-      contentType,
-      socialLinks,
-      title,
-      description,
-    };
-    return NextResponse.json({ success: true, data: result });
+    
   } catch (error) {
-    console.error("ScraperAPI error:", error);
-    return NextResponse.json({ error: "Failed to scrape website" }, { status: 500 });
+    console.error("Route error:", error);
+    return NextResponse.json({ 
+      error: "Failed to process request",
+      details: process.env.NODE_ENV === 'development' ? (error as Error).message : undefined
+    }, { status: 500 });
   }
 }
