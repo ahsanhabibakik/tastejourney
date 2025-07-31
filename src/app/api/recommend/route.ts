@@ -475,6 +475,7 @@ export async function POST(request: NextRequest) {
       .slice(0, 3);
 
     // Enrich each destination with SerpApi data
+
     async function fetchSerpApi(type: string, q: string) {
       const url = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/serpapi?type=${type}&q=${encodeURIComponent(q)}`;
       try {
@@ -487,17 +488,63 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    async function fetchNumbeo(city: string) {
+      const url = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/cost-of-living?city=${encodeURIComponent(city)}`;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.data || null;
+      } catch {
+        return null;
+      }
+    }
+
+    async function fetchFlights(origin: string, destination: string, departureDate: string) {
+      const url = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/flights?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&departureDate=${encodeURIComponent(departureDate)}`;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.data || null;
+      } catch {
+        return null;
+      }
+    }
+
+    async function fetchHotels(cityCode: string, checkInDate: string, checkOutDate: string) {
+      const url = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/hotels?cityCode=${encodeURIComponent(cityCode)}&checkInDate=${encodeURIComponent(checkInDate)}&checkOutDate=${encodeURIComponent(checkOutDate)}`;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.data || null;
+      } catch {
+        return null;
+      }
+    }
+
+    // For demo, use static origin and dates; in production, use user input or geolocation
+    const staticOrigin = "JFK";
+    const staticDeparture = "2025-09-01";
+    const staticCheckIn = "2025-09-01";
+    const staticCheckOut = "2025-09-08";
+
     const recommendations = await Promise.all(topDestinations.map(async (dest) => {
-      // Compose queries
       const placeQuery = `${dest.name}, ${dest.country}`;
       const youtubeQuery = `${dest.name} travel vlog`;
       const factQuery = dest.name;
+      const city = dest.name;
+      // For Amadeus, you would need to map city/country to IATA code; here we use static for demo
+      const cityCode = dest.country === "Japan" ? "KYO" : dest.country === "Greece" ? "JTR" : dest.country === "Indonesia" ? "DPS" : dest.country === "Mexico" ? "CUN" : dest.country === "UAE" ? "DXB" : "";
 
-      // Fetch enrichment in parallel
-      const [maps, youtube, knowledgeGraph] = await Promise.all([
+      const [maps, youtube, knowledgeGraph, numbeo, flights, hotels] = await Promise.all([
         fetchSerpApi("maps", placeQuery),
         fetchSerpApi("youtube", youtubeQuery),
         fetchSerpApi("knowledge_graph", factQuery),
+        fetchNumbeo(city),
+        cityCode ? fetchFlights(staticOrigin, cityCode, staticDeparture) : null,
+        cityCode ? fetchHotels(cityCode, staticCheckIn, staticCheckOut) : null,
       ]);
 
       return {
@@ -527,10 +574,15 @@ export async function POST(request: NextRequest) {
           geoFit: Math.round(dest.geoFitScore * 100),
           total: Math.round((dest.totalScore || 0) * 100),
         },
-        serpapi: {
-          maps,
-          youtube,
-          knowledgeGraph,
+        enrichment: {
+          serpapi: {
+            maps,
+            youtube,
+            knowledgeGraph,
+          },
+          numbeo,
+          flights,
+          hotels,
         },
       };
     }));
