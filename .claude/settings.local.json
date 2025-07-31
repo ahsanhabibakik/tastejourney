@@ -6,7 +6,11 @@
       "Bash(git pull:*)",
       "Bash(git add:*)",
       "Bash(git push:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(taskkill:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": []
   }

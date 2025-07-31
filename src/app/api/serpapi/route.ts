@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
 
     if (!res.ok) {
       // Try to parse SerpApi's own error message, otherwise send raw text
-      let errBody: any;
+      let errBody: unknown;
       try {
         errBody = JSON.parse(text);
       } catch {
@@ -71,10 +71,10 @@ export async function GET(request: NextRequest) {
 
     const data = JSON.parse(text);
     return NextResponse.json({ success: true, data });
-  } catch (e: any) {
+  } catch (e) {
     console.error("Unexpected fetch error:", e);
     return NextResponse.json(
-      { error: e.message || "Unknown error" },
+      { error: e instanceof Error ? e.message : "Unknown error" },
       { status: 500 }
     );
   }

@@ -22,11 +22,16 @@ export async function POST(request: NextRequest) {
     console.log(`Starting analysis for: ${url}`);
     
     try {
-      // Use the enhanced scraper
-      const analysis = await analyzeWebsite(url);
+      // Use the enhanced scraper with timeout
+      const analysisPromise = analyzeWebsite(url);
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Analysis timeout')), 30000) // 30 second timeout
+      );
+      
+      const analysis = await Promise.race([analysisPromise, timeoutPromise]) as Awaited<ReturnType<typeof analyzeWebsite>>;
       
       // Transform social links to the expected format for the frontend
-      const socialLinks = analysis.socialLinks.map(link => {
+      const socialLinks = analysis.socialLinks.map((link: string) => {
         let platform = 'Unknown';
         if (link.includes('instagram.com')) platform = 'Instagram';
         else if (link.includes('twitter.com') || link.includes('x.com')) platform = 'Twitter';
@@ -57,7 +62,7 @@ export async function POST(request: NextRequest) {
         brands: analysis.brands || [],
         collaborations: analysis.collaborations || [],
         regionBias: analysis.regionBias || [],
-        contactInfo: (analysis.contactInfo || []).filter(contact => 
+        contactInfo: (analysis.contactInfo || []).filter((contact: string) => 
           !contact.includes('@') || contact.split('@').length === 2 // Basic email validation
         ).slice(0, 3), // Limit contact info for privacy
         extractedAt: new Date().toISOString(),

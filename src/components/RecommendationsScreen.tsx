@@ -82,7 +82,7 @@ const RecommendationsScreen: React.FC = () => {
 
   // Accept recommendations and Qloo enrichment from props or context
   // For demo, fallback to mock data if not provided
-  const recommendationsData = (typeof window !== 'undefined' && window.recommendationsResult) || {};
+  const recommendationsData = (typeof window !== 'undefined' && (window as typeof window & { recommendationsResult?: any }).recommendationsResult) || {};
   const recommendations: Recommendation[] = recommendationsData.recommendations || [
     {
       id: 1,

@@ -480,44 +480,29 @@ const ChatInterface: React.FC = () => {
   }
 
   return (
-    <div className="w-full h-screen flex flex-col bg-gradient-to-br from-background via-background to-muted/10">
-      {/* Header */}
-      <div className="flex-shrink-0 bg-background/95 backdrop-blur-sm border-b border-border/50 px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">
-            🌍 TasteJourney AI
-          </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-            Personalized travel recommendations for content creators
-          </p>
-        </div>
-      </div>
-
+    <div className="flex flex-col h-[calc(100vh-73px)]">
       {/* Chat Messages Area */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6">
-          <div className="space-y-4 sm:space-y-6">
+      <div className="flex-1 overflow-y-auto bg-background">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+          <div className="space-y-4">
             {messages.map((message) => (
               <div
                 key={message.id}
                 className={`flex ${
                   message.isBot ? "justify-start" : "justify-end"
-                } w-full`}
+                }`}
               >
                 <div
                   className={`
-                    ${message.isBot 
-                      ? "max-w-[85%] sm:max-w-[80%] lg:max-w-[75%] xl:max-w-[70%]" 
-                      : "max-w-[75%] sm:max-w-[65%] lg:max-w-[55%]"
-                    }
-                    px-3 sm:px-4 lg:px-5 py-3 sm:py-4 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md
+                    max-w-[80%] sm:max-w-[70%] lg:max-w-[60%]
+                    px-4 py-3 rounded-xl
                     ${message.isBot
-                      ? "bg-card text-card-foreground border border-border/50"
-                      : "bg-primary text-primary-foreground shadow-primary/25"
+                      ? "bg-muted"
+                      : "bg-primary text-primary-foreground"
                     }
                   `}
                 >
-                  <p className="text-sm sm:text-base leading-relaxed whitespace-pre-wrap break-words">
+                  <p className="text-sm leading-relaxed">
                     {message.text}
                   </p>
 
@@ -537,66 +522,43 @@ const ChatInterface: React.FC = () => {
 
                 {message.component === "questions" &&
                   chatState === "questions" && (
-                    <div className="mt-4 sm:mt-6 w-full">
+                    <div className="mt-4 w-full">
                       {/* Progress Bar */}
-                      <div className="flex items-center justify-between mb-4 sm:mb-6">
-                        <div className="flex items-center flex-1">
-                          {questions.map((q, idx) => (
-                            <div
-                              key={q.id}
-                              className={`h-2 sm:h-3 rounded-full mx-0.5 sm:mx-1 transition-all duration-500 ${
-                                idx <= currentQuestionIndex
-                                  ? "bg-primary w-6 sm:w-8 lg:w-10"
-                                  : "bg-muted w-3 sm:w-4 lg:w-5"
-                              }`}
-                            ></div>
-                          ))}
+                      <div className="flex items-center gap-2 mb-4">
+                        <div className="flex-1 bg-muted rounded-full h-2">
+                          <div 
+                            className="bg-primary h-full rounded-full transition-all duration-300"
+                            style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
+                          />
                         </div>
-                        <span className="ml-3 text-xs sm:text-sm text-muted-foreground font-medium">
-                          {currentQuestionIndex + 1} / {questions.length}
+                        <span className="text-xs text-muted-foreground">
+                          {currentQuestionIndex + 1}/{questions.length}
                         </span>
                       </div>
                       
-                      {/* Question Card */}
-                      <div className="bg-gradient-to-r from-card to-card/80 backdrop-blur-sm border border-border/50 shadow-lg rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 mb-4 sm:mb-6 animate-fade-in">
-                        <div className="flex items-start gap-3 sm:gap-4">
-                          <span className="text-2xl sm:text-3xl lg:text-4xl flex-shrink-0">
+                      {/* Current Question */}
+                      <div className="bg-background border border-border rounded-lg p-4 mb-4">
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl">
                             {questions[currentQuestionIndex].icon}
                           </span>
-                          <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-base sm:text-lg lg:text-xl text-foreground break-words">
-                              {questions[currentQuestionIndex].text}
-                            </h3>
-                          </div>
+                          <h3 className="font-medium text-base">
+                            {questions[currentQuestionIndex].text}
+                          </h3>
                         </div>
                       </div>
                       
-                      {/* Options Grid */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                      {/* Options */}
+                      <div className="space-y-2">
                         {questions[currentQuestionIndex].options.map(
                           (option, index) => (
                             <Button
                               key={index}
-                              variant="outline"
-                              size="sm"
-                              className={`
-                                w-full justify-start text-left p-3 sm:p-4 h-auto min-h-[48px] sm:min-h-[56px]
-                                transition-all duration-300 hover:scale-[1.02] hover:shadow-md
-                                ${userAnswers[questions[currentQuestionIndex].id] === option
-                                  ? "border-primary bg-primary/10 text-primary font-semibold shadow-md scale-[1.02]"
-                                  : "hover:border-primary/50 hover:bg-primary/5"
-                                }
-                              `}
+                              variant={userAnswers[questions[currentQuestionIndex].id] === option ? "default" : "outline"}
+                              className="w-full justify-start text-left"
                               onClick={() => handleQuestionAnswer(option)}
                             >
-                              <div className="flex items-center gap-2 sm:gap-3 w-full">
-                                <span className="text-base sm:text-lg flex-shrink-0">
-                                  {userAnswers[questions[currentQuestionIndex].id] === option ? "✅" : "⚪"}
-                                </span>
-                                <span className="text-sm sm:text-base break-words flex-1">
-                                  {option}
-                                </span>
-                              </div>
+                              {option}
                             </Button>
                           )
                         )}
@@ -607,150 +569,66 @@ const ChatInterface: React.FC = () => {
 
                 {message.component === "recommendations" &&
                   chatState === "recommendations" && recommendations?.recommendations && (
-                    <div className="mt-4 sm:mt-6 w-full">
-                      <div className="mb-4 sm:mb-6">
-                        <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">
-                          🎯 Your Top Destinations
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          Optimized for content creation and monetization
-                        </p>
-                      </div>
+                    <div className="mt-4 w-full">
+                      <h3 className="text-lg font-semibold mb-4">
+                        Your Recommended Destinations
+                      </h3>
                       
-                      {/* Desktop Layout: Grid */}
-                      <div className="hidden lg:grid lg:grid-cols-3 gap-4 xl:gap-6">
+                      {/* Responsive Grid */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {recommendations.recommendations.map((rec: Recommendation, i: number) => (
                           <div
                             key={i}
-                            className="bg-card border border-border/50 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02] overflow-hidden"
+                            className="bg-card border border-border rounded-lg overflow-hidden"
                           >
                             {rec.image && (
-                              <div className="aspect-video overflow-hidden">
-                                <img 
-                                  src={rec.image} 
-                                  alt={rec.destination} 
-                                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-110" 
-                                />
-                              </div>
+                              <img 
+                                src={rec.image} 
+                                alt={rec.destination} 
+                                className="w-full h-40 object-cover" 
+                              />
                             )}
-                            <div className="p-4 xl:p-5">
-                              <h4 className="font-bold text-lg xl:text-xl mb-2 text-foreground">
+                            <div className="p-4">
+                              <h4 className="font-semibold text-base mb-2">
                                 {rec.destination}
                               </h4>
                               
                               {rec.highlights && rec.highlights.length > 0 && (
-                                <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                                <p className="text-sm text-muted-foreground mb-3">
                                   {rec.highlights.join(', ')}
                                 </p>
                               )}
                               
-                              <div className="space-y-2 mb-4">
+                              <div className="space-y-1 text-sm">
                                 {rec.budget?.range && (
-                                  <div className="flex items-center gap-2 text-sm">
-                                    <span className="text-green-600">💰</span>
-                                    <span className="font-medium">Budget:</span>
-                                    <span className="text-muted-foreground">{rec.budget.range}</span>
+                                  <div>
+                                    <span className="font-medium">Budget:</span> {rec.budget.range}
                                   </div>
                                 )}
                                 {rec.bestMonths && rec.bestMonths.length > 0 && (
-                                  <div className="flex items-center gap-2 text-sm">
-                                    <span className="text-blue-600">📅</span>
-                                    <span className="font-medium">Best Time:</span>
-                                    <span className="text-muted-foreground">{rec.bestMonths.join(', ')}</span>
+                                  <div>
+                                    <span className="font-medium">Best Time:</span> {rec.bestMonths.join(', ')}
                                   </div>
                                 )}
                                 {rec.engagement?.potential && (
-                                  <div className="flex items-center gap-2 text-sm">
-                                    <span className="text-purple-600">📈</span>
-                                    <span className="font-medium">Engagement:</span>
-                                    <span className="text-muted-foreground">{rec.engagement.potential}</span>
+                                  <div>
+                                    <span className="font-medium">Engagement:</span> {rec.engagement.potential}
                                   </div>
                                 )}
                               </div>
                               
                               {rec.tags && rec.tags.length > 0 && (
-                                <div className="flex flex-wrap gap-1">
-                                  {rec.tags.slice(0, 4).map((tag: string) => (
+                                <div className="flex flex-wrap gap-1 mt-3">
+                                  {rec.tags.slice(0, 3).map((tag: string) => (
                                     <span key={tag} className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">
                                       {tag}
                                     </span>
                                   ))}
-                                  {rec.tags.length > 4 && (
-                                    <span className="bg-muted text-muted-foreground text-xs px-2 py-1 rounded-full">
-                                      +{rec.tags.length - 4}
-                                    </span>
-                                  )}
                                 </div>
                               )}
                             </div>
                           </div>
                         ))}
-                      </div>
-                      
-                      {/* Mobile/Tablet Layout: Horizontal Scroll */}
-                      <div className="lg:hidden overflow-x-auto">
-                        <div className="flex space-x-4 px-1 py-2">
-                          {recommendations.recommendations.map((rec: Recommendation, i: number) => (
-                            <div
-                              key={i}
-                              className="min-w-[280px] sm:min-w-[320px] bg-card border border-border/50 rounded-xl shadow-sm overflow-hidden flex-shrink-0"
-                            >
-                              {rec.image && (
-                                <div className="aspect-video overflow-hidden">
-                                  <img 
-                                    src={rec.image} 
-                                    alt={rec.destination} 
-                                    className="w-full h-full object-cover" 
-                                  />
-                                </div>
-                              )}
-                              <div className="p-4">
-                                <h4 className="font-bold text-base sm:text-lg mb-2 text-foreground">
-                                  {rec.destination}
-                                </h4>
-                                
-                                {rec.highlights && rec.highlights.length > 0 && (
-                                  <p className="text-xs sm:text-sm text-muted-foreground mb-3 line-clamp-2">
-                                    {rec.highlights.join(', ')}
-                                  </p>
-                                )}
-                                
-                                <div className="space-y-1 sm:space-y-2 mb-3">
-                                  {rec.budget?.range && (
-                                    <div className="text-xs sm:text-sm">
-                                      <span className="font-medium">Budget:</span> {rec.budget.range}
-                                    </div>
-                                  )}
-                                  {rec.bestMonths && rec.bestMonths.length > 0 && (
-                                    <div className="text-xs sm:text-sm">
-                                      <span className="font-medium">Best Time:</span> {rec.bestMonths.join(', ')}
-                                    </div>
-                                  )}
-                                  {rec.engagement?.potential && (
-                                    <div className="text-xs sm:text-sm">
-                                      <span className="font-medium">Engagement:</span> {rec.engagement.potential}
-                                    </div>
-                                  )}
-                                </div>
-                                
-                                {rec.tags && rec.tags.length > 0 && (
-                                  <div className="flex flex-wrap gap-1">
-                                    {rec.tags.slice(0, 3).map((tag: string) => (
-                                      <span key={tag} className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">
-                                        {tag}
-                                      </span>
-                                    ))}
-                                    {rec.tags.length > 3 && (
-                                      <span className="bg-muted text-muted-foreground text-xs px-2 py-1 rounded-full">
-                                        +{rec.tags.length - 3}
-                                      </span>
-                                    )}
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
                       </div>
                     </div>
                   )}
@@ -759,8 +637,8 @@ const ChatInterface: React.FC = () => {
           ))}
 
             {isTyping && (
-              <div className="flex justify-start w-full">
-                <div className="max-w-[75%] sm:max-w-[65%] lg:max-w-[55%] px-3 sm:px-4 lg:px-5 py-3 sm:py-4 rounded-2xl bg-muted/80 backdrop-blur-sm border border-border/30">
+              <div className="flex justify-start">
+                <div className="max-w-[80%] sm:max-w-[70%] lg:max-w-[60%] px-4 py-3 rounded-xl bg-muted">
                   <TypingIndicator />
                 </div>
               </div>
@@ -772,35 +650,34 @@ const ChatInterface: React.FC = () => {
 
       {/* Bottom Input Area */}
       {chatState === "recommendations" && (
-        <div className="flex-shrink-0 bg-background/95 backdrop-blur-sm border-t border-border/50">
-          <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
+        <div className="border-t bg-background">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6">
             {!reportSent ? (
-              <div className="py-4 sm:py-6 space-y-4">
+              <div className="py-4 space-y-4">
                 {/* PDF Report Section */}
-                <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-4 sm:p-5">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-sm sm:text-base text-foreground mb-1">
-                        📄 Get Detailed PDF Report
+                <div className="bg-muted/50 rounded-lg p-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <div className="flex-1">
+                      <h4 className="font-medium text-sm mb-1">
+                        Get PDF Report
                       </h4>
-                      <p className="text-xs sm:text-sm text-muted-foreground">
-                        Receive a comprehensive analysis with budget breakdowns and collaboration contacts
+                      <p className="text-xs text-muted-foreground">
+                        Receive detailed analysis via email
                       </p>
                     </div>
-                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 sm:flex-shrink-0">
+                    <div className="flex gap-2">
                       <Input
                         value={email}
                         onChange={e => setEmail(e.target.value)}
-                        placeholder="Enter your email"
-                        className="w-full sm:w-64 h-10 sm:h-11"
+                        placeholder="Your email"
+                        className="w-full sm:w-48"
                         type="email"
                       />
                       <Button 
                         onClick={handleSendReport} 
                         disabled={!email}
-                        className="h-10 sm:h-11 px-6 sm:px-8 whitespace-nowrap"
                       >
-                        Send Report
+                        Send
                       </Button>
                     </div>
                   </div>
@@ -812,25 +689,25 @@ const ChatInterface: React.FC = () => {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    placeholder="Ask me anything about these recommendations..."
-                    className="w-full h-12 sm:h-14 pr-12 sm:pr-16 pl-4 sm:pl-6 text-sm sm:text-base rounded-xl border-border/50 bg-background/50 backdrop-blur-sm focus:bg-background transition-all"
+                    placeholder="Ask about these recommendations..."
+                    className="w-full pr-12"
                   />
                   <Button
                     onClick={handleSendMessage}
                     disabled={!inputValue.trim()}
                     size="icon"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 sm:h-10 sm:w-10 rounded-lg"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8"
                   >
-                    <Send className="h-4 w-4 sm:h-5 sm:w-5" />
+                    <Send className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
             ) : (
-              <div className="py-6 sm:py-8 text-center">
-                <div className="inline-flex items-center gap-2 px-4 py-3 bg-green-50 text-green-700 rounded-xl border border-green-200">
-                  <span className="text-lg">✅</span>
-                  <span className="font-semibold text-sm sm:text-base">
-                    PDF report sent! Check your email.
+              <div className="py-6 text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 text-green-600 rounded-lg">
+                  <span>✅</span>
+                  <span className="text-sm font-medium">
+                    Report sent! Check your email.
                   </span>
                 </div>
               </div>
