@@ -68,12 +68,17 @@ async function fetchWithCheerio(url: string): Promise<string | null> {
 // Fallback scraper using Puppeteer-like approach
 async function fetchWithJSDOM(url: string): Promise<string | null> {
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 20000);
+    
     const res = await fetch(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
       },
-      timeout: 20000
+      signal: controller.signal
     });
+    
+    clearTimeout(timeoutId);
     
     if (!res.ok) return null;
     const html = await res.text();

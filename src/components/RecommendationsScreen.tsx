@@ -82,7 +82,7 @@ const RecommendationsScreen: React.FC = () => {
 
   // Accept recommendations and Qloo enrichment from props or context
   // For demo, fallback to mock data if not provided
-  const recommendationsData = (typeof window !== 'undefined' && (window as typeof window & { recommendationsResult?: any }).recommendationsResult) || {};
+  const recommendationsData = (typeof window !== 'undefined' && (window as typeof window & { recommendationsResult?: { recommendations?: Recommendation[] } }).recommendationsResult) || {};
   const recommendations: Recommendation[] = recommendationsData.recommendations || [
     {
       id: 1,
@@ -276,32 +276,12 @@ const RecommendationsScreen: React.FC = () => {
     return rec.tags.some((tag) => tag.toLowerCase().includes(filterBy));
   });
 
-  // Qloo enrichment
-  const qloo = recommendationsData.qloo || {};
+  // Qloo enrichment - removed for now
+  // const qloo = recommendationsData.qloo || {};
 
   return (
     <div className="mt-6 space-y-8">
-      {/* Qloo Enrichment Section */}
-      {qloo && (
-        <div className="mb-6 p-4 bg-primary/10 rounded-lg border border-primary/30">
-          <h4 className="text-xl font-bold text-primary mb-2">Your AI Taste Profile</h4>
-          {qloo.confidence && (
-            <div className="mb-2 text-sm text-muted-foreground">
-              <strong>Confidence:</strong> {(qloo.confidence * 100).toFixed(1)}%
-            </div>
-          )}
-          {qloo.culturalAffinities && qloo.culturalAffinities.length > 0 && (
-            <div className="mb-2 text-sm text-muted-foreground">
-              <strong>Cultural Affinities:</strong> {qloo.culturalAffinities.join(", ")}
-            </div>
-          )}
-          {qloo.personalityTraits && qloo.personalityTraits.length > 0 && (
-            <div className="mb-2 text-sm text-muted-foreground">
-              <strong>Personality Traits:</strong> {qloo.personalityTraits.join(", ")}
-            </div>
-          )}
-        </div>
-      )}
+      {/* Qloo Enrichment Section - Commented out for now */}
       <div className="text-center pb-6 border-b border-border">
         <div className="flex items-center justify-center mb-4">
           <div className="relative">

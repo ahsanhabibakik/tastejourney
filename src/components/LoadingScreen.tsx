@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Loader2 } from "lucide-react"; // fallback spinner, replace with your Spinner if available
 
 export function LoadingScreen() {
   const [message, setMessage] = useState<string>("");
-  const prompts = [
-    "🔍 Analyzing your website’s content and audience…",
+  
+  const prompts = useMemo(() => [
+    "🔍 Analyzing your website's content and audience…",
     "📊 Crunching engagement numbers and themes…",
     "🎯 Mapping your creator taste profile…",
     "✈️ Calculating your top monetizable destinations…",
     "🛠️ Putting together your custom travel report…",
-  ];
+  ], []);
 
   useEffect(() => {
     setMessage(prompts[Math.floor(Math.random() * prompts.length)]);
-  }, []);
+  }, [prompts]);
 
   return (
     <div className="flex flex-col items-center justify-center py-16 space-y-4">

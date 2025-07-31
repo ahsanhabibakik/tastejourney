@@ -272,6 +272,7 @@ function calculateConfidence(themes: string[], hints: string[]): number {
 
 // Real Qloo API integration
 // See Qloo API docs: https://docs.qloo.com/
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
   // Try different potential endpoints for Qloo hackathon API
   const endpoints = [
@@ -355,6 +356,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Prepare Qloo request
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const qlooRequest: QlooRequest = {
       themes,
       hints,
@@ -363,19 +365,20 @@ export async function POST(request: NextRequest) {
       demographics: demographics || {},
     };
 
-    let qlooResponse: QlooResponse;
+    const qlooResponse: QlooResponse = (() => {
     
-    // For hackathon demo, use enhanced mock system (Qloo API endpoints unavailable)
-    console.log("Using enhanced mock taste vector system for demo");
-    const mockVector = generateMockTasteVector(themes, hints, contentType);
-    qlooResponse = {
-      tasteVector: mockVector,
-      recommendations: generateSmartRecommendations(mockVector, themes),
-      confidence: calculateConfidence(themes, hints),
-      culturalAffinities: generateCulturalAffinities(mockVector),
-      personalityTraits: generatePersonalityTraits(mockVector),
-      processingTime: "Enhanced AI analysis"
-    };
+      // For hackathon demo, use enhanced mock system (Qloo API endpoints unavailable)
+      console.log("Using enhanced mock taste vector system for demo");
+      const mockVector = generateMockTasteVector(themes, hints, contentType);
+      return {
+        tasteVector: mockVector,
+        recommendations: generateSmartRecommendations(mockVector, themes),
+        confidence: calculateConfidence(themes, hints),
+        culturalAffinities: generateCulturalAffinities(mockVector),
+        personalityTraits: generatePersonalityTraits(mockVector),
+        processingTime: "Enhanced AI analysis"
+      };
+    })();
 
     // Uncomment below to try real Qloo API when available
     /*
