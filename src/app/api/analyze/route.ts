@@ -1,206 +1,38 @@
-import { NextRequest, NextResponse } from "next/server";
-import { chromium } from "playwright";
-import * as cheerio from "cheerio";
-
-interface WebsiteAnalysis {
-  url: string;
-  title: string;
-  description: string;
-  themes: string[];
-  hints: string[];
-  regionBias: string[];
-  socialLinks: {
-    platform: string;
-    url: string;
-    followers?: string;
-  }[];
-  contentType: string;
-  targetAudience: string[];
-  postingFrequency: string;
-  topPerformingContent: string;
-  audienceLocation: string;
-  preferredDestinations: string[];
-  extractedKeywords: string[];
-  ogImage?: string;
-  favicon?: string;
-  language: string;
-  lastUpdated?: string;
+import { NextRequest, NextResponse } from 'next/server';
+import { analyzeWebsite } from '@/lib/scraper';
 }
+    const { url } = await request.json();
 
-// Helper function to extract themes from content
-function extractThemes($: cheerio.CheerioAPI): string[] {
-  const themes = new Set<string>();
+    if (!url) {
+      return NextResponse.json({ error: 'URL required' }, { status: 400 });
+    }
 
-  // Look for common travel/lifestyle keywords
-  const travelKeywords = [
-    "travel",
-    "adventure",
-    "food",
-    "culture",
-    "photography",
-    "lifestyle",
-    "luxury",
-    "budget",
-    "backpack",
-    "solo",
-    "family",
-    "couple",
-    "beach",
-    "mountain",
-    "city",
-    "nature",
-    "urban",
-    "rural",
-    "hotel",
-    "restaurant",
-    "museum",
-    "tour",
-    "guide",
-    "tips",
-  ];
+    const analysis = await analyzeWebsite(url);
+    return NextResponse.json(analysis);
+  } catch (error) {
+    return NextResponse.json({ error: 'Analysis failed' }, { status: 500 });
+  }
+}
 
   const content = $("body").text().toLowerCase();
-  const metaKeywords =
-    $('meta[name="keywords"]').attr("content")?.toLowerCase() || "";
-  const title = $("title").text().toLowerCase();
-  const description =
-    $('meta[name="description"]').attr("content")?.toLowerCase() || "";
 
-  const allText = `${content} ${metaKeywords} ${title} ${description}`;
+import { NextRequest, NextResponse } from 'next/server';
+import { analyzeWebsite } from '@/lib/scraper';
 
-  travelKeywords.forEach((keyword) => {
-    if (allText.includes(keyword)) {
-      themes.add(keyword);
+export async function POST(request: NextRequest) {
+  try {
+    const { url } = await request.json();
+
+    if (!url) {
+      return NextResponse.json({ error: 'URL required' }, { status: 400 });
     }
-  });
 
-  // Look for specific content themes in headings
-  $("h1, h2, h3").each((_, element) => {
-    const heading = $(element).text().toLowerCase();
-    if (heading.includes("photo")) themes.add("photography");
-    if (heading.includes("food") || heading.includes("recipe"))
-      themes.add("food");
-    if (heading.includes("travel") || heading.includes("journey"))
-      themes.add("travel");
-    if (heading.includes("adventure")) themes.add("adventure");
-    if (heading.includes("culture")) themes.add("culture");
-  });
-
-  return Array.from(themes).slice(0, 8); // Limit to top 8 themes
+    const analysis = await analyzeWebsite(url);
+    return NextResponse.json(analysis);
+  } catch (error) {
+    return NextResponse.json({ error: 'Analysis failed' }, { status: 500 });
+  }
 }
-
-// Helper function to extract content hints
-function extractHints($: cheerio.CheerioAPI): string[] {
-  const hints = new Set<string>();
-
-  // Look for portfolio/gallery indicators
-  if ($("img").length > 10) hints.add("visual-content-creator");
-  if ($(".gallery, .portfolio, #gallery, #portfolio").length > 0)
-    hints.add("photographer");
-
-  // Look for blog indicators
-  if ($("article, .post, .blog-post").length > 0) hints.add("blogger");
-
-  // Look for social media links
-  const socialLinks = $(
-    'a[href*="instagram"], a[href*="youtube"], a[href*="tiktok"]'
-  );
-  if (socialLinks.length > 0) hints.add("social-media-creator");
-
-  // Look for business indicators
-  if ($('a[href*="contact"], .contact, #contact').length > 0)
-    hints.add("professional");
-  if ($('a[href*="hire"], a[href*="booking"]').length > 0)
-    hints.add("service-provider");
-
-  // Look for specific content types
-  if ($("video, .video").length > 0) hints.add("video-creator");
-  if ($(".recipe, .cooking").length > 0) hints.add("food-blogger");
-
-  return Array.from(hints);
-}
-
-// Helper function to extract region bias
-function extractRegions($: cheerio.CheerioAPI): string[] {
-  const regions = new Set<string>();
-  const content = $("body").text().toLowerCase();
-
-  const regionKeywords = {
-    europe: [
-      "europe",
-      "european",
-      "paris",
-      "london",
-      "rome",
-      "barcelona",
-      "amsterdam",
-    ],
-    asia: ["asia", "asian", "japan", "china", "thailand", "singapore", "korea"],
-    "north-america": [
-      "america",
-      "usa",
-      "canada",
-      "mexico",
-      "new york",
-      "california",
-    ],
-    "south-america": ["brazil", "argentina", "peru", "colombia", "chile"],
-    africa: ["africa", "south africa", "morocco", "egypt", "kenya"],
-    oceania: ["australia", "new zealand", "fiji", "tahiti"],
-  };
-
-  Object.entries(regionKeywords).forEach(([region, keywords]) => {
-    if (keywords.some((keyword) => content.includes(keyword))) {
-      regions.add(region);
-    }
-  });
-
-  return Array.from(regions);
-}
-
-// Helper function to extract social media links
-function extractSocialLinks(
-  $: cheerio.CheerioAPI
-): { platform: string; url: string; followers?: string }[] {
-  const socialLinks: { platform: string; url: string; followers?: string }[] =
-    [];
-
-  const socialPlatforms = {
-    "instagram.com": "Instagram",
-    "youtube.com": "YouTube",
-    "tiktok.com": "TikTok",
-    "twitter.com": "Twitter",
-    "x.com": "X",
-    "facebook.com": "Facebook",
-    "linkedin.com": "LinkedIn",
-    "pinterest.com": "Pinterest",
-  };
-
-  $("a[href]").each((_, element) => {
-    const href = $(element).attr("href");
-    if (href) {
-      Object.entries(socialPlatforms).forEach(([domain, platform]) => {
-        if (href.includes(domain)) {
-          socialLinks.push({
-            platform,
-            url: href,
-            followers: undefined, // Could be extracted with more sophisticated scraping
-          });
-        }
-      });
-    }
-  });
-
-  // Remove duplicates
-  const uniqueLinks = socialLinks.filter(
-    (link, index, self) =>
-      index === self.findIndex((l) => l.platform === link.platform)
-  );
-
-  return uniqueLinks;
-}
-
-// Helper function to determine content type
 function determineContentType($: cheerio.CheerioAPI, themes: string[]): string {
   if (themes.includes("photography") && $("img").length > 15)
     return "Photography";
@@ -366,15 +198,16 @@ export async function POST(request: NextRequest) {
     const { url } = await request.json();
 
     if (!url) {
-      return NextResponse.json({ error: "URL is required" }, { status: 400 });
+      return NextResponse.json({ error: 'URL required' }, { status: 400 });
     }
 
-    // Validate URL format
-    try {
-      new URL(url);
-    } catch {
-      return NextResponse.json(
-        { error: "Invalid URL format" },
+    const analysis = await analyzeWebsite(url);
+    return NextResponse.json(analysis);
+  } catch (error) {
+    return NextResponse.json({ error: 'Analysis failed' }, { status: 500 });
+  }
+}
+
         { status: 400 }
       );
     }
