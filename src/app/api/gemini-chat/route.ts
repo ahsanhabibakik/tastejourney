@@ -3,13 +3,57 @@ import { NextRequest, NextResponse } from 'next/server';
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyAv_4-Q6LU21xSko8g9XBGAu1CeqNmB8Ew';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
+interface WebsiteData {
+  url: string;
+  themes: string[];
+  hints: string[];
+  contentType: string;
+  socialLinks: { platform: string; url: string }[];
+  title: string;
+  description: string;
+  keywords?: string[];
+  images?: string[];
+  videoLinks?: string[];
+  language?: string;
+  location?: string;
+  brands?: string[];
+  collaborations?: string[];
+  regionBias?: string[];
+  extractedAt?: string;
+  scrapingMethods?: string[];
+  fallbackUsed?: boolean;
+}
+
+interface Recommendation {
+  id: number;
+  destination: string;
+  country: string;
+  matchScore: number;
+  image: string;
+  highlights: string[];
+  budget: {
+    range: string;
+    breakdown: string;
+    currency: string;
+  };
+}
+
+interface UserAnswers {
+  budget?: string;
+  duration?: string;
+  style?: string;
+  contentFocus?: string;
+  climate?: string;
+  [key: string]: string | undefined;
+}
+
 interface GeminiRequest {
   message: string;
   context?: {
     chatState?: string;
-    websiteData?: any;
-    recommendations?: any[];
-    userAnswers?: any;
+    websiteData?: WebsiteData;
+    recommendations?: Recommendation[];
+    userAnswers?: UserAnswers;
   };
 }
 
@@ -24,7 +68,7 @@ interface GeminiResponse {
 }
 
 // Enhanced system prompt for travel assistant
-const getSystemPrompt = (context?: any) => {
+const getSystemPrompt = (context?: GeminiRequest['context']) => {
   const basePrompt = `You are an expert AI travel companion specializing in content creator travel recommendations. You provide personalized, actionable advice for travel content creators looking to monetize their journeys.
 
 Key capabilities:
