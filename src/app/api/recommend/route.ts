@@ -458,15 +458,10 @@ export async function POST(request: NextRequest) {
     const body: RecommendationRequest = await request.json();
     const { tasteVector, userPreferences, websiteData } = body;
 
-    // Validate required fields
     if (!tasteVector || !userPreferences || !websiteData) {
-      return NextResponse.json(
-        {
-          error:
-            "Missing required fields: tasteVector, userPreferences, websiteData",
-        },
-        { status: 400 }
-      );
+      return NextResponse.json({
+        error: "Missing required fields: tasteVector, userPreferences, websiteData",
+      }, { status: 400 });
     }
 
     // Score all destinations
@@ -479,35 +474,65 @@ export async function POST(request: NextRequest) {
       .sort((a, b) => (b.totalScore || 0) - (a.totalScore || 0))
       .slice(0, 3);
 
-    // Format response
-    const recommendations = topDestinations.map((dest) => ({
-      id: dest.id,
-      destination: `${dest.name}, ${dest.country}`,
-      matchScore: Math.round((dest.totalScore || 0) * 100),
-      image: dest.image,
-      highlights: dest.highlights,
-      budget: {
-        range: `$${dest.avgCost - 300} - $${dest.avgCost + 300}`,
-        breakdown: "7 days including flights, accommodation & activities",
-        currency: "USD",
-      },
-      engagement: dest.engagement,
-      collaborations: dest.brands,
-      creators: dest.activeCreators,
-      bestMonths: dest.bestMonths,
-      travelTime: dest.travelTime,
-      visaRequired: dest.visaRequired,
-      safetyRating: dest.safetyRating,
-      tags: dest.tags,
-      // Include scoring breakdown for debugging
-      scoreBreakdown: {
-        qlooAffinity: Math.round(dest.qlooAffinityScore * 100),
-        creatorDensity: Math.round(dest.creatorDensity * 100),
-        brandFit: Math.round(dest.brandFitScore * 100),
-        budgetMatch: Math.round(dest.budgetFitScore * 100),
-        geoFit: Math.round(dest.geoFitScore * 100),
-        total: Math.round((dest.totalScore || 0) * 100),
-      },
+    // Enrich each destination with SerpApi data
+    async function fetchSerpApi(type: string, q: string) {
+      const url = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/serpapi?type=${type}&q=${encodeURIComponent(q)}`;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.data || null;
+      } catch {
+        return null;
+      }
+    }
+
+    const recommendations = await Promise.all(topDestinations.map(async (dest) => {
+      // Compose queries
+      const placeQuery = `${dest.name}, ${dest.country}`;
+      const youtubeQuery = `${dest.name} travel vlog`;
+      const factQuery = dest.name;
+
+      // Fetch enrichment in parallel
+      const [maps, youtube, knowledgeGraph] = await Promise.all([
+        fetchSerpApi("maps", placeQuery),
+        fetchSerpApi("youtube", youtubeQuery),
+        fetchSerpApi("knowledge_graph", factQuery),
+      ]);
+
+      return {
+        id: dest.id,
+        destination: `${dest.name}, ${dest.country}`,
+        matchScore: Math.round((dest.totalScore || 0) * 100),
+        image: dest.image,
+        highlights: dest.highlights,
+        budget: {
+          range: `$${dest.avgCost - 300} - $${dest.avgCost + 300}`,
+          breakdown: "7 days including flights, accommodation & activities",
+          currency: "USD",
+        },
+        engagement: dest.engagement,
+        collaborations: dest.brands,
+        creators: dest.activeCreators,
+        bestMonths: dest.bestMonths,
+        travelTime: dest.travelTime,
+        visaRequired: dest.visaRequired,
+        safetyRating: dest.safetyRating,
+        tags: dest.tags,
+        scoreBreakdown: {
+          qlooAffinity: Math.round(dest.qlooAffinityScore * 100),
+          creatorDensity: Math.round(dest.creatorDensity * 100),
+          brandFit: Math.round(dest.brandFitScore * 100),
+          budgetMatch: Math.round(dest.budgetFitScore * 100),
+          geoFit: Math.round(dest.geoFitScore * 100),
+          total: Math.round((dest.totalScore || 0) * 100),
+        },
+        serpapi: {
+          maps,
+          youtube,
+          knowledgeGraph,
+        },
+      };
     }));
 
     // Simulate processing time for realistic UX
@@ -522,12 +547,9 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Error generating recommendations:", error);
-    return NextResponse.json(
-      {
-        error: "Failed to generate recommendations",
-        details: error instanceof Error ? error.message : "Unknown error",
-      },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      error: "Failed to generate recommendations",
+      details: error instanceof Error ? error.message : "Unknown error",
+    }, { status: 500 });
   }
 }
