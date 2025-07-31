@@ -22,9 +22,14 @@ import {
   Hotel,
   Utensils,
   Filter,
-  SortDesc,
   ThumbsUp,
   MessageCircle,
+  Sparkles,
+  Award,
+  Zap,
+  Target,
+  Eye,
+  Layers,
 } from "lucide-react";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -280,185 +285,236 @@ const RecommendationsScreen: React.FC = () => {
   // const qloo = recommendationsData.qloo || {};
 
   return (
-    <div className="mt-6 space-y-8">
-      {/* Qloo Enrichment Section - Commented out for now */}
-      <div className="text-center pb-6 border-b border-border">
-        <div className="flex items-center justify-center mb-4">
+    <div className="mt-6 space-y-8 animate-fade-in">
+      {/* Enhanced Header Section */}
+      <div className="text-center pb-8 border-b border-border/30">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/5 via-primary/10 to-accent/5 p-8 mb-6">
+          <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]" />
           <div className="relative">
-            <Globe className="h-10 w-10 text-primary mr-3" />
-            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+            <div className="flex items-center justify-center mb-6">
+              <div className="relative group">
+                <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-500" />
+                <div className="relative bg-background border-2 border-primary/20 rounded-full p-4">
+                  <Globe className="h-12 w-12 text-primary" />
+                  <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center border-2 border-background">
+                    <Sparkles className="w-3 h-3 text-white" />
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="text-left">
-            <h3 className="text-3xl font-bold text-foreground">
-              Your Personalized Travel Recommendations
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              AI-powered insights for content creators
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
+              Your AI-Curated Travel Destinations
+            </h1>
+            <p className="text-xl text-muted-foreground mb-6 max-w-3xl mx-auto leading-relaxed">
+              Optimized for content creation, audience engagement, and monetization opportunities based on your unique profile
             </p>
+            <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Target className="h-4 w-4 text-primary" />
+                <span>Personalized Matching</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Zap className="h-4 w-4 text-primary" />
+                <span>Real-time Analysis</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Award className="h-4 w-4 text-primary" />
+                <span>Creator Optimized</span>
+              </div>
+            </div>
           </div>
         </div>
-        <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
-          Optimized for content creation, audience engagement, and monetization
-          opportunities based on your website analysis
-        </p>
 
-        {/* Stats Bar */}
-        <div className="flex justify-center items-center space-x-8 mt-6 p-4 bg-muted/30 rounded-lg">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-primary">
+        {/* Enhanced Stats Bar */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 text-center hover:shadow-md transition-all duration-200">
+            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-2">
+              <MapPin className="h-5 w-5 text-primary" />
+            </div>
+            <div className="text-2xl font-bold text-foreground">
               {recommendations.length}
             </div>
-            <div className="text-xs text-muted-foreground">Destinations</div>
+            <div className="text-sm text-muted-foreground">Destinations</div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-primary">
+          <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 text-center hover:shadow-md transition-all duration-200">
+            <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center mx-auto mb-2">
+              <Users className="h-5 w-5 text-blue-500" />
+            </div>
+            <div className="text-2xl font-bold text-foreground">
               {recommendations.reduce((sum, rec) => sum + rec.creators, 0)}+
             </div>
-            <div className="text-xs text-muted-foreground">Active Creators</div>
+            <div className="text-sm text-muted-foreground">Active Creators</div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-primary">
+          <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 text-center hover:shadow-md transition-all duration-200">
+            <div className="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center mx-auto mb-2">
+              <Briefcase className="h-5 w-5 text-purple-500" />
+            </div>
+            <div className="text-2xl font-bold text-foreground">
               {recommendations.reduce(
                 (sum, rec) => sum + rec.collaborations.length,
                 0
               )}
             </div>
-            <div className="text-xs text-muted-foreground">Brand Partners</div>
+            <div className="text-sm text-muted-foreground">Brand Partners</div>
+          </div>
+          <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 text-center hover:shadow-md transition-all duration-200">
+            <div className="w-10 h-10 bg-green-500/10 rounded-lg flex items-center justify-center mx-auto mb-2">
+              <Eye className="h-5 w-5 text-green-500" />
+            </div>
+            <div className="text-2xl font-bold text-foreground">
+              {Math.round(recommendations.reduce((sum, rec) => sum + rec.engagement.avgLikes, 0) / recommendations.length / 1000)}K
+            </div>
+            <div className="text-sm text-muted-foreground">Avg Engagement</div>
           </div>
         </div>
       </div>
 
-      {/* Filter and Sort Controls */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-4 bg-muted/20 rounded-lg">
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <Filter className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm font-medium">Filter:</span>
-            <select
-              value={filterBy}
-              onChange={(e) =>
-                setFilterBy(
-                  e.target.value as "all" | "budget" | "luxury" | "adventure"
-                )
-              }
-              className="bg-background border border-border rounded px-2 py-1 text-sm"
-            >
-              <option value="all">All Destinations</option>
-              <option value="budget">Budget Friendly</option>
-              <option value="luxury">Luxury</option>
-              <option value="adventure">Adventure</option>
-            </select>
+      {/* Enhanced Filter and Sort Controls */}
+      <div className="bg-background/50 backdrop-blur-sm border border-border/50 rounded-2xl p-6 shadow-sm">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                <Filter className="h-4 w-4 text-primary" />
+              </div>
+              <span className="font-semibold text-foreground">Filter Options</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {["all", "budget", "luxury", "adventure"].map((filter) => (
+                <Button
+                  key={filter}
+                  variant={filterBy === filter ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setFilterBy(filter as typeof filterBy)}
+                  className="capitalize transition-all duration-200 hover:scale-105"
+                >
+                  {filter === "all" ? "All Destinations" : filter}
+                </Button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <SortDesc className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm font-medium">Sort by:</span>
-            <select
-              value={sortBy}
-              onChange={(e) =>
-                setSortBy(e.target.value as "match" | "budget" | "engagement")
-              }
-              className="bg-background border border-border rounded px-2 py-1 text-sm"
-            >
-              <option value="match">Match Score</option>
-              <option value="budget">Budget</option>
-              <option value="engagement">Engagement</option>
-            </select>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                <Layers className="h-4 w-4 text-blue-500" />
+              </div>
+              <span className="font-semibold text-foreground">Sort By</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { key: "match", label: "Best Match" },
+                { key: "budget", label: "Budget" },
+                { key: "engagement", label: "Engagement" }
+              ].map(({ key, label }) => (
+                <Button
+                  key={key}
+                  variant={sortBy === key ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSortBy(key as typeof sortBy)}
+                  className="transition-all duration-200 hover:scale-105"
+                >
+                  {label}
+                </Button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Enhanced Recommendations Grid */}
-      <div className="space-y-8">
+      {/* Ultra-Enhanced Recommendations Grid */}
+      <div className="space-y-10">
         {filteredRecommendations.map((rec, index) => (
           <Card
             key={rec.id}
-            className={`overflow-hidden hover:shadow-2xl transition-all duration-500 border-l-4 border-l-primary transform hover:-translate-y-1 ${
-              selectedDestination === rec.id ? "ring-2 ring-primary/50" : ""
+            className={`group overflow-hidden hover:shadow-2xl transition-all duration-700 border border-border/50 hover:border-primary/30 transform hover:-translate-y-2 hover:scale-[1.02] animate-fade-in ${
+              selectedDestination === rec.id ? "ring-2 ring-primary/50 shadow-xl scale-[1.01]" : ""
             }`}
-            style={{ animationDelay: `${index * 100}ms` }}
+            style={{ animationDelay: `${index * 150}ms` }}
           >
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
-              {/* Enhanced Image Section */}
-              <div className="relative lg:col-span-1 group">
+              {/* Ultra-Enhanced Image Section */}
+              <div className="relative lg:col-span-1 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
                 <Image
                   src={rec.image}
                   alt={rec.destination}
                   width={400}
                   height={300}
-                  className="w-full h-64 lg:h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-64 lg:h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                 />
 
-                {/* Overlay with actions */}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-3">
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    onClick={() => handleBookmark(rec.id)}
-                    className={`${
-                      bookmarkedItems.has(rec.id)
-                        ? "bg-primary text-primary-foreground"
-                        : ""
-                    }`}
-                  >
-                    <Bookmark className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    onClick={() => handleShare(rec.destination)}
-                  >
-                    <Share2 className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    onClick={() =>
-                      setSelectedDestination(
-                        selectedDestination === rec.id ? null : rec.id
-                      )
-                    }
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                  </Button>
+                {/* Enhanced Overlay with actions */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center z-20">
+                  <div className="flex items-center space-x-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    <Button
+                      size="sm"
+                      className={`backdrop-blur-md border border-white/20 transition-all duration-300 hover:scale-110 ${
+                        bookmarkedItems.has(rec.id)
+                          ? "bg-primary text-primary-foreground shadow-lg"
+                          : "bg-white/10 text-white hover:bg-white/20"
+                      }`}
+                      onClick={() => handleBookmark(rec.id)}
+                    >
+                      <Bookmark className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="backdrop-blur-md bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-110"
+                      onClick={() => handleShare(rec.destination)}
+                    >
+                      <Share2 className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="backdrop-blur-md bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-110"
+                      onClick={() =>
+                        setSelectedDestination(
+                          selectedDestination === rec.id ? null : rec.id
+                        )
+                      }
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
 
-                {/* Enhanced Badges */}
-                <div className="absolute top-4 right-4 space-y-2">
-                  <Badge className="bg-primary text-primary-foreground font-bold text-sm px-3 py-1 shadow-lg">
-                    {rec.matchScore}% Match
-                  </Badge>
+                {/* Ultra-Enhanced Badges */}
+                <div className="absolute top-4 right-4 space-y-2 z-30">
+                  <div className="relative">
+                    <Badge className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-bold text-sm px-4 py-2 shadow-xl border-2 border-white/20 backdrop-blur-sm">
+                      <Sparkles className="h-3 w-3 mr-1" />
+                      {rec.matchScore}% Match
+                    </Badge>
+                    <div className="absolute -inset-1 bg-gradient-to-r from-primary/50 to-primary/30 rounded-full blur opacity-50" />
+                  </div>
                   {rec.visaRequired && (
                     <Badge
                       variant="outline"
-                      className="bg-background/90 text-xs"
+                      className="bg-white/90 backdrop-blur-sm text-xs border-white/30 text-gray-700"
                     >
                       Visa Required
                     </Badge>
                   )}
                 </div>
 
-                <div className="absolute bottom-4 left-4 space-y-2">
-                  <div className="flex items-center space-x-1 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1">
+                <div className="absolute bottom-4 left-4 space-y-2 z-30">
+                  <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
                     <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                    <span className="text-white text-sm font-medium">
+                    <span className="text-white text-sm font-semibold">
                       {rec.safetyRating}/5
                     </span>
+                    <span className="text-white/70 text-xs">Safety</span>
                   </div>
                 </div>
 
-                {/* Tags */}
-                <div className="absolute bottom-4 right-4">
-                  <div className="flex flex-wrap gap-1">
+                {/* Enhanced Tags */}
+                <div className="absolute bottom-4 right-4 z-30">
+                  <div className="flex flex-wrap gap-2">
                     {rec.tags.slice(0, 2).map((tag) => (
                       <Badge
                         key={rec.id + '-' + tag}
-                        variant="secondary"
-                        className="text-xs bg-background/90"
+                        className="text-xs bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20 transition-colors duration-200"
                       >
                         {tag}
                       </Badge>

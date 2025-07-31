@@ -50,8 +50,8 @@ EndFontMetrics`;
   return (originalReadFileSync as any).call(fs, filePath, options);
 };
 
-// Import PDFKit AFTER monkey patch
-import PDFDocument from 'pdfkit';
+// Import PDFKit AFTER monkey patch - DISABLED FOR FASTER DEPLOYMENT
+// import PDFDocument from 'pdfkit';
 
 // =============================================================================
 // TYPE DEFINITIONS
@@ -110,7 +110,7 @@ interface MailOptions {
   to: string;
   subject: string;
   html: string;
-  attachments: Array<{
+  attachments?: Array<{
     filename: string;
     content: Buffer;
     contentType: string;
@@ -144,175 +144,175 @@ const createEmailTransporter = () => {
 };
 
 // =============================================================================
-// PDF GENERATION UTILITIES
+// PDF GENERATION UTILITIES - DISABLED FOR FASTER DEPLOYMENT
 // =============================================================================
-const createSafePDFDocument = (options: Record<string, unknown> = {}) => {
-  const doc = new PDFDocument({
-    margins: { top: 50, bottom: 50, left: 50, right: 50 },
-    size: 'A4',
-    bufferPages: true,
-    autoFirstPage: true,
-    ...options
-  });
-
-  // Use only built-in fonts to avoid filesystem issues
-  doc.font('Times-Roman');
-  
-  return doc;
-};
-
-const generatePDFContent = (
-  doc: InstanceType<typeof PDFDocument>, 
-  data: {
-    displayName: string;
-    recommendations: Recommendation[];
-    userProfile: UserProfile;
-    websiteData: WebsiteData;
-  }
-) => {
-  const { displayName, recommendations, userProfile, websiteData } = data;
-
-  try {
-    // =============================================================================
-    // HEADER SECTION
-    // =============================================================================
-    doc.fontSize(28).text('TasteJourney', { align: 'center' });
-    doc.fontSize(16).text('AI-Powered Travel Recommendations', { align: 'center' });
-    doc.moveDown(0.5);
-    doc.fontSize(10).text(`Generated on ${new Date().toLocaleDateString('en-US', { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })}`, { align: 'center' });
-    doc.moveDown(2);
-
-    // =============================================================================
-    // PERSONALIZED GREETING
-    // =============================================================================
-    doc.fontSize(14).text(`Dear ${displayName},`, { align: 'left' });
-    doc.moveDown(0.5);
-    doc.fontSize(11).text(
-      'Thank you for using TasteJourney! Based on your website analysis and travel preferences, ' +
-      'we\'ve curated personalized destination recommendations optimized for content creation and monetization opportunities.',
-      { align: 'justify', lineGap: 2 }
-    );
-    doc.moveDown(2);
-
-    // =============================================================================
-    // WEBSITE ANALYSIS SECTION
-    // =============================================================================
-    doc.fontSize(16).text('Website Analysis', { underline: true });
-    doc.moveDown(0.5);
-    doc.fontSize(10);
-    
-    const websiteInfo = [
-      ['Website Title', websiteData.title || 'N/A'],
-      ['URL', websiteData.url],
-      ['Description', websiteData.description || 'N/A'],
-      ['Content Type', websiteData.contentType],
-      ['Main Themes', websiteData.themes.join(', ') || 'N/A'],
-      ['Content Focus', websiteData.hints.join(', ') || 'N/A'],
-      ['Social Presence', websiteData.socialLinks.map(s => s.platform).join(', ') || 'N/A']
-    ];
-
-    websiteInfo.forEach(([label, value]) => {
-      doc.font('Times-Bold').text(`${label}: `, { continued: true });
-      doc.font('Times-Roman').text(String(value).substring(0, 80) + (String(value).length > 80 ? '...' : ''));
-    });
-    doc.moveDown(2);
-
-    // =============================================================================
-    // USER PREFERENCES SECTION
-    // =============================================================================
-    doc.fontSize(16).text('Your Travel Preferences', { underline: true });
-    doc.moveDown(0.5);
-    doc.fontSize(10);
-
-    Object.entries(userProfile).forEach(([key, value]) => {
-      if (value) {
-        const formattedKey = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
-        doc.font('Times-Bold').text(`${formattedKey}: `, { continued: true });
-        doc.font('Times-Roman').text(String(value));
-      }
-    });
-    doc.moveDown(2);
-
-    // =============================================================================
-    // RECOMMENDATIONS SECTION
-    // =============================================================================
-    doc.fontSize(16).text('Personalized Destination Recommendations', { underline: true });
-    doc.moveDown(1);
-
-    if (!recommendations || recommendations.length === 0) {
-      doc.fontSize(11).text('No specific recommendations available at this time. Please try again with more detailed preferences.');
-    } else {
-      recommendations.forEach((rec, index) => {
-        // Check if we need a new page
-        if (doc.y > 700) {
-          doc.addPage();
-          doc.font('Times-Roman');
-        }
-
-        // Destination header
-        doc.fontSize(14).font('Times-Bold').text(`${index + 1}. ${rec.destination}`, { underline: true });
-        doc.moveDown(0.3);
-        doc.font('Times-Roman');
-
-        // Highlights
-        if (rec.highlights && rec.highlights.length > 0) {
-          doc.fontSize(10).font('Times-Bold').text('Key Highlights:', { continued: true });
-          doc.font('Times-Roman').text(` ${rec.highlights.join(' • ')}`);
-        }
-
-        // Budget information
-        if (rec.budget?.range) {
-          doc.fontSize(10).font('Times-Bold').text('Budget Range: ', { continued: true });
-          doc.font('Times-Roman').text(rec.budget.range);
-        }
-
-        // Best travel months
-        if (rec.bestMonths && rec.bestMonths.length > 0) {
-          doc.fontSize(10).font('Times-Bold').text('Best Travel Months: ', { continued: true });
-          doc.font('Times-Roman').text(rec.bestMonths.join(', '));
-        }
-
-        // Engagement potential
-        if (rec.engagement?.potential) {
-          doc.fontSize(10).font('Times-Bold').text('Content Engagement Potential: ', { continued: true });
-          doc.font('Times-Roman').text(rec.engagement.potential);
-        }
-
-        // Tags
-        if (rec.tags && rec.tags.length > 0) {
-          doc.fontSize(9).font('Times-Bold').text('Tags: ', { continued: true });
-          doc.font('Times-Roman').text(rec.tags.join(' • '));
-        }
-
-        doc.moveDown(1.5);
-      });
-    }
-
-    // =============================================================================
-    // FOOTER SECTION
-    // =============================================================================
-    const footerY = doc.page.height - 80;
-    doc.fontSize(8);
-    doc.text('Generated by TasteJourney AI - Your Personalized Travel Companion', 50, footerY, { 
-      align: 'center',
-      width: doc.page.width - 100
-    });
-    doc.text(`Contact: ${process.env.GMAIL_USER} | Report ID: ${Date.now()}`, 50, footerY + 15, { 
-      align: 'center',
-      width: doc.page.width - 100
-    });
-
-  } catch (error) {
-    console.error('Error generating PDF content:', error);
-    // Fallback content
-    doc.fontSize(12).text('Error generating detailed report. Please contact support.');
-  }
-};
+// const createSafePDFDocument = (options: Record<string, unknown> = {}) => {
+//   const doc = new PDFDocument({
+//     margins: { top: 50, bottom: 50, left: 50, right: 50 },
+//     size: 'A4',
+//     bufferPages: true,
+//     autoFirstPage: true,
+//     ...options
+//   });
+//
+//   // Use only built-in fonts to avoid filesystem issues
+//   doc.font('Times-Roman');
+//   
+//   return doc;
+// };
+//
+// const generatePDFContent = (
+//   doc: InstanceType<typeof PDFDocument>, 
+//   data: {
+//     displayName: string;
+//     recommendations: Recommendation[];
+//     userProfile: UserProfile;
+//     websiteData: WebsiteData;
+//   }
+// ) => {
+//   const { displayName, recommendations, userProfile, websiteData } = data;
+//
+//   try {
+//     // =============================================================================
+//     // HEADER SECTION
+//     // =============================================================================
+//     doc.fontSize(28).text('TasteJourney', { align: 'center' });
+//     doc.fontSize(16).text('AI-Powered Travel Recommendations', { align: 'center' });
+//     doc.moveDown(0.5);
+//     doc.fontSize(10).text(`Generated on ${new Date().toLocaleDateString('en-US', { 
+//       weekday: 'long', 
+//       year: 'numeric', 
+//       month: 'long', 
+//       day: 'numeric' 
+//     })}`, { align: 'center' });
+//     doc.moveDown(2);
+//
+//     // =============================================================================
+//     // PERSONALIZED GREETING
+//     // =============================================================================
+//     doc.fontSize(14).text(`Dear ${displayName},`, { align: 'left' });
+//     doc.moveDown(0.5);
+//     doc.fontSize(11).text(
+//       'Thank you for using TasteJourney! Based on your website analysis and travel preferences, ' +
+//       'we\'ve curated personalized destination recommendations optimized for content creation and monetization opportunities.',
+//       { align: 'justify', lineGap: 2 }
+//     );
+//     doc.moveDown(2);
+//
+//     // =============================================================================
+//     // WEBSITE ANALYSIS SECTION
+//     // =============================================================================
+//     doc.fontSize(16).text('Website Analysis', { underline: true });
+//     doc.moveDown(0.5);
+//     doc.fontSize(10);
+//     
+//     const websiteInfo = [
+//       ['Website Title', websiteData.title || 'N/A'],
+//       ['URL', websiteData.url],
+//       ['Description', websiteData.description || 'N/A'],
+//       ['Content Type', websiteData.contentType],
+//       ['Main Themes', websiteData.themes.join(', ') || 'N/A'],
+//       ['Content Focus', websiteData.hints.join(', ') || 'N/A'],
+//       ['Social Presence', websiteData.socialLinks.map(s => s.platform).join(', ') || 'N/A']
+//     ];
+//
+//     websiteInfo.forEach(([label, value]) => {
+//       doc.font('Times-Bold').text(`${label}: `, { continued: true });
+//       doc.font('Times-Roman').text(String(value).substring(0, 80) + (String(value).length > 80 ? '...' : ''));
+//     });
+//     doc.moveDown(2);
+//
+//     // =============================================================================
+//     // USER PREFERENCES SECTION
+//     // =============================================================================
+//     doc.fontSize(16).text('Your Travel Preferences', { underline: true });
+//     doc.moveDown(0.5);
+//     doc.fontSize(10);
+//
+//     Object.entries(userProfile).forEach(([key, value]) => {
+//       if (value) {
+//         const formattedKey = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
+//         doc.font('Times-Bold').text(`${formattedKey}: `, { continued: true });
+//         doc.font('Times-Roman').text(String(value));
+//       }
+//     });
+//     doc.moveDown(2);
+//
+//     // =============================================================================
+//     // RECOMMENDATIONS SECTION
+//     // =============================================================================
+//     doc.fontSize(16).text('Personalized Destination Recommendations', { underline: true });
+//     doc.moveDown(1);
+//
+//     if (!recommendations || recommendations.length === 0) {
+//       doc.fontSize(11).text('No specific recommendations available at this time. Please try again with more detailed preferences.');
+//     } else {
+//       recommendations.forEach((rec, index) => {
+//         // Check if we need a new page
+//         if (doc.y > 700) {
+//           doc.addPage();
+//           doc.font('Times-Roman');
+//         }
+//
+//         // Destination header
+//         doc.fontSize(14).font('Times-Bold').text(`${index + 1}. ${rec.destination}`, { underline: true });
+//         doc.moveDown(0.3);
+//         doc.font('Times-Roman');
+//
+//         // Highlights
+//         if (rec.highlights && rec.highlights.length > 0) {
+//           doc.fontSize(10).font('Times-Bold').text('Key Highlights:', { continued: true });
+//           doc.font('Times-Roman').text(` ${rec.highlights.join(' • ')}`);
+//         }
+//
+//         // Budget information
+//         if (rec.budget?.range) {
+//           doc.fontSize(10).font('Times-Bold').text('Budget Range: ', { continued: true });
+//           doc.font('Times-Roman').text(rec.budget.range);
+//         }
+//
+//         // Best travel months
+//         if (rec.bestMonths && rec.bestMonths.length > 0) {
+//           doc.fontSize(10).font('Times-Bold').text('Best Travel Months: ', { continued: true });
+//           doc.font('Times-Roman').text(rec.bestMonths.join(', '));
+//         }
+//
+//         // Engagement potential
+//         if (rec.engagement?.potential) {
+//           doc.fontSize(10).font('Times-Bold').text('Content Engagement Potential: ', { continued: true });
+//           doc.font('Times-Roman').text(rec.engagement.potential);
+//         }
+//
+//         // Tags
+//         if (rec.tags && rec.tags.length > 0) {
+//           doc.fontSize(9).font('Times-Bold').text('Tags: ', { continued: true });
+//           doc.font('Times-Roman').text(rec.tags.join(' • '));
+//         }
+//
+//         doc.moveDown(1.5);
+//       });
+//     }
+//
+//     // =============================================================================
+//     // FOOTER SECTION
+//     // =============================================================================
+//     const footerY = doc.page.height - 80;
+//     doc.fontSize(8);
+//     doc.text('Generated by TasteJourney AI - Your Personalized Travel Companion', 50, footerY, { 
+//       align: 'center',
+//       width: doc.page.width - 100
+//     });
+//     doc.text(`Contact: ${process.env.GMAIL_USER} | Report ID: ${Date.now()}`, 50, footerY + 15, { 
+//       align: 'center',
+//       width: doc.page.width - 100
+//     });
+//
+//   } catch (error) {
+//     console.error('Error generating PDF content:', error);
+//     // Fallback content
+//     doc.fontSize(12).text('Error generating detailed report. Please contact support.');
+//   }
+// };
 
 // =============================================================================
 // EMAIL TEMPLATE GENERATION
@@ -449,7 +449,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { email, recommendations, userProfile, websiteData, userName } = requestData;
+    const { email, recommendations, websiteData, userName } = requestData;
+    // const { email, recommendations, userProfile, websiteData, userName } = requestData;
 
     // Validate required fields
     if (!email || typeof email !== 'string' || !email.includes('@')) {
@@ -473,68 +474,70 @@ export async function POST(request: NextRequest) {
       ? recommendations.filter(rec => rec && typeof rec === 'object' && rec.destination)
       : [];
 
-    const safeUserProfile: UserProfile = userProfile || {};
-    const safeWebsiteData: WebsiteData = {
-      ...websiteData,
-      url: websiteData.url || '',
-      themes: Array.isArray(websiteData.themes) ? websiteData.themes : [],
-      hints: Array.isArray(websiteData.hints) ? websiteData.hints : [],
-      contentType: websiteData.contentType || 'Mixed Content',
-      socialLinks: Array.isArray(websiteData.socialLinks) ? websiteData.socialLinks : [],
-      title: websiteData.title || 'Website Analysis',
-      description: websiteData.description || 'No description available'
-    };
+    // const safeUserProfile: UserProfile = userProfile || {};
+    // const safeWebsiteData: WebsiteData = {
+    //   ...websiteData,
+    //   url: websiteData.url || '',
+    //   themes: Array.isArray(websiteData.themes) ? websiteData.themes : [],
+    //   hints: Array.isArray(websiteData.hints) ? websiteData.hints : [],
+    //   contentType: websiteData.contentType || 'Mixed Content',
+    //   socialLinks: Array.isArray(websiteData.socialLinks) ? websiteData.socialLinks : [],
+    //   title: websiteData.title || 'Website Analysis',
+    //   description: websiteData.description || 'No description available'
+    // };
 
     const displayName = userName || email.split('@')[0] || 'Travel Enthusiast';
 
     // =============================================================================
-    // PDF GENERATION
+    // PDF GENERATION - DISABLED FOR FASTER DEPLOYMENT
     // =============================================================================
-    let pdfBuffer: Buffer;
+    // let pdfBuffer: Buffer;
     
-    try {
-      const doc = createSafePDFDocument();
-      const chunks: Buffer[] = [];
-      
-      doc.on('data', (chunk: Buffer) => chunks.push(chunk));
-      
-      // Generate PDF content
-      generatePDFContent(doc, {
-        displayName,
-        recommendations: safeRecommendations,
-        userProfile: safeUserProfile,
-        websiteData: safeWebsiteData
-      });
+    // try {
+    //   const doc = createSafePDFDocument();
+    //   const chunks: Buffer[] = [];
+    //   
+    //   doc.on('data', (chunk: Buffer) => chunks.push(chunk));
+    //   
+    //   // Generate PDF content
+    //   generatePDFContent(doc, {
+    //     displayName,
+    //     recommendations: safeRecommendations,
+    //     userProfile: safeUserProfile,
+    //     websiteData: safeWebsiteData
+    //   });
 
-      doc.end();
+    //   doc.end();
 
-      // Wait for PDF generation to complete
-      pdfBuffer = await new Promise<Buffer>((resolve, reject) => {
-        doc.on('end', () => {
-          try {
-            resolve(Buffer.concat(chunks));
-          } catch (error) {
-            reject(error);
-          }
-        });
-        doc.on('error', reject);
-        
-        // Timeout after 30 seconds
-        setTimeout(() => reject(new Error('PDF generation timeout')), 30000);
-      });
+    //   // Wait for PDF generation to complete
+    //   pdfBuffer = await new Promise<Buffer>((resolve, reject) => {
+    //     doc.on('end', () => {
+    //       try {
+    //         resolve(Buffer.concat(chunks));
+    //       } catch (error) {
+    //         reject(error);
+    //       }
+    //     });
+    //     doc.on('error', reject);
+    //     
+    //     // Timeout after 30 seconds
+    //     setTimeout(() => reject(new Error('PDF generation timeout')), 30000);
+    //   });
 
-      console.log(`PDF generated successfully: ${pdfBuffer.length} bytes`);
+    //   console.log(`PDF generated successfully: ${pdfBuffer.length} bytes`);
 
-    } catch (pdfError) {
-      console.error('PDF generation failed:', pdfError);
-      return NextResponse.json(
-        { 
-          error: 'Failed to generate PDF report',
-          details: pdfError instanceof Error ? pdfError.message : 'Unknown PDF error'
-        },
-        { status: 500 }
-      );
-    }
+    // } catch (pdfError) {
+    //   console.error('PDF generation failed:', pdfError);
+    //   return NextResponse.json(
+    //     { 
+    //       error: 'Failed to generate PDF report',
+    //       details: pdfError instanceof Error ? pdfError.message : 'Unknown PDF error'
+    //     },
+    //     { status: 500 }
+    //   );
+    // }
+
+    // PDF generation disabled - sending email without attachment
 
     // =============================================================================
     // EMAIL SENDING
@@ -547,13 +550,13 @@ export async function POST(request: NextRequest) {
         to: email,
         subject: `🌟 Your Personalized TasteJourney Travel Report - ${displayName}`,
         html: generateEmailHTML(displayName),
-        attachments: [
-          {
-            filename: `TasteJourney-Report-${displayName.replace(/[^a-zA-Z0-9]/g, '')}-${new Date().toISOString().split('T')[0]}.pdf`,
-            content: pdfBuffer,
-            contentType: 'application/pdf',
-          },
-        ],
+        // attachments: [
+        //   {
+        //     filename: `TasteJourney-Report-${displayName.replace(/[^a-zA-Z0-9]/g, '')}-${new Date().toISOString().split('T')[0]}.pdf`,
+        //     content: pdfBuffer,
+        //     contentType: 'application/pdf',
+        //   },
+        // ],
       };
 
       await transporter.sendMail(mailOptions);
@@ -586,7 +589,7 @@ export async function POST(request: NextRequest) {
         email,
         displayName,
         recommendationsCount: safeRecommendations.length,
-        pdfSize: pdfBuffer.length,
+        // pdfSize: pdfBuffer.length, // PDF generation disabled
         processingTime: `${processingTime}ms`
       },
       timestamp: new Date().toISOString(),
