@@ -631,21 +631,21 @@ const ChatInterface: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-73px)] bg-gradient-to-br from-background via-background/95 to-muted/30">
+    <div className="flex flex-col h-[calc(100vh-60px)] sm:h-[calc(100vh-73px)] bg-gradient-to-br from-background via-background/95 to-muted/30">
       {/* Enhanced Chat Header */}
       <div className="border-b border-border/50 bg-background/80 backdrop-blur-md">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <Bot className="h-8 w-8 text-primary" />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-background animate-pulse" />
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6 py-2.5 sm:py-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="relative flex-shrink-0">
+              <Bot className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
+              <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full border-2 border-background animate-pulse" />
             </div>
-            <div className="flex-1">
-              <h2 className="font-semibold text-foreground flex items-center gap-2">
-                AI Travel Companion
-                <Sparkles className="h-4 w-4 text-primary" />
+            <div className="flex-1 min-w-0">
+              <h2 className="font-semibold text-sm sm:text-base text-foreground flex items-center gap-1.5 sm:gap-2 truncate">
+                <span className="truncate">AI Travel Companion</span>
+                <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
               </h2>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs sm:text-sm text-muted-foreground truncate">
                 {chatState === "initial" && "Ready to analyze your website"}
                 {chatState === "analyzing" && "Analyzing your content..."}
                 {chatState === "confirmation" && "Reviewing extracted data"}
@@ -655,10 +655,10 @@ const ChatInterface: React.FC = () => {
                 {chatState === "recommendations" && "Recommendations ready!"}
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1 px-3 py-1 bg-primary/10 rounded-full">
-                <MessageSquare className="h-3 w-3 text-primary" />
-                <span className="text-xs font-medium text-primary">{messages.length}</span>
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+              <div className="flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1 bg-primary/10 rounded-full">
+                <MessageSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-primary" />
+                <span className="text-[10px] sm:text-xs font-medium text-primary">{messages.length}</span>
               </div>
             </div>
           </div>
@@ -667,54 +667,56 @@ const ChatInterface: React.FC = () => {
 
       {/* Chat Messages Area */}
       <div className="flex-1 overflow-y-auto scrollbar-thin">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6">
-          <div className="space-y-6">
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6">
+          <div className="space-y-4 sm:space-y-6">
             {messages.map((message, index) => (
               <div
                 key={message.id}
-                className={`flex items-end gap-3 animate-fade-in ${
+                className={`flex items-start gap-2 sm:gap-3 animate-fade-in ${
                   message.isBot ? "justify-start" : "justify-end flex-row-reverse"
                 }`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Avatar */}
-                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                <div className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center mt-1 ${
                   message.isBot 
                     ? "bg-primary/10 border-2 border-primary/20" 
-                    : "bg-muted border-2 border-border"
+                    : "bg-gradient-to-br from-primary/80 to-primary border-2 border-primary/30"
                 }`}>
                   {message.isBot ? (
-                    <Bot className="h-4 w-4 text-primary" />
+                    <Bot className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
                   ) : (
-                    <User className="h-4 w-4 text-muted-foreground" />
+                    <User className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
                   )}
                 </div>
 
                 {/* Message Content */}
-                <div className={`group relative max-w-[85%] sm:max-w-[75%] lg:max-w-[65%]`}>
+                <div className={`group relative w-full max-w-[80%] xs:max-w-[85%] sm:max-w-[75%] md:max-w-[70%] lg:max-w-[65%] xl:max-w-[60%]`}>
                   <div
                     className={`
-                      px-4 py-3 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md
+                      px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md
                       ${message.isBot
                         ? "bg-card border border-border/50 hover:border-border"
-                        : "bg-primary text-primary-foreground shadow-md hover:shadow-lg"
+                        : "bg-gradient-to-br from-primary to-primary/90 text-primary-foreground shadow-md hover:shadow-lg"
                       }
                     `}
                   >
                     {message.isBot && (
-                      <div className="flex items-center gap-2 mb-2 opacity-70">
-                        <Wand2 className="h-3 w-3" />
-                        <span className="text-xs font-medium">AI Assistant</span>
+                      <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2 opacity-70">
+                        <Wand2 className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+                        <span className="text-[10px] sm:text-xs font-medium">AI Assistant</span>
                       </div>
                     )}
-                    <p className="text-sm leading-relaxed">
+                    <p className="text-xs sm:text-sm leading-relaxed">
                       {message.text}
                     </p>
                   </div>
                   
                   {/* Timestamp on hover */}
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-1">
-                    <span className="text-xs text-muted-foreground">
+                  <div className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-1 ${
+                    message.isBot ? "text-left" : "text-right"
+                  }`}>
+                    <span className="text-[10px] sm:text-xs text-muted-foreground">
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
@@ -1044,37 +1046,37 @@ const ChatInterface: React.FC = () => {
       {/* Enhanced Bottom Input Area */}
       {chatState === "recommendations" && (
         <div className="border-t border-border/50 bg-background/80 backdrop-blur-md">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6">
             {!reportSent ? (
-              <div className="py-6 space-y-6">
+              <div className="py-4 sm:py-6 space-y-4 sm:space-y-6">
                 {/* Enhanced PDF Report Section */}
-                <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-6 shadow-sm">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                    <div className="flex items-center gap-3 flex-1">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                        <span className="text-lg">📧</span>
+                <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-4 sm:p-6 shadow-sm">
+                  <div className="flex flex-col gap-3 sm:gap-4">
+                    <div className="flex items-start sm:items-center gap-3 flex-1">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span className="text-base sm:text-lg">📧</span>
                       </div>
-                      <div>
-                        <h4 className="font-semibold text-base mb-1 text-foreground">
+                      <div className="min-w-0 flex-1">
+                        <h4 className="font-semibold text-sm sm:text-base mb-1 text-foreground">
                           Get Your Detailed PDF Report
                         </h4>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                           Comprehensive analysis with cost breakdowns, contacts & guides
                         </p>
                       </div>
                     </div>
-                    <div className="flex gap-3">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                       <Input
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         placeholder="Enter your email address"
-                        className="w-full sm:w-64 h-11"
+                        className="w-full sm:w-64 h-10 sm:h-11 text-sm"
                         type="email"
                       />
                       <Button 
                         onClick={handleSendReport} 
                         disabled={!email}
-                        className="h-11 px-6 font-medium"
+                        className="h-10 sm:h-11 px-4 sm:px-6 font-medium text-sm whitespace-nowrap"
                       >
                         Send Report
                       </Button>
@@ -1089,20 +1091,20 @@ const ChatInterface: React.FC = () => {
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Ask me anything about these recommendations..."
-                    className="w-full pr-14 h-12 text-base border-2 transition-all duration-200 focus:border-primary/50 focus:ring-primary/20"
+                    className="w-full pr-12 sm:pr-14 h-10 sm:h-12 text-sm sm:text-base border-2 transition-all duration-200 focus:border-primary/50 focus:ring-primary/20"
                   />
                   <Button
                     onClick={handleSendMessage}
                     disabled={!inputValue.trim()}
                     size="icon"
-                    className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 transition-all duration-200 hover:scale-105"
+                    className="absolute right-1.5 sm:right-2 top-1/2 -translate-y-1/2 h-7 w-7 sm:h-8 sm:w-8 transition-all duration-200 hover:scale-105"
                   >
-                    <Send className="h-4 w-4" />
+                    <Send className="h-3 w-3 sm:h-4 sm:w-4" />
                   </Button>
                 </div>
                 
                 {/* Quick Actions */}
-                <div className="flex flex-wrap gap-2 justify-center">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center">
                   {[
                     "More destinations",
                     "Budget breakdown", 
@@ -1113,7 +1115,7 @@ const ChatInterface: React.FC = () => {
                       key={action}
                       variant="outline"
                       size="sm"
-                      className="text-xs hover:bg-primary/10 hover:border-primary/30"
+                      className="text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 h-auto hover:bg-primary/10 hover:border-primary/30"
                       onClick={() => {
                         setInputValue(action);
                         setTimeout(() => handleSendMessage(), 0);
@@ -1125,16 +1127,16 @@ const ChatInterface: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="py-8 text-center">
-                <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 rounded-xl shadow-sm">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <span className="text-lg">✅</span>
+              <div className="py-6 sm:py-8 text-center">
+                <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 rounded-xl shadow-sm">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-sm sm:text-lg">✅</span>
                   </div>
                   <div className="text-left">
-                    <p className="font-semibold text-sm">
+                    <p className="font-semibold text-xs sm:text-sm">
                       Report Successfully Sent!
                     </p>
-                    <p className="text-xs text-green-600">
+                    <p className="text-[10px] sm:text-xs text-green-600">
                       Check your email (and spam folder) for the PDF
                     </p>
                   </div>

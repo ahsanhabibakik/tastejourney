@@ -211,6 +211,13 @@
 }
 
 @layer components {
+  /* Responsive breakpoint utilities */
+  .xs\:max-w-\[85\%\] {
+    @media (min-width: 360px) {
+      max-width: 85%;
+    }
+  }
+
   /* Positioning utilities */
   .inset-0 {
     top: 0;
