@@ -38,27 +38,31 @@ interface UserAnswers {
 const questions = [
   {
     id: "budget",
-    text: "What's your budget range for this trip?",
+    text: "💸 What's your budget range for this trip?",
     options: ["$500-1000", "$1000-2500", "$2500-5000", "$5000+"],
+    icon: "💸",
   },
   {
     id: "duration",
-    text: "How long would you like to travel?",
+    text: "🗓️ How long would you like to travel?",
     options: ["1-3 days", "4-7 days", "1-2 weeks", "2+ weeks"],
+    icon: "🗓️",
   },
   {
     id: "style",
-    text: "What's your preferred travel style?",
+    text: "🌍 What's your preferred travel style?",
     options: ["Adventure", "Luxury", "Cultural", "Beach", "Urban"],
+    icon: "🌍",
   },
   {
     id: "contentFocus",
-    text: "What type of content do you focus on?",
+    text: "📸 What type of content do you focus on?",
     options: ["Photography", "Food", "Lifestyle", "Adventure"],
+    icon: "📸",
   },
   {
     id: "climate",
-    text: "Do you have any preferred or avoided climates/regions?",
+    text: "☀️ Do you have any preferred or avoided climates/regions?",
     options: [
       "Tropical/Sunny",
       "Mild/Temperate",
@@ -69,6 +73,7 @@ const questions = [
       "Avoid cold",
       "Avoid rainy",
     ],
+    icon: "☀️",
   },
 ];
 
@@ -451,22 +456,60 @@ const ChatInterface: React.FC = () => {
 
                 {message.component === "questions" &&
                   chatState === "questions" && (
-                    <div className="mt-4 space-y-2">
-                      {questions[currentQuestionIndex].options.map(
-                        (option, index) => (
-                          <Button
-                            key={index}
-                            variant="outline"
-                            size="sm"
-                            className="w-full justify-start"
-                            onClick={() => handleQuestionAnswer(option)}
-                          >
-                            {option}
-                          </Button>
-                        )
-                      )}
+                    <div className="mt-4">
+                      {/* Progress Bar */}
+                      <div className="flex items-center mb-4">
+                        {questions.map((q, idx) => (
+                          <div
+                            key={q.id}
+                            className={`h-2 rounded-full mx-1 transition-all duration-300 ${
+                              idx <= currentQuestionIndex
+                                ? "bg-blue-500 w-8"
+                                : "bg-gray-200 w-4"
+                            }`}
+                          ></div>
+                        ))}
+                        <span className="ml-3 text-xs text-gray-500">
+                          {currentQuestionIndex + 1} / {questions.length}
+                        </span>
+                      </div>
+                      {/* Animated Question Card */}
+                      <div className="bg-white/80 shadow-lg rounded-xl p-4 mb-2 animate-fade-in flex items-center gap-2">
+                        <span className="text-2xl">
+                          {questions[currentQuestionIndex].icon}
+                        </span>
+                        <span className="font-semibold text-base">
+                          {questions[currentQuestionIndex].text}
+                        </span>
+                      </div>
+                      <div className="space-y-2">
+                        {questions[currentQuestionIndex].options.map(
+                          (option, index) => (
+                            <Button
+                              key={index}
+                              variant="outline"
+                              size="sm"
+                              className={`w-full justify-start flex items-center transition-all duration-200 group ${
+                                userAnswers[questions[currentQuestionIndex].id] === option
+                                  ? "border-blue-500 bg-blue-50 text-blue-700 font-bold scale-105"
+                                  : ""
+                              }`}
+                              onClick={() => handleQuestionAnswer(option)}
+                            >
+                              <span className="mr-2">
+                                {userAnswers[questions[currentQuestionIndex].id] === option ? "✅" : ""}
+                              </span>
+                              {option}
+                            </Button>
+                          )
+                        )}
+                      </div>
                     </div>
                   )}
+// Animation for fade-in
+// Add this style to your global CSS or in a style tag if not already present:
+// .animate-fade-in { animation: fadeIn 0.5s; }
+// @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: none;} }
 
                 {message.component === "recommendations" &&
                   chatState === "recommendations" && recommendations?.recommendations && (
