@@ -1,9 +1,26 @@
 import puppeteer from 'puppeteer'
 
+interface Recommendation {
+  destination: string;
+  highlights?: string[];
+  budget?: { range: string };
+  bestMonths?: string[];
+  engagement?: { potential: string };
+}
+
+interface UserProfile {
+  budget?: string;
+  duration?: string;
+  style?: string;
+  contentFocus?: string;
+  climate?: string;
+  [key: string]: string | undefined;
+}
+
 export interface ReportData {
   userWebsite: string
-  recommendations: any[]
-  userProfile: any
+  recommendations: Recommendation[]
+  userProfile: UserProfile
   generatedAt: Date
 }
 

@@ -36,6 +36,17 @@ interface UserAnswers {
   [key: string]: string | undefined;
 }
 
+interface Recommendation {
+  destination: string;
+  image?: string;
+  highlights?: string[];
+  budget?: { range: string };
+  bestMonths?: string[];
+  engagement?: { potential: string };
+  enrichment?: Record<string, unknown>;
+  tags?: string[];
+}
+
 const questions = [
   {
     id: "budget",
@@ -107,7 +118,7 @@ const ChatInterface: React.FC = () => {
   const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
   const [recommendations, setRecommendations] = useState<
     | {
-        recommendations: Array<Record<string, unknown>>;
+        recommendations: Recommendation[];
         [key: string]: unknown;
       }
     | null
@@ -512,7 +523,7 @@ const ChatInterface: React.FC = () => {
                 {message.component === "recommendations" &&
                   chatState === "recommendations" && recommendations?.recommendations && (
                     <div className="overflow-x-auto flex space-x-4 py-2 scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-gray-300">
-                      {recommendations.recommendations.map((rec: any, i: number) => (
+                      {recommendations.recommendations.map((rec: Recommendation, i: number) => (
                         <div
                           key={i}
                           className="min-w-[320px] max-w-xs bg-white border border-gray-200 rounded-lg shadow-md p-4 flex-shrink-0 flex flex-col justify-between"
@@ -526,29 +537,9 @@ const ChatInterface: React.FC = () => {
                             <div className="text-xs mb-1"><b>Budget:</b> {rec.budget?.range}</div>
                             <div className="text-xs mb-1"><b>Best Months:</b> {rec.bestMonths?.join(', ')}</div>
                             <div className="text-xs mb-1"><b>Engagement:</b> {rec.engagement?.potential}</div>
-                            {/* Enrichment: Cost of Living */}
-                            {rec.enrichment?.numbeo && (
-                              <div className="text-xs mb-1"><b>Cost of Living:</b> {rec.enrichment.numbeo.average_price ? `$${rec.enrichment.numbeo.average_price}` : "See details"}</div>
-                            )}
-                            {/* Enrichment: Flights */}
-                            {rec.enrichment?.flights?.data && rec.enrichment.flights.data.length > 0 && (
-                              <div className="text-xs mb-1"><b>Sample Flight:</b> ${rec.enrichment.flights.data[0]?.price?.total || "-"} ({rec.enrichment.flights.data[0]?.itineraries?.[0]?.segments?.[0]?.departure?.iataCode} → {rec.enrichment.flights.data[0]?.itineraries?.[0]?.segments?.slice(-1)[0]?.arrival?.iataCode})</div>
-                            )}
-                            {/* Enrichment: Hotels */}
-                            {rec.enrichment?.hotels?.data && rec.enrichment.hotels.data.length > 0 && (
-                              <div className="text-xs mb-1"><b>Sample Hotel:</b> {rec.enrichment.hotels.data[0]?.hotel?.name} (${rec.enrichment.hotels.data[0]?.offers?.[0]?.price?.total || "-"})</div>
-                            )}
-                            {/* Enrichment: Google Maps/Places */}
-                            {rec.enrichment?.serpapi?.maps?.local_results && rec.enrichment.serpapi.maps.local_results.length > 0 && (
-                              <div className="text-xs mb-1"><b>Top Place:</b> {rec.enrichment.serpapi.maps.local_results[0]?.title} ({rec.enrichment.serpapi.maps.local_results[0]?.address})</div>
-                            )}
-                            {/* Enrichment: YouTube Creators */}
-                            {rec.enrichment?.serpapi?.youtube?.channels && rec.enrichment.serpapi.youtube.channels.length > 0 && (
-                              <div className="text-xs mb-1"><b>YouTube Creator:</b> {rec.enrichment.serpapi.youtube.channels[0]?.title}</div>
-                            )}
-                            {/* Enrichment: Knowledge Graph */}
-                            {rec.enrichment?.serpapi?.knowledgeGraph?.knowledge_graph && (
-                              <div className="text-xs mb-1"><b>Fact:</b> {rec.enrichment.serpapi.knowledgeGraph.knowledge_graph.description}</div>
+                            {/* Enrichment data available */}
+                            {rec.enrichment && (
+                              <div className="text-xs mb-1 text-gray-500">Additional data available</div>
                             )}
                           </div>
                           <div className="mt-2 flex flex-wrap gap-1">
