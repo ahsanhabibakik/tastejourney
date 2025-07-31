@@ -254,8 +254,24 @@ export async function POST(request: NextRequest) {
       demographics: demographics || {},
     };
 
-    // Call Qloo API (or mock for development)
-    const qlooResponse = await callQlooAPI(qlooRequest);
+    let qlooResponse: QlooResponse;
+    
+    try {
+      // Try Qloo API first
+      qlooResponse = await callQlooAPI(qlooRequest);
+    } catch (error) {
+      console.log("Qloo API unavailable, using mock data:", error);
+      // Fallback to mock data
+      const mockVector = generateMockTasteVector(themes, hints, contentType);
+      qlooResponse = {
+        tasteVector: mockVector,
+        recommendations: [],
+        confidence: 0.8,
+        culturalAffinities: generateCulturalAffinities(mockVector),
+        personalityTraits: generatePersonalityTraits(mockVector),
+        processingTime: "Mock generation"
+      };
+    }
 
     // Simulate processing time for realistic UX
     await new Promise((resolve) => setTimeout(resolve, 1500));

@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
     });
     
     // Try to load local Roboto font, fallback to default if not found
-    const fontPath = path.join(process.cwd(), 'src', 'fonts', 'Roboto-Regular.ttf');
+    const fontPath = path.join(process.cwd(), 'fonts', 'Roboto-Regular.ttf');
     if (fs.existsSync(fontPath)) {
       const fontBuffer = fs.readFileSync(fontPath);
       doc.registerFont('Roboto', fontBuffer);

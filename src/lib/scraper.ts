@@ -6,7 +6,12 @@ async function fetchWithScraperAPI(url: string): Promise<string | null> {
   if (!apiKey) return null;
   const apiUrl = `https://api.scraperapi.com?api_key=${apiKey}&url=${encodeURIComponent(url)}`;
   try {
-    const res = await fetch(apiUrl, { timeout: 15000 });
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    
+    const res = await fetch(apiUrl, { signal: controller.signal });
+    clearTimeout(timeout);
+    
     if (!res.ok) throw new Error('ScraperAPI failed');
     return await res.text();
   } catch {
@@ -19,7 +24,12 @@ async function fetchWithTarvily(url: string): Promise<string | null> {
   if (!apiKey) return null;
   const apiUrl = `https://api.tarvily.com/scrape?api_key=${apiKey}&url=${encodeURIComponent(url)}`;
   try {
-    const res = await fetch(apiUrl, { timeout: 15000 });
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    
+    const res = await fetch(apiUrl, { signal: controller.signal });
+    clearTimeout(timeout);
+    
     if (!res.ok) throw new Error('Tarvily failed');
     const data = await res.json();
     return data.content || null;
@@ -30,6 +40,9 @@ async function fetchWithTarvily(url: string): Promise<string | null> {
 
 async function fetchWithCheerio(url: string): Promise<string | null> {
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    
     // Enhanced headers to avoid blocking
     const res = await fetch(url, {
       headers: {
@@ -41,8 +54,10 @@ async function fetchWithCheerio(url: string): Promise<string | null> {
         'Connection': 'keep-alive',
         'Upgrade-Insecure-Requests': '1',
       },
-      timeout: 15000
+      signal: controller.signal
     });
+    clearTimeout(timeout);
+    
     if (!res.ok) throw new Error('Direct fetch failed');
     return await res.text();
   } catch {
