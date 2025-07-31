@@ -1,8 +1,7 @@
 "use client";
 
-
 import React, { useState, useRef, useEffect } from "react";
-import { Send } from "lucide-react";
+import { Send, Sparkles, MessageSquare, Bot, User, Wand2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -481,31 +480,93 @@ const ChatInterface: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-73px)]">
+    <div className="flex flex-col h-[calc(100vh-73px)] bg-gradient-to-br from-background via-background/95 to-muted/30">
+      {/* Enhanced Chat Header */}
+      <div className="border-b border-border/50 bg-background/80 backdrop-blur-md">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <Bot className="h-8 w-8 text-primary" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-background animate-pulse" />
+            </div>
+            <div className="flex-1">
+              <h2 className="font-semibold text-foreground flex items-center gap-2">
+                AI Travel Companion
+                <Sparkles className="h-4 w-4 text-primary" />
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                {chatState === "initial" && "Ready to analyze your website"}
+                {chatState === "analyzing" && "Analyzing your content..."}
+                {chatState === "confirmation" && "Reviewing extracted data"}
+                {chatState === "profiling" && "Building your taste profile..."}
+                {chatState === "questions" && `Question ${currentQuestionIndex + 1} of ${questions.length}`}
+                {chatState === "generating" && "Generating recommendations..."}
+                {chatState === "recommendations" && "Recommendations ready!"}
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 px-3 py-1 bg-primary/10 rounded-full">
+                <MessageSquare className="h-3 w-3 text-primary" />
+                <span className="text-xs font-medium text-primary">{messages.length}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Chat Messages Area */}
-      <div className="flex-1 overflow-y-auto bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
-          <div className="space-y-4">
-            {messages.map((message) => (
+      <div className="flex-1 overflow-y-auto scrollbar-thin">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6">
+          <div className="space-y-6">
+            {messages.map((message, index) => (
               <div
                 key={message.id}
-                className={`flex ${
-                  message.isBot ? "justify-start" : "justify-end"
+                className={`flex items-end gap-3 animate-fade-in ${
+                  message.isBot ? "justify-start" : "justify-end flex-row-reverse"
                 }`}
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div
-                  className={`
-                    max-w-[80%] sm:max-w-[70%] lg:max-w-[60%]
-                    px-4 py-3 rounded-xl
-                    ${message.isBot
-                      ? "bg-muted"
-                      : "bg-primary text-primary-foreground"
-                    }
-                  `}
-                >
-                  <p className="text-sm leading-relaxed">
-                    {message.text}
-                  </p>
+                {/* Avatar */}
+                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                  message.isBot 
+                    ? "bg-primary/10 border-2 border-primary/20" 
+                    : "bg-muted border-2 border-border"
+                }`}>
+                  {message.isBot ? (
+                    <Bot className="h-4 w-4 text-primary" />
+                  ) : (
+                    <User className="h-4 w-4 text-muted-foreground" />
+                  )}
+                </div>
+
+                {/* Message Content */}
+                <div className={`group relative max-w-[85%] sm:max-w-[75%] lg:max-w-[65%]`}>
+                  <div
+                    className={`
+                      px-4 py-3 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md
+                      ${message.isBot
+                        ? "bg-card border border-border/50 hover:border-border"
+                        : "bg-primary text-primary-foreground shadow-md hover:shadow-lg"
+                      }
+                    `}
+                  >
+                    {message.isBot && (
+                      <div className="flex items-center gap-2 mb-2 opacity-70">
+                        <Wand2 className="h-3 w-3" />
+                        <span className="text-xs font-medium">AI Assistant</span>
+                      </div>
+                    )}
+                    <p className="text-sm leading-relaxed">
+                      {message.text}
+                    </p>
+                  </div>
+                  
+                  {/* Timestamp on hover */}
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-1">
+                    <span className="text-xs text-muted-foreground">
+                      {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  </div>
 
                 {message.component === "url-form" &&
                   chatState === "initial" && (
@@ -523,45 +584,77 @@ const ChatInterface: React.FC = () => {
 
                 {message.component === "questions" &&
                   chatState === "questions" && (
-                    <div className="mt-4 w-full">
-                      {/* Progress Bar */}
-                      <div className="flex items-center gap-2 mb-4">
-                        <div className="flex-1 bg-muted rounded-full h-2">
+                    <div className="mt-6 w-full animate-slide-up">
+                      {/* Enhanced Progress Bar */}
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="flex-1 bg-muted/50 rounded-full h-3 overflow-hidden">
                           <div 
-                            className="bg-primary h-full rounded-full transition-all duration-300"
+                            className="bg-gradient-to-r from-primary to-primary/80 h-full rounded-full transition-all duration-500 ease-out relative"
                             style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
-                          />
+                          >
+                            <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                          </div>
                         </div>
-                        <span className="text-xs text-muted-foreground">
-                          {currentQuestionIndex + 1}/{questions.length}
-                        </span>
-                      </div>
-                      
-                      {/* Current Question */}
-                      <div className="bg-background border border-border rounded-lg p-4 mb-4">
-                        <div className="flex items-center gap-3">
-                          <span className="text-2xl">
-                            {questions[currentQuestionIndex].icon}
+                        <div className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full">
+                          <span className="text-sm font-semibold text-primary">
+                            {currentQuestionIndex + 1}
                           </span>
-                          <h3 className="font-medium text-base">
-                            {questions[currentQuestionIndex].text}
-                          </h3>
+                          <span className="text-xs text-primary/70">of</span>
+                          <span className="text-sm font-semibold text-primary">
+                            {questions.length}
+                          </span>
                         </div>
                       </div>
                       
-                      {/* Options */}
-                      <div className="space-y-2">
+                      {/* Enhanced Current Question */}
+                      <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-6 mb-6 shadow-sm">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                            <span className="text-2xl">
+                              {questions[currentQuestionIndex].icon}
+                            </span>
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg text-foreground mb-1">
+                              {questions[currentQuestionIndex].text}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                              Choose the option that best describes your preference
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Enhanced Options */}
+                      <div className="grid gap-3">
                         {questions[currentQuestionIndex].options.map(
-                          (option, index) => (
-                            <Button
-                              key={index}
-                              variant={userAnswers[questions[currentQuestionIndex].id] === option ? "default" : "outline"}
-                              className="w-full justify-start text-left"
-                              onClick={() => handleQuestionAnswer(option)}
-                            >
-                              {option}
-                            </Button>
-                          )
+                          (option, index) => {
+                            const isSelected = userAnswers[questions[currentQuestionIndex].id] === option;
+                            return (
+                              <Button
+                                key={index}
+                                variant={isSelected ? "default" : "outline"}
+                                className={`w-full justify-start text-left p-4 h-auto transition-all duration-200 hover:scale-[1.02] hover:shadow-md ${
+                                  isSelected 
+                                    ? "bg-primary text-primary-foreground shadow-md ring-2 ring-primary/20" 
+                                    : "hover:bg-muted/50 hover:border-primary/30"
+                                }`}
+                                onClick={() => handleQuestionAnswer(option)}
+                                style={{ animationDelay: `${index * 50}ms` }}
+                              >
+                                <div className="flex items-center gap-3">
+                                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                                    isSelected 
+                                      ? "border-primary-foreground bg-primary-foreground" 
+                                      : "border-muted-foreground"
+                                  }`}>
+                                    {isSelected && <div className="w-2 h-2 rounded-full bg-primary" />}
+                                  </div>
+                                  <span className="font-medium">{option}</span>
+                                </div>
+                              </Button>
+                            );
+                          }
                         )}
                       </div>
                     </div>
@@ -640,8 +733,15 @@ const ChatInterface: React.FC = () => {
           ))}
 
             {isTyping && (
-              <div className="flex justify-start">
-                <div className="max-w-[80%] sm:max-w-[70%] lg:max-w-[60%] px-4 py-3 rounded-xl bg-muted">
+              <div className="flex items-end gap-3 justify-start animate-fade-in">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
+                  <Bot className="h-4 w-4 text-primary" />
+                </div>
+                <div className="bg-card border border-border/50 px-4 py-3 rounded-2xl shadow-sm max-w-[200px]">
+                  <div className="flex items-center gap-2 mb-2 opacity-70">
+                    <Wand2 className="h-3 w-3" />
+                    <span className="text-xs font-medium">AI Assistant</span>
+                  </div>
                   <TypingIndicator />
                 </div>
               </div>
@@ -651,67 +751,103 @@ const ChatInterface: React.FC = () => {
         </div>
       </div>
 
-      {/* Bottom Input Area */}
+      {/* Enhanced Bottom Input Area */}
       {chatState === "recommendations" && (
-        <div className="border-t bg-background">
+        <div className="border-t border-border/50 bg-background/80 backdrop-blur-md">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
             {!reportSent ? (
-              <div className="py-4 space-y-4">
-                {/* PDF Report Section */}
-                <div className="bg-muted/50 rounded-lg p-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                    <div className="flex-1">
-                      <h4 className="font-medium text-sm mb-1">
-                        Get PDF Report
-                      </h4>
-                      <p className="text-xs text-muted-foreground">
-                        Receive detailed analysis via email
-                      </p>
+              <div className="py-6 space-y-6">
+                {/* Enhanced PDF Report Section */}
+                <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-6 shadow-sm">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div className="flex items-center gap-3 flex-1">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                        <span className="text-lg">📧</span>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-base mb-1 text-foreground">
+                          Get Your Detailed PDF Report
+                        </h4>
+                        <p className="text-sm text-muted-foreground">
+                          Comprehensive analysis with cost breakdowns, contacts & guides
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-3">
                       <Input
                         value={email}
                         onChange={e => setEmail(e.target.value)}
-                        placeholder="Your email"
-                        className="w-full sm:w-48"
+                        placeholder="Enter your email address"
+                        className="w-full sm:w-64 h-11"
                         type="email"
                       />
                       <Button 
                         onClick={handleSendReport} 
                         disabled={!email}
+                        className="h-11 px-6 font-medium"
                       >
-                        Send
+                        Send Report
                       </Button>
                     </div>
                   </div>
                 </div>
                 
-                {/* Chat Input */}
-                <div className="relative">
+                {/* Enhanced Chat Input */}
+                <div className="relative group">
                   <Input
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    placeholder="Ask about these recommendations..."
-                    className="w-full pr-12"
+                    placeholder="Ask me anything about these recommendations..."
+                    className="w-full pr-14 h-12 text-base border-2 transition-all duration-200 focus:border-primary/50 focus:ring-primary/20"
                   />
                   <Button
                     onClick={handleSendMessage}
                     disabled={!inputValue.trim()}
                     size="icon"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 transition-all duration-200 hover:scale-105"
                   >
                     <Send className="h-4 w-4" />
                   </Button>
                 </div>
+                
+                {/* Quick Actions */}
+                <div className="flex flex-wrap gap-2 justify-center">
+                  {[
+                    "More destinations",
+                    "Budget breakdown", 
+                    "Collaboration tips",
+                    "Best travel times"
+                  ].map((action) => (
+                    <Button
+                      key={action}
+                      variant="outline"
+                      size="sm"
+                      className="text-xs hover:bg-primary/10 hover:border-primary/30"
+                      onClick={() => {
+                        setInputValue(action);
+                        setTimeout(() => handleSendMessage(), 0);
+                      }}
+                    >
+                      {action}
+                    </Button>
+                  ))}
+                </div>
               </div>
             ) : (
-              <div className="py-6 text-center">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 text-green-600 rounded-lg">
-                  <span>✅</span>
-                  <span className="text-sm font-medium">
-                    Report sent! Check your email.
-                  </span>
+              <div className="py-8 text-center">
+                <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 rounded-xl shadow-sm">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                    <span className="text-lg">✅</span>
+                  </div>
+                  <div className="text-left">
+                    <p className="font-semibold text-sm">
+                      Report Successfully Sent!
+                    </p>
+                    <p className="text-xs text-green-600">
+                      Check your email (and spam folder) for the PDF
+                    </p>
+                  </div>
                 </div>
               </div>
             )}
