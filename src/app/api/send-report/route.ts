@@ -1,5 +1,3 @@
-// src/app/api/send-report/route.ts
-
 export const runtime = 'nodejs';
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -15,7 +13,7 @@ interface Recommendation {
   bestMonths?: string[];
   engagement?: { potential: string };
   tags?: string[];
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface UserProfile {
@@ -41,7 +39,6 @@ interface ReportRequest {
 
 export async function POST(request: NextRequest) {
   try {
-    // 1) parse payload
     const { email, recommendations, userProfile, websiteData } =
       (await request.json()) as ReportRequest;
 
@@ -49,20 +46,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
-    // 2) load local Roboto font
+    // 2) Try to load local Roboto font, fallback to default if not found
     const fontPath = path.join(process.cwd(), 'src', 'fonts', 'Roboto-Regular.ttf');
-    if (!fs.existsSync(fontPath)) {
-      throw new Error(`Font file not found at ${fontPath}`);
-    }
-    const fontBuffer = fs.readFileSync(fontPath);
-
-    // 3) prepare PDFKit
     const doc = new PDFDocument({ autoFirstPage: false });
-    doc.registerFont('Roboto', fontBuffer);
-    doc.addPage();
-    doc.font('Roboto');
+    if (fs.existsSync(fontPath)) {
+      const fontBuffer = fs.readFileSync(fontPath);
+      doc.registerFont('Roboto', fontBuffer);
+      doc.addPage();
+      doc.font('Roboto');
+    } else {
+      doc.addPage(); // use default font
+    }
 
-    // collect chunks
     const chunks: Buffer[] = [];
     doc.on('data', (c: Buffer) => chunks.push(c));
 
@@ -102,7 +97,6 @@ export async function POST(request: NextRequest) {
 
     doc.end();
 
-    // wait for PDF buffer
     const pdfBuffer: Buffer = await new Promise((resolve, reject) => {
       doc.on('end', () => resolve(Buffer.concat(chunks)));
       doc.on('error', reject);
