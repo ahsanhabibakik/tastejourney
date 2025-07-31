@@ -87,7 +87,7 @@ const nextConfig: NextConfig = {
 
   // Experimental features for better performance
 
-  serverExternalPackages: ["playwright", "puppeteer", "cheerio"],
+  serverExternalPackages: ["playwright", "puppeteer", "cheerio", "nodemailer"],
   experimental: {
     // Optimize bundle size
     optimizePackageImports: ["lucide-react", "@radix-ui/react-icons"],
@@ -106,6 +106,7 @@ const nextConfig: NextConfig = {
       config.externals.push({
         playwright: "playwright",
         puppeteer: "puppeteer",
+        nodemailer: "nodemailer",
       });
     }
 

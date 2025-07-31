@@ -1,0 +1,7 @@
+{
+  "timestamp": "2025-07-31T21:44:53.687Z",
+  "from": "delwerhossain006@gmail.com",
+  "to": "delwerhossain006@gmail.com",
+  "subject": "🧪 Mock Test Email from TasteJourney API",
+  "body": "\n        <div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;\">\n          <h1 style=\"color: #2563eb;\">TasteJourney Email Test (MOCK)</h1>\n          <p>This is a mock test email to verify that the email system is working correctly.</p>\n          <div style=\"background: #f0f9ff; padding: 15px; border-radius: 8px; margin: 20px 0;\">\n            <h3 style=\"margin: 0; color: #1d4ed8;\">✅ Mock Test Results:</h3>\n            <ul>\n              <li>Nodemailer import: Success</li>\n              <li>PDF generation: Ready</li>\n              <li>Email template: Generated</li>\n              <li>Mock delivery: Success</li>\n            </ul>\n          </div>\n          <p><strong>Timestamp:</strong> 2025-07-31T21:44:53.687Z</p>\n          <p><strong>From:</strong> delwerhossain006@gmail.com</p>\n          <p><strong>Node.js Version:</strong> v22.15.0</p>\n          <div style=\"background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;\">\n            <p style=\"margin: 0; color: #92400e;\">\n              <strong>Note:</strong> This is a mock email. To send real emails, configure Gmail app password in .env.local\n            </p>\n          </div>\n        </div>\n      "
+}
