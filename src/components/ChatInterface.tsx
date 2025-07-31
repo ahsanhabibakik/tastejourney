@@ -2,7 +2,7 @@
 
 
 import React, { useState, useRef, useEffect } from "react";
-import { Send } from "lucide-react";
+import { Send, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -149,6 +149,8 @@ const ChatInterface: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
   const [selectedClimates, setSelectedClimates] = useState<string[]>([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [recommendations, setRecommendations] = useState<
     | {
         recommendations: Recommendation[];
@@ -433,6 +435,32 @@ const ChatInterface: React.FC = () => {
     }
   };
 
+  const scrollToSlide = (direction: 'left' | 'right') => {
+    if (!scrollContainerRef.current || !recommendations) return;
+    
+    const container = scrollContainerRef.current;
+    const cardWidth = 384; // w-96 = 384px
+    const gap = 24; // gap-6 = 24px
+    const scrollDistance = cardWidth + gap;
+    
+    if (direction === 'left') {
+      const newSlide = Math.max(0, currentSlide - 1);
+      setCurrentSlide(newSlide);
+      container.scrollTo({
+        left: newSlide * scrollDistance,
+        behavior: 'smooth'
+      });
+    } else {
+      const maxSlide = recommendations.recommendations.length - 1;
+      const newSlide = Math.min(maxSlide, currentSlide + 1);
+      setCurrentSlide(newSlide);
+      container.scrollTo({
+        left: newSlide * scrollDistance,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   const handleClimateConfirm = async () => {
     if (selectedClimates.length === 0) return;
     
@@ -714,36 +742,75 @@ const ChatInterface: React.FC = () => {
 
                 {message.component === "recommendations" &&
                   chatState === "recommendations" && recommendations?.recommendations && (
-                    <div className="mt-4 w-full">
-                      <h3 className="text-lg font-semibold mb-4">
-                        Your Recommended Destinations
-                      </h3>
+                    <div className="mt-6 w-full">
+                      {/* Modern Header with Navigation */}
+                      <div className="flex items-center justify-between mb-6">
+                        <div>
+                          <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                            Your Recommended Destinations
+                          </h3>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            Personalized for your content creation goals
+                          </p>
+                        </div>
+                        
+                        {/* Desktop Navigation Arrows */}
+                        <div className="hidden md:flex items-center gap-2">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => scrollToSlide('left')}
+                            disabled={currentSlide === 0}
+                            className="h-10 w-10 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-30"
+                          >
+                            <ChevronLeft className="h-5 w-5" />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => scrollToSlide('right')}
+                            disabled={currentSlide >= recommendations.recommendations.length - 1}
+                            className="h-10 w-10 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-30"
+                          >
+                            <ChevronRight className="h-5 w-5" />
+                          </Button>
+                        </div>
+                      </div>
                       
                       {/* Enhanced Destination Cards - Horizontal Scrollable */}
-                      <div className="overflow-x-auto pb-4 scrollbar-hide" style={{scrollBehavior: 'smooth'}}>
-                        <div className="flex gap-6 w-max">
+                      <div 
+                        ref={scrollContainerRef}
+                        className="overflow-x-auto pb-6 scrollbar-hide"
+                        style={{scrollBehavior: 'smooth'}}
+                      >
+                        <div className="flex gap-6 w-max px-1">
                           {recommendations.recommendations.map((rec: Recommendation, i: number) => (
                             <div
                               key={i}
-                              className="bg-card border border-border rounded-lg overflow-hidden flex-shrink-0 w-80 md:w-96"
+                              className="group bg-card border border-border/50 rounded-2xl overflow-hidden flex-shrink-0 w-80 md:w-96 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm"
                             >
-                            {rec.image && (
-                              <Image 
-                                src={rec.image} 
-                                alt={rec.destination}
-                                width={400}
-                                height={200}
-                                className="w-full h-48 object-cover" 
-                              />
-                            )}
-                            <div className="p-6">
-                              <div className="flex justify-between items-start mb-3">
-                                <h4 className="font-semibold text-xl">
-                                  {rec.destination}
-                                </h4>
-                                <span className="bg-green-100 text-green-800 text-sm font-medium px-2 py-1 rounded">
+                            <div className="relative overflow-hidden">
+                              {rec.image && (
+                                <Image 
+                                  src={rec.image} 
+                                  alt={rec.destination}
+                                  width={400}
+                                  height={200}
+                                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" 
+                                />
+                              )}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                              <div className="absolute top-4 right-4">
+                                <span className="bg-white/90 backdrop-blur-sm text-primary text-sm font-semibold px-3 py-1.5 rounded-full shadow-lg border border-white/20">
                                   #{i + 1} Match
                                 </span>
+                              </div>
+                            </div>
+                            <div className="p-6">
+                              <div className="mb-4">
+                                <h4 className="font-bold text-xl mb-1 group-hover:text-primary transition-colors duration-200">
+                                  {rec.destination}
+                                </h4>
                               </div>
                               
                               {rec.highlights && rec.highlights.length > 0 && (
@@ -785,26 +852,36 @@ const ChatInterface: React.FC = () => {
 
                               {/* Creator Collaboration Section */}
                               {rec.creatorDetails && (
-                                <div className="mt-4 p-4 bg-muted/50 rounded-lg">
-                                  <h5 className="font-medium text-sm mb-3 text-primary">
-                                    🎯 Top Creator Collaboration Opportunities
-                                  </h5>
+                                <div className="mt-5 p-5 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border border-primary/20">
+                                  <div className="flex items-center gap-2 mb-4">
+                                    <div className="p-2 bg-primary/20 rounded-lg">
+                                      <span className="text-primary text-sm font-semibold">🎯</span>
+                                    </div>
+                                    <h5 className="font-semibold text-sm text-primary">
+                                      Creator Collaboration Hub
+                                    </h5>
+                                  </div>
                                   
-                                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
+                                  <div className="grid grid-cols-1 gap-3 mb-4">
                                     {rec.creatorDetails.topCreators.map((creator, idx) => (
-                                      <div key={idx} className="bg-background p-3 rounded border text-xs">
-                                        <div className="font-medium">{creator.name}</div>
-                                        <div className="text-muted-foreground">{creator.followers} • {creator.niche}</div>
-                                        <div className="text-primary text-xs mt-1">{creator.collaboration}</div>
+                                      <div key={idx} className="bg-background/80 backdrop-blur-sm p-3 rounded-lg border border-border/50 hover:border-primary/30 transition-colors duration-200">
+                                        <div className="flex items-center justify-between mb-1">
+                                          <div className="font-semibold text-sm">{creator.name}</div>
+                                          <div className="text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded-full">
+                                            {creator.followers}
+                                          </div>
+                                        </div>
+                                        <div className="text-xs text-muted-foreground mb-1">{creator.niche}</div>
+                                        <div className="text-primary text-xs font-medium">{creator.collaboration}</div>
                                       </div>
                                     ))}
                                   </div>
                                   
                                   <div>
-                                    <h6 className="font-medium text-xs mb-2">Available Collaboration Types:</h6>
-                                    <div className="flex flex-wrap gap-1">
+                                    <h6 className="font-semibold text-xs mb-3 text-foreground/80">Partnership Opportunities:</h6>
+                                    <div className="flex flex-wrap gap-2">
                                       {rec.creatorDetails.collaborationOpportunities.map((opp, idx) => (
-                                        <span key={idx} className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">
+                                        <span key={idx} className="bg-primary/15 text-primary text-xs px-3 py-1.5 rounded-full font-medium border border-primary/20 hover:bg-primary/20 transition-colors duration-200">
                                           {opp}
                                         </span>
                                       ))}
@@ -828,23 +905,40 @@ const ChatInterface: React.FC = () => {
                         </div>
                       </div>
                       
-                      {/* Scroll Indicator */}
-                      <div className="flex justify-center mt-4">
-                        <div className="flex items-center gap-2 px-3 py-2 bg-muted/30 rounded-full">
-                          <span className="text-xs text-muted-foreground">
-                            👈 Swipe to explore all {recommendations.recommendations.length} destinations 👉
-                          </span>
+                      {/* Modern Progress Indicator */}
+                      <div className="flex flex-col items-center gap-4 mt-6">
+                        {/* Animated dots indicator with click functionality */}
+                        <div className="flex items-center gap-2">
+                          {recommendations.recommendations.map((_, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => {
+                                setCurrentSlide(idx);
+                                if (scrollContainerRef.current) {
+                                  const scrollDistance = (384 + 24) * idx; // cardWidth + gap
+                                  scrollContainerRef.current.scrollTo({
+                                    left: scrollDistance,
+                                    behavior: 'smooth'
+                                  });
+                                }
+                              }}
+                              className={`transition-all duration-300 rounded-full ${
+                                idx === currentSlide 
+                                  ? 'w-8 h-2 bg-primary shadow-lg shadow-primary/30' 
+                                  : 'w-2 h-2 bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                              }`}
+                            />
+                          ))}
                         </div>
-                      </div>
-                      
-                      {/* Dots indicator */}
-                      <div className="flex justify-center gap-1 mt-2">
-                        {recommendations.recommendations.map((_, idx) => (
-                          <div
-                            key={idx}
-                            className="w-2 h-2 rounded-full bg-muted-foreground/30"
-                          />
-                        ))}
+                        
+                        {/* Mobile scroll hint */}
+                        <div className="md:hidden">
+                          <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-primary/5 rounded-full border border-primary/20">
+                            <span className="text-xs text-primary font-medium">
+                              👈 Swipe to explore all destinations 👉
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}
