@@ -133,13 +133,18 @@ const ChatInterface: React.FC = () => {
     scrollToBottom();
   }, [messages, isTyping]);
 
+  // Generate a unique ID for each message
+  function generateUniqueId() {
+    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  }
+
   const addMessage = (
     text: string,
     isBot: boolean,
     component?: "url-form" | "confirmation" | "questions" | "recommendations"
   ) => {
     const newMessage: Message = {
-      id: Date.now().toString(),
+      id: generateUniqueId(),
       text,
       isBot,
       timestamp: new Date(),
