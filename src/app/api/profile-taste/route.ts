@@ -192,37 +192,65 @@ function generatePersonalityTraits(vector: TasteVector): string[] {
 // Real Qloo API integration
 // See Qloo API docs: https://docs.qloo.com/
 async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
-  // Qloo Insights API integration (see https://docs.qloo.com/reference/insights-api-deep-dive)
-  const response = await fetch(`${process.env.QLOO_API_URL}/v1/taste/profile`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${process.env.QLOO_API_KEY}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      content_themes: request.themes,
-      content_hints: request.hints,
-      content_type: request.contentType,
-      social_profiles: request.socialLinks,
-      demographics: request.demographics
-    })
-  });
+  // Try different potential endpoints for Qloo hackathon API
+  const endpoints = [
+    '/v1/insights',
+    '/v1/recommendations', 
+    '/v1/taste',
+    '/v1/profile',
+    '/insights',
+    '/recommendations'
+  ];
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Qloo API error: ${response.status} - ${errorText}`);
+  for (const endpoint of endpoints) {
+    try {
+      console.log(`Trying Qloo endpoint: ${process.env.QLOO_API_URL}${endpoint}`);
+      
+      const response = await fetch(`${process.env.QLOO_API_URL}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'X-API-Key': process.env.QLOO_API_KEY!,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          content_themes: request.themes,
+          content_hints: request.hints,
+          content_type: request.contentType,
+          social_profiles: request.socialLinks,
+          demographics: request.demographics,
+          // Alternative payload formats
+          input: {
+            themes: request.themes,
+            hints: request.hints,
+            contentType: request.contentType,
+            interests: request.themes
+          }
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(`Success with endpoint ${endpoint}:`, data);
+        
+        // Map Qloo API response to local QlooResponse type
+        return {
+          tasteVector: data.taste_vector || data.tasteVector || {},
+          recommendations: data.recommendations || [],
+          confidence: data.confidence || 0.8,
+          culturalAffinities: data.cultural_affinities || data.culturalAffinities || [],
+          personalityTraits: data.personality_traits || data.personalityTraits || [],
+          processingTime: `API call to ${endpoint}`
+        };
+      } else {
+        const errorText = await response.text();
+        console.log(`Failed endpoint ${endpoint}: ${response.status} - ${errorText}`);
+      }
+    } catch (error) {
+      console.log(`Error with endpoint ${endpoint}:`, error);
+    }
   }
 
-  const data = await response.json();
-  // Map Qloo API response to local QlooResponse type
-  return {
-    tasteVector: data.taste_vector || {},
-    recommendations: data.recommendations || [],
-    confidence: data.confidence || 0,
-    culturalAffinities: data.cultural_affinities || [],
-    personalityTraits: data.personality_traits || [],
-    processingTime: data.processing_time || "API call"
-  };
+  throw new Error('All Qloo API endpoints failed');
 }
 
 export async function POST(request: NextRequest) {
