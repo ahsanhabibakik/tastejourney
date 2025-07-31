@@ -112,6 +112,17 @@ const ChatInterface: React.FC = () => {
     socialLinks: { platform: string; url: string }[];
     title: string;
     description: string;
+    keywords?: string[];
+    images?: string[];
+    videoLinks?: string[];
+    language?: string;
+    location?: string;
+    brands?: string[];
+    collaborations?: string[];
+    regionBias?: string[];
+    extractedAt?: string;
+    scrapingMethods?: string[];
+    fallbackUsed?: boolean;
   } | null>(null);
   const [tasteProfile, setTasteProfile] = useState<{ tasteVector: Record<string, number> } | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
