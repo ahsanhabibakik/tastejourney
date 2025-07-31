@@ -34,9 +34,16 @@ Creator Journey is an AI-powered chatbot for content creators who travel. It scr
 - Email Delivery (SendGrid)
 
 #### Technical Requirements
-- All APIs must be free tier or open source
-- Rate limiting and error handling for all APIs
-- Privacy-first: no user data stored long-term
+
+##### Scraping Approach for Live Hackathon Deployment
+
+- For local/dev: Use Playwright (free, works locally, not on Vercel).
+- For live/Vercel: Use ScraperAPI (free tier) as primary, Tarvily (free tier) as secondary.
+- If both APIs are rate-limited/exhausted, fallback to Cheerio + fetch for static/non-JS sites.
+- Clearly document API usage limits in README and UI.
+- All scraping code must handle API errors and gracefully degrade to next available method.
+- No paid APIs required for MVP/hackathon demo.
+- See `/lib/scraper.ts` for implementation details.
 
 #### Recommendation Scoring Logic
 ```
