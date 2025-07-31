@@ -728,87 +728,94 @@ const RecommendationsScreen: React.FC = () => {
 
       {/* Enhanced Action Cards */}
       <Card>
-        <CardContent className="p-8">
-          <h4 className="text-2xl font-bold text-foreground mb-6 text-center">
-            What would you like to explore next?
-          </h4>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card
-              className="p-6 hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50 group"
-              onClick={() => console.log("More destinations clicked")}
-            >
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <MapPin className="h-8 w-8 text-primary" />
-                </div>
-                <h5 className="font-semibold text-foreground mb-2 text-lg">
-                  Get More Destinations
-                </h5>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Explore additional travel recommendations based on different
-                  criteria or seasons
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-                >
-                  Explore More <ChevronRight className="h-4 w-4 ml-1" />
-                </Button>
-              </div>
-            </Card>
+    <CardContent className="p-8">
+  <h4 className="text-2xl font-bold text-foreground mb-6 text-center">
+    What would you like to explore next?
+  </h4>
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {/* 1. Primary Destinations Card */}
+    <Card
+      className="p-6 flex flex-col justify-between h-full hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50 group"
+      onClick={() => console.log("More destinations clicked")}
+    >
+      <div className="text-center">
+        <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          <MapPin className="h-8 w-8 text-primary" />
+        </div>
+        <h5 className="font-semibold text-foreground mb-2 text-lg">
+          Get More Destinations
+        </h5>
+        <p className="text-sm text-muted-foreground mb-4">
+          Explore additional travel recommendations based on different criteria or seasons
+        </p>
+      </div>
+      <div className="mt-4 text-center">
+        <Button
+          variant="outline"
+          size="sm"
+          className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+        >
+          Explore More <ChevronRight className="h-4 w-4 ml-1" />
+        </Button>
+      </div>
+    </Card>
 
-            <Card
-              className="p-6 hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50 group"
-              onClick={() => console.log("Budget planning clicked")}
-            >
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500/20 to-green-500/10 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <DollarSign className="h-8 w-8 text-green-600" />
-                </div>
-                <h5 className="font-semibold text-foreground mb-2 text-lg">
-                  Budget Planning
-                </h5>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Get detailed cost breakdowns and budget optimization tips for
-                  your chosen destination
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="group-hover:bg-green-600 group-hover:text-white transition-colors"
-                >
-                  Plan Budget <ChevronRight className="h-4 w-4 ml-1" />
-                </Button>
-              </div>
-            </Card>
+    {/* 2. Budget Planning Card */}
+    <Card
+      className="p-6 flex flex-col justify-between h-full hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-green-600/50 group"
+      onClick={() => console.log("Budget planning clicked")}
+    >
+      <div className="text-center">
+        <div className="w-16 h-16 bg-gradient-to-br from-green-500/20 to-green-500/10 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          <DollarSign className="h-8 w-8 text-green-600" />
+        </div>
+        <h5 className="font-semibold text-foreground mb-2 text-lg">
+          Budget Planning
+        </h5>
+        <p className="text-sm text-muted-foreground mb-4">
+          Get detailed cost breakdowns and budget optimization tips for your chosen destination
+        </p>
+      </div>
+      <div className="mt-4 text-center">
+        <Button
+          variant="outline"
+          size="sm"
+          className="group-hover:bg-green-600 group-hover:text-white transition-colors"
+        >
+          Plan Budget <ChevronRight className="h-4 w-4 ml-1" />
+        </Button>
+      </div>
+    </Card>
 
-            <Card
-              className="p-6 hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50 group"
-              onClick={() => console.log("Brand collaborations clicked")}
-            >
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500/20 to-purple-500/10 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Briefcase className="h-8 w-8 text-purple-600" />
-                </div>
-                <h5 className="font-semibold text-foreground mb-2 text-lg">
-                  Brand Collaborations
-                </h5>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Learn more about specific brand partnership opportunities and
-                  how to approach them
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="group-hover:bg-purple-600 group-hover:text-white transition-colors"
-                >
-                  View Partnerships <ChevronRight className="h-4 w-4 ml-1" />
-                </Button>
-              </div>
-            </Card>
-          </div>
-        </CardContent>
+    {/* 3. Brand Collaborations Card */}
+    <Card
+      className="p-6 flex flex-col justify-between h-full hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-purple-600/50 group"
+      onClick={() => console.log("Brand collaborations clicked")}
+    >
+      <div className="text-center">
+        <div className="w-16 h-16 bg-gradient-to-br from-purple-500/20 to-purple-500/10 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          <Briefcase className="h-8 w-8 text-purple-600" />
+        </div>
+        <h5 className="font-semibold text-foreground mb-2 text-lg">
+          Brand Collaborations
+        </h5>
+        <p className="text-sm text-muted-foreground mb-4">
+          Learn more about specific brand partnership opportunities and how to approach them
+        </p>
+      </div>
+      <div className="mt-4 text-center">
+        <Button
+          variant="outline"
+          size="sm"
+          className="group-hover:bg-purple-600 group-hover:text-white transition-colors"
+        >
+          View Partnerships <ChevronRight className="h-4 w-4 ml-1" />
+        </Button>
+      </div>
+    </Card>
+  </div>
+</CardContent>
+
       </Card>
     </div>
   );
