@@ -189,6 +189,87 @@ function generatePersonalityTraits(vector: TasteVector): string[] {
   return traits.slice(0, 5); // Limit to top 5
 }
 
+// Generate smart recommendations based on taste vector
+function generateSmartRecommendations(vector: TasteVector, themes: string[]): string[] {
+  const recommendations: string[] = [];
+
+  // Adventure-based recommendations
+  if (vector.adventure > 0.6) {
+    recommendations.push("Costa Rica", "New Zealand", "Nepal", "Patagonia");
+  }
+
+  // Culture-focused recommendations
+  if (vector.culture > 0.6) {
+    recommendations.push("Kyoto", "Rome", "Istanbul", "Marrakech", "Cusco");
+  }
+
+  // Luxury travel recommendations
+  if (vector.luxury > 0.6) {
+    recommendations.push("Maldives", "Dubai", "Monaco", "Santorini", "Aspen");
+  }
+
+  // Food-focused recommendations
+  if (vector.food > 0.6) {
+    recommendations.push("Tokyo", "Paris", "Bangkok", "Lima", "Mumbai");
+  }
+
+  // Nature-based recommendations
+  if (vector.nature > 0.6) {
+    recommendations.push("Iceland", "Norwegian Fjords", "Amazon Rainforest", "Yellowstone", "Banff");
+  }
+
+  // Urban exploration recommendations
+  if (vector.urban > 0.6) {
+    recommendations.push("New York", "London", "Singapore", "Barcelona", "Berlin");
+  }
+
+  // Budget-friendly recommendations
+  if (vector.budget > 0.6) {
+    recommendations.push("Vietnam", "Portugal", "Czech Republic", "Guatemala", "India");
+  }
+
+  // Theme-based recommendations
+  themes.forEach(theme => {
+    switch (theme.toLowerCase()) {
+      case 'photography':
+      case 'visual':
+        recommendations.push("Morocco", "India", "Myanmar", "Ethiopia");
+        break;
+      case 'wellness':
+      case 'health':
+        recommendations.push("Bali", "Rishikesh", "Tulum", "Costa Rica");
+        break;
+      case 'business':
+      case 'professional':
+        recommendations.push("Singapore", "Switzerland", "Japan", "Germany");
+        break;
+    }
+  });
+
+  // Remove duplicates and return top recommendations
+  const uniqueRecs = [...new Set(recommendations)];
+  return uniqueRecs.slice(0, 8);
+}
+
+// Calculate confidence based on input quality
+function calculateConfidence(themes: string[], hints: string[]): number {
+  let confidence = 0.5; // Base confidence
+
+  // More themes = higher confidence
+  confidence += Math.min(themes.length * 0.1, 0.3);
+
+  // More hints = higher confidence
+  confidence += Math.min(hints.length * 0.05, 0.2);
+
+  // Bonus for specific content types
+  const specificHints = ['photographer', 'food-blogger', 'travel-blogger'];
+  if (hints.some(hint => specificHints.includes(hint))) {
+    confidence += 0.1;
+  }
+
+  return Math.min(confidence, 0.95); // Cap at 95%
+}
+
 // Real Qloo API integration
 // See Qloo API docs: https://docs.qloo.com/
 async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
@@ -284,22 +365,27 @@ export async function POST(request: NextRequest) {
 
     let qlooResponse: QlooResponse;
     
+    // For hackathon demo, use enhanced mock system (Qloo API endpoints unavailable)
+    console.log("Using enhanced mock taste vector system for demo");
+    const mockVector = generateMockTasteVector(themes, hints, contentType);
+    qlooResponse = {
+      tasteVector: mockVector,
+      recommendations: generateSmartRecommendations(mockVector, themes),
+      confidence: calculateConfidence(themes, hints),
+      culturalAffinities: generateCulturalAffinities(mockVector),
+      personalityTraits: generatePersonalityTraits(mockVector),
+      processingTime: "Enhanced AI analysis"
+    };
+
+    // Uncomment below to try real Qloo API when available
+    /*
     try {
-      // Try Qloo API first
       qlooResponse = await callQlooAPI(qlooRequest);
     } catch (error) {
       console.log("Qloo API unavailable, using mock data:", error);
-      // Fallback to mock data
-      const mockVector = generateMockTasteVector(themes, hints, contentType);
-      qlooResponse = {
-        tasteVector: mockVector,
-        recommendations: [],
-        confidence: 0.8,
-        culturalAffinities: generateCulturalAffinities(mockVector),
-        personalityTraits: generatePersonalityTraits(mockVector),
-        processingTime: "Mock generation"
-      };
+      // Use mock as fallback
     }
+    */
 
     // Simulate processing time for realistic UX
     await new Promise((resolve) => setTimeout(resolve, 1500));

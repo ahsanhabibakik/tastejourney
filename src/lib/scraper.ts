@@ -129,18 +129,52 @@ function extractThemes($: cheerio.CheerioAPI): string[] {
   // Alt text from images
   const imageThemes = $('img[alt]').map((_, el) => $(el).attr('alt')?.toLowerCase() || '').get();
   
-  const possibleThemes = [
-    "travel", "photography", "adventure", "culture", "food", "lifestyle", 
-    "fashion", "luxury", "urban", "nature", "beach", "cultural", "fitness",
-    "wellness", "art", "music", "technology", "business", "education",
-    "family", "pets", "sports", "gaming", "cooking", "beauty", "health",
-    "outdoor", "indoor", "city", "rural", "mountains", "ocean", "desert"
-  ];
+  // Enhanced theme detection with synonyms and related terms
+  const themePatterns = {
+    "productivity": /productiv|efficient|workflow|time management|focus|organize|planning|gtd|getting things done|optimize|habit|routine|system/i,
+    "business": /business|entrepreneur|startup|company|corporate|marketing|sales|revenue|profit|strategy|management|leadership|invest/i,
+    "art": /\bart\b|design|creative|illustration|drawing|painting|visual|aesthetic|artistic|gallery|portfolio|creative work/i,
+    "education": /educat|learn|teach|course|tutorial|study|academic|university|school|knowledge|skill|training|development/i,
+    "technology": /tech|software|programming|coding|digital|innovation|ai|artificial intelligence|machine learning|development|app|web/i,
+    "health": /health|medical|wellness|fitness|nutrition|diet|exercise|mental health|therapy|wellbeing|mindfulness/i,
+    "finance": /financ|money|invest|trading|crypto|stock|saving|budget|wealth|economic|banking|fintech/i,
+    "travel": /travel|journey|destination|trip|vacation|explore|adventure|wanderlust|backpack|nomad|culture|country/i,
+    "lifestyle": /lifestyle|life|personal|daily|routine|balance|happiness|mindset|self improvement|motivation|inspiration/i,
+    "photography": /photo|camera|picture|image|visual|shoot|portrait|landscape|photography|instagram|content creation/i,
+    "food": /food|cooking|recipe|cuisine|restaurant|chef|culinary|nutrition|eat|meal|kitchen/i,
+    "fashion": /fashion|style|clothing|outfit|trend|design|brand|wear|model|beauty|aesthetic/i,
+    "fitness": /fitness|workout|gym|exercise|training|muscle|strength|cardio|yoga|sports|athletic/i,
+    "music": /music|song|artist|album|sound|audio|musician|instrument|band|concert|performance/i,
+    "gaming": /gaming|game|video game|esports|streaming|twitch|youtube|content|player|tournament/i,
+    "writing": /writing|author|book|blog|content|story|journalism|publication|writer|article|copywriting/i,
+    "science": /science|research|study|experiment|discovery|innovation|analysis|data|scientific|academic/i,
+    "real-estate": /real estate|property|housing|investment|mortgage|rent|buying|selling|market/i,
+    "parenting": /parent|family|child|kid|baby|motherhood|fatherhood|family life|raising/i,
+    "relationships": /relationship|dating|marriage|love|family|friendship|social|communication|connection/i,
+    "spirituality": /spiritual|meditation|mindfulness|philosophy|religion|consciousness|self awareness|inner peace/i,
+    "entertainment": /entertainment|movie|film|tv|show|comedy|drama|celebrity|media|culture/i,
+    "politics": /politics|government|policy|election|democracy|society|social issues|activism|reform/i,
+    "environment": /environment|climate|sustainability|green|eco|nature|conservation|renewable|planet/i,
+    "sports": /sport|football|basketball|soccer|tennis|golf|baseball|athletic|competition|team|league/i
+  };
+
+  const allText = [...keywordThemes, ...headingThemes, ...contentThemes, ...imageThemes].join(' ').toLowerCase();
   
-  const allText = [...keywordThemes, ...headingThemes, ...contentThemes, ...imageThemes].join(' ');
-  const themes = possibleThemes.filter(theme => 
-    allText.includes(theme) || allText.includes(theme.slice(0, -1)) // singular forms
-  );
+  // Enhanced theme detection using pattern matching
+  const themes: string[] = [];
+  for (const [theme, pattern] of Object.entries(themePatterns)) {
+    if (pattern.test(allText)) {
+      themes.push(theme);
+    }
+  }
+  
+  // Also extract from page description and title with more weight
+  const titleDescription = `${$('title').text()} ${$('meta[name="description"]').attr('content') || ''} ${$('meta[property="og:description"]').attr('content') || ''}`.toLowerCase();
+  for (const [theme, pattern] of Object.entries(themePatterns)) {
+    if (pattern.test(titleDescription) && !themes.includes(theme)) {
+      themes.push(theme);
+    }
+  }
   
   return Array.from(new Set(themes));
 }
