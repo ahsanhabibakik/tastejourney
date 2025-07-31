@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const { websiteData } = await request.json();
+    const { websiteData, tasteVector } = await request.json();
 
     if (!websiteData) {
       return NextResponse.json(
@@ -10,16 +10,16 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+    if (!tasteVector) {
+      return NextResponse.json(
+        { error: "tasteVector is required" },
+        { status: 400 }
+      );
+    }
 
-    // TODO: Implement actual recommendation logic here
-    // This could involve:
-    // 1. AI/ML algorithms to match user preferences with destinations
-    // 2. Real-time data from travel APIs
-    // 3. Brand partnership databases
-    // 4. Creator community analytics
-    // 5. Budget optimization algorithms
-
-    const mockRecommendations = [
+    // Example scoring: matchScore based on tasteVector and destination tags
+    // TasteVector should be generated using Qloo API (see https://docs.qloo.com/)
+    const destinations = [
       {
         id: 1,
         destination: "Bali, Indonesia",
@@ -103,12 +103,29 @@ export async function POST(request: NextRequest) {
       },
     ];
 
+    // Score destinations using tasteVector
+    const scored = destinations.map(dest => {
+      let score = 0;
+      if (dest.highlights) {
+        dest.highlights.forEach(h => {
+          if (h.toLowerCase().includes("adventure")) score += (tasteVector.adventure || 0) * 20;
+          if (h.toLowerCase().includes("food")) score += (tasteVector.food || 0) * 20;
+          if (h.toLowerCase().includes("culture")) score += (tasteVector.culture || 0) * 20;
+          if (h.toLowerCase().includes("luxury")) score += (tasteVector.luxury || 0) * 20;
+        });
+      }
+      return { ...dest, matchScore: Math.round(score + 70) };
+    });
+
+    // Sort by matchScore descending
+    scored.sort((a, b) => b.matchScore - a.matchScore);
+
     // Simulate processing time
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     return NextResponse.json({
-      recommendations: mockRecommendations,
-      totalCount: mockRecommendations.length,
+      recommendations: scored,
+      totalCount: scored.length,
     });
   } catch (error) {
     console.error("Error getting recommendations:", error);
