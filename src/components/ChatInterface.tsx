@@ -467,11 +467,10 @@ const ChatInterface: React.FC = () => {
                                 ? "bg-blue-500 w-8"
                                 : "bg-gray-200 w-4"
                             }`}
-                          ></div>
-                        ))}
-                        <span className="ml-3 text-xs text-gray-500">
-                          {currentQuestionIndex + 1} / {questions.length}
-                        </span>
+                    </div>
+                  )}
+
+                {message.component ===
                       </div>
                       {/* Animated Question Card */}
                       <div className="bg-white/80 shadow-lg rounded-xl p-4 mb-2 animate-fade-in flex items-center gap-2">
@@ -506,10 +505,7 @@ const ChatInterface: React.FC = () => {
                       </div>
                     </div>
                   )}
-// Animation for fade-in
-// Add this style to your global CSS or in a style tag if not already present:
-// .animate-fade-in { animation: fadeIn 0.5s; }
-// @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: none;} }
+
 
                 {message.component === "recommendations" &&
                   chatState === "recommendations" && recommendations?.recommendations && (
