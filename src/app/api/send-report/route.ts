@@ -1,10 +1,11 @@
 export const runtime = 'nodejs';
 
 import { NextRequest, NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import sgMail from '@sendgrid/mail';
 import PDFDocument from 'pdfkit';
 import fs from 'fs';
 import path from 'path';
+// import nodemailer from 'nodemailer'; // commented out for fallback
 
 interface Recommendation {
   destination: string;
@@ -36,6 +37,8 @@ interface ReportRequest {
   userProfile: UserProfile;
   websiteData: WebsiteData;
 }
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
 export async function POST(request: NextRequest) {
   try {
@@ -113,7 +116,31 @@ export async function POST(request: NextRequest) {
       doc.on('error', reject);
     });
 
-    // 4) send email via Nodemailer
+
+    // Send email via SendGrid
+    const msg = {
+      to: email,
+      from: 'syedmirhabib@gmail.com', // must be a verified sender in SendGrid
+      subject: 'Your TasteJourney Travel Report',
+      html: `
+        <p>Hi there,</p>
+        <p>Attached is your personalized travel report from TasteJourney. Enjoy planning!</p>
+        <p>— The TasteJourney Team</p>
+      `,
+      attachments: [
+        {
+          content: pdfBuffer.toString('base64'),
+          filename: 'travel-report.pdf',
+          type: 'application/pdf',
+          disposition: 'attachment',
+        },
+      ],
+    };
+
+    await sgMail.send(msg);
+
+    // --- Nodemailer fallback (commented out) ---
+    /*
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -121,11 +148,6 @@ export async function POST(request: NextRequest) {
         pass: process.env.GMAIL_PASS!,
       },
     });
-
-    // Debug: log email and recommendations count
-    console.log('Sending PDF report to:', email);
-    console.log('Recommendations count:', safeRecommendations.length);
-
     await transporter.sendMail({
       from: process.env.GMAIL_USER,
       to: email,
@@ -143,6 +165,7 @@ export async function POST(request: NextRequest) {
         },
       ],
     });
+    */
 
     return NextResponse.json({
       success: true,
