@@ -12,7 +12,8 @@
       "Bash(taskkill:*)",
       "Bash(mkdir:*)",
       "WebFetch(domain:docs.qloo.com)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }
