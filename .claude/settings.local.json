@@ -10,7 +10,9 @@
       "Bash(npm run dev:*)",
       "Bash(curl:*)",
       "Bash(taskkill:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "WebFetch(domain:docs.qloo.com)",
+      "Bash(pkill:*)"
     ],
     "deny": []
   }
