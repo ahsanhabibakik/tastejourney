@@ -22,7 +22,17 @@ interface ConfirmationScreenProps {
     hints: string[];
     contentType: string;
     socialLinks: { platform: string; url: string }[];
-    extractedKeywords?: string[];
+    keywords?: string[];
+    images?: string[];
+    videoLinks?: string[];
+    language?: string;
+    location?: string;
+    brands?: string[];
+    collaborations?: string[];
+    regionBias?: string[];
+    extractedAt?: string;
+    scrapingMethods?: string[];
+    fallbackUsed?: boolean;
   };
   onConfirm: (confirmed: boolean) => void;
 }
@@ -106,10 +116,107 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
               <div className="flex flex-wrap gap-2">
                 {data.hints.map((hint, index) => (
                   <Badge key={index} variant="secondary" className="text-xs">
-                    {hint.replace("-", " ")}
+                    {hint.replace(/[-_]/g, " ").replace(/\b\w/g, l => l.toUpperCase())}
                   </Badge>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* Additional Information Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {data.location && (
+              <div>
+                <h4 className="font-medium text-foreground mb-2 flex items-center">
+                  <MapPin className="h-4 w-4 text-primary mr-2" />
+                  Location
+                </h4>
+                <Badge variant="outline">
+                  {data.location.replace(/[-_]/g, " ").replace(/\b\w/g, l => l.toUpperCase())}
+                </Badge>
+              </div>
+            )}
+
+            {data.language && data.language !== "en" && (
+              <div>
+                <h4 className="font-medium text-foreground mb-2">Language</h4>
+                <Badge variant="outline">{data.language.toUpperCase()}</Badge>
+              </div>
+            )}
+          </div>
+
+          {data.keywords && data.keywords.length > 0 && (
+            <div>
+              <h4 className="font-medium text-foreground mb-2">Keywords</h4>
+              <div className="flex flex-wrap gap-1">
+                {data.keywords.slice(0, 8).map((keyword, index) => (
+                  <Badge key={index} variant="outline" className="text-xs">
+                    {keyword}
+                  </Badge>
+                ))}
+                {data.keywords.length > 8 && (
+                  <Badge variant="outline" className="text-xs">
+                    +{data.keywords.length - 8} more
+                  </Badge>
+                )}
+              </div>
+            </div>
+          )}
+
+          {data.brands && data.brands.length > 0 && (
+            <div>
+              <h4 className="font-medium text-foreground mb-2">Brand Mentions</h4>
+              <div className="flex flex-wrap gap-2">
+                {data.brands.map((brand, index) => (
+                  <Badge key={index} variant="secondary" className="text-xs">
+                    {brand.replace(/[-_]/g, " ").replace(/\b\w/g, l => l.toUpperCase())}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {data.regionBias && data.regionBias.length > 0 && (
+            <div>
+              <h4 className="font-medium text-foreground mb-2">Regional Interest</h4>
+              <div className="flex flex-wrap gap-2">
+                {data.regionBias.map((region, index) => (
+                  <Badge key={index} variant="outline" className="text-xs">
+                    {region.replace(/[-_]/g, " ").replace(/\b\w/g, l => l.toUpperCase())}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Media Content Summary */}
+          {((data.images && data.images.length > 0) || (data.videoLinks && data.videoLinks.length > 0)) && (
+            <div>
+              <h4 className="font-medium text-foreground mb-2">Media Content</h4>
+              <div className="flex gap-4 text-sm text-muted-foreground">
+                {data.images && data.images.length > 0 && (
+                  <span>📸 {data.images.length} images</span>
+                )}
+                {data.videoLinks && data.videoLinks.length > 0 && (
+                  <span>🎥 {data.videoLinks.length} videos</span>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Analysis Metadata */}
+          {data.fallbackUsed && (
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+              <p className="text-xs text-yellow-800">
+                ⚠️ Note: This analysis uses fallback data due to website access limitations. 
+                The actual content may be more detailed.
+              </p>
+            </div>
+          )}
+
+          {data.extractedAt && (
+            <div className="text-xs text-muted-foreground">
+              Analyzed: {new Date(data.extractedAt).toLocaleString()}
             </div>
           )}
         </div>
