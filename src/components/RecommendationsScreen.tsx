@@ -62,18 +62,23 @@ interface Recommendation {
 }
 
 const RecommendationsScreen: React.FC = () => {
-  const [selectedDestination, setSelectedDestination] = useState<number | null>(
-    null
-  );
-  const [sortBy, setSortBy] = useState<"match" | "budget" | "engagement">(
-    "match"
-  );
-  const [filterBy, setFilterBy] = useState<
-    "all" | "budget" | "luxury" | "adventure"
-  >("all");
-  const [bookmarkedItems, setBookmarkedItems] = useState<Set<number>>(
-    new Set()
-  );
+  const [selectedDestination, setSelectedDestination] = useState<number | null>(null);
+  const [sortBy, setSortBy] = useState<"match" | "budget" | "engagement">("match");
+  const [filterBy, setFilterBy] = useState<"all" | "budget" | "luxury" | "adventure">("all");
+  const [bookmarkedItems, setBookmarkedItems] = useState<Set<number>>(new Set());
+
+  // Load bookmarks from localStorage on mount
+  React.useEffect(() => {
+    const stored = localStorage.getItem("bookmarkedDestinations");
+    if (stored) {
+      setBookmarkedItems(new Set(JSON.parse(stored)));
+    }
+  }, []);
+
+  // Sync bookmarks to localStorage
+  React.useEffect(() => {
+    localStorage.setItem("bookmarkedDestinations", JSON.stringify(Array.from(bookmarkedItems)));
+  }, [bookmarkedItems]);
 
   const recommendations: Recommendation[] = [
     {
@@ -207,8 +212,20 @@ const RecommendationsScreen: React.FC = () => {
     const newBookmarks = new Set(bookmarkedItems);
     if (newBookmarks.has(id)) {
       newBookmarks.delete(id);
+      // Remove from backend
+      fetch("/api/bookmarks", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ destination: id.toString() })
+      });
     } else {
       newBookmarks.add(id);
+      // Add to backend
+      fetch("/api/bookmarks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ destination: id.toString() })
+      });
     }
     setBookmarkedItems(newBookmarks);
   };
