@@ -62,6 +62,9 @@
   --radius-sm: 0.5rem;
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
+
+  /* Positioning utilities */
+  --inset-0: 0px;
 }
 
 .dark {
@@ -208,6 +211,14 @@
 }
 
 @layer components {
+  /* Positioning utilities */
+  .inset-0 {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
   /* Custom gradient backgrounds */
   .gradient-bg {
     background: linear-gradient(
@@ -291,6 +302,8 @@
   /* Gradient text */
   .gradient-text {
     @apply bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent;
+  }
+
   /* Hide scrollbar for horizontal scroll */
   .scrollbar-hide {
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
