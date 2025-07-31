@@ -1,11 +1,11 @@
 export const runtime = 'nodejs';
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
 // Mock email service for testing when Gmail is not available
-export async function POST(request: NextRequest) {
+export async function POST(): Promise<NextResponse> {
   try {
     const mockEmailData = {
       timestamp: new Date().toISOString(),

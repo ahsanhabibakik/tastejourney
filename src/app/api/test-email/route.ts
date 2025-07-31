@@ -1,9 +1,9 @@
 export const runtime = 'nodejs';
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-export async function POST(request: NextRequest) {
+export async function POST(): Promise<NextResponse> {
   try {
     // Check if credentials exist
     if (!process.env.GMAIL_USER || !process.env.GMAIL_PASS) {

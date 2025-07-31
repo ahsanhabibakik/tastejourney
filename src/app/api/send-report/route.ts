@@ -9,10 +9,11 @@ import nodemailer from 'nodemailer';
 // =============================================================================
 // Prevent PDFKit from accessing filesystem for font files
 const originalReadFileSync = fs.readFileSync;
-fs.readFileSync = function(filePath: any, options?: any) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(fs as any).readFileSync = function(filePath: any, options?: any) {
   if (typeof filePath === 'string' && filePath.includes('.afm')) {
     // Return minimal AFM data for any font to prevent ENOENT errors
-    return `StartFontMetrics 4.1
+    const afmData = `StartFontMetrics 4.1
 FontName Times-Roman
 FullName Times Roman
 FamilyName Times
@@ -37,8 +38,16 @@ C 33 ; WX 333 ; N exclam ; B 130 -9 238 676 ;
 C 65 ; WX 722 ; N A ; B 15 0 706 674 ;
 EndCharMetrics
 EndFontMetrics`;
+    
+    // Return as Buffer or string based on options
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (options && typeof options === 'object' && (options as { encoding?: any }).encoding === null) {
+      return Buffer.from(afmData);
+    }
+    return afmData;
   }
-  return originalReadFileSync.call(this, filePath, options);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (originalReadFileSync as any).call(fs, filePath, options);
 };
 
 // Import PDFKit AFTER monkey patch
@@ -137,7 +146,7 @@ const createEmailTransporter = () => {
 // =============================================================================
 // PDF GENERATION UTILITIES
 // =============================================================================
-const createSafePDFDocument = (options: any = {}) => {
+const createSafePDFDocument = (options: Record<string, unknown> = {}) => {
   const doc = new PDFDocument({
     margins: { top: 50, bottom: 50, left: 50, right: 50 },
     size: 'A4',
@@ -153,16 +162,15 @@ const createSafePDFDocument = (options: any = {}) => {
 };
 
 const generatePDFContent = (
-  doc: PDFDocument, 
+  doc: InstanceType<typeof PDFDocument>, 
   data: {
     displayName: string;
-    email: string;
     recommendations: Recommendation[];
     userProfile: UserProfile;
     websiteData: WebsiteData;
   }
 ) => {
-  const { displayName, email, recommendations, userProfile, websiteData } = data;
+  const { displayName, recommendations, userProfile, websiteData } = data;
 
   try {
     // =============================================================================
@@ -309,7 +317,7 @@ const generatePDFContent = (
 // =============================================================================
 // EMAIL TEMPLATE GENERATION
 // =============================================================================
-const generateEmailHTML = (displayName: string, email: string) => {
+const generateEmailHTML = (displayName: string) => {
   return `
 <!DOCTYPE html>
 <html lang="en">
@@ -467,14 +475,14 @@ export async function POST(request: NextRequest) {
 
     const safeUserProfile: UserProfile = userProfile || {};
     const safeWebsiteData: WebsiteData = {
+      ...websiteData,
       url: websiteData.url || '',
       themes: Array.isArray(websiteData.themes) ? websiteData.themes : [],
       hints: Array.isArray(websiteData.hints) ? websiteData.hints : [],
       contentType: websiteData.contentType || 'Mixed Content',
       socialLinks: Array.isArray(websiteData.socialLinks) ? websiteData.socialLinks : [],
       title: websiteData.title || 'Website Analysis',
-      description: websiteData.description || 'No description available',
-      ...websiteData
+      description: websiteData.description || 'No description available'
     };
 
     const displayName = userName || email.split('@')[0] || 'Travel Enthusiast';
@@ -493,7 +501,6 @@ export async function POST(request: NextRequest) {
       // Generate PDF content
       generatePDFContent(doc, {
         displayName,
-        email,
         recommendations: safeRecommendations,
         userProfile: safeUserProfile,
         websiteData: safeWebsiteData
@@ -539,7 +546,7 @@ export async function POST(request: NextRequest) {
         from: `TasteJourney <${process.env.GMAIL_USER}>`,
         to: email,
         subject: `🌟 Your Personalized TasteJourney Travel Report - ${displayName}`,
-        html: generateEmailHTML(displayName, email),
+        html: generateEmailHTML(displayName),
         attachments: [
           {
             filename: `TasteJourney-Report-${displayName.replace(/[^a-zA-Z0-9]/g, '')}-${new Date().toISOString().split('T')[0]}.pdf`,

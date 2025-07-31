@@ -5,6 +5,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 import TypingIndicator from "./TypingIndicator";
 import URLForm from "./URLForm";
 import ConfirmationScreen from "./ConfirmationScreen";
@@ -582,9 +583,11 @@ const ChatInterface: React.FC = () => {
                             className="bg-card border border-border rounded-lg overflow-hidden"
                           >
                             {rec.image && (
-                              <img 
+                              <Image 
                                 src={rec.image} 
-                                alt={rec.destination} 
+                                alt={rec.destination}
+                                width={400}
+                                height={160}
                                 className="w-full h-40 object-cover" 
                               />
                             )}
