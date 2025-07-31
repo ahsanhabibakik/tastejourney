@@ -39,8 +39,8 @@ interface ReportRequest {
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, recommendations, userProfile, websiteData } =
-      (await request.json()) as ReportRequest;
+    const { email, recommendations, userProfile, websiteData }: ReportRequest =
+      await request.json();
 
     if (!email) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
     doc.moveDown(1);
 
     doc.fontSize(16).text('Recommendations:', { underline: true });
-    recommendations.forEach((rec, i) => {
+    recommendations.forEach((rec: Recommendation, i: number) => {
       doc.moveDown(0.5);
       doc.fontSize(13).text(`${i + 1}. ${rec.destination}`);
       if (rec.highlights)
