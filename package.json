@@ -12,6 +12,7 @@
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@reduxjs/toolkit": "^2.8.2",
+    "@sendgrid/mail": "^8.1.5",
     "@tailwindcss/postcss": "^4.1.11",
     "autoprefixer": "^10.4.21",
     "cheerio": "^1.1.2",

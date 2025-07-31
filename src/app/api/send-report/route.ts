@@ -1,4 +1,8 @@
+
 import { NextRequest, NextResponse } from "next/server";
+import sgMail from '@sendgrid/mail';
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
 interface Recommendation {
   [key: string]: unknown;
@@ -25,23 +29,34 @@ interface ReportRequest {
   websiteData: WebsiteData;
 }
 
+
 export async function POST(request: NextRequest) {
-
   try {
-    const { email }: ReportRequest = await request.json();
-
-
+    const { email, recommendations, userProfile, websiteData }: ReportRequest = await request.json();
     if (!email) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
-    // Simulate PDF generation and email sending
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // 1. Generate PDF (mocked as a simple Buffer for now)
+    // In production, use Puppeteer to generate a real PDF
+    const pdfBuffer = Buffer.from(`TasteJourney Report for ${email}\n${JSON.stringify({ recommendations, userProfile, websiteData }, null, 2)}`);
 
-    // In production, this would:
-    // 1. Generate PDF using puppeteer
     // 2. Send email using SendGrid
-    // 3. Store report in database
+    const msg = {
+      to: email,
+      from: 'reports@tastejourney.ai',
+      subject: 'Your Personalized Travel Recommendations',
+      html: `<p>Hi,<br>Your personalized travel recommendations are attached as a PDF.<br>Thank you for using TasteJourney!</p><p><a href="#">Unsubscribe</a></p>`,
+      attachments: [
+        {
+          content: pdfBuffer.toString('base64'),
+          filename: 'travel-recommendations.pdf',
+          type: 'application/pdf',
+          disposition: 'attachment',
+        },
+      ],
+    };
+    await sgMail.send(msg);
 
     return NextResponse.json({
       success: true,
