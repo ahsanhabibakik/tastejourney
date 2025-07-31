@@ -1,5 +1,42 @@
-import { chromium } from 'playwright';
 import * as cheerio from 'cheerio';
+
+// --- Scraping API helpers for live/hackathon deployment ---
+async function fetchWithScraperAPI(url: string): Promise<string | null> {
+  const apiKey = process.env.SCRAPERAPI_KEY;
+  if (!apiKey) return null;
+  const apiUrl = `https://api.scraperapi.com?api_key=${apiKey}&url=${encodeURIComponent(url)}`;
+  try {
+    const res = await fetch(apiUrl);
+    if (!res.ok) throw new Error('ScraperAPI failed');
+    return await res.text();
+  } catch {
+    return null;
+  }
+}
+
+async function fetchWithTarvily(url: string): Promise<string | null> {
+  const apiKey = process.env.TARVILY_KEY;
+  if (!apiKey) return null;
+  const apiUrl = `https://api.tarvily.com/scrape?api_key=${apiKey}&url=${encodeURIComponent(url)}`;
+  try {
+    const res = await fetch(apiUrl);
+    if (!res.ok) throw new Error('Tarvily failed');
+    const data = await res.json();
+    return data.content || null;
+  } catch {
+    return null;
+  }
+}
+
+async function fetchWithCheerio(url: string): Promise<string | null> {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Direct fetch failed');
+    return await res.text();
+  } catch {
+    return null;
+  }
+}
 
 export interface WebsiteAnalysis {
   themes: string[];
@@ -54,28 +91,22 @@ function extractSocialLinks($: cheerio.CheerioAPI): string[] {
 }
 
 export async function analyzeWebsite(url: string): Promise<WebsiteAnalysis> {
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
+  let html: string | null = null;
+  html = await fetchWithScraperAPI(url);
+  if (!html) html = await fetchWithTarvily(url);
+  if (!html) html = await fetchWithCheerio(url);
+  if (!html) throw new Error('All scraping methods failed');
 
-  try {
-    await page.goto(url, { waitUntil: 'networkidle' });
-    const content = await page.content();
-    const $ = cheerio.load(content);
-
-    const analysis: WebsiteAnalysis = {
-      themes: extractThemes($),
-      hints: extractHints($),
-      regionBias: extractRegions($),
-      socialLinks: extractSocialLinks($),
-      title:
-        $('title').text() ||
-        $('meta[property="og:title"]').attr('content') ||
-        '',
-      description: $('meta[name="description"]').attr('content') || ''
-    };
-
-    return analysis;
-  } finally {
-    await browser.close();
-  }
+  const $ = cheerio.load(html);
+  return {
+    themes: extractThemes($),
+    hints: extractHints($),
+    regionBias: extractRegions($),
+    socialLinks: extractSocialLinks($),
+    title:
+      $('title').text() ||
+      $('meta[property="og:title"]').attr('content') ||
+      '',
+    description: $('meta[name="description"]').attr('content') || ''
+  };
 }
