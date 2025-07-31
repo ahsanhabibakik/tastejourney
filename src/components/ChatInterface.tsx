@@ -124,7 +124,12 @@ const ChatInterface: React.FC = () => {
     scrapingMethods?: string[];
     fallbackUsed?: boolean;
   } | null>(null);
-  const [tasteProfile, setTasteProfile] = useState<{ tasteVector: Record<string, number> } | null>(null);
+  const [tasteProfile, setTasteProfile] = useState<{ 
+    tasteVector: Record<string, number>;
+    confidence?: number;
+    culturalAffinities?: string[];
+    personalityTraits?: string[];
+  } | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
   const [recommendations, setRecommendations] = useState<

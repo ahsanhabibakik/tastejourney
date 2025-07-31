@@ -12,36 +12,70 @@ export async function GET(request: NextRequest) {
   const q = searchParams.get("q") || "";
 
   if (!q) {
-    return NextResponse.json({ error: "q (query) is required" }, { status: 400 });
+    return NextResponse.json(
+      { error: "q (query) is required" },
+      { status: 400 }
+    );
   }
 
   let url = "";
   switch (type) {
     case "google":
-      url = `https://serpapi.com/search.json?engine=google&q=${encodeURIComponent(q)}&api_key=${SERPAPI_KEY}`;
+      url = `https://serpapi.com/search.json?engine=google&q=${encodeURIComponent(
+        q
+      )}&api_key=${SERPAPI_KEY}`;
       break;
     case "maps":
-      url = `https://serpapi.com/search.json?engine=google_maps&q=${encodeURIComponent(q)}&api_key=${SERPAPI_KEY}`;
+      url = `https://serpapi.com/search.json?engine=google_maps&q=${encodeURIComponent(
+        q
+      )}&api_key=${SERPAPI_KEY}`;
       break;
     case "places":
-      url = `https://serpapi.com/search.json?engine=google_places&q=${encodeURIComponent(q)}&api_key=${SERPAPI_KEY}`;
+      url = `https://serpapi.com/search.json?engine=google_places&q=${encodeURIComponent(
+        q
+      )}&api_key=${SERPAPI_KEY}`;
       break;
     case "youtube":
-      url = `https://serpapi.com/search.json?engine=youtube&q=${encodeURIComponent(q)}&api_key=${SERPAPI_KEY}`;
+      // SerpApi’s YouTube engine requires `search_query` instead of `q`
+      url = `https://serpapi.com/search.json?engine=youtube&search_query=${encodeURIComponent(
+        q
+      )}&api_key=${SERPAPI_KEY}`;
       break;
     case "knowledge_graph":
-      url = `https://serpapi.com/search.json?engine=google&q=${encodeURIComponent(q)}&api_key=${SERPAPI_KEY}&google_domain=google.com&gl=us&hl=en`;
+      url = `https://serpapi.com/search.json?engine=google&q=${encodeURIComponent(
+        q
+      )}&api_key=${SERPAPI_KEY}&google_domain=google.com&gl=us&hl=en`;
       break;
     default:
-      return NextResponse.json({ error: "Unsupported type" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Unsupported type" },
+        { status: 400 }
+      );
   }
 
   try {
     const res = await fetch(url);
-    if (!res.ok) throw new Error("Failed to fetch from SerpApi");
-    const data = await res.json();
+    const text = await res.text();
+
+    if (!res.ok) {
+      // Try to parse SerpApi's own error message, otherwise send raw text
+      let errBody: any;
+      try {
+        errBody = JSON.parse(text);
+      } catch {
+        errBody = { error: text };
+      }
+      console.error(`[SerpApi ${type}] ${res.status}:`, errBody);
+      return NextResponse.json(errBody, { status: res.status });
+    }
+
+    const data = JSON.parse(text);
     return NextResponse.json({ success: true, data });
-  } catch {
-    return NextResponse.json({ error: "Failed to fetch from SerpApi" }, { status: 500 });
+  } catch (e: any) {
+    console.error("Unexpected fetch error:", e);
+    return NextResponse.json(
+      { error: e.message || "Unknown error" },
+      { status: 500 }
+    );
   }
 }

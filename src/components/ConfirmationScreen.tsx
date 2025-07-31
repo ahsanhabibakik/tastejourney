@@ -42,42 +42,41 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
   onConfirm,
 }) => {
   return (
-    <Card className="mt-4">
-      <CardHeader className="border-b border-border pb-4">
-        <CardTitle className="flex items-center space-x-2">
+    <Card className="w-full max-w-md mx-auto mt-4 p-4 sm:p-6">
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center space-x-2 text-base sm:text-lg">
           <Globe className="h-5 w-5 text-primary" />
           <span>Website Analysis Results</span>
         </CardTitle>
-        <p className="text-sm text-muted-foreground">
-          Please confirm if this information accurately represents your content
-          and audience:
+        <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
+          Please confirm if this information accurately represents your content and audience:
         </p>
       </CardHeader>
 
-      <CardContent className="pt-6">
-        <div className="space-y-4">
-          <div>
-            <h4 className="font-medium text-foreground mb-2">
-              Website Details
-            </h4>
-            <div className="bg-muted/30 rounded-lg p-3 space-y-1">
-              <p className="text-sm font-medium">{data.title}</p>
-              <p className="text-xs text-muted-foreground">
+      <CardContent className="pt-4">
+        <div className="space-y-5">
+          <section>
+            <h4 className="font-medium text-sm sm:text-base mb-2">Website Details</h4>
+            <div className="bg-muted/30 rounded-lg p-3">
+              <p className="text-sm sm:text-base font-medium truncate">{data.title}</p>
+              <p className="mt-1 text-xs sm:text-sm text-muted-foreground line-clamp-3">
                 {data.description}
               </p>
-              <p className="text-xs text-primary">{data.url}</p>
+              <p className="mt-1 text-xs sm:text-sm text-primary truncate break-all">
+                {data.url}
+              </p>
             </div>
-          </div>
+          </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <div>
-              <h4 className="font-medium text-foreground mb-2 flex items-center">
-                <TrendingUp className="h-4 w-4 text-primary mr-2" />
+              <h4 className="flex items-center font-medium text-sm sm:text-base mb-2">
+                <TrendingUp className="h-4 w-4 text-primary mr-1" />
                 Content Themes
               </h4>
-              <div className="flex flex-wrap gap-2">
-                {data.themes?.map((theme, index) => (
-                  <Badge key={index} variant="secondary">
+              <div className="flex flex-wrap gap-1 sm:gap-2 overflow-x-auto">
+                {data.themes.map((theme, idx) => (
+                  <Badge key={idx} variant="secondary" className="text-xs sm:text-sm">
                     {theme}
                   </Badge>
                 ))}
@@ -85,42 +84,40 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
             </div>
 
             <div>
-              <h4 className="font-medium text-foreground mb-2">Content Type</h4>
-              <Badge variant="default" className="text-sm">
+              <h4 className="font-medium text-sm sm:text-base mb-2">Content Type</h4>
+              <Badge variant="default" className="text-xs sm:text-sm">
                 {data.contentType}
               </Badge>
             </div>
           </div>
 
-          {data.socialLinks && data.socialLinks.length > 0 && (
-            <div>
-              <h4 className="font-medium text-foreground mb-2 flex items-center">
-                <Users className="h-4 w-4 text-primary mr-2" />
+          {data.socialLinks.length > 0 && (
+            <section>
+              <h4 className="flex items-center font-medium text-sm sm:text-base mb-2">
+                <Users className="h-4 w-4 text-primary mr-1" />
                 Social Media Presence
               </h4>
-              <div className="flex flex-wrap gap-2">
-                {data.socialLinks.map((link, index) => (
-                  <Badge key={index} variant="outline">
+              <div className="flex flex-wrap gap-1 sm:gap-2 overflow-x-auto">
+                {data.socialLinks.map((link, idx) => (
+                  <Badge key={idx} variant="outline" className="text-xs sm:text-sm">
                     {link.platform}
                   </Badge>
                 ))}
               </div>
-            </div>
+            </section>
           )}
 
           {data.hints && data.hints.length > 0 && (
-            <div>
-              <h4 className="font-medium text-foreground mb-2">
-                Creator Profile
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {data.hints.map((hint, index) => (
-                  <Badge key={index} variant="secondary" className="text-xs">
+            <section>
+              <h4 className="font-medium text-sm sm:text-base mb-2">Creator Profile</h4>
+              <div className="flex flex-wrap gap-1 sm:gap-2 overflow-x-auto">
+                {data.hints.map((hint, idx) => (
+                  <Badge key={idx} variant="secondary" className="text-xs sm:text-sm">
                     {hint.replace(/[-_]/g, " ").replace(/\b\w/g, l => l.toUpperCase())}
                   </Badge>
                 ))}
               </div>
-            </div>
+            </section>
           )}
 
           {/* Additional Information Section */}
@@ -221,18 +218,21 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
           )}
         </div>
 
-        <div className="flex space-x-3 pt-6 border-t border-border mt-6">
-          <Button onClick={() => onConfirm(true)} className="flex-1">
-            <CheckCircle className="h-4 w-4 mr-2" />
-            Yes, this looks accurate
+        <div className="mt-6 pt-4 border-t border-border space-y-2">
+          <Button
+            onClick={() => onConfirm(true)}
+            className="w-full flex items-center justify-center space-x-2"
+          >
+            <CheckCircle className="h-5 w-5" />
+            <span className="text-sm sm:text-base">Yes, this looks accurate</span>
           </Button>
           <Button
             onClick={() => onConfirm(false)}
             variant="outline"
-            className="flex-1"
+            className="w-full flex items-center justify-center space-x-2"
           >
-            <XCircle className="h-4 w-4 mr-2" />
-            Needs corrections
+            <XCircle className="h-5 w-5" />
+            <span className="text-sm sm:text-base">Needs corrections</span>
           </Button>
         </div>
       </CardContent>

@@ -239,7 +239,7 @@ function extractSocialLinks($: cheerio.CheerioAPI): string[] {
   
   $("a[href]").each((_, el) => {
     const href = $(el).attr("href") || "";
-    for (const [platform, pattern] of Object.entries(socialPatterns)) {
+    for (const pattern of Object.values(socialPatterns)) {
       if (pattern.test(href)) {
         links.push(href);
         break;
