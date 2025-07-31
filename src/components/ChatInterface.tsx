@@ -321,7 +321,7 @@ const ChatInterface: React.FC = () => {
 
       try {
         const finalAnswers = { ...userAnswers, [currentQuestion.id]: answer };
-        const response = await fetch("/api/recommend", {
+        const response = await fetch("/api/recommendations", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -349,7 +349,15 @@ const ChatInterface: React.FC = () => {
         const result = await response.json();
 
         if (result.recommendations) {
-          setRecommendations(result);
+          // Attach Qloo enrichment if available
+          setRecommendations({
+            ...result,
+            qloo: {
+              confidence: tasteProfile?.confidence,
+              culturalAffinities: tasteProfile?.culturalAffinities,
+              personalityTraits: tasteProfile?.personalityTraits,
+            },
+          });
           setChatState("recommendations");
           await simulateTyping(() => {
             addMessage(
