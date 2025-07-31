@@ -1,3 +1,70 @@
+# Product Requirements & Reference (PRD Summary)
+
+## Product Name: Creator Journey Chatbot
+**Prepared by:** AI Buddy Team  
+**Date:** July 29, 2025  
+**Version:** 1.0
+
+### Overview
+Creator Journey is an AI-powered chatbot for content creators who travel. It scrapes the user's website, analyzes content, integrates with Qloo Taste AI™, and recommends travel destinations optimized for:
+- Audience Engagement
+- Brand Collaboration Opportunities
+- Monetization & Product Sales Potential
+- Creator Collaborations at the Location
+- Budget Accuracy & Stretch Goals
+
+#### User Journey
+1. User submits website URL
+2. System scrapes and analyzes content, themes, audience, and social links
+3. User confirms extracted data
+4. Qloo Taste AI™ generates taste vector
+5. Chatbot asks up to 4 clarification questions (trip length, budget, content format, region)
+6. Recommendations generated (Qloo 90% + website 10%)
+7. Top 3 destinations shown in chat, PDF report sent via email
+8. User can continue chatting for more info
+
+#### Functional Requirements
+- Website Content Analysis & Extraction (Playwright, Cheerio)
+- Taste Vector Generation (Qloo Taste AI™)
+- Budget Calculations (Amadeus, Numbeo)
+- Creator/Brand Collaboration Recommendations (YouTube, Instagram, TikTok, Social Searcher)
+- Fact-Checking (Wikipedia, Wikidata, RAG)
+- Interactive Q&A (max 4 questions)
+- PDF Report Generation (Puppeteer)
+- Email Delivery (SendGrid)
+
+#### Technical Requirements
+- All APIs must be free tier or open source
+- Rate limiting and error handling for all APIs
+- Privacy-first: no user data stored long-term
+
+#### Recommendation Scoring Logic
+```
+Total_Score = (0.45 × Qloo Affinity) +  
+              (0.25 × Community Engagement) +  
+              (0.15 × Brand Collaboration Fit) +  
+              (0.10 × Budget Alignment) +  
+              (0.05 × Local Creator Collaboration Potential)
+```
+Recommendations outside budget, visa, or disliked regions are filtered out.
+
+#### Output
+- Chatbot: Top 3 destinations, highlights, engagement, brands, creators, budget, events
+- Email: PDF report with detailed breakdown, cost analysis, confidence markers
+
+#### Success Metrics
+- User satisfaction (NPS ≥ 8)
+- Recommendation accuracy (≥ 95%)
+- Email open rate (>60%)
+- API call efficiency (within free tier limits)
+
+#### Future Roadmap
+- Paid API integrations
+- Enhanced personalization
+- Monetization via affiliate/premium
+- Expanded fact-checking
+
+---
 # TasteJourney Implementation Tasks
 
 ## Ready-to-Code Task List
