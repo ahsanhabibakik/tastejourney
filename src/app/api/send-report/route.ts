@@ -46,6 +46,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
+    // Defensive: ensure recommendations is always an array
+    const safeRecommendations: Recommendation[] = Array.isArray(recommendations)
+      ? recommendations
+      : recommendations
+      ? [recommendations]
+      : [];
+
     // 2) Try to load local Roboto font, fallback to default if not found
     const fontPath = path.join(process.cwd(), 'src', 'fonts', 'Roboto-Regular.ttf');
     const doc = new PDFDocument({ autoFirstPage: false });
@@ -82,18 +89,22 @@ export async function POST(request: NextRequest) {
     doc.moveDown(1);
 
     doc.fontSize(16).text('Recommendations:', { underline: true });
-    recommendations.forEach((rec: Recommendation, i: number) => {
-      doc.moveDown(0.5);
-      doc.fontSize(13).text(`${i + 1}. ${rec.destination}`);
-      if (rec.highlights)
-        doc.fontSize(11).text(`   - Highlights: ${rec.highlights.join(', ')}`);
-      if (rec.budget) doc.text(`   - Budget: ${rec.budget.range}`);
-      if (rec.bestMonths)
-        doc.text(`   - Best Months: ${rec.bestMonths.join(', ')}`);
-      if (rec.engagement)
-        doc.text(`   - Engagement: ${rec.engagement.potential}`);
-      if (rec.tags) doc.text(`   - Tags: ${rec.tags.join(', ')}`);
-    });
+    if (safeRecommendations.length === 0) {
+      doc.fontSize(12).text('No recommendations available.');
+    } else {
+      safeRecommendations.forEach((rec: Recommendation, i: number) => {
+        doc.moveDown(0.5);
+        doc.fontSize(13).text(`${i + 1}. ${rec.destination}`);
+        if (rec.highlights)
+          doc.fontSize(11).text(`   - Highlights: ${rec.highlights.join(', ')}`);
+        if (rec.budget) doc.text(`   - Budget: ${rec.budget.range}`);
+        if (rec.bestMonths)
+          doc.text(`   - Best Months: ${rec.bestMonths.join(', ')}`);
+        if (rec.engagement)
+          doc.text(`   - Engagement: ${rec.engagement.potential}`);
+        if (rec.tags) doc.text(`   - Tags: ${rec.tags.join(', ')}`);
+      });
+    }
 
     doc.end();
 
@@ -110,6 +121,10 @@ export async function POST(request: NextRequest) {
         pass: process.env.GMAIL_PASS!,
       },
     });
+
+    // Debug: log email and recommendations count
+    console.log('Sending PDF report to:', email);
+    console.log('Recommendations count:', safeRecommendations.length);
 
     await transporter.sendMail({
       from: process.env.GMAIL_USER,
