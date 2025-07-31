@@ -33,6 +33,7 @@ interface UserAnswers {
   style?: string;
   contentFocus?: string;
   climate?: string;
+  [key: string]: string | undefined;
 }
 
 const questions = [
@@ -467,10 +468,11 @@ const ChatInterface: React.FC = () => {
                                 ? "bg-blue-500 w-8"
                                 : "bg-gray-200 w-4"
                             }`}
-                    </div>
-                  )}
-
-                {message.component ===
+                          ></div>
+                        ))}
+                        <span className="ml-3 text-xs text-gray-500">
+                          {currentQuestionIndex + 1} / {questions.length}
+                        </span>
                       </div>
                       {/* Animated Question Card */}
                       <div className="bg-white/80 shadow-lg rounded-xl p-4 mb-2 animate-fade-in flex items-center gap-2">
