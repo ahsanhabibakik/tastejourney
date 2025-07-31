@@ -453,7 +453,32 @@ const ChatInterface: React.FC = () => {
                   )}
 
                 {message.component === "recommendations" &&
-                  chatState === "recommendations" && <RecommendationsScreen />}
+                  chatState === "recommendations" && recommendations?.recommendations && (
+                    <div className="overflow-x-auto flex space-x-4 py-2 scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-gray-300">
+                      {recommendations.recommendations.map((rec: any, i: number) => (
+                        <div
+                          key={i}
+                          className="min-w-[260px] max-w-xs bg-white border border-gray-200 rounded-lg shadow-md p-4 flex-shrink-0 flex flex-col justify-between"
+                        >
+                          <div>
+                            <div className="font-bold text-lg mb-1">{rec.destination}</div>
+                            {rec.image && (
+                              <img src={rec.image} alt={rec.destination} className="w-full h-32 object-cover rounded mb-2" />
+                            )}
+                            <div className="text-xs text-gray-500 mb-1">{rec.highlights?.join(', ')}</div>
+                            <div className="text-xs mb-1"><b>Budget:</b> {rec.budget?.range}</div>
+                            <div className="text-xs mb-1"><b>Best Months:</b> {rec.bestMonths?.join(', ')}</div>
+                            <div className="text-xs mb-1"><b>Engagement:</b> {rec.engagement?.potential}</div>
+                          </div>
+                          <div className="mt-2 flex flex-wrap gap-1">
+                            {rec.tags?.map((tag: string) => (
+                              <span key={tag} className="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full">{tag}</span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
               </div>
             </div>
           ))}
