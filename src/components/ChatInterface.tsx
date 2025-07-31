@@ -33,8 +33,8 @@ interface UserAnswers {
   duration?: string;
   style?: string;
   contentFocus?: string;
-  climate?: string;
-  [key: string]: string | undefined;
+  climate?: string | string[];
+  [key: string]: string | string[] | undefined;
 }
 
 interface Recommendation {
@@ -46,6 +46,16 @@ interface Recommendation {
   engagement?: { potential: string };
   enrichment?: Record<string, unknown>;
   tags?: string[];
+  creatorDetails?: {
+    totalActiveCreators: number;
+    topCreators: Array<{
+      name: string;
+      followers: string;
+      niche: string;
+      collaboration: string;
+    }>;
+    collaborationOpportunities: string[];
+  };
 }
 
 const questions = [
@@ -54,28 +64,32 @@ const questions = [
     text: "💸 What's your budget range for this trip?",
     options: ["$500-1000", "$1000-2500", "$2500-5000", "$5000+"],
     icon: "💸",
+    multiSelect: false,
   },
   {
     id: "duration",
     text: "🗓️ How long would you like to travel?",
     options: ["1-3 days", "4-7 days", "1-2 weeks", "2+ weeks"],
     icon: "🗓️",
+    multiSelect: false,
   },
   {
     id: "style",
     text: "🌍 What's your preferred travel style?",
     options: ["Adventure", "Luxury", "Cultural", "Beach", "Urban"],
     icon: "🌍",
+    multiSelect: false,
   },
   {
     id: "contentFocus",
     text: "📸 What type of content do you focus on?",
     options: ["Photography", "Food", "Lifestyle", "Adventure"],
     icon: "📸",
+    multiSelect: false,
   },
   {
     id: "climate",
-    text: "☀️ Do you have any preferred or avoided climates/regions?",
+    text: "☀️ Select all climate preferences that apply (you can choose multiple):",
     options: [
       "Tropical/Sunny",
       "Mild/Temperate",
@@ -87,6 +101,7 @@ const questions = [
       "Avoid rainy",
     ],
     icon: "☀️",
+    multiSelect: true,
   },
 ];
 
@@ -133,6 +148,7 @@ const ChatInterface: React.FC = () => {
   } | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
+  const [selectedClimates, setSelectedClimates] = useState<string[]>([]);
   const [recommendations, setRecommendations] = useState<
     | {
         recommendations: Recommendation[];
@@ -310,8 +326,25 @@ const ChatInterface: React.FC = () => {
     }
   };
 
+  const handleClimateSelection = (climate: string) => {
+    setSelectedClimates(prev => {
+      if (prev.includes(climate)) {
+        return prev.filter(c => c !== climate);
+      } else {
+        return [...prev, climate];
+      }
+    });
+  };
+
   const handleQuestionAnswer = async (answer: string) => {
     const currentQuestion = questions[currentQuestionIndex];
+    
+    // Handle multi-select for climate question
+    if (currentQuestion.id === "climate" && currentQuestion.multiSelect) {
+      handleClimateSelection(answer);
+      return; // Don't proceed to next question yet
+    }
+    
     addMessage(answer, false);
 
     // Save the answer
@@ -357,7 +390,97 @@ const ChatInterface: React.FC = () => {
               style: finalAnswers.style?.toLowerCase() || "adventure",
               contentFocus:
                 finalAnswers.contentFocus?.toLowerCase() || "photography",
-              climate: finalAnswers.climate || "No preference",
+              climate: finalAnswers.climate || selectedClimates.length > 0 ? selectedClimates : ["No preference"],
+            },
+            websiteData: websiteData,
+          }),
+        });
+
+        const result = await response.json();
+
+        if (result.recommendations) {
+          // Attach Qloo enrichment if available
+          setRecommendations({
+            ...result,
+            qloo: {
+              confidence: tasteProfile?.confidence,
+              culturalAffinities: tasteProfile?.culturalAffinities,
+              personalityTraits: tasteProfile?.personalityTraits,
+            },
+          });
+          setChatState("recommendations");
+          await simulateTyping(() => {
+            addMessage(
+              "Here are your top travel destination recommendations optimized for content creation and monetization:",
+              true,
+              "recommendations"
+            );
+          }, 3000);
+        } else {
+          throw new Error("No recommendations received");
+        }
+      } catch (error) {
+        console.error("Error generating recommendations:", error);
+        setChatState("recommendations");
+        await simulateTyping(() => {
+          addMessage(
+            "Here are your personalized travel recommendations:",
+            true,
+            "recommendations"
+          );
+        }, 2000);
+      }
+    }
+  };
+
+  const handleClimateConfirm = async () => {
+    if (selectedClimates.length === 0) return;
+    
+    const climateAnswerText = selectedClimates.join(", ");
+    addMessage(climateAnswerText, false);
+    
+    // Save the climate answers
+    setUserAnswers((prev) => ({
+      ...prev,
+      climate: selectedClimates,
+    }));
+
+    // Move to next question or finish
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex((prev) => prev + 1);
+      await simulateTyping(() => {
+        addMessage(questions[currentQuestionIndex + 1].text, true, "questions");
+      });
+    } else {
+      // All questions answered, generate recommendations
+      setChatState("generating");
+      await simulateTyping(() => {
+        addMessage(
+          "Perfect! I have all the information I need. Now I'm generating your personalized travel recommendations using AI analysis of taste vectors, creator communities, and brand partnerships...",
+          true
+        );
+      });
+
+      try {
+        const response = await fetch("/api/recommendations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tasteVector: tasteProfile?.tasteVector || {
+              adventure: 0.7,
+              culture: 0.6,
+              luxury: 0.4,
+              food: 0.8,
+              nature: 0.5,
+              urban: 0.3,
+              budget: 0.6,
+            },
+            userPreferences: {
+              budget: userAnswers.budget?.replace("$", "") || "1000-2500",
+              duration: userAnswers.duration || "4-7 days",
+              style: userAnswers.style?.toLowerCase() || "adventure",
+              contentFocus: userAnswers.contentFocus?.toLowerCase() || "photography",
+              climate: selectedClimates,
             },
             websiteData: websiteData,
           }),
@@ -552,16 +675,37 @@ const ChatInterface: React.FC = () => {
                       {/* Options */}
                       <div className="space-y-2">
                         {questions[currentQuestionIndex].options.map(
-                          (option, index) => (
+                          (option, index) => {
+                            const isMultiSelect = questions[currentQuestionIndex].multiSelect;
+                            const isSelected = isMultiSelect 
+                              ? selectedClimates.includes(option)
+                              : userAnswers[questions[currentQuestionIndex].id] === option;
+                            
+                            return (
+                              <Button
+                                key={index}
+                                variant={isSelected ? "default" : "outline"}
+                                className="w-full justify-start text-left"
+                                onClick={() => handleQuestionAnswer(option)}
+                              >
+                                {isMultiSelect && isSelected && "✓ "}
+                                {option}
+                              </Button>
+                            );
+                          }
+                        )}
+                        
+                        {/* Continue button for multi-select */}
+                        {questions[currentQuestionIndex].multiSelect && selectedClimates.length > 0 && (
+                          <div className="mt-4 pt-2 border-t">
                             <Button
-                              key={index}
-                              variant={userAnswers[questions[currentQuestionIndex].id] === option ? "default" : "outline"}
-                              className="w-full justify-start text-left"
-                              onClick={() => handleQuestionAnswer(option)}
+                              onClick={handleClimateConfirm}
+                              className="w-full"
+                              variant="default"
                             >
-                              {option}
+                              Continue with {selectedClimates.length} preference{selectedClimates.length > 1 ? 's' : ''}
                             </Button>
-                          )
+                          </div>
                         )}
                       </div>
                     </div>
@@ -575,8 +719,8 @@ const ChatInterface: React.FC = () => {
                         Your Recommended Destinations
                       </h3>
                       
-                      {/* Responsive Grid */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {/* Enhanced Destination Cards */}
+                      <div className="space-y-6">
                         {recommendations.recommendations.map((rec: Recommendation, i: number) => (
                           <div
                             key={i}
@@ -587,44 +731,92 @@ const ChatInterface: React.FC = () => {
                                 src={rec.image} 
                                 alt={rec.destination}
                                 width={400}
-                                height={160}
-                                className="w-full h-40 object-cover" 
+                                height={200}
+                                className="w-full h-48 object-cover" 
                               />
                             )}
-                            <div className="p-4">
-                              <h4 className="font-semibold text-base mb-2">
-                                {rec.destination}
-                              </h4>
+                            <div className="p-6">
+                              <div className="flex justify-between items-start mb-3">
+                                <h4 className="font-semibold text-xl">
+                                  {rec.destination}
+                                </h4>
+                                <span className="bg-green-100 text-green-800 text-sm font-medium px-2 py-1 rounded">
+                                  #{i + 1} Match
+                                </span>
+                              </div>
                               
                               {rec.highlights && rec.highlights.length > 0 && (
-                                <p className="text-sm text-muted-foreground mb-3">
-                                  {rec.highlights.join(', ')}
+                                <p className="text-sm text-muted-foreground mb-4">
+                                  {rec.highlights.join(' • ')}
                                 </p>
                               )}
                               
-                              <div className="space-y-1 text-sm">
-                                {rec.budget?.range && (
-                                  <div>
-                                    <span className="font-medium">Budget:</span> {rec.budget.range}
-                                  </div>
-                                )}
-                                {rec.bestMonths && rec.bestMonths.length > 0 && (
-                                  <div>
-                                    <span className="font-medium">Best Time:</span> {rec.bestMonths.join(', ')}
-                                  </div>
-                                )}
-                                {rec.engagement?.potential && (
-                                  <div>
-                                    <span className="font-medium">Engagement:</span> {rec.engagement.potential}
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div className="space-y-2 text-sm">
+                                  {rec.budget?.range && (
+                                    <div>
+                                      <span className="font-medium">💰 Budget:</span> {rec.budget.range}
+                                    </div>
+                                  )}
+                                  {rec.bestMonths && rec.bestMonths.length > 0 && (
+                                    <div>
+                                      <span className="font-medium">📅 Best Time:</span> {rec.bestMonths.join(', ')}
+                                    </div>
+                                  )}
+                                  {rec.engagement?.potential && (
+                                    <div>
+                                      <span className="font-medium">📈 Engagement:</span> {rec.engagement.potential}
+                                    </div>
+                                  )}
+                                </div>
+                                
+                                {rec.creatorDetails && (
+                                  <div className="space-y-2 text-sm">
+                                    <div>
+                                      <span className="font-medium">👥 Active Creators:</span> {rec.creatorDetails.totalActiveCreators}+
+                                    </div>
+                                    <div>
+                                      <span className="font-medium">🤝 Collaboration Rate:</span> High
+                                    </div>
                                   </div>
                                 )}
                               </div>
+
+                              {/* Creator Collaboration Section */}
+                              {rec.creatorDetails && (
+                                <div className="mt-4 p-4 bg-muted/50 rounded-lg">
+                                  <h5 className="font-medium text-sm mb-3 text-primary">
+                                    🎯 Top Creator Collaboration Opportunities
+                                  </h5>
+                                  
+                                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
+                                    {rec.creatorDetails.topCreators.map((creator, idx) => (
+                                      <div key={idx} className="bg-background p-3 rounded border text-xs">
+                                        <div className="font-medium">{creator.name}</div>
+                                        <div className="text-muted-foreground">{creator.followers} • {creator.niche}</div>
+                                        <div className="text-primary text-xs mt-1">{creator.collaboration}</div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                  
+                                  <div>
+                                    <h6 className="font-medium text-xs mb-2">Available Collaboration Types:</h6>
+                                    <div className="flex flex-wrap gap-1">
+                                      {rec.creatorDetails.collaborationOpportunities.map((opp, idx) => (
+                                        <span key={idx} className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">
+                                          {opp}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                               
                               {rec.tags && rec.tags.length > 0 && (
-                                <div className="flex flex-wrap gap-1 mt-3">
-                                  {rec.tags.slice(0, 3).map((tag: string) => (
-                                    <span key={tag} className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">
-                                      {tag}
+                                <div className="flex flex-wrap gap-1 mt-4">
+                                  {rec.tags.map((tag: string) => (
+                                    <span key={tag} className="bg-secondary text-secondary-foreground text-xs px-2 py-1 rounded-full">
+                                      #{tag}
                                     </span>
                                   ))}
                                 </div>
