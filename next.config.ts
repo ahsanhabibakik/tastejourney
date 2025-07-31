@@ -94,7 +94,7 @@ const nextConfig: NextConfig = {
   },
 
   // Webpack configuration
-  webpack: (config, { isServer }) => {
+  webpack: (config: any, { isServer }: { isServer: boolean }) => {
     // Exclude ref folder from build and watch
     config.watchOptions = {
       ...config.watchOptions,
@@ -138,7 +138,7 @@ const nextConfig: NextConfig = {
   },
 
   // Optimize build output for deployment
-  output: "standalone",
+  output: process.env.NEXT_STANDALONE === "true" ? "standalone" : undefined,
 
   // Enable compression
   compress: true,
