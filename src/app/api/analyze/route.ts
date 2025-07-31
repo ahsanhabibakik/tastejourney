@@ -1,23 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { analyzeWebsite } from '@/lib/scraper';
-}
-    const { url } = await request.json();
 
-    if (!url) {
-      return NextResponse.json({ error: 'URL required' }, { status: 400 });
-    }
-
-    const analysis = await analyzeWebsite(url);
-    return NextResponse.json(analysis);
-  } catch (error) {
-    return NextResponse.json({ error: 'Analysis failed' }, { status: 500 });
-  }
-}
-
-  const content = $("body").text().toLowerCase();
-
-import { NextRequest, NextResponse } from 'next/server';
-import { analyzeWebsite } from '@/lib/scraper';
 
 export async function POST(request: NextRequest) {
   try {
