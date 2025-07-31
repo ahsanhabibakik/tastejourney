@@ -427,21 +427,39 @@ const ChatInterface: React.FC = () => {
 
   async function handleSendReport() {
     if (!email) return;
+    
     try {
       const res = await fetch('/api/send-report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
-          recommendations: recommendations?.recommendations,
+          recommendations: recommendations?.recommendations || [],
           userProfile: userAnswers,
-          websiteData,
+          websiteData: websiteData || {
+            url: '',
+            themes: [],
+            hints: [],
+            contentType: '',
+            socialLinks: [],
+            title: '',
+            description: ''
+          },
+          userName: email.split('@')[0], // Extract username from email
         }),
       });
+      
       const data = await res.json();
-      if (data.success) setReportSent(true);
-    } catch (e) {
-      // Optionally show error
+      
+      if (data.success) {
+        setReportSent(true);
+        addMessage("Great! Your personalized travel report has been sent to your email. Check your inbox (and spam folder) for the PDF attachment.", true);
+      } else {
+        throw new Error(data.error || 'Failed to send report');
+      }
+    } catch (error) {
+      console.error('Error sending report:', error);
+      addMessage(`Sorry, there was an issue sending your report: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again or contact support.`, true);
     }
   }
 

@@ -11,12 +11,28 @@ YOUTUBE_API_KEY=your_youtube_api_key_here
 GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 SERPAPI_KEY=your_serpapi_key_here
 SENDGRID_API_KEY=your_sendgrid_key_here
+FROM_EMAIL=your_verified_sendgrid_email@domain.com
 QLOO_API_KEY=your_qloo_api_key_here
 OPENAI_API_KEY=your_openai_key_here
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
 > **Note:** Never commit your `.env.local` file to version control. See `.gitignore`.
+
+## SendGrid Setup for PDF Reports
+
+To enable PDF report emailing functionality:
+
+1. **Create a SendGrid Account**: Sign up at [sendgrid.com](https://sendgrid.com)
+2. **Get API Key**: 
+   - Go to Settings → API Keys
+   - Create a new API key with "Full Access" or "Mail Send" permissions
+   - Copy the API key to `SENDGRID_API_KEY` in your `.env.local`
+3. **Verify Sender Email**:
+   - Go to Settings → Sender Authentication
+   - Verify the email address you want to send from
+   - Add this email to `FROM_EMAIL` in your `.env.local`
+4. **Test the functionality**: Users can now receive personalized PDF travel reports via email
 > This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
