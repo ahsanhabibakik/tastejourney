@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     const osmData = await osmRes.json();
 
     return NextResponse.json({ success: true, google: googleData, osm: osmData });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to fetch location details" }, { status: 500 });
   }
 }

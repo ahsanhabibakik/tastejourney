@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
     if (!res.ok) throw new Error("Failed to fetch hotel offers");
     const data = await res.json();
     return NextResponse.json({ success: true, data });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to fetch hotel data" }, { status: 500 });
   }
 }
