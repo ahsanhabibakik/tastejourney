@@ -1,5 +1,3 @@
-
-
 ## Environment Variables
 
 Create a `.env.local` file in the project root with the following keys:
@@ -19,7 +17,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
 > **Note:** Never commit your `.env.local` file to version control. See `.gitignore`.
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+> This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
