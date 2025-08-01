@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, Sparkles, MessageSquare, Wand2, Star, ChevronLeft, ChevronRight, Users } from "lucide-react";
+import { Send, Bot, User, Sparkles, MessageSquare, Wand2, Star, ChevronLeft, ChevronRight, Users, TrendingUp, DollarSign, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -1008,81 +1008,123 @@ const ChatInterface: React.FC = () => {
                           
                           {/* Enhanced Desktop Grid */}
                           <div className="hidden xl:block">
-                            <div className="grid grid-cols-2 gap-6">
-                              {recommendations.recommendations.map((rec: Recommendation, i: number) => (
-                                <div
-                                  key={i}
-                                  className="group bg-card border border-border/50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                                >
-                                  {/* Enhanced Image for Desktop */}
-                                  <div className="relative overflow-hidden">
-                                    {rec.image && (
-                                      <Image 
-                                        src={rec.image} 
-                                        alt={rec.destination}
-                                        width={400}
-                                        height={200}
-                                        className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500" 
-                                      />
-                                    )}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                                    <div className="absolute top-4 right-4">
-                                      <span className="bg-white/95 text-primary text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
-                                        #{i + 1}
-                                      </span>
-                                    </div>
-                                    <div className="absolute bottom-4 left-4 right-4">
-                                      <h4 className="font-bold text-2xl text-white mb-2 drop-shadow-lg">{rec.destination}</h4>
-                                      <div className="flex items-center gap-2">
-                                        <div className="flex items-center gap-1 bg-white/90 px-2 py-1 rounded-full">
-                                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                                          <span className="text-sm font-semibold text-gray-800">{rec.rating}</span>
+                            <div 
+                              className="overflow-x-auto pb-4 scrollbar-hide -mx-2"
+                              style={{scrollBehavior: 'smooth'}}
+                            >
+                              <div className="flex gap-6 w-max px-2">
+                                {recommendations.recommendations.map((rec: Recommendation, i: number) => (
+                                  <div
+                                    key={i}
+                                    className="group bg-card border border-border/50 rounded-xl overflow-hidden flex-shrink-0 w-[420px] shadow-lg hover:shadow-xl transition-all duration-300"
+                                  >
+                                    {/* Enhanced Image for Desktop */}
+                                    <div className="relative overflow-hidden">
+                                      {rec.image && (
+                                        <Image 
+                                          src={rec.image as string} 
+                                          alt={rec.destination}
+                                          width={420}
+                                          height={240}
+                                          className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" 
+                                        />
+                                      )}
+                                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                                      <div className="absolute top-4 right-4">
+                                        <span className="bg-white/95 text-primary text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
+                                          #{i + 1}
+                                        </span>
+                                      </div>
+                                      <div className="absolute bottom-4 left-4 right-4">
+                                        <h4 className="font-bold text-2xl text-white mb-2 drop-shadow-lg">{rec.destination}</h4>
+                                        <div className="flex items-center gap-2">
+                                          <div className="flex items-center gap-1 bg-white/90 px-2 py-1 rounded-full">
+                                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                                            <span className="text-sm font-semibold text-gray-800">
+                                              {rec.rating}
+                                            </span>
+                                          </div>
+                                          <div className="flex items-center gap-1 bg-blue-500/90 px-2 py-1 rounded-full">
+                                            <TrendingUp className="h-4 w-4 text-white" />
+                                            <span className="text-sm font-semibold text-white">
+                                              High Engagement
+                                            </span>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
-                                  
-                                  {/* Enhanced Content for Desktop */}
-                                  <div className="p-6">
-                                    <p className="text-sm text-muted-foreground leading-relaxed mb-4">{rec.description}</p>
                                     
-                                    {/* Enhanced Creator Cards for Desktop */}
-                                    {rec.suggestedCreators && rec.suggestedCreators.length > 0 && (
-                                      <div className="mb-4">
-                                        <div className="flex items-center gap-2 mb-3">
-                                          <Users className="h-4 w-4 text-primary" />
-                                          <span className="text-sm font-semibold text-foreground">Similar Creators</span>
-                                        </div>
-                                        <div className="grid gap-3">
-                                          {rec.suggestedCreators.slice(0, 2).map((creator, idx) => (
-                                            <div key={idx} className="flex items-center gap-3 p-3 bg-secondary/30 rounded-lg">
-                                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 border-2 border-primary/20 flex items-center justify-center">
-                                                <User className="h-5 w-5 text-primary" />
-                                              </div>
-                                              <div className="flex-1">
-                                                <div className="font-semibold text-foreground">{creator.name}</div>
-                                                <div className="text-xs text-muted-foreground">{creator.niche}</div>
-                                                <div className="text-primary font-medium mt-1">{creator.collaboration}</div>
-                                              </div>
-                                            </div>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    )}
-                                    
-                                    {/* Enhanced Tags for Desktop */}
-                                    {rec.tags && rec.tags.length > 0 && (
-                                      <div className="flex flex-wrap gap-2">
-                                        {rec.tags.slice(0, 4).map((tag: string) => (
-                                          <span key={tag} className="bg-secondary/80 text-secondary-foreground text-xs px-3 py-1 rounded-full font-medium">
-                                            #{tag}
+                                    {/* Enhanced Content for Desktop */}
+                                    <div className="p-6 space-y-4">
+                                      <div className="bg-blue-100 dark:bg-blue-900/50 p-3 rounded-lg border border-blue-200 dark:border-blue-700">
+                                        <div className="flex items-center gap-2 mb-2">
+                                          <TrendingUp className="h-4 w-4 text-black dark:text-white" />
+                                          <span className="text-sm font-black text-black dark:text-white">
+                                            High Engagement Potential
                                           </span>
-                                        ))}
+                                        </div>
+                                        <p className="text-xs text-black dark:text-white font-black">
+                                          Perfect for content creators
+                                        </p>
                                       </div>
-                                    )}
+                                      
+                                      <div className="bg-purple-100 dark:bg-purple-900/50 p-3 rounded-lg border border-purple-200 dark:border-purple-700">
+                                        <div className="flex items-center gap-2 mb-1">
+                                          <DollarSign className="h-4 w-4 text-black dark:text-white" />
+                                          <span className="text-sm font-black text-black dark:text-white">Creator Friendly</span>
+                                        </div>
+                                        <p className="text-xs text-black dark:text-white font-black">
+                                          Great value for content creation
+                                        </p>
+                                      </div>
+
+                                      <div className="bg-green-100 dark:bg-green-900/50 p-3 rounded-lg border border-green-200 dark:border-green-700">
+                                        <div className="flex items-center gap-2 mb-1">
+                                          <Briefcase className="h-4 w-4 text-black dark:text-white" />
+                                          <span className="text-sm font-black text-black dark:text-white">
+                                            Brand Opportunities
+                                          </span>
+                                        </div>
+                                        <p className="text-xs text-black dark:text-white font-black">
+                                          Multiple partnership possibilities
+                                        </p>
+                                      </div>
+
+                                      <div className="bg-gray-100 dark:bg-gray-800/70 p-3 rounded-lg border border-gray-200 dark:border-gray-600">
+                                        <div className="flex items-center gap-2 mb-1">
+                                          <Users className="h-4 w-4 text-black dark:text-white" />
+                                          <span className="text-sm font-black text-black dark:text-white">
+                                            Creator Community
+                                          </span>
+                                        </div>
+                                        <p className="text-xs text-black dark:text-white font-black">
+                                          Active local creator network
+                                        </p>
+                                      </div>
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                ))}
+                              </div>
+                              
+                              {/* Desktop Navigation buttons */}
+                              <div className="flex justify-center gap-4 mt-6">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => scrollRecommendations('left')}
+                                  className="h-12 w-12 p-0 rounded-full shadow-md hover:shadow-lg"
+                                >
+                                  <ChevronLeft className="h-5 w-5" />
+                                </Button>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => scrollRecommendations('right')}
+                                  className="h-12 w-12 p-0 rounded-full shadow-md hover:shadow-lg"
+                                >
+                                  <ChevronRight className="h-5 w-5" />
+                                </Button>
+                              </div>
                             </div>
                           </div>
                         </div>

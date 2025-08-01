@@ -13,167 +13,82 @@
         "estimated_reach": "250K-500K views per video",
         "engagement_rate": "8.5%"
       },
-      "identified_brand_partnerships": [
-        {
-          "brand": "Sony",
-          "category": "Electronics",
-          "partnership_type": "Product placement",
-          "estimated_value": "$5,000-15,000",
-          "contact_available": true
-        },
-        {
-          "brand": "Uniqlo",
-          "category": "Fashion",
-          "partnership_type": "Wardrobe sponsorship",
-          "estimated_value": "$2,000-8,000",
-          "contact_available": true
-        },
-        {
-          "brand": "Nintendo",
-          "category": "Gaming",
-          "partnership_type": "Experience collaboration",
-          "estimated_value": "$3,000-10,000",
-          "contact_available": false
-        }
-      ],
-      "local_creators_collaboration": {
-        "total_available": 156,
-        "top_creators": [
-          {
-            "name": "@tokyofashion",
-            "platform": "Instagram",
-            "followers": "340K",
-            "engagement": "7.8%",
-            "niche": "Fashion & Lifestyle",
-            "collaboration_rate": "$800-1,500 per post",
-            "availability": "High"
-          },
-          {
-            "name": "@japantravel",
-            "platform": "YouTube",
-            "followers": "156K",
-            "engagement": "9.2%",
-            "niche": "Travel & Culture",
-            "collaboration_rate": "$1,200-2,500 per video",
-            "availability": "Medium"
-          }
-        ]
-      },
       "budget_insights": {
-        "budget_categories": ["$1000-2500", "$2500-5000", "$5000+"],
-        "within_user_budget": true,
-        "stretch_goal_option": true,
-        "cost_breakdown": {
-          "flights": {
-            "economy": "$850-1,200",
-            "business": "$3,500-5,500",
-            "from_location": "LAX"
+        "budget_categories": ["$800-1500", "$1500-3000", "$3000-6000", "$6000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,200-1,800",
+            "accommodation": "Hostels/Capsule hotels $20-40/night",
+            "food": "Convenience stores/Street food $12-20/day",
+            "transport": "JR Pass + walking $8-15/day",
+            "activities": "Free temples/Parks $50-150 total",
+            "flights": "Budget airlines with stops $450-650"
           },
-          "accommodation": {
-            "budget": "$40-80/night",
-            "mid_range": "$120-250/night",
-            "luxury": "$400-800/night"
+          "budget": {
+            "total_7_days": "$2,200-2,800", 
+            "accommodation": "Business hotels $50-80/night",
+            "food": "Local restaurants $25-40/day",
+            "transport": "Public transport $15-25/day",
+            "activities": "Major attractions $200-400 total",
+            "flights": "Economy direct $800-1,200"
           },
-          "food": {
-            "budget": "$25-40/day",
-            "mid_range": "$50-100/day",
-            "fine_dining": "$150-300/day"
+          "mid_range": {
+            "total_7_days": "$3,500-5,500",
+            "accommodation": "4-star hotels $120-200/night", 
+            "food": "Quality restaurants $50-80/day",
+            "transport": "Mix of train/taxi $25-40/day",
+            "activities": "Premium experiences $400-700 total",
+            "flights": "Premium economy $1,200-1,800"
           },
-          "transport": "$15-30/day",
-          "activities": "$200-500 total",
-          "total_7_days": {
-            "budget": "$2,200-2,800",
-            "mid_range": "$3,500-5,500",
-            "luxury": "$8,000-15,000"
+          "luxury": {
+            "total_7_days": "$8,000-15,000",
+            "accommodation": "5-star/Ryokans $300-600/night",
+            "food": "Fine dining/Michelin $100-250/day", 
+            "transport": "Private car/First class $40-80/day",
+            "activities": "Exclusive experiences $800-1,500 total",
+            "flights": "Business class $3,000-5,000"
           }
         }
       },
-      "events": [
-        {
-          "title": "Tokyo Jazz Festival",
-          "date": "September 1-3, 2025",
-          "venue": "Multiple venues",
-          "type": "Music",
-          "source": "Live Nation",
-          "ticket_price": "$45-120",
-          "content_opportunity": "High",
-          "link": "https://www.tokyo-jazz.com"
-        },
-        {
-          "title": "Shibuya Sky Observatory Opening",
-          "date": "August 15, 2025",
-          "venue": "Shibuya Sky",
-          "type": "Experience",
-          "source": "Google Places",
-          "ticket_price": "$20",
-          "content_opportunity": "Very High",
-          "link": "https://shibuya-sky.com"
-        }
-      ],
-      "detailed_destination_breakdown": {
-        "must_visit_areas": [
-          {
-            "name": "Shibuya Crossing",
-            "content_value": "Iconic urban shots",
-            "best_time": "Evening rush hour",
-            "photography_tips": "Use wide angle lens"
-          },
-          {
-            "name": "Senso-ji Temple",
-            "content_value": "Cultural authenticity",
-            "best_time": "Early morning",
-            "photography_tips": "Respect photography rules"
-          }
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1480796927426-f609979314bd?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1542931287-023b922fa89b?w=800&h=600&fit=crop&crop=center"
         ],
-        "hidden_gems": [
-          "TeamLab Borderless",
-          "Golden Gai bars",
-          "Tsukiji Outer Market"
-        ]
-      },
-      "recommended_experiences": [
-        {
-          "name": "Sushi Making Class",
-          "duration": "3 hours",
-          "cost": "$120",
-          "content_potential": "Very High",
-          "bookable": true
-        },
-        {
-          "name": "Robot Restaurant Show",
-          "duration": "1.5 hours",
-          "cost": "$80",
-          "content_potential": "High",
-          "bookable": true
+        "attractions": {
+          "Shibuya Crossing": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600&h=400&fit=crop&crop=center",
+          "Senso-ji Temple": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=600&h=400&fit=crop&crop=center",
+          "Tokyo Skytree": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=600&h=400&fit=crop&crop=center"
         }
-      ],
-      "monetization_opportunities": {
-        "affiliate_potential": "High",
-        "sponsored_content": "Very High",
-        "product_placement": "High",
-        "estimated_revenue": "$15,000-35,000 per trip"
       },
-      "fact_check_confidence": {
-        "overall_score": 9.5,
-        "data_sources": ["Official tourism board", "Local creator network", "Real-time pricing APIs"],
-        "last_updated": "2025-07-15",
-        "verification_status": "Verified"
+      "filtering_tags": {
+        "experience_type": ["cultural_immersion", "urban_exploration", "food_adventure", "photography_focused", "tech_innovation"],
+        "activity_level": ["moderate_walking", "high_energy"],
+        "group_suitability": ["solo_friendly", "couple_romantic", "family_suitable", "group_activities"],
+        "content_themes": ["street_photography", "food_blogging", "cultural_stories", "tech_reviews", "lifestyle_content"],
+        "dietary_accommodations": ["vegetarian_friendly", "halal_options", "gluten_free_available"],
+        "accessibility": ["partial_wheelchair_accessible", "elderly_friendly", "child_friendly"],
+        "climate_suitability": ["mild_weather", "seasonal_variety"],
+        "crowd_preference": ["tourist_popular", "authentic_local_areas"]
       },
       "content_focus_alignment": {
         "photography": 9.5,
         "food": 9.8,
         "adventure": 7.5,
         "culture": 9.2,
-        "luxury": 8.5
-      },
-      "best_seasons": ["Spring", "Fall"],
-      "language_barrier": "Medium",
-      "wifi_quality": "Excellent",
-      "content_creation_friendly": true
+        "luxury": 8.5,
+        "budget": 8.8,
+        "wellness": 7.8,
+        "tech": 9.5
+      }
     },
     {
       "id": 2,
-      "destination": "Bali, Indonesia",
+      "destination": "Bali, Indonesia", 
       "country": "Indonesia",
       "region": "Southeast Asia",
       "climate": "tropical",
@@ -184,118 +99,78 @@
         "estimated_reach": "300K-600K views per video",
         "engagement_rate": "9.1%"
       },
-      "identified_brand_partnerships": [
-        {
-          "brand": "Lululemon",
-          "category": "Activewear",
-          "partnership_type": "Yoga/wellness content",
-          "estimated_value": "$8,000-20,000",
-          "contact_available": true
-        },
-        {
-          "brand": "Airbnb",
-          "category": "Accommodation",
-          "partnership_type": "Stay collaboration",
-          "estimated_value": "$3,000-12,000",
-          "contact_available": true
-        }
-      ],
-      "local_creators_collaboration": {
-        "total_available": 89,
-        "top_creators": [
-          {
-            "name": "@balivibes",
-            "platform": "Instagram",
-            "followers": "280K",
-            "engagement": "8.9%",
-            "niche": "Wellness & Travel",
-            "collaboration_rate": "$600-1,200 per post",
-            "availability": "High"
-          }
-        ]
-      },
       "budget_insights": {
-        "budget_categories": ["$500-1500", "$1500-3000", "$3000+"],
-        "within_user_budget": true,
-        "stretch_goal_option": true,
-        "cost_breakdown": {
-          "flights": {
-            "economy": "$650-950",
-            "business": "$2,800-4,200",
-            "from_location": "LAX"
+        "budget_categories": ["$400-800", "$800-1500", "$1500-3000", "$3000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$600-900",
+            "accommodation": "Hostels/Guesthouses $8-15/night",
+            "food": "Local warungs $5-10/day", 
+            "transport": "Scooter rental $5-8/day",
+            "activities": "Beaches/Temples $30-80 total",
+            "flights": "Budget airlines $300-450"
           },
-          "accommodation": {
-            "budget": "$25-50/night",
-            "mid_range": "$80-180/night",
-            "luxury": "$300-600/night"
+          "budget": {
+            "total_7_days": "$1,200-1,800",
+            "accommodation": "Mid-range hotels $25-40/night",
+            "food": "Mix of local/tourist restaurants $15-25/day",
+            "transport": "Private driver/Scooter $10-15/day", 
+            "activities": "Popular attractions $100-200 total",
+            "flights": "Economy direct $600-900"
           },
-          "food": {
-            "budget": "$15-25/day",
-            "mid_range": "$30-60/day",
-            "fine_dining": "$100-200/day"
+          "mid_range": {
+            "total_7_days": "$2,500-4,000",
+            "accommodation": "Boutique hotels/Villas $80-150/night",
+            "food": "Nice restaurants $30-50/day",
+            "transport": "Private car/Tours $20-35/day",
+            "activities": "Premium experiences $250-450 total", 
+            "flights": "Premium economy $900-1,300"
           },
-          "transport": "$10-20/day",
-          "activities": "$150-400 total",
-          "total_7_days": {
-            "budget": "$1,400-2,000",
-            "mid_range": "$2,500-4,000",
-            "luxury": "$6,000-12,000"
+          "luxury": {
+            "total_7_days": "$6,000-12,000",
+            "accommodation": "5-star resorts $200-500/night",
+            "food": "Fine dining $60-120/day",
+            "transport": "Private chauffeur $35-60/day",
+            "activities": "Exclusive experiences $500-1,000 total",
+            "flights": "Business class $2,500-4,000"
           }
         }
       },
-      "events": [
-        {
-          "title": "Bali Arts Festival",
-          "date": "June 15-July 15, 2025",
-          "venue": "Denpasar",
-          "type": "Cultural",
-          "source": "Local events",
-          "ticket_price": "Free",
-          "content_opportunity": "Very High"
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1555400292-1559705b1d98?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Ubud Rice Terraces": "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=600&h=400&fit=crop&crop=center",
+          "Mount Batur": "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=600&h=400&fit=crop&crop=center",
+          "Tanah Lot": "https://images.unsplash.com/photo-1555400292-1559705b1d98?w=600&h=400&fit=crop&crop=center"
         }
-      ],
-      "detailed_destination_breakdown": {
-        "must_visit_areas": [
-          {
-            "name": "Ubud Rice Terraces",
-            "content_value": "Scenic landscape content",
-            "best_time": "Golden hour",
-            "photography_tips": "Drone shots recommended"
-          }
-        ]
       },
-      "recommended_experiences": [
-        {
-          "name": "Sunrise Mount Batur Hike",
-          "duration": "6 hours",
-          "cost": "$45",
-          "content_potential": "Very High",
-          "bookable": true
-        }
-      ],
-      "monetization_opportunities": {
-        "affiliate_potential": "Very High",
-        "sponsored_content": "High",
-        "product_placement": "Medium",
-        "estimated_revenue": "$12,000-28,000 per trip"
-      },
-      "fact_check_confidence": {
-        "overall_score": 9.2,
-        "data_sources": ["Tourism authority", "Local partnerships"],
-        "last_updated": "2025-07-10",
-        "verification_status": "Verified"
+      "filtering_tags": {
+        "experience_type": ["wellness_retreat", "beach_relaxation", "cultural_exploration", "adventure_sports", "spiritual_journey"],
+        "activity_level": ["low_activity", "moderate_walking", "high_energy"],
+        "group_suitability": ["solo_friendly", "couple_romantic", "wellness_groups", "adventure_groups"],
+        "content_themes": ["wellness_content", "beach_photography", "spiritual_journey", "adventure_sports", "luxury_lifestyle"],
+        "dietary_accommodations": ["vegetarian_paradise", "vegan_friendly", "raw_food_options", "juice_cleanses"],
+        "accessibility": ["limited_wheelchair_access", "wellness_facilities", "child_friendly_resorts"],
+        "climate_suitability": ["tropical_weather", "humid_conditions"],
+        "crowd_preference": ["tourist_areas", "secluded_beaches", "authentic_villages"]
       },
       "content_focus_alignment": {
         "photography": 9.8,
         "wellness": 9.5,
         "adventure": 8.5,
         "culture": 8.8,
-        "budget": 9.2
-      },
-      "best_seasons": ["Dry season (Apr-Oct)"],
-      "language_barrier": "Low",
-      "wifi_quality": "Good",
-      "content_creation_friendly": true
+        "budget": 9.2,
+        "luxury": 8.9,
+        "beach": 9.7,
+        "spiritual": 9.3
+      }
     },
     {
       "id": 3,
@@ -310,118 +185,73 @@
         "estimated_reach": "200K-450K views per video",
         "engagement_rate": "8.2%"
       },
-      "identified_brand_partnerships": [
-        {
-          "brand": "Zara",
-          "category": "Fashion",
-          "partnership_type": "Style collaboration",
-          "estimated_value": "$5,000-15,000",
-          "contact_available": true
-        },
-        {
-          "brand": "Seat",
-          "category": "Automotive",
-          "partnership_type": "City exploration",
-          "estimated_value": "$8,000-25,000",
-          "contact_available": false
-        }
-      ],
-      "local_creators_collaboration": {
-        "total_available": 67,
-        "top_creators": [
-          {
-            "name": "@barcelonalife",
-            "platform": "TikTok",
-            "followers": "420K",
-            "engagement": "12.3%",
-            "niche": "Lifestyle & Food",
-            "collaboration_rate": "$1,000-2,000 per video",
-            "availability": "Medium"
-          }
-        ]
-      },
       "budget_insights": {
-        "budget_categories": ["$1000-2500", "$2500-4500", "$4500+"],
-        "within_user_budget": true,
-        "stretch_goal_option": false,
-        "cost_breakdown": {
-          "flights": {
-            "economy": "$550-850",
-            "business": "$2,200-3,800",
-            "from_location": "JFK"
+        "budget_categories": ["$1000-2500", "$2500-4500", "$4500-7000", "$7000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,200-1,800",
+            "accommodation": "Hostels $20-35/night",
+            "food": "Tapas bars/Markets $15-25/day",
+            "transport": "Metro/Walking $8-15/day",
+            "activities": "Free museums/Gaudi sites $50-120 total",
+            "flights": "Budget airlines $300-500"
           },
-          "accommodation": {
-            "budget": "$50-90/night",
-            "mid_range": "$120-220/night",
-            "luxury": "$350-650/night"
+          "budget": {
+            "total_7_days": "$2,000-3,000",
+            "accommodation": "Budget hotels $50-90/night",
+            "food": "Local restaurants $35-50/day",
+            "transport": "Public transport/Taxis $20-35/day",
+            "activities": "Attractions/Tours $250-600 total",
+            "flights": "Economy $550-850"
           },
-          "food": {
-            "budget": "$35-50/day",
-            "mid_range": "$60-100/day",
-            "fine_dining": "$150-250/day"
+          "mid_range": {
+            "total_7_days": "$3,500-5,500",
+            "accommodation": "3-4 star hotels $120-220/night",
+            "food": "Quality restaurants $60-100/day",
+            "transport": "Private transfers $20-35/day",
+            "activities": "Premium experiences $250-600 total",
+            "flights": "Premium economy $700-1,100"
           },
-          "transport": "$20-35/day",
-          "activities": "$250-600 total",
-          "total_7_days": {
-            "budget": "$2,000-3,000",
-            "mid_range": "$3,500-5,500",
-            "luxury": "$7,000-13,000"
+          "luxury": {
+            "total_7_days": "$7,000-13,000",
+            "accommodation": "5-star hotels $350-650/night",
+            "food": "Fine dining $150-250/day",
+            "transport": "Private car/Helicopter $35-60/day",
+            "activities": "Exclusive experiences $400-1,000 total",
+            "flights": "Business class $2,200-3,800"
           }
         }
       },
-      "events": [
-        {
-          "title": "La Mercè Festival",
-          "date": "September 24-27, 2025",
-          "venue": "City-wide",
-          "type": "Cultural",
-          "source": "City events",
-          "ticket_price": "Free",
-          "content_opportunity": "Very High"
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1544460478-b4a38825c9c4?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Sagrada Familia": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=600&h=400&fit=crop&crop=center",
+          "Park Güell": "https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?w=600&h=400&fit=crop&crop=center",
+          "Gothic Quarter": "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=600&h=400&fit=crop&crop=center"
         }
-      ],
-      "detailed_destination_breakdown": {
-        "must_visit_areas": [
-          {
-            "name": "Sagrada Familia",
-            "content_value": "Architectural marvel",
-            "best_time": "Morning light",
-            "photography_tips": "Book skip-the-line tickets"
-          }
-        ]
       },
-      "recommended_experiences": [
-        {
-          "name": "Flamenco Show & Dinner",
-          "duration": "3 hours",
-          "cost": "$85",
-          "content_potential": "High",
-          "bookable": true
-        }
-      ],
-      "monetization_opportunities": {
-        "affiliate_potential": "High",
-        "sponsored_content": "High",
-        "product_placement": "Medium",
-        "estimated_revenue": "$10,000-22,000 per trip"
-      },
-      "fact_check_confidence": {
-        "overall_score": 9.0,
-        "data_sources": ["Spain tourism board", "Local event calendars"],
-        "last_updated": "2025-07-08",
-        "verification_status": "Verified"
+      "filtering_tags": {
+        "experience_type": ["architectural_marvels", "art_galleries", "beach_city", "culinary_adventure", "nightlife"],
+        "dietary_accommodations": ["tapas_culture", "seafood_rich", "vegetarian_options", "wine_culture"],
+        "climate_suitability": ["mediterranean_weather", "mild_winters", "hot_summers"],
+        "crowd_preference": ["popular_attractions", "local_neighborhoods", "beach_areas"]
       },
       "content_focus_alignment": {
         "photography": 9.2,
         "food": 9.0,
         "adventure": 7.8,
         "culture": 9.5,
-        "architecture": 9.8
-      },
-      "best_seasons": ["Spring", "Fall"],
-      "language_barrier": "Medium",
-      "wifi_quality": "Excellent",
-      "content_creation_friendly": true
+        "architecture": 9.8,
+        "budget": 8.5,
+        "urban": 9.1
+      }
     },
     {
       "id": 4,
@@ -436,118 +266,73 @@
         "estimated_reach": "280K-520K views per video",
         "engagement_rate": "8.7%"
       },
-      "identified_brand_partnerships": [
-        {
-          "brand": "Emirates",
-          "category": "Airlines",
-          "partnership_type": "Travel collaboration",
-          "estimated_value": "$15,000-40,000",
-          "contact_available": true
-        },
-        {
-          "brand": "Burj Al Arab",
-          "category": "Hospitality",
-          "partnership_type": "Luxury stay",
-          "estimated_value": "$8,000-25,000",
-          "contact_available": true
-        }
-      ],
-      "local_creators_collaboration": {
-        "total_available": 45,
-        "top_creators": [
-          {
-            "name": "@dubailifestyle",
-            "platform": "Instagram",
-            "followers": "520K",
-            "engagement": "6.8%",
-            "niche": "Luxury & Travel",
-            "collaboration_rate": "$1,500-3,000 per post",
-            "availability": "Low"
-          }
-        ]
-      },
       "budget_insights": {
-        "budget_categories": ["$2000-4000", "$4000-8000", "$8000+"],
-        "within_user_budget": false,
-        "stretch_goal_option": true,
-        "cost_breakdown": {
-          "flights": {
-            "economy": "$800-1,400",
-            "business": "$4,000-7,000",
-            "from_location": "JFK"
+        "budget_categories": ["$1000-2000", "$2000-4000", "$4000-8000", "$8000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,300-2,000",
+            "accommodation": "Hostels/Budget hotels $30-60/night",
+            "food": "Food courts/Local cafes $15-30/day",
+            "transport": "Public transport/Metro $10-20/day",
+            "activities": "Free beaches/Malls $80-150 total",
+            "flights": "Budget airlines $400-700"
           },
-          "accommodation": {
-            "budget": "$80-150/night",
-            "mid_range": "$200-400/night",
-            "luxury": "$600-1,500/night"
+          "budget": {
+            "total_7_days": "$2,200-3,500",
+            "accommodation": "3-star hotels $60-120/night",
+            "food": "Restaurant chains/Mid-range $30-50/day",
+            "transport": "Taxis/Tours $20-40/day",
+            "activities": "Desert safari/City tours $200-400 total",
+            "flights": "Economy $700-1,100"
           },
-          "food": {
-            "budget": "$40-70/day",
-            "mid_range": "$80-150/day",
-            "fine_dining": "$200-500/day"
+          "mid_range": {
+            "total_7_days": "$4,500-6,800",
+            "accommodation": "4-star hotels/Beach resorts $120-220/night",
+            "food": "Quality restaurants $50-90/day",
+            "transport": "Private cars/Premium tours $40-70/day",
+            "activities": "Premium experiences/Spa treatments $400-700 total",
+            "flights": "Premium economy $1,100-1,600"
           },
-          "transport": "$30-60/day",
-          "activities": "$400-1,000 total",
-          "total_7_days": {
-            "budget": "$3,500-5,500",
-            "mid_range": "$6,000-10,000",
-            "luxury": "$15,000-30,000"
+          "luxury": {
+            "total_7_days": "$9,000-18,000",
+            "accommodation": "5-star hotels/Luxury resorts $250-600/night",
+            "food": "Fine dining/Celebrity chefs $100-250/day",
+            "transport": "Private helicopter/Supercars $100-250/day",
+            "activities": "Exclusive experiences/Private yachts $800-2,000 total",
+            "flights": "Business/First class $2,500-5,000"
           }
         }
       },
-      "events": [
-        {
-          "title": "Dubai Shopping Festival",
-          "date": "December 15, 2025 - January 29, 2026",
-          "venue": "City-wide",
-          "type": "Shopping",
-          "source": "Dubai events",
-          "ticket_price": "Free entry",
-          "content_opportunity": "High"
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1546412414-e1885259563a?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1585155770861-b5de65c2b3b5?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Burj Khalifa": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&h=400&fit=crop&crop=center",
+          "Dubai Marina": "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&h=400&fit=crop&crop=center",
+          "Palm Jumeirah": "https://images.unsplash.com/photo-1546412414-e1885259563a?w=600&h=400&fit=crop&crop=center"
         }
-      ],
-      "detailed_destination_breakdown": {
-        "must_visit_areas": [
-          {
-            "name": "Burj Khalifa",
-            "content_value": "Iconic skyline shots",
-            "best_time": "Sunset",
-            "photography_tips": "Book observation deck in advance"
-          }
-        ]
       },
-      "recommended_experiences": [
-        {
-          "name": "Desert Safari with Camel Riding",
-          "duration": "6 hours",
-          "cost": "$120",
-          "content_potential": "Very High",
-          "bookable": true
-        }
-      ],
-      "monetization_opportunities": {
-        "affiliate_potential": "Very High",
-        "sponsored_content": "Very High",
-        "product_placement": "High",
-        "estimated_revenue": "$20,000-45,000 per trip"
-      },
-      "fact_check_confidence": {
-        "overall_score": 9.3,
-        "data_sources": ["Dubai Tourism", "Official event calendars"],
-        "last_updated": "2025-07-12",
-        "verification_status": "Verified"
+      "filtering_tags": {
+        "experience_type": ["luxury_lifestyle", "desert_adventures", "modern_architecture", "shopping_paradise", "multicultural_dining"],
+        "dietary_accommodations": ["halal_cuisine", "international_options", "fine_dining", "luxury_buffets"],
+        "climate_suitability": ["desert_heat", "air_conditioned_environments", "winter_preferred"],
+        "crowd_preference": ["luxury_experiences", "shopping_districts", "tourist_attractions"]
       },
       "content_focus_alignment": {
         "luxury": 9.8,
         "adventure": 8.5,
         "photography": 9.0,
         "shopping": 9.5,
-        "technology": 9.2
-      },
-      "best_seasons": ["Winter (Nov-Mar)"],
-      "language_barrier": "Low",
-      "wifi_quality": "Excellent",
-      "content_creation_friendly": true
+        "technology": 9.2,
+        "budget": 6.8,
+        "modern": 9.5
+      }
     },
     {
       "id": 5,
@@ -562,118 +347,73 @@
         "estimated_reach": "350K-650K views per video",
         "engagement_rate": "9.5%"
       },
-      "identified_brand_partnerships": [
-        {
-          "brand": "Patagonia",
-          "category": "Outdoor gear",
-          "partnership_type": "Adventure content",
-          "estimated_value": "$10,000-25,000",
-          "contact_available": true
-        },
-        {
-          "brand": "GoPro",
-          "category": "Camera equipment",
-          "partnership_type": "Action filming",
-          "estimated_value": "$5,000-15,000",
-          "contact_available": true
-        }
-      ],
-      "local_creators_collaboration": {
-        "total_available": 23,
-        "top_creators": [
-          {
-            "name": "@icelandnature",
-            "platform": "YouTube",
-            "followers": "180K",
-            "engagement": "11.2%",
-            "niche": "Nature & Adventure",
-            "collaboration_rate": "$800-1,800 per video",
-            "availability": "High"
-          }
-        ]
-      },
       "budget_insights": {
-        "budget_categories": ["$2500-4000", "$4000-7000", "$7000+"],
-        "within_user_budget": false,
-        "stretch_goal_option": true,
-        "cost_breakdown": {
-          "flights": {
-            "economy": "$400-700",
-            "business": "$2,500-4,000",
-            "from_location": "JFK"
+        "budget_categories": ["$1500-3000", "$3000-5000", "$5000-8000", "$8000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,800-2,600",
+            "accommodation": "Hostels/Guesthouses $35-60/night",
+            "food": "Supermarket meals/Budget cafes $30-50/day",
+            "transport": "Car rental/Camping van $40-70/day",
+            "activities": "Free hot springs/Hiking $50-150 total",
+            "flights": "Budget airlines $300-500"
           },
-          "accommodation": {
-            "budget": "$100-180/night",
-            "mid_range": "$200-350/night",
-            "luxury": "$400-800/night"
+          "budget": {
+            "total_7_days": "$3,200-4,400",
+            "accommodation": "Budget hotels/Farm stays $80-120/night",
+            "food": "Local restaurants $50-80/day",
+            "transport": "Car rental with insurance $60-90/day",
+            "activities": "Tours/Attractions $200-400 total",
+            "flights": "Economy $500-750"
           },
-          "food": {
-            "budget": "$60-90/day",
-            "mid_range": "$100-150/day",
-            "fine_dining": "$200-300/day"
+          "mid_range": {
+            "total_7_days": "$5,500-7,200",
+            "accommodation": "3-4 star hotels $140-220/night",
+            "food": "Quality restaurants $80-120/day",
+            "transport": "4WD rental/Tours $80-120/day",
+            "activities": "Premium tours/Northern lights $400-700 total",
+            "flights": "Premium economy $750-1,100"
           },
-          "transport": "$80-120/day (car rental)",
-          "activities": "$300-800 total",
-          "total_7_days": {
-            "budget": "$3,500-5,000",
-            "mid_range": "$5,500-8,500",
-            "luxury": "$10,000-18,000"
+          "luxury": {
+            "total_7_days": "$9,500-16,000",
+            "accommodation": "Luxury hotels/Unique stays $300-600/night",
+            "food": "Fine dining/Chef experiences $120-250/day",
+            "transport": "Private tours/Helicopter $150-300/day",
+            "activities": "Exclusive experiences $800-1,500 total",
+            "flights": "Business class $2,000-3,500"
           }
         }
       },
-      "events": [
-        {
-          "title": "Northern Lights Season",
-          "date": "September 15 - March 31",
-          "venue": "Nationwide",
-          "type": "Natural phenomenon",
-          "source": "Weather data",
-          "ticket_price": "Free",
-          "content_opportunity": "Very High"
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1539066834395-2f4ac200a2f4?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1504829857797-ddff29c27927?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1551524164-3ca4ac833fb5?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Blue Lagoon": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop&crop=center",
+          "Northern Lights": "https://images.unsplash.com/photo-1539066834395-2f4ac200a2f4?w=600&h=400&fit=crop&crop=center",
+          "Gullfoss Waterfall": "https://images.unsplash.com/photo-1504829857797-ddff29c27927?w=600&h=400&fit=crop&crop=center"
         }
-      ],
-      "detailed_destination_breakdown": {
-        "must_visit_areas": [
-          {
-            "name": "Blue Lagoon",
-            "content_value": "Unique geothermal experience",
-            "best_time": "Early morning",
-            "photography_tips": "Waterproof camera essential"
-          }
-        ]
       },
-      "recommended_experiences": [
-        {
-          "name": "Golden Circle Tour",
-          "duration": "8 hours",
-          "cost": "$150",
-          "content_potential": "Very High",
-          "bookable": true
-        }
-      ],
-      "monetization_opportunities": {
-        "affiliate_potential": "High",
-        "sponsored_content": "Very High",
-        "product_placement": "Very High",
-        "estimated_revenue": "$18,000-35,000 per trip"
-      },
-      "fact_check_confidence": {
-        "overall_score": 9.4,
-        "data_sources": ["Iceland tourism board", "Weather services"],
-        "last_updated": "2025-07-14",
-        "verification_status": "Verified"
+      "filtering_tags": {
+        "experience_type": ["natural_wonders", "northern_lights", "adventure_drives", "geothermal_spas", "photography_paradise"],
+        "dietary_accommodations": ["fresh_seafood", "lamb_specialties", "dairy_products", "limited_vegetarian"],
+        "climate_suitability": ["cold_weather_gear", "winter_activities", "summer_midnight_sun"],
+        "crowd_preference": ["nature_focused", "small_groups", "self_drive_tours"]
       },
       "content_focus_alignment": {
         "nature": 9.8,
         "adventure": 9.5,
         "photography": 9.7,
         "wellness": 8.5,
-        "unique_experiences": 9.6
-      },
-      "best_seasons": ["Summer (Jun-Aug)", "Winter (Sep-Mar)"],
-      "language_barrier": "Very Low",
-      "wifi_quality": "Excellent",
-      "content_creation_friendly": true
+        "unique_experiences": 9.6,
+        "luxury": 7.8,
+        "budget": 6.5
+      }
     },
     {
       "id": 6,
@@ -688,86 +428,72 @@
         "estimated_reach": "220K-480K views per video",
         "engagement_rate": "8.4%"
       },
-      "identified_brand_partnerships": [
-        {
-          "brand": "Louis Vuitton",
-          "category": "Luxury fashion",
-          "partnership_type": "Style collaboration",
-          "estimated_value": "$12,000-30,000",
-          "contact_available": false
-        },
-        {
-          "brand": "L'Oréal Paris",
-          "category": "Beauty",
-          "partnership_type": "Beauty content",
-          "estimated_value": "$8,000-20,000",
-          "contact_available": true
-        }
-      ],
-      "local_creators_collaboration": {
-        "total_available": 78,
-        "top_creators": [
-          {
-            "name": "@parisianvibes",
-            "platform": "Instagram",
-            "followers": "390K",
-            "engagement": "7.5%",
-            "niche": "Fashion & Lifestyle",
-            "collaboration_rate": "$1,200-2,200 per post",
-            "availability": "Medium"
-          }
-        ]
-      },
       "budget_insights": {
-        "budget_categories": ["$1500-3000", "$3000-6000", "$6000+"],
-        "within_user_budget": true,
-        "stretch_goal_option": true,
-        "cost_breakdown": {
-          "flights": {
-            "economy": "$500-900",
-            "business": "$2,800-4,500",
-            "from_location": "JFK"
+        "budget_categories": ["$1500-3000", "$3000-6000", "$6000-10000", "$10000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,800-2,600",
+            "accommodation": "Hostels $25-45/night",
+            "food": "Bakeries/Markets $20-35/day",
+            "transport": "Metro passes $10-20/day",
+            "activities": "Free museums/Walking tours $50-150 total",
+            "flights": "Budget airlines $400-700"
           },
-          "accommodation": {
-            "budget": "$70-120/night",
-            "mid_range": "$150-300/night",
-            "luxury": "$400-1,000/night"
+          "budget": {
+            "total_7_days": "$2,500-4,000",
+            "accommodation": "Budget hotels $70-120/night",
+            "food": "Bistros/Cafes $40-60/day",
+            "transport": "Public transport/Taxis $25-40/day",
+            "activities": "Museums/Tours $300-700 total",
+            "flights": "Economy $500-900"
           },
-          "food": {
-            "budget": "$40-60/day",
-            "mid_range": "$80-120/day",
-            "fine_dining": "$200-400/day"
+          "mid_range": {
+            "total_7_days": "$4,500-7,500",
+            "accommodation": "3-4 star hotels $150-300/night",
+            "food": "Quality restaurants $80-120/day",
+            "transport": "Private tours/Car service $40-70/day",
+            "activities": "Premium experiences $400-800 total",
+            "flights": "Premium economy $900-1,500"
           },
-          "transport": "$25-40/day",
-          "activities": "$300-700 total",
-          "total_7_days": {
-            "budget": "$2,500-4,000",
-            "mid_range": "$4,500-7,500",
-            "luxury": "$9,000-18,000"
+          "luxury": {
+            "total_7_days": "$9,000-18,000",
+            "accommodation": "5-star hotels $400-1,000/night",
+            "food": "Fine dining/Michelin stars $200-400/day",
+            "transport": "Private chauffeur $80-150/day",
+            "activities": "Exclusive experiences $800-1,500 total",
+            "flights": "Business class $2,800-4,500"
           }
         }
       },
-      "events": [
-        {
-          "title": "Paris Fashion Week",
-          "date": "September 23-October 1, 2025",
-          "venue": "Various locations",
-          "type": "Fashion",
-          "source": "Fashion calendar",
-          "ticket_price": "Invitation only",
-          "content_opportunity": "Very High"
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1549144511-f099e773c147?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1554227073-2297b7c0e67e?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Eiffel Tower": "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=600&h=400&fit=crop&crop=center",
+          "Louvre Museum": "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?w=600&h=400&fit=crop&crop=center",
+          "Arc de Triomphe": "https://images.unsplash.com/photo-1549144511-f099e773c147?w=600&h=400&fit=crop&crop=center"
         }
-      ],
+      },
+      "filtering_tags": {
+        "experience_type": ["romantic_getaway", "art_museums", "fashion_capital", "culinary_journey", "historic_landmarks"],
+        "dietary_accommodations": ["fine_dining", "pastry_culture", "wine_pairings", "vegetarian_options"],
+        "climate_suitability": ["four_seasons", "mild_weather", "indoor_attractions"],
+        "crowd_preference": ["iconic_landmarks", "local_neighborhoods", "cultural_districts"]
+      },
       "content_focus_alignment": {
         "fashion": 9.5,
         "culture": 9.2,
         "photography": 9.0,
         "food": 8.8,
-        "romance": 9.3
-      },
-      "fact_check_confidence": {
-        "overall_score": 9.1,
-        "verification_status": "Verified"
+        "romance": 9.3,
+        "history": 9.1,
+        "luxury": 8.9
       }
     },
     {
@@ -783,40 +509,72 @@
         "estimated_reach": "400K-700K views per video",
         "engagement_rate": "8.8%"
       },
-      "identified_brand_partnerships": [
-        {
-          "brand": "Nike",
-          "category": "Sports apparel",
-          "partnership_type": "Streetwear collaboration",
-          "estimated_value": "$15,000-35,000",
-          "contact_available": true
-        },
-        {
-          "brand": "Uber",
-          "category": "Transportation",
-          "partnership_type": "City navigation",
-          "estimated_value": "$5,000-12,000",
-          "contact_available": true
-        }
-      ],
       "budget_insights": {
-        "budget_categories": ["$2000-4000", "$4000-8000", "$8000+"],
-        "within_user_budget": false,
-        "stretch_goal_option": true,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$3,500-5,500",
-            "mid_range": "$6,000-10,000",
-            "luxury": "$12,000-25,000"
+        "budget_categories": ["$2000-4000", "$4000-8000", "$8000-15000", "$15000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$2,200-3,200",
+            "accommodation": "Hostels/Shared rooms $40-80/night",
+            "food": "Food trucks/Delis $25-45/day",
+            "transport": "Subway/Walking $15-25/day",
+            "activities": "Free attractions/Central Park $100-250 total",
+            "flights": "Budget airlines $300-600"
+          },
+          "budget": {
+            "total_7_days": "$3,500-5,500",
+            "accommodation": "Budget hotels $80-150/night",
+            "food": "Casual restaurants $45-75/day",
+            "transport": "Subway/Taxis $30-50/day",
+            "activities": "Broadway/Museums $400-800 total",
+            "flights": "Economy $400-800"
+          },
+          "mid_range": {
+            "total_7_days": "$6,000-10,000",
+            "accommodation": "4-star hotels $200-350/night",
+            "food": "Quality restaurants $75-120/day",
+            "transport": "Taxis/Car service $50-80/day",
+            "activities": "Premium shows/Tours $600-1,200 total",
+            "flights": "Premium economy $800-1,400"
+          },
+          "luxury": {
+            "total_7_days": "$12,000-25,000",
+            "accommodation": "5-star hotels $500-1,200/night",
+            "food": "Fine dining/Celebrity chefs $150-300/day",
+            "transport": "Private car/Helicopter $100-250/day",
+            "activities": "VIP experiences/Private tours $1,200-2,500 total",
+            "flights": "Business/First class $2,000-4,000"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1506856587125-307c1465adba?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1529260830199-42c24126f198?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1518391176894-993b3173b017?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Times Square": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=600&h=400&fit=crop&crop=center",
+          "Central Park": "https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?w=600&h=400&fit=crop&crop=center",
+          "Brooklyn Bridge": "https://images.unsplash.com/photo-1506856587125-307c1465adba?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["urban_lifestyle", "broadway_shows", "art_galleries", "food_scene", "fashion_shopping"],
+        "dietary_accommodations": ["diverse_cuisine", "food_trucks", "fine_dining", "international_options"],
+        "climate_suitability": ["four_seasons", "indoor_attractions", "weather_variable"],
+        "crowd_preference": ["bustling_city", "iconic_landmarks", "neighborhood_exploration"]
       },
       "content_focus_alignment": {
         "urban": 9.8,
         "fashion": 9.2,
         "food": 9.0,
         "entertainment": 9.5,
-        "business": 8.8
+        "business": 8.8,
+        "photography": 9.3,
+        "culture": 9.1
       }
     },
     {
@@ -833,22 +591,71 @@
         "engagement_rate": "9.0%"
       },
       "budget_insights": {
-        "budget_categories": ["$1200-2500", "$2500-4500", "$4500+"],
-        "within_user_budget": true,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$1,800-2,800",
-            "mid_range": "$3,000-5,000",
-            "luxury": "$6,000-12,000"
+        "budget_categories": ["$1200-2500", "$2500-4500", "$4500-8000", "$8000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,400-2,200",
+            "accommodation": "Hostels/Eco-lodges $15-30/night",
+            "food": "Local sodas/Markets $8-15/day",
+            "transport": "Buses/Shared shuttles $10-20/day",
+            "activities": "National parks/Hiking $60-150 total",
+            "flights": "Budget with stops $400-700"
+          },
+          "budget": {
+            "total_7_days": "$1,800-2,800",
+            "accommodation": "Mid-range hotels $40-70/night",
+            "food": "Local restaurants $15-25/day",
+            "transport": "Private shuttles/Car rental $25-45/day",
+            "activities": "Wildlife tours/Ziplines $200-400 total",
+            "flights": "Economy $600-900"
+          },
+          "mid_range": {
+            "total_7_days": "$3,000-5,000",
+            "accommodation": "Eco-resorts/Boutique hotels $80-150/night",
+            "food": "Quality restaurants $30-50/day",
+            "transport": "Private car/Tours $40-70/day",
+            "activities": "Premium wildlife/Adventure tours $400-700 total",
+            "flights": "Premium economy $900-1,300"
+          },
+          "luxury": {
+            "total_7_days": "$6,000-12,000",
+            "accommodation": "Luxury eco-resorts $200-500/night",
+            "food": "Fine dining/Resort cuisine $60-120/day",
+            "transport": "Private helicopter/Luxury vehicles $80-150/day",
+            "activities": "Exclusive wildlife/Private guides $700-1,500 total",
+            "flights": "Business class $1,800-3,200"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1544376798-89aa6b82c6cd?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1582550945154-019cea109d4b?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1551634022-8b2a031c7dae?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Manuel Antonio": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=600&h=400&fit=crop&crop=center",
+          "Arenal Volcano": "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&h=400&fit=crop&crop=center",
+          "Monteverde": "https://images.unsplash.com/photo-1544376798-89aa6b82c6cd?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["eco_adventure", "wildlife_viewing", "zip_lining", "volcano_hiking", "beach_relaxation"],
+        "dietary_accommodations": ["fresh_tropical_fruits", "local_cuisine", "vegetarian_options", "sustainable_dining"],
+        "climate_suitability": ["tropical_heat", "rainy_season", "humid_conditions"],
+        "crowd_preference": ["nature_reserves", "small_group_tours", "eco_lodges"]
       },
       "content_focus_alignment": {
         "adventure": 9.5,
         "nature": 9.8,
         "eco_travel": 9.6,
         "wildlife": 9.4,
-        "wellness": 8.5
+        "wellness": 8.5,
+        "photography": 9.2,
+        "sustainability": 9.7
       }
     },
     {
@@ -865,22 +672,71 @@
         "engagement_rate": "8.6%"
       },
       "budget_insights": {
-        "budget_categories": ["$800-1800", "$1800-3500", "$3500+"],
-        "within_user_budget": true,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$1,200-2,200",
-            "mid_range": "$2,500-4,500",
-            "luxury": "$5,000-10,000"
+        "budget_categories": ["$300-600", "$600-1200", "$1200-2500", "$2500+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$400-700",
+            "accommodation": "Hostels/Budget guesthouses $6-12/night",
+            "food": "Street food/Local restaurants $3-8/day",
+            "transport": "Buses/Trains $3-6/day",
+            "activities": "Temples/Beaches $20-60 total",
+            "flights": "Budget airlines $250-400"
+          },
+          "budget": {
+            "total_7_days": "$800-1,400",
+            "accommodation": "Mid-range hotels $15-30/night",
+            "food": "Mix of street food/restaurants $8-15/day", 
+            "transport": "Taxis/Domestic flights $8-15/day",
+            "activities": "Tours/Attractions $80-150 total",
+            "flights": "Economy $400-650"
+          },
+          "mid_range": {
+            "total_7_days": "$1,800-3,200",
+            "accommodation": "Good hotels/Resorts $40-80/night",
+            "food": "Restaurants/Some fine dining $20-35/day",
+            "transport": "Private transfers $15-25/day", 
+            "activities": "Premium tours/Spas $200-400 total",
+            "flights": "Premium economy $650-950"
+          },
+          "luxury": {
+            "total_7_days": "$4,500-9,000",
+            "accommodation": "5-star resorts $120-300/night",
+            "food": "Fine dining $50-100/day",
+            "transport": "Private car/Helicopter $30-60/day",
+            "activities": "Exclusive experiences $400-800 total",
+            "flights": "Business class $1,800-3,200"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1580522154071-c6ca47aee4dc?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1488371934083-530245514013?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1562602833-0f4ab2fc46e3?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Bangkok Grand Palace": "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=600&h=400&fit=crop&crop=center",
+          "Phuket Beach": "https://images.unsplash.com/photo-1580522154071-c6ca47aee4dc?w=600&h=400&fit=crop&crop=center",
+          "Chiang Mai": "https://images.unsplash.com/photo-1488371934083-530245514013?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["street_food_paradise", "island_hopping", "cultural_temples", "beach_relaxation", "adventure_sports"],
+        "dietary_accommodations": ["vegetarian_options", "fresh_seafood", "tropical_fruits", "spice_tolerant"],
+        "climate_suitability": ["hot_humid_weather", "monsoon_aware"],
+        "crowd_preference": ["popular_destinations", "hidden_gems", "local_favorites"]
       },
       "content_focus_alignment": {
         "food": 9.4,
         "budget": 9.6,
         "culture": 9.0,
         "adventure": 8.5,
-        "wellness": 8.8
+        "wellness": 8.8,
+        "beach": 9.4,
+        "photography": 9.1
       }
     },
     {
@@ -897,28 +753,77 @@
         "engagement_rate": "8.3%"
       },
       "budget_insights": {
-        "budget_categories": ["$1000-2200", "$2200-4000", "$4000+"],
-        "within_user_budget": true,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$1,500-2,500",
-            "mid_range": "$2,800-4,800",
-            "luxury": "$6,000-12,000"
+        "budget_categories": ["$400-800", "$800-1600", "$1600-3000", "$3000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$550-900",
+            "accommodation": "Riads/Hostels $10-20/night",
+            "food": "Street food/Local cafes $5-12/day",
+            "transport": "Buses/Shared taxis $5-10/day",
+            "activities": "Medina walks/Atlas mountains $30-70 total",
+            "flights": "Budget with stops $250-450"
+          },
+          "budget": {
+            "total_7_days": "$900-1,500",
+            "accommodation": "Traditional riads $25-45/night",
+            "food": "Tagine restaurants $12-22/day",
+            "transport": "Private taxis/Tours $10-18/day",
+            "activities": "Desert tours/Souks $80-150 total",
+            "flights": "Economy $450-700"
+          },
+          "mid_range": {
+            "total_7_days": "$1,800-2,800",
+            "accommodation": "Luxury riads $60-120/night",
+            "food": "Quality restaurants $25-40/day",
+            "transport": "Private car/Guided tours $20-35/day",
+            "activities": "Sahara camping/Spa treatments $180-300 total",
+            "flights": "Premium economy $700-1,000"
+          },
+          "luxury": {
+            "total_7_days": "$4,000-7,500",
+            "accommodation": "5-star riads/Palaces $150-350/night",
+            "food": "Fine dining/Private chefs $50-90/day",
+            "transport": "Private helicopter/Luxury car $40-80/day",
+            "activities": "Exclusive desert camps/Private tours $350-600 total",
+            "flights": "Business class $1,400-2,500"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1558454018-b8ea95bd2a94?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Marrakech Medina": "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=600&h=400&fit=crop&crop=center",
+          "Sahara Desert": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=600&h=400&fit=crop&crop=center",
+          "Casablanca": "https://images.unsplash.com/photo-1558454018-b8ea95bd2a94?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["desert_adventure", "ancient_medinas", "berber_culture", "atlas_mountains", "islamic_architecture"],
+        "dietary_accommodations": ["halal_cuisine", "tagine_culture", "mint_tea_tradition", "couscous_dishes"],
+        "climate_suitability": ["desert_heat", "dry_climate", "temperature_variations"],
+        "crowd_preference": ["bustling_markets", "quiet_mountains", "traditional_villages"]
       },
       "content_focus_alignment": {
         "culture": 9.5,
         "photography": 9.2,
         "adventure": 8.8,
         "food": 8.5,
-        "history": 9.0
+        "history": 9.0,
+        "unique_experiences": 9.3,
+        "budget": 8.7
       }
     },
     {
       "id": 11,
       "destination": "Singapore",
-      "country": "Singapore",
+      "country": "Singapore", 
       "region": "Southeast Asia",
       "climate": "tropical",
       "match_score": 89,
@@ -929,30 +834,78 @@
         "engagement_rate": "8.5%"
       },
       "budget_insights": {
-        "budget_categories": ["$1800-3500", "$3500-6500", "$6500+"],
-        "within_user_budget": false,
-        "stretch_goal_option": true,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$2,800-4,200",
-            "mid_range": "$4,500-7,500",
-            "luxury": "$8,000-16,000"
+        "budget_categories": ["$1800-3500", "$3500-6500", "$6500-12000", "$12000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$2,200-3,200",
+            "accommodation": "Hostels/Budget hotels $35-60/night",
+            "food": "Hawker centers/Food courts $12-25/day",
+            "transport": "Public transport $8-15/day",
+            "activities": "Free attractions/Gardens $60-150 total",
+            "flights": "Budget airlines $600-1,000"
+          },
+          "budget": {
+            "total_7_days": "$2,800-4,200",
+            "accommodation": "3-star hotels $80-130/night",
+            "food": "Local restaurants $25-45/day",
+            "transport": "MRT/Taxis $15-30/day",
+            "activities": "Attractions/Tours $200-400 total",
+            "flights": "Economy $800-1,300"
+          },
+          "mid_range": {
+            "total_7_days": "$4,500-7,500",
+            "accommodation": "4-star hotels $150-280/night",
+            "food": "Quality restaurants $45-80/day",
+            "transport": "Private cars/Premium transport $25-50/day",
+            "activities": "Premium experiences/Spa $400-700 total",
+            "flights": "Premium economy $1,200-1,800"
+          },
+          "luxury": {
+            "total_7_days": "$8,000-16,000",
+            "accommodation": "5-star hotels/Marina Bay Sands $300-700/night",
+            "food": "Fine dining/Celebrity chefs $80-180/day",
+            "transport": "Private chauffeur/Helicopter $60-150/day",
+            "activities": "Exclusive experiences/Private tours $700-1,500 total",
+            "flights": "Business class $2,500-4,500"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1548106749-1d80e1d7ae66?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1565967511849-76a60a516170?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Marina Bay Sands": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=600&h=400&fit=crop&crop=center",
+          "Gardens by the Bay": "https://images.unsplash.com/photo-1548106749-1d80e1d7ae66?w=600&h=400&fit=crop&crop=center",
+          "Merlion Park": "https://images.unsplash.com/photo-1565967511849-76a60a516170?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["futuristic_architecture", "food_paradise", "cultural_diversity", "shopping_luxury", "business_hub"],
+        "dietary_accommodations": ["hawker_culture", "international_cuisine", "halal_options", "vegetarian_friendly"],
+        "climate_suitability": ["tropical_heat", "humid_conditions", "air_conditioned_spaces"],
+        "crowd_preference": ["urban_attractions", "cultural_districts", "shopping_areas"]
       },
       "content_focus_alignment": {
         "food": 9.6,
         "urban": 9.4,
         "technology": 9.2,
         "business": 9.0,
-        "culture": 8.8
+        "culture": 8.8,
+        "luxury": 8.9,
+        "photography": 9.1
       }
     },
     {
       "id": 12,
       "destination": "Norway",
       "country": "Norway",
-      "region": "Nordic",
+      "region": "Nordic", 
       "climate": "cold",
       "match_score": 87,
       "potential_audience_engagement": {
@@ -962,23 +915,71 @@
         "engagement_rate": "8.9%"
       },
       "budget_insights": {
-        "budget_categories": ["$3000-5500", "$5500-9000", "$9000+"],
-        "within_user_budget": false,
-        "stretch_goal_option": false,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$4,500-6,500",
-            "mid_range": "$7,000-11,000",
-            "luxury": "$12,000-22,000"
+        "budget_categories": ["$3000-5500", "$5500-9000", "$9000-15000", "$15000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$3,500-5,000",
+            "accommodation": "Hostels/Camping $45-80/night",
+            "food": "Supermarkets/Budget cafes $40-70/day",
+            "transport": "Public transport/Hitchhiking $30-60/day",
+            "activities": "Free hiking/Nature $100-250 total",
+            "flights": "Budget airlines $500-900"
+          },
+          "budget": {
+            "total_7_days": "$4,500-6,500",
+            "accommodation": "Budget hotels/Cabins $100-180/night",
+            "food": "Local restaurants $60-100/day",
+            "transport": "Car rental/Ferries $60-100/day",
+            "activities": "Tours/Attractions $300-600 total",
+            "flights": "Economy $700-1,200"
+          },
+          "mid_range": {
+            "total_7_days": "$7,000-11,000",
+            "accommodation": "3-4 star hotels $200-350/night",
+            "food": "Quality restaurants $100-160/day",
+            "transport": "Private car/Premium transport $80-140/day",
+            "activities": "Premium tours/Northern lights $600-1,000 total",
+            "flights": "Premium economy $1,200-1,800"
+          },
+          "luxury": {
+            "total_7_days": "$12,000-22,000",
+            "accommodation": "Luxury hotels/Arctic lodges $400-800/night",
+            "food": "Fine dining/Nordic cuisine $150-300/day",
+            "transport": "Private helicopter/Luxury vehicles $150-350/day",
+            "activities": "Exclusive Arctic experiences $1,000-2,500 total",
+            "flights": "Business class $2,500-4,500"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1504829857797-ddff29c27927?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1583210214080-eea9a41b2d0b?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1549482831-d0f5f0a44173?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Geirangerfjord": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&h=400&fit=crop&crop=center",
+          "Lofoten Islands": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&h=400&fit=crop&crop=center",
+          "Bergen": "https://images.unsplash.com/photo-1504829857797-ddff29c27927?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["fjord_cruises", "northern_lights", "hiking_trails", "arctic_adventures", "sustainable_tourism"],
+        "dietary_accommodations": ["fresh_seafood", "nordic_cuisine", "limited_vegetarian", "local_specialties"],
+        "climate_suitability": ["cold_weather_gear", "seasonal_variations", "winter_activities"],
+        "crowd_preference": ["nature_focused", "small_groups", "remote_locations"]
       },
       "content_focus_alignment": {
         "nature": 9.7,
         "adventure": 9.3,
         "photography": 9.5,
         "sustainability": 9.4,
-        "luxury": 7.5
+        "luxury": 7.5,
+        "unique_experiences": 9.6,
+        "budget": 5.5
       }
     },
     {
@@ -986,7 +987,7 @@
       "destination": "Portugal",
       "country": "Portugal",
       "region": "Southern Europe",
-      "climate": "mediterranean",
+      "climate": "mediterranean", 
       "match_score": 84,
       "potential_audience_engagement": {
         "score": 8.4,
@@ -995,22 +996,71 @@
         "engagement_rate": "8.1%"
       },
       "budget_insights": {
-        "budget_categories": ["$1200-2500", "$2500-4500", "$4500+"],
-        "within_user_budget": true,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$1,800-2,800",
-            "mid_range": "$3,200-5,200",
-            "luxury": "$6,000-11,000"
+        "budget_categories": ["$600-1200", "$1200-2200", "$2200-4000", "$4000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$800-1,300",
+            "accommodation": "Hostels/Pensions $15-25/night",
+            "food": "Local cafes/Markets $12-20/day",
+            "transport": "Public transport $5-10/day",
+            "activities": "Free walking tours/Museums $40-100 total",
+            "flights": "Budget airlines $200-400"
+          },
+          "budget": {
+            "total_7_days": "$1,400-2,100",
+            "accommodation": "3-star hotels $35-60/night",
+            "food": "Traditional restaurants $25-40/day",
+            "transport": "Trains/Trams $10-18/day",
+            "activities": "Attractions/Tours $100-200 total", 
+            "flights": "Economy $400-650"
+          },
+          "mid_range": {
+            "total_7_days": "$2,500-3,800",
+            "accommodation": "Boutique hotels $70-120/night",
+            "food": "Quality restaurants $40-65/day",
+            "transport": "Car rental/Private tours $20-35/day",
+            "activities": "Wine tours/Premium experiences $200-350 total",
+            "flights": "Premium economy $650-900"
+          },
+          "luxury": {
+            "total_7_days": "$5,000-9,500",
+            "accommodation": "5-star hotels/Pousadas $150-350/night", 
+            "food": "Fine dining/Michelin restaurants $80-150/day",
+            "transport": "Private chauffeur $40-70/day",
+            "activities": "Exclusive tours/Tastings $400-700 total",
+            "flights": "Business class $1,500-2,800"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1551918120-9739cb430c6d?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1515749964047-1a7b7b5f7e3f?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1568849676085-51415703900f?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1593800656061-97179dd1e6fc?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Porto Old Town": "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=600&h=400&fit=crop&crop=center",
+          "Lisbon Tram": "https://images.unsplash.com/photo-1551918120-9739cb430c6d?w=600&h=400&fit=crop&crop=center",
+          "Algarve Coast": "https://images.unsplash.com/photo-1515749964047-1a7b7b5f7e3f?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["wine_culture", "coastal_beauty", "historic_charm", "artistic_heritage", "culinary_journey"],
+        "dietary_accommodations": ["seafood_paradise", "vegetarian_friendly", "wine_culture", "pastry_heaven"],
+        "climate_suitability": ["mild_weather", "sunny_climate"],
+        "crowd_preference": ["less_touristy", "authentic_culture", "relaxed_pace"]
       },
       "content_focus_alignment": {
         "culture": 8.8,
         "food": 8.6,
         "photography": 8.9,
         "budget": 9.2,
-        "coastal": 9.1
+        "coastal": 9.1,
+        "history": 9.2,
+        "relaxation": 9.0
       }
     },
     {
@@ -1027,22 +1077,71 @@
         "engagement_rate": "8.7%"
       },
       "budget_insights": {
-        "budget_categories": ["$700-1500", "$1500-3000", "$3000+"],
-        "within_user_budget": true,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$1,000-1,800",
-            "mid_range": "$2,000-3,500",
-            "luxury": "$4,000-8,000"
+        "budget_categories": ["$250-500", "$500-1000", "$1000-2000", "$2000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$350-600",
+            "accommodation": "Hostels/Budget hotels $5-12/night",
+            "food": "Street food/Pho stands $2-6/day",
+            "transport": "Buses/Motorbike taxis $2-5/day",
+            "activities": "Free attractions/Walking tours $15-40 total",
+            "flights": "Budget with stops $200-350"
+          },
+          "budget": {
+            "total_7_days": "$700-1,200",
+            "accommodation": "Mid-range hotels $20-35/night",
+            "food": "Local restaurants $8-15/day",
+            "transport": "Private transfers/Domestic flights $8-15/day",
+            "activities": "Tours/Cooking classes $60-120 total",
+            "flights": "Economy $350-550"
+          },
+          "mid_range": {
+            "total_7_days": "$1,400-2,400",
+            "accommodation": "Boutique hotels $45-80/night",
+            "food": "Quality restaurants $20-35/day",
+            "transport": "Private car/Boat tours $15-25/day",
+            "activities": "Premium tours/Spa treatments $150-300 total",
+            "flights": "Premium economy $550-800"
+          },
+          "luxury": {
+            "total_7_days": "$3,500-6,500",
+            "accommodation": "5-star resorts $100-250/night",
+            "food": "Fine dining $40-80/day",
+            "transport": "Private helicopter/Yacht $35-65/day",
+            "activities": "Exclusive experiences $300-600 total",
+            "flights": "Business class $1,200-2,200"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1583417267826-aebc4d1542e1?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1570791943228-9c8c5eab4c1c?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1564159518237-b8e2e73b0c88?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Ha Long Bay": "https://images.unsplash.com/photo-1583417267826-aebc4d1542e1?w=600&h=400&fit=crop&crop=center",
+          "Ho Chi Minh City": "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&h=400&fit=crop&crop=center",
+          "Hoi An": "https://images.unsplash.com/photo-1528127269322-539801943592?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["street_food_heaven", "historical_sites", "natural_beauty", "river_cruises", "cultural_immersion"],
+        "dietary_accommodations": ["pho_culture", "fresh_herbs", "seafood_rich", "vegetarian_buddhist_options"],
+        "climate_suitability": ["hot_humid", "monsoon_season"],
+        "crowd_preference": ["authentic_local", "tourist_friendly", "hidden_gems"]
       },
       "content_focus_alignment": {
         "budget": 9.5,
         "food": 9.3,
         "adventure": 8.8,
         "culture": 8.9,
-        "nature": 8.6
+        "nature": 8.6,
+        "photography": 8.8,
+        "history": 8.9
       }
     },
     {
@@ -1059,22 +1158,71 @@
         "engagement_rate": "8.4%"
       },
       "budget_insights": {
-        "budget_categories": ["$1400-2800", "$2800-5000", "$5000+"],
-        "within_user_budget": true,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$2,200-3,500",
-            "mid_range": "$3,800-6,200",
-            "luxury": "$7,000-14,000"
+        "budget_categories": ["$800-1500", "$1500-2800", "$2800-5000", "$5000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,000-1,600",
+            "accommodation": "Hostels/Budget hotels $18-30/night",
+            "food": "Tavernas/Street food $15-25/day",
+            "transport": "Ferries/Buses $12-20/day",
+            "activities": "Archaeological sites/Beaches $50-120 total",
+            "flights": "Budget airlines $300-500"
+          },
+          "budget": {
+            "total_7_days": "$1,800-2,700",
+            "accommodation": "3-star hotels $40-70/night",
+            "food": "Traditional restaurants $25-40/day",
+            "transport": "Island ferries/Taxis $20-30/day",
+            "activities": "Tours/Museums $120-250 total",
+            "flights": "Economy $500-750"
+          },
+          "mid_range": {
+            "total_7_days": "$3,200-4,800",
+            "accommodation": "Boutique hotels/Villas $80-150/night",
+            "food": "Seaside restaurants $40-65/day",
+            "transport": "Private transfers/Car rental $30-45/day",
+            "activities": "Sailing trips/Premium tours $250-450 total",
+            "flights": "Premium economy $750-1,100"
+          },
+          "luxury": {
+            "total_7_days": "$6,500-12,000",
+            "accommodation": "5-star resorts/Private villas $200-500/night",
+            "food": "Fine dining/Sunset restaurants $70-130/day",
+            "transport": "Private yacht/Helicopter $60-120/day",
+            "activities": "Exclusive island tours $500-900 total",
+            "flights": "Business class $1,800-3,500"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1507114709658-7e31c23c9d3f?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1563789031959-4c11a9e97cfc?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1604397913957-bde7333e6afc?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Santorini": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600&h=400&fit=crop&crop=center",
+          "Mykonos": "https://images.unsplash.com/photo-1507114709658-7e31c23c9d3f?w=600&h=400&fit=crop&crop=center",
+          "Athens Acropolis": "https://images.unsplash.com/photo-1563789031959-4c11a9e97cfc?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["ancient_history", "island_paradise", "sunset_views", "mediterranean_cuisine", "beach_relaxation"],
+        "dietary_accommodations": ["mediterranean_diet", "fresh_seafood", "olive_oil_cuisine", "vegetarian_options"],
+        "climate_suitability": ["sunny_weather", "hot_summers", "mild_winters"],
+        "crowd_preference": ["popular_islands", "secluded_beaches", "historic_sites"]
       },
       "content_focus_alignment": {
         "culture": 9.2,
         "photography": 9.1,
         "history": 9.4,
         "coastal": 9.3,
-        "relaxation": 8.8
+        "relaxation": 8.8,
+        "beach": 9.2,
+        "luxury": 8.7
       }
     },
     {
@@ -1091,22 +1239,71 @@
         "engagement_rate": "8.6%"
       },
       "budget_insights": {
-        "budget_categories": ["$600-1400", "$1400-2800", "$2800+"],
-        "within_user_budget": true,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$900-1,600",
-            "mid_range": "$1,800-3,200",
-            "luxury": "$3,500-7,500"
+        "budget_categories": ["$200-500", "$500-1200", "$1200-2500", "$2500+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$300-550",
+            "accommodation": "Hostels/Budget guesthouses $3-8/night",
+            "food": "Street food/Dhabas $2-5/day",
+            "transport": "Trains/Buses $3-8/day",
+            "activities": "Temples/Markets $20-50 total",
+            "flights": "Budget with stops $250-400"
+          },
+          "budget": {
+            "total_7_days": "$650-1,100",
+            "accommodation": "Mid-range hotels $15-30/night",
+            "food": "Local restaurants $8-15/day",
+            "transport": "AC trains/Private cars $10-20/day",
+            "activities": "Palace tours/Cultural shows $80-150 total",
+            "flights": "Economy $400-650"
+          },
+          "mid_range": {
+            "total_7_days": "$1,400-2,200",
+            "accommodation": "Heritage hotels $40-80/night",
+            "food": "Quality restaurants $20-35/day",
+            "transport": "Private driver/Domestic flights $25-45/day",
+            "activities": "Premium tours/Spa treatments $180-350 total",
+            "flights": "Premium economy $650-950"
+          },
+          "luxury": {
+            "total_7_days": "$3,500-6,500",
+            "accommodation": "Palace hotels/Luxury resorts $120-300/night",
+            "food": "Fine dining/Royal cuisine $50-100/day",
+            "transport": "Private helicopter/Luxury cars $60-120/day",
+            "activities": "Exclusive experiences/Private palaces $400-800 total",
+            "flights": "Business class $1,500-2,800"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1527932957-3ca99eeb87f7?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1588517479179-4d49d61a7172?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1563713498-6dec4ce3e0e6?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Taj Mahal": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&h=400&fit=crop&crop=center",
+          "Golden Temple": "https://images.unsplash.com/photo-1527932957-3ca99eeb87f7?w=600&h=400&fit=crop&crop=center",
+          "Kerala Backwaters": "https://images.unsplash.com/photo-1588517479179-4d49d61a7172?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["spiritual_journey", "royal_heritage", "textile_shopping", "spice_markets", "architectural_wonders"],
+        "dietary_accommodations": ["vegetarian_paradise", "spicy_cuisine", "dairy_rich", "street_food_culture"],
+        "climate_suitability": ["hot_weather", "monsoon_season", "desert_climate"],
+        "crowd_preference": ["bustling_cities", "quiet_temples", "local_markets"]
       },
       "content_focus_alignment": {
         "culture": 9.8,
         "spirituality": 9.5,
         "budget": 9.6,
         "food": 9.2,
-        "history": 9.3
+        "history": 9.3,
+        "photography": 9.0,
+        "unique_experiences": 9.4
       }
     },
     {
@@ -1114,7 +1311,7 @@
       "destination": "Australia",
       "country": "Australia",
       "region": "Oceania",
-      "climate": "varied",
+      "climate": "varied", 
       "match_score": 85,
       "potential_audience_engagement": {
         "score": 8.5,
@@ -1123,23 +1320,71 @@
         "engagement_rate": "8.3%"
       },
       "budget_insights": {
-        "budget_categories": ["$2500-4500", "$4500-8000", "$8000+"],
-        "within_user_budget": false,
-        "stretch_goal_option": true,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$3,800-5,500",
-            "mid_range": "$6,000-9,500",
-            "luxury": "$10,000-20,000"
+        "budget_categories": ["$1500-3000", "$3000-5500", "$5500-9000", "$9000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,800-2,800",
+            "accommodation": "Hostels/Backpacker lodges $25-45/night",
+            "food": "Supermarkets/Food courts $20-35/day",
+            "transport": "Public transport/Buses $15-25/day",
+            "activities": "Free beaches/Hiking $80-150 total",
+            "flights": "Budget with stops $600-1,000"
+          },
+          "budget": {
+            "total_7_days": "$3,500-4,800",
+            "accommodation": "Mid-range hotels $80-130/night",
+            "food": "Casual restaurants $35-55/day",
+            "transport": "Domestic flights/Car rental $30-50/day",
+            "activities": "Wildlife tours/City attractions $200-400 total",
+            "flights": "Economy $1,000-1,500"
+          },
+          "mid_range": {
+            "total_7_days": "$6,000-8,500",
+            "accommodation": "4-star hotels $150-250/night",
+            "food": "Quality restaurants $55-85/day",
+            "transport": "Private tours/Premium flights $50-80/day",
+            "activities": "Great Barrier Reef/Premium experiences $400-700 total",
+            "flights": "Premium economy $1,500-2,200"
+          },
+          "luxury": {
+            "total_7_days": "$10,500-18,000",
+            "accommodation": "5-star hotels/Luxury lodges $300-600/night",
+            "food": "Fine dining/Wine experiences $100-200/day",
+            "transport": "Private helicopter/Luxury cars $100-200/day",
+            "activities": "Exclusive wildlife/Private island tours $800-1,500 total",
+            "flights": "Business class $3,000-5,500"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1537036746963-e322bfec13c1?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1598935898639-81586f7d2129?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Sydney Opera House": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop&crop=center",
+          "Great Barrier Reef": "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&h=400&fit=crop&crop=center",
+          "Uluru": "https://images.unsplash.com/photo-1537036746963-e322bfec13c1?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["wildlife_encounters", "beach_culture", "urban_sophistication", "outback_adventures", "wine_regions"],
+        "dietary_accommodations": ["fresh_seafood", "barbecue_culture", "wine_pairings", "multicultural_cuisine"],
+        "climate_suitability": ["opposite_seasons", "varied_climates", "sun_protection_needed"],
+        "crowd_preference": ["popular_beaches", "hidden_gems", "urban_attractions"]
       },
       "content_focus_alignment": {
         "adventure": 9.2,
         "nature": 9.4,
         "wildlife": 9.6,
         "outdoor": 9.3,
-        "urban": 8.5
+        "urban": 8.5,
+        "beach": 9.1,
+        "luxury": 8.8
       }
     },
     {
@@ -1156,22 +1401,71 @@
         "engagement_rate": "8.0%"
       },
       "budget_insights": {
-        "budget_categories": ["$1300-2600", "$2600-4800", "$4800+"],
-        "within_user_budget": true,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$2,000-3,200",
-            "mid_range": "$3,500-5,800",
-            "luxury": "$6,500-12,000"
+        "budget_categories": ["$600-1200", "$1200-2200", "$2200-4000", "$4000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$800-1,300",
+            "accommodation": "Hostels/Budget hotels $15-30/night",
+            "food": "Local restaurants/Street food $10-18/day",
+            "transport": "Buses/Shared taxis $8-15/day",
+            "activities": "Petra/Wadi Rum camping $100-200 total",
+            "flights": "Budget with stops $300-500"
+          },
+          "budget": {
+            "total_7_days": "$1,400-2,100",
+            "accommodation": "Mid-range hotels $35-65/night",
+            "food": "Traditional restaurants $18-30/day",
+            "transport": "Private cars/Tours $20-35/day",
+            "activities": "Guided tours/Desert camps $200-350 total",
+            "flights": "Economy $500-750"
+          },
+          "mid_range": {
+            "total_7_days": "$2,500-3,600",
+            "accommodation": "4-star hotels/Desert lodges $70-130/night",
+            "food": "Quality restaurants $30-50/day",
+            "transport": "Private driver/4WD tours $35-60/day",
+            "activities": "Premium desert experiences $350-600 total",
+            "flights": "Premium economy $750-1,100"
+          },
+          "luxury": {
+            "total_7_days": "$5,000-9,000",
+            "accommodation": "5-star hotels/Luxury camps $150-350/night",
+            "food": "Fine dining/Bedouin feasts $60-120/day",
+            "transport": "Private helicopter/Luxury 4WDs $80-150/day",
+            "activities": "Exclusive access/Private guides $600-1,200 total",
+            "flights": "Business class $1,800-3,200"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1566051542888-86cc9a4b0b4a?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1543526806-b8b8b86e60f3?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1560268090-6c0ab6a056e5?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Petra": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop&crop=center",
+          "Wadi Rum": "https://images.unsplash.com/photo-1566051542888-86cc9a4b0b4a?w=600&h=400&fit=crop&crop=center",
+          "Dead Sea": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["archaeological_wonders", "desert_adventures", "bedouin_culture", "ancient_civilizations", "star_gazing"],
+        "dietary_accommodations": ["halal_cuisine", "middle_eastern_spices", "vegetarian_options", "desert_hospitality"],
+        "climate_suitability": ["desert_climate", "temperature_variations", "dry_heat"],
+        "crowd_preference": ["historic_sites", "desert_solitude", "cultural_immersion"]
       },
       "content_focus_alignment": {
         "history": 9.6,
         "adventure": 8.8,
         "culture": 9.1,
         "photography": 8.9,
-        "unique": 9.3
+        "unique": 9.3,
+        "desert": 9.5,
+        "archaeology": 9.7
       }
     },
     {
@@ -1188,22 +1482,71 @@
         "engagement_rate": "8.5%"
       },
       "budget_insights": {
-        "budget_categories": ["$1000-2200", "$2200-4000", "$4000+"],
-        "within_user_budget": true,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$1,600-2,600",
-            "mid_range": "$2,800-4,500",
-            "luxury": "$5,000-10,000"
+        "budget_categories": ["$500-1000", "$1000-2000", "$2000-3500", "$3500+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$650-1,100",
+            "accommodation": "Hostels/Budget hotels $12-22/night",
+            "food": "Street tacos/Local markets $6-12/day",
+            "transport": "Buses/Metro $3-8/day",
+            "activities": "Free museums/Beaches $30-80 total",
+            "flights": "Budget airlines $200-400"
+          },
+          "budget": {
+            "total_7_days": "$1,200-1,900",
+            "accommodation": "Mid-range hotels $25-45/night",
+            "food": "Traditional restaurants $12-25/day",
+            "transport": "Taxis/Tours $10-18/day",
+            "activities": "Archaeological sites/Cenotes $80-160 total",
+            "flights": "Economy $400-650"
+          },
+          "mid_range": {
+            "total_7_days": "$2,200-3,400",
+            "accommodation": "Boutique hotels/Beach resorts $60-110/night",
+            "food": "Quality restaurants $25-45/day",
+            "transport": "Private transfers/Car rental $20-35/day",
+            "activities": "Premium tours/Spa treatments $180-320 total",
+            "flights": "Premium economy $650-950"
+          },
+          "luxury": {
+            "total_7_days": "$4,500-8,500",
+            "accommodation": "5-star all-inclusive resorts $150-350/night",
+            "food": "Fine dining/Resort meals $50-100/day",
+            "transport": "Private chauffeur/Helicopter $40-75/day",
+            "activities": "Exclusive experiences/Private tours $350-650 total",
+            "flights": "Business class $1,500-2,800"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1518105779142-d975f22083b3?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1569974507005-6dc4fb04a8f7?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1544740457-6ad4c6a54ba8?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1512813195386-6502bea26a96?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1568402102990-bc541580b59f?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Chichen Itza": "https://images.unsplash.com/photo-1518105779142-d975f22083b3?w=600&h=400&fit=crop&crop=center",
+          "Tulum": "https://images.unsplash.com/photo-1569974507005-6dc4fb04a8f7?w=600&h=400&fit=crop&crop=center",
+          "Cancun Beach": "https://images.unsplash.com/photo-1544740457-6ad4c6a54ba8?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["ancient_civilizations", "beach_paradise", "culinary_adventure", "cultural_festivals", "cenote_swimming"],
+        "dietary_accommodations": ["spicy_food_culture", "vegetarian_options", "fresh_seafood", "tropical_fruits"],
+        "climate_suitability": ["hot_weather", "hurricane_season_aware"],
+        "crowd_preference": ["popular_destinations", "local_experiences", "party_scenes"]
       },
       "content_focus_alignment": {
         "culture": 9.3,
         "food": 9.4,
         "history": 8.9,
         "beach": 8.8,
-        "budget": 8.7
+        "budget": 8.7,
+        "adventure": 8.6,
+        "photography": 9.0
       }
     },
     {
@@ -1220,22 +1563,1496 @@
         "engagement_rate": "9.1%"
       },
       "budget_insights": {
-        "budget_categories": ["$1600-3200", "$3200-5800", "$5800+"],
-        "within_user_budget": true,
-        "cost_breakdown": {
-          "total_7_days": {
-            "budget": "$2,400-3,800",
-            "mid_range": "$4,200-6,800",
-            "luxury": "$7,500-15,000"
+        "budget_categories": ["$800-1600", "$1600-3000", "$3000-5500", "$5500+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,000-1,500",
+            "accommodation": "Hostels/Guesthouses $20-35/night",
+            "food": "Street food/Korean BBQ $12-20/day",
+            "transport": "Public transport $8-15/day",
+            "activities": "Free palaces/Markets $40-100 total",
+            "flights": "Budget airlines $400-650"
+          },
+          "budget": {
+            "total_7_days": "$1,800-2,600",
+            "accommodation": "Mid-range hotels $45-75/night",
+            "food": "Korean restaurants $20-35/day",
+            "transport": "KTX trains/Taxis $15-25/day",
+            "activities": "K-pop tours/Cultural sites $120-250 total",
+            "flights": "Economy $650-900"
+          },
+          "mid_range": {
+            "total_7_days": "$3,200-4,500",
+            "accommodation": "4-star hotels $80-140/night",
+            "food": "Quality restaurants $35-60/day",
+            "transport": "Private tours/Premium trains $25-40/day",
+            "activities": "Premium experiences/Spa treatments $250-450 total",
+            "flights": "Premium economy $900-1,300"
+          },
+          "luxury": {
+            "total_7_days": "$6,000-10,500",
+            "accommodation": "5-star hotels/Hanok stays $180-400/night",
+            "food": "Fine dining/Chef experiences $70-140/day",
+            "transport": "Private chauffeur/Helicopter $50-100/day",
+            "activities": "Exclusive K-culture experiences $500-900 total",
+            "flights": "Business class $2,200-3,800"
           }
         }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1546513689-8ef75e7a2d04?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1562602833-6a6c57d62d6a?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Gyeongbokgung Palace": "https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=600&h=400&fit=crop&crop=center",
+          "Busan Beach": "https://images.unsplash.com/photo-1546513689-8ef75e7a2d04?w=600&h=400&fit=crop&crop=center",
+          "Gangnam District": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "filtering_tags": {
+        "experience_type": ["k_culture", "technology_innovation", "culinary_adventure", "wellness_spas", "modern_architecture"],
+        "dietary_accommodations": ["korean_bbq", "kimchi_culture", "vegetarian_temple_food", "seafood_rich"],
+        "climate_suitability": ["four_seasons", "hot_summers", "cold_winters"],
+        "crowd_preference": ["urban_exploration", "traditional_areas", "modern_districts"]
       },
       "content_focus_alignment": {
         "culture": 9.4,
         "technology": 9.2,
         "food": 9.1,
         "urban": 8.9,
-        "entertainment": 9.3
+        "entertainment": 9.3,
+        "wellness": 8.8,
+        "modern": 9.5
+      }
+    },
+    {
+      "id": 21,
+      "destination": "Dubai, UAE",
+      "country": "United Arab Emirates",
+      "region": "Middle East",
+      "climate": "desert",
+      "match_score": 91,
+      "potential_audience_engagement": {
+        "score": 9.0,
+        "reasons": ["Luxury lifestyle content", "Modern architecture", "Shopping experiences", "Desert adventures"],
+        "estimated_reach": "300K-600K views per video",
+        "engagement_rate": "8.2%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$1200-2000", "$2000-4000", "$4000-8000", "$8000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,500-2,200",
+            "accommodation": "Hostels/Budget hotels $25-50/night",
+            "food": "Food courts/Local eateries $15-25/day",
+            "transport": "Metro/Bus $8-15/day",
+            "activities": "Free beaches/Markets $100-200 total",
+            "flights": "Budget airlines $400-700"
+          },
+          "budget": {
+            "total_7_days": "$2,800-3,500",
+            "accommodation": "Mid-range hotels $80-120/night",
+            "food": "Restaurant meals $30-50/day",
+            "transport": "Taxi/Metro mix $20-35/day",
+            "activities": "Major attractions $300-500 total",
+            "flights": "Economy $700-1,100"
+          },
+          "mid_range": {
+            "total_7_days": "$5,000-7,000",
+            "accommodation": "4-star hotels $150-250/night",
+            "food": "Quality dining $60-100/day",
+            "transport": "Private car/Premium transport $40-60/day",
+            "activities": "Premium experiences $600-1,000 total",
+            "flights": "Premium economy $1,200-1,800"
+          },
+          "luxury": {
+            "total_7_days": "$12,000-25,000",
+            "accommodation": "5-star resorts $400-800/night",
+            "food": "Fine dining $120-300/day",
+            "transport": "Luxury car/Helicopter $80-200/day",
+            "activities": "VIP experiences $1,500-3,000 total",
+            "flights": "Business/First class $3,000-6,000"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Burj Khalifa": "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&h=400&fit=crop&crop=center",
+          "Dubai Mall": "https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?w=600&h=400&fit=crop&crop=center",
+          "Palm Jumeirah": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Desert safari and camel riding",
+        "Luxury shopping in Gold Souk",
+        "Skydiving over Palm Jumeirah",
+        "Traditional dhow cruise",
+        "Helicopter tour of the city"
+      ],
+      "avoid_if": [
+        "budget under $1000",
+        "prefer authentic cultural experiences",
+        "dislike extreme heat",
+        "looking for historical sites"
+      ],
+      "filtering_tags": {
+        "experience_type": ["luxury", "modern", "shopping", "adventure", "desert"],
+        "dietary_accommodations": ["halal", "international_cuisine", "fine_dining"],
+        "accessibility": ["wheelchair_accessible", "english_speaking", "modern_infrastructure"],
+        "climate_suitability": ["hot_weather", "desert_climate", "indoor_activities"],
+        "crowd_preference": ["luxury_experiences", "modern_attractions", "shopping_districts"]
+      },
+      "content_focus_alignment": {
+        "luxury": 9.5,
+        "modern": 9.2,
+        "shopping": 9.0,
+        "adventure": 8.5,
+        "architecture": 9.3,
+        "culture": 7.8,
+        "desert": 9.1
+      }
+    },
+    {
+      "id": 22,
+      "destination": "Cape Town, South Africa",
+      "country": "South Africa",
+      "region": "Africa",
+      "climate": "mediterranean",
+      "match_score": 89,
+      "potential_audience_engagement": {
+        "score": 8.8,
+        "reasons": ["Scenic landscapes", "Wine tourism", "Cultural diversity", "Adventure activities"],
+        "estimated_reach": "200K-400K views per video",
+        "engagement_rate": "8.0%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$600-1200", "$1200-2500", "$2500-5000", "$5000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$800-1,200",
+            "accommodation": "Hostels/Guesthouses $15-30/night",
+            "food": "Local markets/Street food $8-15/day",
+            "transport": "Public transport/Walking $5-12/day",
+            "activities": "Free hiking/Beaches $50-150 total",
+            "flights": "Budget with stops $450-800"
+          },
+          "budget": {
+            "total_7_days": "$1,500-2,200",
+            "accommodation": "B&Bs/Budget hotels $35-60/night",
+            "food": "Local restaurants $18-30/day",
+            "transport": "Car rental/Tours $25-40/day",
+            "activities": "Wine tours/Table Mountain $200-400 total",
+            "flights": "Economy $700-1,200"
+          },
+          "mid_range": {
+            "total_7_days": "$3,000-4,500",
+            "accommodation": "Boutique hotels $80-150/night",
+            "food": "Quality restaurants $40-70/day",
+            "transport": "Private tours/Car hire $50-80/day",
+            "activities": "Premium wine tours/Safari day trips $500-800 total",
+            "flights": "Premium economy $1,200-1,800"
+          },
+          "luxury": {
+            "total_7_days": "$6,000-12,000",
+            "accommodation": "5-star hotels/Wine estates $200-500/night",
+            "food": "Fine dining/Wine pairings $80-200/day",
+            "transport": "Private driver/Helicopter transfers $100-250/day",
+            "activities": "Exclusive safari/Private wine experiences $1,000-2,500 total",
+            "flights": "Business class $2,500-4,500"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1563656157432-67560011e209?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1577948000111-9c970dfe3743?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Table Mountain": "https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?w=600&h=400&fit=crop&crop=center",
+          "V&A Waterfront": "https://images.unsplash.com/photo-1563656157432-67560011e209?w=600&h=400&fit=crop&crop=center",
+          "Robben Island": "https://images.unsplash.com/photo-1577948000111-9c970dfe3743?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Wine tasting in Stellenbosch",
+        "Penguin watching at Boulders Beach",
+        "Cage diving with great white sharks",
+        "Township cultural tours",
+        "Garden Route scenic drive"
+      ],
+      "avoid_if": [
+        "concerned about safety",
+        "prefer developed infrastructure",
+        "looking for tropical beaches",
+        "budget under $600"
+      ],
+      "filtering_tags": {
+        "experience_type": ["nature", "wine", "adventure", "culture", "scenic"],
+        "dietary_accommodations": ["international_cuisine", "local_specialties", "wine_pairing"],
+        "accessibility": ["some_limitations", "english_speaking", "mixed_infrastructure"],
+        "climate_suitability": ["mediterranean", "mild_winters", "warm_summers"],
+        "crowd_preference": ["outdoor_activities", "wine_regions", "coastal_areas"]
+      },
+      "content_focus_alignment": {
+        "nature": 9.2,
+        "wine": 9.0,
+        "adventure": 8.8,
+        "culture": 8.5,
+        "scenic": 9.3,
+        "wildlife": 8.7,
+        "history": 8.2
+      }
+    },
+    {
+      "id": 23,
+      "destination": "Reykjavik, Iceland",
+      "country": "Iceland",
+      "region": "Northern Europe",
+      "climate": "arctic",
+      "match_score": 87,
+      "potential_audience_engagement": {
+        "score": 8.9,
+        "reasons": ["Northern lights", "Unique landscapes", "Geothermal experiences", "Nordic culture"],
+        "estimated_reach": "250K-450K views per video",
+        "engagement_rate": "8.3%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$1500-2500", "$2500-4000", "$4000-7000", "$7000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$2,000-2,800",
+            "accommodation": "Hostels/Guesthouses $40-70/night",
+            "food": "Grocery shopping/Street food $25-40/day",
+            "transport": "Bus tours/Hitchhiking $15-30/day",
+            "activities": "Free hot springs/Hiking $150-300 total",
+            "flights": "Budget airlines $400-800"
+          },
+          "budget": {
+            "total_7_days": "$3,200-4,200",
+            "accommodation": "Budget hotels/Guesthouses $80-120/night",
+            "food": "Local restaurants $40-60/day",
+            "transport": "Small car rental $60-90/day",
+            "activities": "Golden Circle/Blue Lagoon $400-700 total",
+            "flights": "Economy direct $600-1,000"
+          },
+          "mid_range": {
+            "total_7_days": "$5,500-7,500",
+            "accommodation": "Mid-range hotels $150-250/night",
+            "food": "Quality restaurants $70-110/day",
+            "transport": "4WD rental/Tours $100-150/day",
+            "activities": "Northern lights tours/Glacier walks $700-1,200 total",
+            "flights": "Premium economy $1,000-1,500"
+          },
+          "luxury": {
+            "total_7_days": "$10,000-18,000",
+            "accommodation": "Luxury lodges/Hotels $300-600/night",
+            "food": "Fine dining/Nordic cuisine $120-250/day",
+            "transport": "Private tours/Helicopter $200-400/day",
+            "activities": "Private northern lights/Ice caves $1,500-3,000 total",
+            "flights": "Business class $2,000-3,500"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1539066436416-5a57d2ba830c?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1531168556467-80aace0d0144?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1521067661194-ea004dfbda53?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Blue Lagoon": "https://images.unsplash.com/photo-1531168556467-80aace0d0144?w=600&h=400&fit=crop&crop=center",
+          "Golden Circle": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop&crop=center",
+          "Northern Lights": "https://images.unsplash.com/photo-1521067661194-ea004dfbda53?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Northern lights hunting",
+        "Ice cave exploration",
+        "Whale watching tours",
+        "Geothermal hot springs",
+        "Volcano hiking expeditions"
+      ],
+      "avoid_if": [
+        "budget under $1500",
+        "dislike cold weather",
+        "prefer tropical destinations",
+        "looking for nightlife"
+      ],
+      "filtering_tags": {
+        "experience_type": ["nature", "adventure", "unique_landscapes", "northern_lights", "geothermal"],
+        "dietary_accommodations": ["nordic_cuisine", "fresh_seafood", "international_options"],
+        "accessibility": ["limited_accessibility", "english_speaking", "modern_infrastructure"],
+        "climate_suitability": ["cold_weather", "winter_activities", "arctic_conditions"],
+        "crowd_preference": ["natural_wonders", "remote_locations", "small_groups"]
+      },
+      "content_focus_alignment": {
+        "nature": 9.5,
+        "adventure": 9.0,
+        "unique": 9.3,
+        "nordic": 8.8,
+        "photography": 9.2,
+        "wellness": 8.5,
+        "winter": 9.1
+      }
+    },
+    {
+      "id": 24,
+      "destination": "Buenos Aires, Argentina",
+      "country": "Argentina",
+      "region": "South America",
+      "climate": "temperate",
+      "match_score": 85,
+      "potential_audience_engagement": {
+        "score": 8.6,
+        "reasons": ["Tango culture", "European architecture", "Food scene", "Vibrant nightlife"],
+        "estimated_reach": "180K-350K views per video",
+        "engagement_rate": "7.8%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$500-1000", "$1000-2000", "$2000-4000", "$4000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$700-1,100",
+            "accommodation": "Hostels/Budget hotels $12-25/night",
+            "food": "Empanadas/Local eateries $8-15/day",
+            "transport": "Subway/Bus $3-8/day",
+            "activities": "Free walking tours/Tango shows $50-150 total",
+            "flights": "Budget with stops $600-1,000"
+          },
+          "budget": {
+            "total_7_days": "$1,200-1,800",
+            "accommodation": "Mid-range hotels $30-60/night",
+            "food": "Restaurant meals $15-30/day",
+            "transport": "Taxi/Metro mix $12-25/day",
+            "activities": "Museums/Tango lessons $150-300 total",
+            "flights": "Economy $800-1,300"
+          },
+          "mid_range": {
+            "total_7_days": "$2,500-3,800",
+            "accommodation": "Boutique hotels $70-130/night",
+            "food": "Quality steakhouses $35-60/day",
+            "transport": "Private tours/Remis $25-50/day",
+            "activities": "Premium tango shows/Day trips $400-700 total",
+            "flights": "Premium economy $1,200-1,800"
+          },
+          "luxury": {
+            "total_7_days": "$5,000-10,000",
+            "accommodation": "5-star hotels $150-350/night",
+            "food": "Fine dining/Wine tastings $70-150/day",
+            "transport": "Private driver/First class $50-120/day",
+            "activities": "Private tango lessons/Estancia visits $800-1,500 total",
+            "flights": "Business class $2,200-4,000"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1543059509-040636ae1efe?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1583162976018-8bef0c00cf4e?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1561918227-0bf5a8b95ad4?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Plaza de Mayo": "https://images.unsplash.com/photo-1543059509-040636ae1efe?w=600&h=400&fit=crop&crop=center",
+          "La Boca": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop&crop=center",
+          "Recoleta Cemetery": "https://images.unsplash.com/photo-1583162976018-8bef0c00cf4e?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Tango shows in San Telmo",
+        "Steak and wine tastings",
+        "Football match at La Bombonera",
+        "Day trip to Tigre Delta",
+        "European architecture tours"
+      ],
+      "avoid_if": [
+        "vegetarian/vegan preferences",
+        "looking for beaches",
+        "prefer quiet destinations",
+        "dislike late dining"
+      ],
+      "filtering_tags": {
+        "experience_type": ["culture", "tango", "food", "nightlife", "architecture"],
+        "dietary_accommodations": ["meat_focused", "wine_culture", "late_dining"],
+        "accessibility": ["mixed_accessibility", "spanish_helpful", "walkable_areas"],
+        "climate_suitability": ["temperate", "mild_winters", "warm_summers"],
+        "crowd_preference": ["urban_exploration", "cultural_districts", "nightlife_areas"]
+      },
+      "content_focus_alignment": {
+        "culture": 9.0,
+        "food": 8.8,
+        "tango": 9.2,
+        "architecture": 8.5,
+        "nightlife": 8.7,
+        "history": 8.3,
+        "urban": 8.6
+      }
+    },
+    {
+      "id": 25,
+      "destination": "Marrakech, Morocco",
+      "country": "Morocco",
+      "region": "North Africa",
+      "climate": "desert",
+      "match_score": 88,
+      "potential_audience_engagement": {
+        "score": 8.7,
+        "reasons": ["Exotic markets", "Moroccan architecture", "Desert experiences", "Cultural immersion"],
+        "estimated_reach": "220K-420K views per video",
+        "engagement_rate": "8.1%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$400-800", "$800-1600", "$1600-3200", "$3200+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$600-900",
+            "accommodation": "Hostels/Basic riads $10-25/night",
+            "food": "Street food/Local eateries $5-12/day",
+            "transport": "Local buses/Walking $3-8/day",
+            "activities": "Free medina exploration/Haggling $30-100 total",
+            "flights": "Budget with stops $350-650"
+          },
+          "budget": {
+            "total_7_days": "$1,000-1,500",
+            "accommodation": "Traditional riads $25-50/night",
+            "food": "Local restaurants/Tagines $12-25/day",
+            "transport": "Taxis/Grand taxis $10-20/day",
+            "activities": "Guided tours/Atlas Mountains $150-300 total",
+            "flights": "Economy direct $450-800"
+          },
+          "mid_range": {
+            "total_7_days": "$2,200-3,500",
+            "accommodation": "Luxury riads $60-120/night",
+            "food": "Quality restaurants/Rooftops $25-50/day",
+            "transport": "Private tours/Transfers $30-60/day",
+            "activities": "Desert tours/Cooking classes $400-800 total",
+            "flights": "Premium economy $700-1,200"
+          },
+          "luxury": {
+            "total_7_days": "$4,500-8,000",
+            "accommodation": "5-star riads/Hotels $120-300/night",
+            "food": "Fine dining/Private chefs $50-120/day",
+            "transport": "Private driver/Luxury transfers $60-150/day",
+            "activities": "Private desert camps/Exclusive tours $800-1,800 total",
+            "flights": "Business class $1,500-2,800"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1593509327860-9e5ab51bb8ad?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1558618023-fcd1ee38be73?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1532708477351-eee11ba2b2b1?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Jemaa el-Fnaa": "https://images.unsplash.com/photo-1558618023-fcd1ee38be73?w=600&h=400&fit=crop&crop=center",
+          "Koutoubia Mosque": "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?w=600&h=400&fit=crop&crop=center",
+          "Sahara Desert": "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Sahara desert camping",
+        "Traditional hammam spa",
+        "Moroccan cooking classes",
+        "Atlas Mountains trekking",
+        "Berber village visits"
+      ],
+      "avoid_if": [
+        "uncomfortable with haggling",
+        "strict dietary restrictions",
+        "prefer modern amenities",
+        "dislike hot weather"
+      ],
+      "filtering_tags": {
+        "experience_type": ["culture", "desert", "markets", "architecture", "traditional"],
+        "dietary_accommodations": ["moroccan_cuisine", "tagines", "mint_tea", "halal"],
+        "accessibility": ["limited_accessibility", "arabic_french_helpful", "traditional_buildings"],
+        "climate_suitability": ["hot_weather", "desert_climate", "dry_conditions"],
+        "crowd_preference": ["medina_markets", "cultural_immersion", "traditional_areas"]
+      },
+      "content_focus_alignment": {
+        "culture": 9.3,
+        "traditional": 9.1,
+        "desert": 8.9,
+        "markets": 9.0,
+        "architecture": 8.8,
+        "adventure": 8.4,
+        "authentic": 9.2
+      }
+    },
+    {
+      "id": 26,
+      "destination": "Seoul, South Korea",
+      "country": "South Korea",
+      "region": "East Asia",
+      "climate": "temperate",
+      "match_score": 92,
+      "potential_audience_engagement": {
+        "score": 9.1,
+        "reasons": ["K-pop culture", "Technology innovation", "Korean cuisine", "Modern city life"],
+        "estimated_reach": "280K-550K views per video",
+        "engagement_rate": "8.7%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$700-1400", "$1400-2800", "$2800-5600", "$5600+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$900-1,400",
+            "accommodation": "Hostels/Guesthouses $15-35/night",
+            "food": "Street food/Korean BBQ $10-20/day",
+            "transport": "Subway/Bus $5-12/day",
+            "activities": "Free palaces/Markets $80-200 total",
+            "flights": "Budget with stops $500-900"
+          },
+          "budget": {
+            "total_7_days": "$1,800-2,500",
+            "accommodation": "Budget hotels $40-80/night",
+            "food": "Local restaurants $20-35/day",
+            "transport": "Taxi/Metro mix $15-25/day",
+            "activities": "K-pop tours/Temples $250-450 total",
+            "flights": "Economy direct $700-1,200"
+          },
+          "mid_range": {
+            "total_7_days": "$3,500-5,000",
+            "accommodation": "4-star hotels $100-180/night",
+            "food": "Quality restaurants $40-70/day",
+            "transport": "Private tours/KTX trains $30-50/day",
+            "activities": "Premium experiences/DMZ tours $450-800 total",
+            "flights": "Premium economy $1,100-1,700"
+          },
+          "luxury": {
+            "total_7_days": "$7,000-12,000",
+            "accommodation": "5-star hotels $200-400/night",
+            "food": "Fine dining/Michelin restaurants $80-150/day",
+            "transport": "Private car/First class $50-100/day",
+            "activities": "VIP K-pop experiences/Private tours $800-1,500 total",
+            "flights": "Business class $2,500-4,500"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Gangnam District": "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=600&h=400&fit=crop&crop=center",
+          "Bukchon Hanok Village": "https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=600&h=400&fit=crop&crop=center",
+          "Myeongdong": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "K-pop studio tours and concerts",
+        "Korean BBQ and street food tours",
+        "Traditional hanbok wearing",
+        "DMZ border tour",
+        "Tech district exploration"
+      ],
+      "avoid_if": [
+        "not interested in modern culture",
+        "prefer historical destinations",
+        "dislike spicy food",
+        "looking for beaches"
+      ],
+      "filtering_tags": {
+        "experience_type": ["modern", "kpop", "technology", "food", "culture"],
+        "dietary_accommodations": ["korean_cuisine", "spicy_food", "bbq", "international_options"],
+        "accessibility": ["excellent_accessibility", "english_signage", "modern_infrastructure"],
+        "climate_suitability": ["four_seasons", "hot_summers", "cold_winters"],
+        "crowd_preference": ["urban_exploration", "shopping_districts", "entertainment_areas"]
+      },
+      "content_focus_alignment": {
+        "kpop": 9.5,
+        "technology": 9.2,
+        "food": 9.0,
+        "modern": 9.3,
+        "culture": 8.8,
+        "shopping": 8.9,
+        "urban": 9.1
+      }
+    },
+    {
+      "id": 27,
+      "destination": "Stockholm, Sweden",
+      "country": "Sweden",
+      "region": "Northern Europe",
+      "climate": "temperate",
+      "match_score": 84,
+      "potential_audience_engagement": {
+        "score": 8.5,
+        "reasons": ["Scandinavian design", "Archipelago beauty", "Sustainable living", "Nordic culture"],
+        "estimated_reach": "170K-320K views per video",
+        "engagement_rate": "7.9%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$1200-2000", "$2000-4000", "$4000-7000", "$7000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,600-2,200",
+            "accommodation": "Hostels/Budget hotels $35-60/night",
+            "food": "Grocery stores/Casual dining $20-35/day",
+            "transport": "Public transport pass $15-25/day",
+            "activities": "Free museums/Parks $100-250 total",
+            "flights": "Budget airlines $400-700"
+          },
+          "budget": {
+            "total_7_days": "$2,800-3,600",
+            "accommodation": "Mid-range hotels $80-130/night",
+            "food": "Restaurant meals $35-55/day",
+            "transport": "Metro/Tram/Ferry $25-40/day",
+            "activities": "Museums/Archipelago tours $300-500 total",
+            "flights": "Economy direct $600-1,000"
+          },
+          "mid_range": {
+            "total_7_days": "$4,800-6,500",
+            "accommodation": "Design hotels $150-250/night",
+            "food": "Quality Nordic cuisine $60-100/day",
+            "transport": "Taxi/Private tours $40-70/day",
+            "activities": "Premium experiences/Island hopping $600-1,000 total",
+            "flights": "Premium economy $1,000-1,500"
+          },
+          "luxury": {
+            "total_7_days": "$8,500-15,000",
+            "accommodation": "5-star hotels $250-500/night",
+            "food": "Fine dining/Michelin restaurants $100-200/day",
+            "transport": "Private car/Yacht charters $80-200/day",
+            "activities": "Exclusive archipelago/Private experiences $1,200-2,500 total",
+            "flights": "Business class $2,000-3,500"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1509356843151-3e7d96241e11?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1583486860670-3d4e4e8e4d2b?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1580837119756-563d608dd119?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1548089078-9d2ca7a8a0d8?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1509114734006-4a65b8b4c6c9?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Gamla Stan": "https://images.unsplash.com/photo-1583486860670-3d4e4e8e4d2b?w=600&h=400&fit=crop&crop=center",
+          "Stockholm Archipelago": "https://images.unsplash.com/photo-1580837119756-563d608dd119?w=600&h=400&fit=crop&crop=center",
+          "Vasa Museum": "https://images.unsplash.com/photo-1548089078-9d2ca7a8a0d8?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Stockholm archipelago island hopping",
+        "ABBA Museum and music history",
+        "Scandinavian design shopping",
+        "Nobel Prize Museum",
+        "Ice bar and winter activities"
+      ],
+      "avoid_if": [
+        "budget under $1200",
+        "looking for warm weather",
+        "prefer non-European destinations",
+        "dislike expensive cities"
+      ],
+      "filtering_tags": {
+        "experience_type": ["design", "nature", "culture", "archipelago", "nordic"],
+        "dietary_accommodations": ["nordic_cuisine", "fresh_seafood", "international_options"],
+        "accessibility": ["excellent_accessibility", "english_speaking", "modern_infrastructure"],
+        "climate_suitability": ["cool_weather", "mild_summers", "cold_winters"],
+        "crowd_preference": ["design_districts", "waterfront_areas", "cultural_sites"]
+      },
+      "content_focus_alignment": {
+        "design": 9.2,
+        "nordic": 9.0,
+        "nature": 8.8,
+        "culture": 8.5,
+        "sustainable": 8.9,
+        "archipelago": 9.1,
+        "history": 8.3
+      }
+    },
+    {
+      "id": 28,
+      "destination": "Mumbai, India",
+      "country": "India",
+      "region": "South Asia",
+      "climate": "tropical",
+      "match_score": 83,
+      "potential_audience_engagement": {
+        "score": 8.4,
+        "reasons": ["Bollywood culture", "Street food scene", "Contrasts of wealth", "Cultural diversity"],
+        "estimated_reach": "200K-400K views per video",
+        "engagement_rate": "8.0%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$300-600", "$600-1200", "$1200-2500", "$2500+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$450-700",
+            "accommodation": "Hostels/Budget hotels $8-20/night",
+            "food": "Street food/Local eateries $3-8/day",
+            "transport": "Local trains/Buses $2-5/day",
+            "activities": "Free markets/Beaches $20-60 total",
+            "flights": "Budget with stops $400-700"
+          },
+          "budget": {
+            "total_7_days": "$800-1,200",
+            "accommodation": "Mid-range hotels $25-50/night",
+            "food": "Restaurant meals $8-18/day",
+            "transport": "Taxis/Auto-rickshaws $8-15/day",
+            "activities": "Bollywood tours/Markets $100-250 total",
+            "flights": "Economy direct $500-900"
+          },
+          "mid_range": {
+            "total_7_days": "$1,600-2,800",
+            "accommodation": "4-star hotels $50-120/night",
+            "food": "Quality restaurants $18-40/day",
+            "transport": "Private car/Tours $20-40/day",
+            "activities": "Premium experiences/Day trips $300-600 total",
+            "flights": "Premium economy $800-1,400"
+          },
+          "luxury": {
+            "total_7_days": "$3,500-7,000",
+            "accommodation": "5-star hotels $120-350/night",
+            "food": "Fine dining/Hotel restaurants $40-100/day",
+            "transport": "Private driver/Luxury cars $40-100/day",
+            "activities": "VIP Bollywood/Private tours $600-1,500 total",
+            "flights": "Business class $1,800-3,500"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1580618432485-1e08c5039479?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1548053910-aaeb970cc1d6?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Gateway of India": "https://images.unsplash.com/photo-1580618432485-1e08c5039479?w=600&h=400&fit=crop&crop=center",
+          "Marine Drive": "https://images.unsplash.com/photo-1548053910-aaeb970cc1d6?w=600&h=400&fit=crop&crop=center",
+          "Dharavi Slum": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Bollywood studio tours",
+        "Street food walking tours",
+        "Slum tourism with ethical guides",
+        "Local train commuter experience",
+        "Dhobi Ghat laundry district"
+      ],
+      "avoid_if": [
+        "sensitive to chaos and crowds",
+        "strict hygiene concerns",
+        "prefer structured environments",
+        "uncomfortable with poverty"
+      ],
+      "filtering_tags": {
+        "experience_type": ["culture", "bollywood", "street_food", "urban", "contrasts"],
+        "dietary_accommodations": ["indian_cuisine", "vegetarian_options", "spicy_food"],
+        "accessibility": ["limited_accessibility", "english_speaking", "mixed_infrastructure"],
+        "climate_suitability": ["tropical", "hot_humid", "monsoon_season"],
+        "crowd_preference": ["urban_chaos", "street_life", "cultural_immersion"]
+      },
+      "content_focus_alignment": {
+        "culture": 9.1,
+        "bollywood": 9.3,
+        "street_food": 9.0,
+        "urban": 8.8,
+        "contrasts": 9.2,
+        "authentic": 8.9,
+        "chaotic": 8.7
+      }
+    },
+    {
+      "id": 29,
+      "destination": "Vancouver, Canada",
+      "country": "Canada",
+      "region": "North America",
+      "climate": "temperate",
+      "match_score": 86,
+      "potential_audience_engagement": {
+        "score": 8.6,
+        "reasons": ["Mountain and ocean views", "Outdoor activities", "Multicultural food", "Urban nature"],
+        "estimated_reach": "190K-380K views per video",
+        "engagement_rate": "8.1%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$1000-1800", "$1800-3500", "$3500-6500", "$6500+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,400-2,000",
+            "accommodation": "Hostels/Budget hotels $30-55/night",
+            "food": "Food courts/Casual dining $18-30/day",
+            "transport": "Public transit $10-18/day",
+            "activities": "Free parks/Hiking $80-200 total",
+            "flights": "Budget domestic $300-600"
+          },
+          "budget": {
+            "total_7_days": "$2,200-3,200",
+            "accommodation": "Mid-range hotels $70-120/night",
+            "food": "Restaurant meals $30-50/day",
+            "transport": "Mix of transit/Uber $20-35/day",
+            "activities": "Attractions/Tours $250-450 total",
+            "flights": "Economy direct $400-800"
+          },
+          "mid_range": {
+            "total_7_days": "$4,000-5,800",
+            "accommodation": "4-star hotels $130-220/night",
+            "food": "Quality restaurants $50-80/day",
+            "transport": "Car rental/Private tours $40-70/day",
+            "activities": "Premium outdoor experiences $500-900 total",
+            "flights": "Premium economy $600-1,200"
+          },
+          "luxury": {
+            "total_7_days": "$7,500-13,000",
+            "accommodation": "5-star hotels $250-450/night",
+            "food": "Fine dining/Wine country $80-150/day",
+            "transport": "Private car/Helicopter tours $80-200/day",
+            "activities": "Exclusive outdoor/Spa experiences $1,000-2,200 total",
+            "flights": "Business class $1,200-2,500"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1549091301-8a2e15b7a1ea?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1575936123952-b67c250d357f?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1517639493569-5666a7b2f494?w=800&h=600&fit=crop&crop=center",  
+          "https://images.unsplash.com/photo-1509556843416-3501f922fc04?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1605538883669-825200433431?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Stanley Park": "https://images.unsplash.com/photo-1575936123952-b67c250d357f?w=600&h=400&fit=crop&crop=center",
+          "Granville Island": "https://images.unsplash.com/photo-1517639493569-5666a7b2f494?w=600&h=400&fit=crop&crop=center",
+          "Capilano Suspension Bridge": "https://images.unsplash.com/photo-1509556843416-3501f922fc04?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Grouse Mountain gondola and activities",
+        "Whistler day trip for skiing/hiking",
+        "Richmond Night Market food tours",
+        "Seawall cycling adventure",
+        "Queen Elizabeth Park photography"
+      ],
+      "avoid_if": [
+        "budget under $1000",
+        "dislike rainy weather",
+        "looking for warm beaches",
+        "prefer urban-only experiences"
+      ],
+      "filtering_tags": {
+        "experience_type": ["nature", "outdoor", "multicultural", "urban", "mountains"],
+        "dietary_accommodations": ["multicultural_food", "fresh_seafood", "international_options"],
+        "accessibility": ["excellent_accessibility", "english_speaking", "modern_infrastructure"],
+        "climate_suitability": ["mild_weather", "rainy_seasons", "cool_summers"],
+        "crowd_preference": ["outdoor_activities", "waterfront_areas", "nature_parks"]
+      },
+      "content_focus_alignment": {
+        "nature": 9.2,
+        "outdoor": 9.0,
+        "urban": 8.5,
+        "multicultural": 8.8,
+        "mountains": 9.1,
+        "food": 8.6,
+        "photography": 8.9
+      }
+    },
+    {
+      "id": 30,
+      "destination": "Melbourne, Australia",
+      "country": "Australia",
+      "region": "Oceania",
+      "climate": "temperate",
+      "match_score": 87,
+      "potential_audience_engagement": {
+        "score": 8.7,
+        "reasons": ["Coffee culture", "Street art scene", "Cultural events", "Foodie destination"],
+        "estimated_reach": "210K-410K views per video",
+        "engagement_rate": "8.3%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$1200-2200", "$2200-4000", "$4000-7000", "$7000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,600-2,400",
+            "accommodation": "Hostels/Budget hotels $25-50/night",
+            "food": "Food trucks/Casual dining $15-30/day",
+            "transport": "Trams/Public transport $8-18/day",
+            "activities": "Free street art/Markets $100-250 total",
+            "flights": "Budget with stops $800-1,400"
+          },
+          "budget": {
+            "total_7_days": "$2,800-3,800",
+            "accommodation": "Mid-range hotels $80-140/night",
+            "food": "Cafe culture/Restaurants $30-50/day",
+            "transport": "Mix of tram/Uber $18-30/day",
+            "activities": "Museums/Food tours $300-500 total",
+            "flights": "Economy direct $1,000-1,600"
+          },
+          "mid_range": {
+            "total_7_days": "$4,500-6,200",
+            "accommodation": "Boutique hotels $140-240/night",
+            "food": "Quality restaurants/Wine bars $50-80/day",
+            "transport": "Car rental/Private tours $35-60/day",
+            "activities": "Premium experiences/Day trips $500-900 total",
+            "flights": "Premium economy $1,400-2,200"
+          },
+          "luxury": {
+            "total_7_days": "$8,000-14,000",
+            "accommodation": "5-star hotels $250-500/night",
+            "food": "Fine dining/Chef experiences $80-180/day",
+            "transport": "Private car/Helicopter $70-150/day",
+            "activities": "Exclusive food/Wine experiences $1,000-2,500 total",
+            "flights": "Business class $2,500-4,500"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1552550049-db097c9480d1?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1539066436416-5a57d2ba830c?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Federation Square": "https://images.unsplash.com/photo-1552550049-db097c9480d1?w=600&h=400&fit=crop&crop=center",
+          "Royal Botanic Gardens": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop&crop=center",
+          "Queen Victoria Market": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Coffee culture and laneway exploration",
+        "Great Ocean Road scenic drive",
+        "Street art and graffiti tours",
+        "Yarra Valley wine tasting",
+        "Penguin Parade at Phillip Island"
+      ],
+      "avoid_if": [
+        "budget under $1200",
+        "looking for tropical weather",
+        "prefer historical destinations",
+        "dislike coffee culture"
+      ],
+      "filtering_tags": {
+        "experience_type": ["coffee", "street_art", "food", "culture", "events"],
+        "dietary_accommodations": ["cafe_culture", "diverse_cuisine", "wine_culture"],
+        "accessibility": ["excellent_accessibility", "english_speaking", "modern_infrastructure"],
+        "climate_suitability": ["temperate", "four_seasons", "cool_winters"],
+        "crowd_preference": ["cultural_districts", "coffee_areas", "market_scenes"]
+      },
+      "content_focus_alignment": {
+        "coffee": 9.4,
+        "street_art": 9.2,
+        "food": 9.0,
+        "culture": 8.8,
+        "events": 8.6,
+        "urban": 8.9,
+        "modern": 8.5
+      }
+    },
+    {
+      "id": 31,
+      "destination": "Lisbon, Portugal",
+      "country": "Portugal",
+      "region": "Southern Europe",
+      "climate": "mediterranean",
+      "match_score": 88,
+      "potential_audience_engagement": {
+        "score": 8.6,
+        "reasons": ["Historic charm", "Affordable European city", "Coastal beauty", "Portuguese culture"],
+        "estimated_reach": "180K-360K views per video",
+        "engagement_rate": "8.0%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$600-1200", "$1200-2400", "$2400-4500", "$4500+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$800-1,300",
+            "accommodation": "Hostels/Guesthouses $15-35/night",
+            "food": "Pastéis/Local eateries $10-20/day",
+            "transport": "Trams/Metro $5-12/day",
+            "activities": "Free viewpoints/Markets $50-150 total",
+            "flights": "Budget airlines $200-500"
+          },
+          "budget": {
+            "total_7_days": "$1,500-2,200",
+            "accommodation": "Budget hotels/Quintas $35-70/night",
+            "food": "Traditional restaurants $20-35/day",
+            "transport": "Tuk-tuks/Public transport $15-25/day",
+            "activities": "Museums/Sintra day trip $200-400 total",
+            "flights": "Economy direct $300-700"
+          },
+          "mid_range": {
+            "total_7_days": "$2,800-4,000",
+            "accommodation": "Boutique hotels $70-140/night",
+            "food": "Quality seafood/Wine $35-60/day",
+            "transport": "Private tours/Car rental $30-55/day",
+            "activities": "Premium experiences/Porto trip $400-700 total",
+            "flights": "Premium economy $500-1,000"
+          },
+          "luxury": {
+            "total_7_days": "$5,500-9,000",
+            "accommodation": "5-star palaces/Pousadas $150-350/night",
+            "food": "Fine dining/Michelin restaurants $60-120/day",
+            "transport": "Private driver/Luxury transfers $50-120/day",
+            "activities": "Exclusive experiences/Private quintas $700-1,500 total",
+            "flights": "Business class $1,200-2,500"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1513735494327-8c2ec53f3363?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Belém Tower": "https://images.unsplash.com/photo-1513735494327-8c2ec53f3363?w=600&h=400&fit=crop&crop=center",
+          "Alfama District": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop&crop=center",
+          "Sintra Palaces": "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Fado music in Alfama neighborhood",
+        "Pastéis de nata tasting tours",
+        "Sintra fairy-tale palaces day trip",
+        "Tram 28 historic route",
+        "Coastal Cascais and Estoril"
+      ],
+      "avoid_if": [
+        "looking for nightlife scene",
+        "prefer modern cities",
+        "dislike hills and walking",
+        "seeking luxury shopping"
+      ],
+      "filtering_tags": {
+        "experience_type": ["historic", "coastal", "affordable", "culture", "traditional"],
+        "dietary_accommodations": ["portuguese_cuisine", "fresh_seafood", "pastries"],
+        "accessibility": ["mixed_accessibility", "english_spoken", "historic_infrastructure"],
+        "climate_suitability": ["mediterranean", "mild_winters", "warm_summers"],
+        "crowd_preference": ["historic_districts", "coastal_areas", "traditional_neighborhoods"]
+      },
+      "content_focus_alignment": {
+        "historic": 9.1,
+        "affordable": 9.0,
+        "coastal": 8.8,
+        "culture": 8.7,
+        "traditional": 8.9,
+        "charming": 9.2,
+        "authentic": 8.6
+      }
+    },
+    {
+      "id": 32,
+      "destination": "Singapore",
+      "country": "Singapore",
+      "region": "Southeast Asia",
+      "climate": "tropical",
+      "match_score": 90,
+      "potential_audience_engagement": {
+        "score": 8.9,
+        "reasons": ["Futuristic architecture", "Food paradise", "Multicultural fusion", "Urban innovation"],
+        "estimated_reach": "240K-480K views per video",
+        "engagement_rate": "8.4%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$1000-1800", "$1800-3500", "$3500-6500", "$6500+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,300-1,900",
+            "accommodation": "Hostels/Budget hotels $20-45/night",
+            "food": "Hawker centers/Food courts $8-18/day",
+            "transport": "MRT/Bus $5-12/day",
+            "activities": "Free gardens/Markets $80-200 total",
+            "flights": "Budget with stops $500-900"
+          },
+          "budget": {
+            "total_7_days": "$2,200-3,200",
+            "accommodation": "Mid-range hotels $60-110/night",
+            "food": "Local restaurants/Street food $18-35/day",
+            "transport": "Grab/MRT mix $15-25/day",
+            "activities": "Major attractions/Zoo $250-450 total",
+            "flights": "Economy direct $700-1,200"
+          },
+          "mid_range": {
+            "total_7_days": "$4,000-5,800",
+            "accommodation": "4-star hotels $120-200/night",
+            "food": "Quality restaurants $40-70/day",
+            "transport": "Private tours/Taxis $25-45/day",
+            "activities": "Premium experiences/Theme parks $500-800 total",
+            "flights": "Premium economy $1,000-1,600"
+          },
+          "luxury": {
+            "total_7_days": "$7,500-12,000",
+            "accommodation": "5-star hotels/Marina Bay $200-450/night",
+            "food": "Fine dining/Michelin experiences $70-150/day",
+            "transport": "Private car/Luxury transfers $45-100/day",
+            "activities": "VIP experiences/Private tours $800-1,800 total",
+            "flights": "Business class $2,000-3,500"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1562077803-f73f9dfe19a5?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1549428046-33c1b5ede15b?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1540624622875-b83dd6b2e925?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Marina Bay Sands": "https://images.unsplash.com/photo-1562077803-f73f9dfe19a5?w=600&h=400&fit=crop&crop=center",
+          "Gardens by the Bay": "https://images.unsplash.com/photo-1549428046-33c1b5ede15b?w=600&h=400&fit=crop&crop=center",
+          "Chinatown": "https://images.unsplash.com/photo-1540624622875-b83dd6b2e925?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Hawker center food crawls",
+        "Gardens by the Bay light shows",
+        "Sentosa Island theme parks",
+        "Clarke Quay nightlife scene",
+        "Orchard Road shopping sprees"
+      ],
+      "avoid_if": [
+        "budget under $1000",
+        "dislike humid weather",
+        "looking for budget destinations",
+        "prefer historical cities"
+      ],
+      "filtering_tags": {
+        "experience_type": ["futuristic", "food", "multicultural", "urban", "modern"],
+        "dietary_accommodations": ["multicultural_food", "hawker_centers", "international_cuisine"],
+        "accessibility": ["excellent_accessibility", "english_speaking", "modern_infrastructure"],
+        "climate_suitability": ["tropical", "hot_humid", "consistent_weather"],
+        "crowd_preference": ["urban_exploration", "food_districts", "modern_attractions"]
+      },
+      "content_focus_alignment": {
+        "futuristic": 9.4,
+        "food": 9.3,
+        "multicultural": 9.1,
+        "urban": 9.0,
+        "modern": 9.2,
+        "innovation": 9.3,
+        "clean": 8.9
+      }
+    },
+    {
+      "id": 33,
+      "destination": "Prague, Czech Republic",
+      "country": "Czech Republic", 
+      "region": "Central Europe",
+      "climate": "temperate",
+      "match_score": 86,
+      "potential_audience_engagement": {
+        "score": 8.5,
+        "reasons": ["Fairy-tale architecture", "Affordable European gem", "Beer culture", "Historic charm"],
+        "estimated_reach": "170K-340K views per video",
+        "engagement_rate": "7.9%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$500-1000", "$1000-2000", "$2000-3800", "$3800+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$700-1,100",
+            "accommodation": "Hostels/Budget pensions $12-25/night",
+            "food": "Local pubs/Street food $8-15/day",
+            "transport": "Trams/Metro $3-8/day",
+            "activities": "Free castle grounds/Markets $40-120 total",
+            "flights": "Budget airlines $200-450"
+          },
+          "budget": {
+            "total_7_days": "$1,200-1,800",
+            "accommodation": "Mid-range hotels $30-60/night",
+            "food": "Traditional restaurants $15-28/day",
+            "transport": "Public transport/Taxis $10-18/day",
+            "activities": "Castle tours/Beer tastings $150-300 total",
+            "flights": "Economy direct $300-600"
+          },
+          "mid_range": {
+            "total_7_days": "$2,200-3,400",
+            "accommodation": "Boutique hotels $60-120/night",
+            "food": "Quality Czech cuisine $28-50/day",
+            "transport": "Private tours/Car hire $20-40/day",
+            "activities": "Premium experiences/Day trips $300-600 total",
+            "flights": "Premium economy $500-900"
+          },
+          "luxury": {
+            "total_7_days": "$4,500-7,500",
+            "accommodation": "5-star palace hotels $120-280/night",
+            "food": "Fine dining/Michelin restaurants $50-100/day",
+            "transport": "Private driver/Luxury cars $40-80/day",
+            "activities": "Exclusive tours/Private castles $600-1,200 total",
+            "flights": "Business class $1,000-2,000"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1541849546-216549ae216d?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1509838468982-9cf7e7fe9a0d?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1498636461415-1b2e00191cdc?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Prague Castle": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop&crop=center",
+          "Charles Bridge": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&h=400&fit=crop&crop=center",
+          "Old Town Square": "https://images.unsplash.com/photo-1509838468982-9cf7e7fe9a0d?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Beer hall crawls and brewing tours",
+        "Astronomical Clock hourly shows",
+        "Fairy-tale castle day trips",
+        "Classical concert halls",
+        "Jewish Quarter historic tours"
+      ],
+      "avoid_if": [
+        "looking for modern attractions",
+        "prefer warm weather",
+        "dislike crowded tourist areas",
+        "seeking beach destinations"
+      ],
+      "filtering_tags": {
+        "experience_type": ["historic", "architecture", "beer", "affordable", "fairy_tale"],
+        "dietary_accommodations": ["czech_cuisine", "beer_culture", "hearty_meals"],
+        "accessibility": ["mixed_accessibility", "english_spoken", "historic_infrastructure"],
+        "climate_suitability": ["temperate", "cool_winters", "mild_summers"],
+        "crowd_preference": ["historic_centers", "beer_halls", "castle_grounds"]
+      },
+      "content_focus_alignment": {
+        "historic": 9.3,
+        "architecture": 9.2,
+        "affordable": 9.0,
+        "beer": 8.9,
+        "fairy_tale": 9.1,
+        "charming": 8.8,
+        "culture": 8.5
+      }
+    },
+    {
+      "id": 34,
+      "destination": "Cairo, Egypt",
+      "country": "Egypt",
+      "region": "North Africa",
+      "climate": "desert",
+      "match_score": 85,
+      "potential_audience_engagement": {
+        "score": 8.6,
+        "reasons": ["Ancient pyramids", "Rich history", "Nile River culture", "Archaeological wonders"],
+        "estimated_reach": "200K-400K views per video",
+        "engagement_rate": "8.2%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$400-800", "$800-1600", "$1600-3200", "$3200+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$600-1,000",
+            "accommodation": "Hostels/Budget hotels $8-20/night",
+            "food": "Street food/Local eateries $5-12/day",
+            "transport": "Metro/Local buses $2-6/day",
+            "activities": "Pyramid entry/Museums $50-150 total",
+            "flights": "Budget with stops $400-700"
+          },
+          "budget": {
+            "total_7_days": "$1,000-1,600",
+            "accommodation": "Mid-range hotels $25-50/night",
+            "food": "Restaurant meals $12-25/day",
+            "transport": "Taxis/Tours $8-18/day",
+            "activities": "Full pyramid tours/Nile cruise $200-400 total",
+            "flights": "Economy direct $500-900"
+          },
+          "mid_range": {
+            "total_7_days": "$2,000-3,200",
+            "accommodation": "4-star Nile view hotels $50-100/night",
+            "food": "Quality restaurants $25-45/day",
+            "transport": "Private tours/AC vehicles $20-40/day",
+            "activities": "Premium tours/Sound & light shows $400-700 total",
+            "flights": "Premium economy $700-1,300"
+          },
+          "luxury": {
+            "total_7_days": "$4,000-7,500",
+            "accommodation": "5-star historic hotels $100-250/night",
+            "food": "Fine dining/Hotel restaurants $45-90/day",
+            "transport": "Private guide/Luxury vehicles $40-100/day",
+            "activities": "VIP pyramid access/Private Nile cruise $800-1,800 total",
+            "flights": "Business class $1,500-3,000"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1593509327860-9e5ab51bb8ad?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1593509327860-9e5ab51bb8ad?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1574849364434-73ec2b6ad359?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1562227829-7b6f75977dcf?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1546912501-ad8d47c61b0c?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Pyramids of Giza": "https://images.unsplash.com/photo-1593509327860-9e5ab51bb8ad?w=600&h=400&fit=crop&crop=center",
+          "Egyptian Museum": "https://images.unsplash.com/photo-1574849364434-73ec2b6ad359?w=600&h=400&fit=crop&crop=center",
+          "Khan el-Khalili": "https://images.unsplash.com/photo-1562227829-7b6f75977dcf?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Great Pyramid chamber exploration", 
+        "Nile River felucca sailing",
+        "Khan el-Khalili bazaar shopping",
+        "Islamic Cairo mosque visits",
+        "Egyptian Museum mummy halls"
+      ],
+      "avoid_if": [
+        "uncomfortable with heat",
+        "sensitive to crowds and chaos",
+        "prefer modern amenities",
+        "concerned about political stability"
+      ],
+      "filtering_tags": {
+        "experience_type": ["ancient", "history", "pyramids", "archaeology", "nile"],
+        "dietary_accommodations": ["middle_eastern_cuisine", "halal_options", "traditional_meals"],
+        "accessibility": ["limited_accessibility", "arabic_helpful", "mixed_infrastructure"],
+        "climate_suitability": ["desert", "hot_dry", "extreme_heat"],
+        "crowd_preference": ["historical_sites", "ancient_monuments", "cultural_immersion"]
+      },
+      "content_focus_alignment": {
+        "ancient": 9.5,
+        "history": 9.4,
+        "pyramids": 9.6,
+        "archaeology": 9.2,
+        "nile": 8.8,
+        "culture": 8.7,
+        "iconic": 9.3
+      }
+    },
+    {
+      "id": 35,
+      "destination": "Santorini, Greece",
+      "country": "Greece",
+      "region": "Southern Europe", 
+      "climate": "mediterranean",
+      "match_score": 89,
+      "potential_audience_engagement": {
+        "score": 8.8,
+        "reasons": ["Iconic sunsets", "Blue-domed churches", "Romantic atmosphere", "Mediterranean paradise"],
+        "estimated_reach": "230K-460K views per video",
+        "engagement_rate": "8.5%"
+      },
+      "budget_insights": {
+        "budget_categories": ["$800-1500", "$1500-3000", "$3000-6000", "$6000+"],
+        "multiple_budget_options": true,
+        "budget_variants": {
+          "backpacker": {
+            "total_7_days": "$1,100-1,700",
+            "accommodation": "Hostels/Budget pensions $20-45/night",
+            "food": "Gyros/Local tavernas $12-25/day",
+            "transport": "Local buses/Walking $5-12/day",
+            "activities": "Free beaches/Sunset viewing $80-200 total",
+            "flights": "Budget with stops $300-600"
+          },
+          "budget": {
+            "total_7_days": "$1,800-2,800",
+            "accommodation": "Traditional guesthouses $45-90/night",
+            "food": "Seafood tavernas $25-45/day",
+            "transport": "Quad bikes/Taxis $15-30/day",
+            "activities": "Wine tours/Boat trips $200-450 total",
+            "flights": "Economy direct $400-800"
+          },
+          "mid_range": {
+            "total_7_days": "$3,500-5,200",
+            "accommodation": "Cave hotels/Sea view rooms $90-180/night",
+            "food": "Quality restaurants/Wine dinners $45-80/day",
+            "transport": "Car rental/Private transfers $30-60/day",
+            "activities": "Sunset cruises/Premium tours $450-800 total",
+            "flights": "Premium economy $600-1,200"
+          },
+          "luxury": {
+            "total_7_days": "$7,000-15,000",
+            "accommodation": "5-star cliff resorts $200-600/night",
+            "food": "Fine dining/Private chefs $80-200/day",
+            "transport": "Private drivers/Helicopter transfers $60-200/day",
+            "activities": "Private yacht/Exclusive experiences $1,000-3,000 total",
+            "flights": "Business class $1,200-2,500"
+          }
+        }
+      },
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=1200&h=800&fit=crop&crop=center",
+        "gallery": [
+          "https://images.unsplash.com/photo-1565332211821-8d2dfa6a3be7?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1563789031959-4c02d2ba2d46?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1593509327860-9e5ab51bb8ad?w=800&h=600&fit=crop&crop=center",
+          "https://images.unsplash.com/photo-1583582654086-5e5d3b380fb1?w=800&h=600&fit=crop&crop=center"
+        ],
+        "attractions": {
+          "Oia Village": "https://images.unsplash.com/photo-1565332211821-8d2dfa6a3be7?w=600&h=400&fit=crop&crop=center",
+          "Fira Town": "https://images.unsplash.com/photo-1563789031959-4c02d2ba2d46?w=600&h=400&fit=crop&crop=center",
+          "Red Beach": "https://images.unsplash.com/photo-1583582654086-5e5d3b380fb1?w=600&h=400&fit=crop&crop=center"
+        }
+      },
+      "alternative_experiences": [
+        "Oia sunset viewing crowds",
+        "Wine tasting at cliff-side vineyards",
+        "Black sand beach exploration",
+        "Traditional Greek cooking classes",
+        "Volcano and hot springs boat trips"
+      ],
+      "avoid_if": [
+        "budget under $800",
+        "dislike crowded tourist spots",
+        "traveling in winter months",
+        "looking for nightlife scene"
+      ],
+      "filtering_tags": {
+        "experience_type": ["romantic", "sunsets", "mediterranean", "islands", "photography"],
+        "dietary_accommodations": ["greek_cuisine", "fresh_seafood", "wine_culture"],
+        "accessibility": ["limited_accessibility", "english_spoken", "island_infrastructure"],
+        "climate_suitability": ["mediterranean", "hot_summers", "mild_winters"],
+        "crowd_preference": ["scenic_viewpoints", "coastal_areas", "romantic_settings"]
+      },
+      "content_focus_alignment": {
+        "romantic": 9.4,
+        "sunsets": 9.6,
+        "photography": 9.3,
+        "mediterranean": 9.1,
+        "iconic": 9.2,
+        "scenic": 9.5,
+        "relaxing": 8.8
       }
     }
   ]
