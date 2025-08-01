@@ -82,7 +82,16 @@ const RecommendationsScreen: React.FC = () => {
 
   // Accept recommendations and Qloo enrichment from props or context
   // For demo, fallback to mock data if not provided
-  const recommendationsData = (typeof window !== 'undefined' && (window as typeof window & { recommendationsResult?: any }).recommendationsResult) || {};
+  const recommendationsData = (typeof window !== 'undefined' && (window as typeof window & { 
+    recommendationsResult?: {
+      recommendations?: Recommendation[];
+      qloo?: {
+        confidence?: number;
+        culturalAffinities?: string[];
+        personalityTraits?: string[];
+      };
+    } 
+  }).recommendationsResult) || {};
   const recommendations: Recommendation[] = recommendationsData.recommendations || [
     {
       id: 1,
@@ -364,6 +373,7 @@ const RecommendationsScreen: React.FC = () => {
                 )
               }
               className="bg-background border border-border rounded px-2 py-1 text-sm"
+              aria-label="Filter recommendations"
             >
               <option value="all">All Destinations</option>
               <option value="budget">Budget Friendly</option>
@@ -383,6 +393,7 @@ const RecommendationsScreen: React.FC = () => {
                 setSortBy(e.target.value as "match" | "budget" | "engagement")
               }
               className="bg-background border border-border rounded px-2 py-1 text-sm"
+              aria-label="Sort recommendations"
             >
               <option value="match">Match Score</option>
               <option value="budget">Budget</option>

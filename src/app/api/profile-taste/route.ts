@@ -140,39 +140,6 @@ function generateMockTasteVector(
       }
       break;
   }
-    vector.luxury += 0.12;
-    vector.budget += 0.07;
-    // Do NOT boost photography traits
-  } else {
-    switch (contentType.toLowerCase()) {
-      case "photography":
-        vector.culture += 0.1;
-        vector.nature += 0.1;
-        break;
-      case "food & culinary":
-        vector.food += 0.2;
-        vector.culture += 0.1;
-        break;
-      case "luxury lifestyle":
-        vector.luxury += 0.2;
-        vector.urban += 0.1;
-        break;
-      case "travel & adventure":
-        vector.adventure += 0.2;
-        vector.nature += 0.1;
-        break;
-      case "productivity":
-      case "educational":
-      case "lifestyle":
-        vector.culture += 0.18;
-        vector.urban += 0.18;
-        vector.luxury += 0.12;
-        vector.budget += 0.07;
-        break;
-    }
-  }
-
-  // ...existing code...
 
   // Normalize values to ensure they're between 0 and 1
   Object.keys(vector).forEach((key) => {
@@ -308,8 +275,9 @@ function calculateConfidence(themes: string[], hints: string[]): number {
   return Math.min(confidence, 0.95); // Cap at 95%
 }
 
-// Real Qloo API integration
+// Real Qloo API integration (commented out for demo)
 // See Qloo API docs: https://docs.qloo.com/
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
   // Try different potential endpoints for Qloo hackathon API
   const endpoints = [
@@ -392,7 +360,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Prepare Qloo request
+    // Prepare Qloo request (saved for future real API integration)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const qlooRequest: QlooRequest = {
       themes,
       hints,
@@ -401,12 +370,10 @@ export async function POST(request: NextRequest) {
       demographics: demographics || {},
     };
 
-    let qlooResponse: QlooResponse;
-    
     // For hackathon demo, use enhanced mock system (Qloo API endpoints unavailable)
     console.log("Using enhanced mock taste vector system for demo");
     const mockVector = generateMockTasteVector(themes, hints, contentType);
-    qlooResponse = {
+    const qlooResponse: QlooResponse = {
       tasteVector: mockVector,
       recommendations: generateSmartRecommendations(mockVector, themes),
       confidence: calculateConfidence(themes, hints),
