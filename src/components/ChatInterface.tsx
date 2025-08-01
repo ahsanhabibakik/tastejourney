@@ -37,7 +37,108 @@ interface UserAnswers {
 }
 
 interface Recommendation {
+  id?: number;
   destination: string;
+  country?: string;
+  region?: string;
+  climate?: string;
+  match_score?: number;
+  potential_audience_engagement?: {
+    score: number;
+    reasons: string[];
+    estimated_reach: string;
+    engagement_rate: string;
+  };
+  budget_insights?: {
+    budget_categories: string[];
+    multiple_budget_options: boolean;
+    budget_variants: {
+      backpacker?: {
+        total_7_days: string;
+        accommodation: string;
+        food: string;
+        transport: string;
+        activities: string;
+        flights: string;
+      };
+      budget?: {
+        total_7_days: string;
+        accommodation: string;
+        food: string;
+        transport: string;
+        activities: string;
+        flights: string;
+      };
+      mid_range?: {
+        total_7_days: string;
+        accommodation: string;
+        food: string;
+        transport: string;
+        activities: string;
+        flights: string;
+      };
+      luxury?: {
+        total_7_days: string;
+        accommodation: string;
+        food: string;
+        transport: string;
+        activities: string;
+        flights: string;
+      };
+    };
+  };
+  images?: {
+    hero: string;
+    gallery: string[];
+    attractions?: Record<string, string>;
+  };
+  filtering_tags?: {
+    experience_type: string[];
+    activity_level: string[];
+    group_suitability: string[];
+    content_themes: string[];
+    dietary_accommodations: string[];
+    accessibility: string[];
+    climate_suitability: string[];
+    crowd_preference: string[];
+  };
+  content_focus_alignment?: {
+    photography: number;
+    food: number;
+    adventure: number;
+    culture: number;
+    luxury: number;
+    budget: number;
+    wellness: number;
+    tech: number;
+  };
+  // Legacy properties for backward compatibility
+  engagement_potential?: string;
+  brand_partnerships?: string[];
+  local_creators?: Array<{
+    handle: string;
+    platform: string;
+    followers?: string;
+    engagement?: string;
+  }>;
+  budget_friendly?: boolean;
+  budget_estimate?: {
+    flights?: string;
+    accommodation?: string;
+    food?: string;
+    total?: string;
+  };
+  events?: Array<{
+    title: string;
+    date: string;
+    link: string;
+    venue?: string;
+  }>;
+  experiences?: string[];
+  monetization_opportunities?: string[];
+  flight_link?: string;
+  best_months?: string[];
+  visa_required?: boolean;
   image?: string;
   highlights?: string[];
   budget?: { range: string };
@@ -914,67 +1015,129 @@ const ChatInterface: React.FC = () => {
                               style={{scrollBehavior: 'smooth'}}
                             >
                               <div className="flex gap-2 sm:gap-3 w-max px-1">
-                                {recommendations.recommendations.map((rec: Recommendation, i: number) => (
+                                {recommendations.recommendations.slice(0, 3).map((rec: Recommendation, i: number) => (
                                   <div
                                     key={i}
-                                    className="group bg-card border border-border/50 rounded-lg overflow-hidden flex-shrink-0 w-56 sm:w-64 md:w-72 shadow-md hover:shadow-lg transition-all duration-200"
+                                    className="group bg-card border border-border/50 rounded-lg overflow-hidden flex-shrink-0 w-72 sm:w-80 md:w-96 shadow-md hover:shadow-lg transition-all duration-200"
                                   >
-                                {/* Compact Image */}
+                                {/* Hero Image */}
                                 <div className="relative overflow-hidden">
-                                  {rec.image && (
+                                  {(rec.images?.hero || rec.image) && (
                                     <Image 
-                                      src={rec.image} 
+                                      src={rec.images?.hero || rec.image || ''} 
                                       alt={rec.destination}
-                                      width={300}
-                                      height={120}
-                                      className="w-full h-24 sm:h-28 md:h-32 object-cover group-hover:scale-105 transition-transform duration-200" 
+                                      width={400}
+                                      height={150}
+                                      className="w-full h-32 sm:h-36 md:h-40 object-cover group-hover:scale-105 transition-transform duration-200" 
                                     />
                                   )}
-                                  <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                                  <div className="absolute top-1.5 right-1.5">
-                                    <span className="bg-white/90 text-primary text-[9px] sm:text-[10px] font-semibold px-1.5 py-0.5 rounded-full shadow-sm">
+                                  <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                                  <div className="absolute top-2 right-2">
+                                    <span className="bg-white/90 text-primary text-xs font-semibold px-2 py-1 rounded-full shadow-sm">
                                       #{i + 1}
                                     </span>
                                   </div>
-                                </div>
-                                
-                                {/* Compact Content */}
-                                <div className="p-2 sm:p-2.5">
-                                  <div className="flex flex-col gap-1 sm:gap-1.5">
-                                    <div className="flex items-start justify-between gap-1">
-                                      <h4 className="font-bold text-xs sm:text-sm text-foreground truncate">{rec.destination}</h4>
-                                      <div className="flex items-center gap-0.5 flex-shrink-0">
-                                        <Star className="h-2.5 w-2.5 sm:h-3 sm:w-3 fill-yellow-400 text-yellow-400" />
-                                        <span className="text-[9px] sm:text-[10px] font-semibold text-muted-foreground">{rec.rating}</span>
-                                      </div>
-                                    </div>
-                                    <p className="text-[9px] sm:text-[10px] text-muted-foreground line-clamp-2 leading-relaxed">{rec.description}</p>
-                                  </div>
-                                  
-                                  {/* Enhanced Creator Card */}
-                                  {rec.suggestedCreators && rec.suggestedCreators.length > 0 && (
-                                    <div className="mt-2 pt-2 border-t border-border/50">
-                                      <div className="space-y-1">
-                                        <p className="text-[8px] sm:text-[9px] font-medium text-muted-foreground uppercase tracking-wide">Similar Creator</p>
-                                        <div className="flex items-center gap-1.5">
-                                          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20 flex items-center justify-center">
-                                            <User className="h-2 w-2 sm:h-2.5 sm:w-2.5 text-primary" />
-                                          </div>
-                                          <div className="flex-1 min-w-0">
-                                            <div className="font-medium text-[9px] sm:text-[10px] text-foreground truncate">{rec.suggestedCreators[0].name}</div>
-                                            <div className="text-[8px] sm:text-[9px] text-muted-foreground truncate">{rec.suggestedCreators[0].niche}</div>
-                                          </div>
-                                        </div>
+                                  {rec.potential_audience_engagement?.score && (
+                                    <div className="absolute bottom-2 left-2">
+                                      <div className="flex items-center gap-1 bg-green-500/90 px-2 py-1 rounded-full">
+                                        <Star className="h-3 w-3 fill-white text-white" />
+                                        <span className="text-xs font-semibold text-white">
+                                          {rec.potential_audience_engagement.score}/10
+                                        </span>
                                       </div>
                                     </div>
                                   )}
-                                  
-                                  {/* Enhanced Tags */}
-                                  {rec.tags && rec.tags.length > 0 && (
-                                    <div className="flex flex-wrap gap-1 mt-2">
-                                      {rec.tags.slice(0, 2).map((tag: string) => (
-                                        <span key={tag} className="bg-secondary/60 text-secondary-foreground text-[8px] sm:text-[9px] px-1.5 py-0.5 rounded-full font-medium">
-                                          #{tag}
+                                </div>
+                                
+                                {/* Rich Content */}
+                                <div className="p-4 space-y-3">
+                                  {/* Header */}
+                                  <div>
+                                    <h4 className="font-bold text-sm text-foreground">{rec.destination}</h4>
+                                    <p className="text-xs text-muted-foreground">{rec.country} • {rec.region}</p>
+                                  </div>
+
+                                  {/* Engagement Potential */}
+                                  {rec.potential_audience_engagement && (
+                                    <div className="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg">
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <TrendingUp className="h-4 w-4 text-blue-600" />
+                                        <span className="text-sm font-semibold text-blue-600">Engagement Potential</span>
+                                      </div>
+                                      <div className="space-y-1">
+                                        <p className="text-xs text-blue-700 dark:text-blue-300">
+                                          <span className="font-medium">Reach:</span> {rec.potential_audience_engagement.estimated_reach}
+                                        </p>
+                                        <p className="text-xs text-blue-700 dark:text-blue-300">
+                                          <span className="font-medium">Engagement:</span> {rec.potential_audience_engagement.engagement_rate}
+                                        </p>
+                                        {rec.potential_audience_engagement.reasons && (
+                                          <div className="mt-2">
+                                            <p className="text-xs font-medium text-blue-600 mb-1">Key Reasons:</p>
+                                            <ul className="space-y-0.5">
+                                              {rec.potential_audience_engagement.reasons.slice(0, 2).map((reason, idx) => (
+                                                <li key={idx} className="text-xs text-blue-700 dark:text-blue-300">• {reason}</li>
+                                              ))}
+                                            </ul>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {/* Budget Information */}
+                                  {rec.budget_insights?.budget_variants && (
+                                    <div className="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg">
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <DollarSign className="h-4 w-4 text-green-600" />
+                                        <span className="text-sm font-semibold text-green-600">Budget Options</span>
+                                      </div>
+                                      <div className="space-y-1">
+                                        {rec.budget_insights.budget_variants.budget && (
+                                          <p className="text-xs text-green-700 dark:text-green-300">
+                                            <span className="font-medium">Budget:</span> {rec.budget_insights.budget_variants.budget.total_7_days}
+                                          </p>
+                                        )}
+                                        {rec.budget_insights.budget_variants.luxury && (
+                                          <p className="text-xs text-green-700 dark:text-green-300">
+                                            <span className="font-medium">Luxury:</span> {rec.budget_insights.budget_variants.luxury.total_7_days}
+                                          </p>
+                                        )}
+                                        {rec.budget_insights.budget_variants.budget?.flights && (
+                                          <p className="text-xs text-green-600 dark:text-green-400">
+                                            <span className="font-medium">Flights:</span> {rec.budget_insights.budget_variants.budget.flights}
+                                          </p>
+                                        )}
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {/* Content Focus Alignment */}
+                                  {rec.content_focus_alignment && (
+                                    <div className="bg-purple-50 dark:bg-purple-900/30 p-3 rounded-lg">
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <Briefcase className="h-4 w-4 text-purple-600" />
+                                        <span className="text-sm font-semibold text-purple-600">Content Match</span>
+                                      </div>
+                                      <div className="flex flex-wrap gap-1">
+                                        {Object.entries(rec.content_focus_alignment)
+                                          .filter(([, score]) => score >= 8)
+                                          .slice(0, 3)
+                                          .map(([type, score]) => (
+                                            <span key={type} className="text-xs bg-purple-100 dark:bg-purple-800 text-purple-700 dark:text-purple-300 px-2 py-1 rounded-full font-medium">
+                                              {type}: {score}/10
+                                            </span>
+                                          ))}
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {/* Content Themes Tags */}
+                                  {rec.filtering_tags?.content_themes && (
+                                    <div className="flex flex-wrap gap-1">
+                                      {rec.filtering_tags.content_themes.slice(0, 3).map((tag: string) => (
+                                        <span key={tag} className="bg-secondary/60 text-secondary-foreground text-xs px-2 py-1 rounded-full font-medium">
+                                          {tag.replace(/_/g, ' ')}
                                         </span>
                                       ))}
                                     </div>
@@ -1056,51 +1219,65 @@ const ChatInterface: React.FC = () => {
                                     
                                     {/* Enhanced Content for Desktop */}
                                     <div className="p-6 space-y-4">
-                                      <div className="bg-blue-100 dark:bg-blue-900/50 p-3 rounded-lg border border-blue-200 dark:border-blue-700">
-                                        <div className="flex items-center gap-2 mb-2">
-                                          <TrendingUp className="h-4 w-4 text-black dark:text-white" />
-                                          <span className="text-sm font-black text-black dark:text-white">
-                                            High Engagement Potential
-                                          </span>
+                                      {rec.engagement_potential && (
+                                        <div className="bg-blue-100 dark:bg-blue-900/50 p-3 rounded-lg border border-blue-200 dark:border-blue-700">
+                                          <div className="flex items-center gap-2 mb-2">
+                                            <TrendingUp className="h-4 w-4 text-black dark:text-white" />
+                                            <span className="text-sm font-black text-black dark:text-white">
+                                              Engagement Potential
+                                            </span>
+                                          </div>
+                                          <p className="text-xs text-black dark:text-white font-black">
+                                            {rec.engagement_potential}
+                                          </p>
                                         </div>
-                                        <p className="text-xs text-black dark:text-white font-black">
-                                          Perfect for content creators
-                                        </p>
-                                      </div>
+                                      )}
                                       
-                                      <div className="bg-purple-100 dark:bg-purple-900/50 p-3 rounded-lg border border-purple-200 dark:border-purple-700">
-                                        <div className="flex items-center gap-2 mb-1">
-                                          <DollarSign className="h-4 w-4 text-black dark:text-white" />
-                                          <span className="text-sm font-black text-black dark:text-white">Creator Friendly</span>
+                                      {rec.budget_estimate && (
+                                        <div className="bg-purple-100 dark:bg-purple-900/50 p-3 rounded-lg border border-purple-200 dark:border-purple-700">
+                                          <div className="flex items-center gap-2 mb-1">
+                                            <DollarSign className="h-4 w-4 text-black dark:text-white" />
+                                            <span className="text-sm font-black text-black dark:text-white">Budget Estimate</span>
+                                          </div>
+                                          <p className="text-xs text-black dark:text-white font-black">
+                                            {rec.budget_estimate.total || 'Contact for pricing'}
+                                          </p>
+                                          {rec.budget_estimate.flights && (
+                                            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                                              Flights: {rec.budget_estimate.flights}
+                                            </p>
+                                          )}
                                         </div>
-                                        <p className="text-xs text-black dark:text-white font-black">
-                                          Great value for content creation
-                                        </p>
-                                      </div>
+                                      )}
 
-                                      <div className="bg-green-100 dark:bg-green-900/50 p-3 rounded-lg border border-green-200 dark:border-green-700">
-                                        <div className="flex items-center gap-2 mb-1">
-                                          <Briefcase className="h-4 w-4 text-black dark:text-white" />
-                                          <span className="text-sm font-black text-black dark:text-white">
-                                            Brand Opportunities
-                                          </span>
+                                      {rec.brand_partnerships && rec.brand_partnerships.length > 0 && (
+                                        <div className="bg-green-100 dark:bg-green-900/50 p-3 rounded-lg border border-green-200 dark:border-green-700">
+                                          <div className="flex items-center gap-2 mb-1">
+                                            <Briefcase className="h-4 w-4 text-black dark:text-white" />
+                                            <span className="text-sm font-black text-black dark:text-white">
+                                              Brand Partnerships
+                                            </span>
+                                          </div>
+                                          <p className="text-xs text-black dark:text-white font-black">
+                                            {rec.brand_partnerships.slice(0, 3).join(', ')}
+                                            {rec.brand_partnerships.length > 3 && ` +${rec.brand_partnerships.length - 3} more`}
+                                          </p>
                                         </div>
-                                        <p className="text-xs text-black dark:text-white font-black">
-                                          Multiple partnership possibilities
-                                        </p>
-                                      </div>
+                                      )}
 
-                                      <div className="bg-gray-100 dark:bg-gray-800/70 p-3 rounded-lg border border-gray-200 dark:border-gray-600">
-                                        <div className="flex items-center gap-2 mb-1">
-                                          <Users className="h-4 w-4 text-black dark:text-white" />
-                                          <span className="text-sm font-black text-black dark:text-white">
-                                            Creator Community
-                                          </span>
+                                      {rec.local_creators && rec.local_creators.length > 0 && (
+                                        <div className="bg-gray-100 dark:bg-gray-800/70 p-3 rounded-lg border border-gray-200 dark:border-gray-600">
+                                          <div className="flex items-center gap-2 mb-1">
+                                            <Users className="h-4 w-4 text-black dark:text-white" />
+                                            <span className="text-sm font-black text-black dark:text-white">
+                                              Local Creators ({rec.local_creators.length})
+                                            </span>
+                                          </div>
+                                          <p className="text-xs text-black dark:text-white font-black">
+                                            Top: {rec.local_creators[0]?.handle} ({rec.local_creators[0]?.followers})
+                                          </p>
                                         </div>
-                                        <p className="text-xs text-black dark:text-white font-black">
-                                          Active local creator network
-                                        </p>
-                                      </div>
+                                      )}
                                     </div>
                                   </div>
                                 ))}
