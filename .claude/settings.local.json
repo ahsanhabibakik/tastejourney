@@ -21,7 +21,8 @@
       "Bash(ls:*)",
       "WebFetch(domain:nextjs.org)",
       "Bash(true)",
-      "Bash(npx next lint:*)"
+      "Bash(npx next lint:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }
