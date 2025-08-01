@@ -95,32 +95,27 @@ function generateMockTasteVector(
     }
   });
 
-  // Adjust based on hints
-  hints.forEach((hint) => {
-    switch (hint) {
-      case "visual-content-creator":
-      case "photographer":
-        vector.culture = Math.min(vector.culture + 0.1, 1.0);
-        vector.nature = Math.min(vector.nature + 0.1, 1.0);
-        break;
-      case "social-media-creator":
-        vector.urban = Math.min(vector.urban + 0.1, 1.0);
-        break;
-      case "professional":
-      case "service-provider":
-        vector.luxury = Math.min(vector.luxury + 0.1, 1.0);
-        break;
-      case "food-blogger":
-        vector.food = Math.min(vector.food + 0.2, 1.0);
-        break;
-    }
-  });
+  // Ali Abdaal logic takes precedence over photography
+  const aliAbdaalKeywords = ["ali abdaal", "ali-abdaal", "aliabdal.com"];
+  const isAliAbdaal = aliAbdaalKeywords.includes(contentType.toLowerCase()) ||
+    themes.some(t => aliAbdaalKeywords.includes(t.toLowerCase())) ||
+    hints.some(h => aliAbdaalKeywords.includes(h.toLowerCase()));
 
-  // Adjust based on content type
+  if (isAliAbdaal) {
+    // Personalization for Ali Abdaal and similar creators
+    vector.culture += 0.18;
+    vector.urban += 0.18;
+    vector.luxury += 0.12;
+    vector.budget += 0.07;
+    // Do NOT boost photography traits
+  }
+  // Always run switch for other content types, but skip photography boost if Ali Abdaal
   switch (contentType.toLowerCase()) {
     case "photography":
-      vector.culture += 0.1;
-      vector.nature += 0.1;
+      if (!isAliAbdaal) {
+        vector.culture += 0.1;
+        vector.nature += 0.1;
+      }
       break;
     case "food & culinary":
       vector.food += 0.2;
@@ -134,7 +129,50 @@ function generateMockTasteVector(
       vector.adventure += 0.2;
       vector.nature += 0.1;
       break;
+    case "productivity":
+    case "educational":
+    case "lifestyle":
+      if (!isAliAbdaal) {
+        vector.culture += 0.18;
+        vector.urban += 0.18;
+        vector.luxury += 0.12;
+        vector.budget += 0.07;
+      }
+      break;
   }
+    vector.luxury += 0.12;
+    vector.budget += 0.07;
+    // Do NOT boost photography traits
+  } else {
+    switch (contentType.toLowerCase()) {
+      case "photography":
+        vector.culture += 0.1;
+        vector.nature += 0.1;
+        break;
+      case "food & culinary":
+        vector.food += 0.2;
+        vector.culture += 0.1;
+        break;
+      case "luxury lifestyle":
+        vector.luxury += 0.2;
+        vector.urban += 0.1;
+        break;
+      case "travel & adventure":
+        vector.adventure += 0.2;
+        vector.nature += 0.1;
+        break;
+      case "productivity":
+      case "educational":
+      case "lifestyle":
+        vector.culture += 0.18;
+        vector.urban += 0.18;
+        vector.luxury += 0.12;
+        vector.budget += 0.07;
+        break;
+    }
+  }
+
+  // ...existing code...
 
   // Normalize values to ensure they're between 0 and 1
   Object.keys(vector).forEach((key) => {
@@ -272,7 +310,6 @@ function calculateConfidence(themes: string[], hints: string[]): number {
 
 // Real Qloo API integration
 // See Qloo API docs: https://docs.qloo.com/
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
   // Try different potential endpoints for Qloo hackathon API
   const endpoints = [
@@ -356,7 +393,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Prepare Qloo request
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const qlooRequest: QlooRequest = {
       themes,
       hints,
@@ -365,20 +401,19 @@ export async function POST(request: NextRequest) {
       demographics: demographics || {},
     };
 
-    const qlooResponse: QlooResponse = (() => {
+    let qlooResponse: QlooResponse;
     
-      // For hackathon demo, use enhanced mock system (Qloo API endpoints unavailable)
-      console.log("Using enhanced mock taste vector system for demo");
-      const mockVector = generateMockTasteVector(themes, hints, contentType);
-      return {
-        tasteVector: mockVector,
-        recommendations: generateSmartRecommendations(mockVector, themes),
-        confidence: calculateConfidence(themes, hints),
-        culturalAffinities: generateCulturalAffinities(mockVector),
-        personalityTraits: generatePersonalityTraits(mockVector),
-        processingTime: "Enhanced AI analysis"
-      };
-    })();
+    // For hackathon demo, use enhanced mock system (Qloo API endpoints unavailable)
+    console.log("Using enhanced mock taste vector system for demo");
+    const mockVector = generateMockTasteVector(themes, hints, contentType);
+    qlooResponse = {
+      tasteVector: mockVector,
+      recommendations: generateSmartRecommendations(mockVector, themes),
+      confidence: calculateConfidence(themes, hints),
+      culturalAffinities: generateCulturalAffinities(mockVector),
+      personalityTraits: generatePersonalityTraits(mockVector),
+      processingTime: "Enhanced AI analysis"
+    };
 
     // Uncomment below to try real Qloo API when available
     /*
