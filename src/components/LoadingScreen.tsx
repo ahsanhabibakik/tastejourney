@@ -40,14 +40,14 @@ export default function LoadingScreen() {
       {/* Enhanced Loading Animation */}
       <div className="relative">
         {/* Outer rotating ring */}
-        <div className="absolute inset-0 w-20 h-20 border-4 border-muted rounded-full animate-spin">
+        <div className="absolute top-0 left-0 right-0 bottom-0 w-20 h-20 border-4 border-muted rounded-full animate-spin">
           <div className="absolute top-0 left-1/2 w-2 h-2 bg-primary rounded-full transform -translate-x-1/2 -translate-y-1" />
         </div>
         
         {/* Inner pulsing icon */}
         <div className="relative w-20 h-20 bg-gradient-to-br from-primary/10 to-primary/20 rounded-full flex items-center justify-center border-2 border-primary/30">
           <CurrentIcon className={`h-8 w-8 ${steps[currentStep]?.color || 'text-primary'} animate-pulse`} />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer rounded-full" />
+          <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer rounded-full" />
         </div>
         
         {/* Floating particles */}
@@ -78,7 +78,7 @@ export default function LoadingScreen() {
             className="h-full bg-gradient-to-r from-primary to-primary/80 rounded-full transition-all duration-700 ease-out relative"
             style={{ width: `${progress}%` }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
+            <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
           </div>
         </div>
       </div>

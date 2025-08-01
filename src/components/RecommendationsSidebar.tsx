@@ -105,7 +105,7 @@ const RecommendationsSidebar: React.FC<RecommendationsSidebarProps> = ({
     <>
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+        className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
         onClick={onClose}
       />
       
@@ -164,7 +164,7 @@ const RecommendationsSidebar: React.FC<RecommendationsSidebarProps> = ({
                     height={128}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   
                   {/* Quick Actions */}
                   <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">

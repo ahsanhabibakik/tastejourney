@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, Sparkles, MessageSquare, Wand2 } from "lucide-react";
+import { Send, Bot, User, Sparkles, MessageSquare, Wand2, Star, ChevronLeft, ChevronRight, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -45,6 +45,14 @@ interface Recommendation {
   engagement?: { potential: string };
   enrichment?: Record<string, unknown>;
   tags?: string[];
+  rating?: string;
+  description?: string;
+  suggestedCreators?: Array<{
+    name: string;
+    niche: string;
+    collaboration: string;
+    followers?: string;
+  }>;
   creatorDetails?: {
     totalActiveCreators: number;
     topCreators: Array<{
@@ -148,7 +156,6 @@ const ChatInterface: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
   const [selectedClimates, setSelectedClimates] = useState<string[]>([]);
-  const [currentSlide, setCurrentSlide] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [recommendations, setRecommendations] = useState<
     | {
@@ -161,6 +168,21 @@ const ChatInterface: React.FC = () => {
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollRecommendations = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 280; // Width of one card plus gap
+      const currentScroll = scrollContainerRef.current.scrollLeft;
+      const newScroll = direction === 'left' 
+        ? currentScroll - scrollAmount 
+        : currentScroll + scrollAmount;
+      
+      scrollContainerRef.current.scrollTo({
+        left: newScroll,
+        behavior: 'smooth'
+      });
+    }
   };
 
   useEffect(() => {
@@ -719,6 +741,7 @@ const ChatInterface: React.FC = () => {
                 {chatState === "generating" && "Generating recommendations..."}
                 {chatState === "recommendations" && "Recommendations ready!"}
               </p>
+              </div>
             </div>
             <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
               <div className="flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1 bg-primary/10 rounded-full">
@@ -728,7 +751,6 @@ const ChatInterface: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
 
         {/* Enhanced Chat Messages Area */}
         <div className="flex-1 overflow-y-auto scrollbar-thin bg-gradient-to-b from-background/50 to-muted/20">
@@ -771,6 +793,300 @@ const ChatInterface: React.FC = () => {
                       <p className="text-xs sm:text-sm lg:text-base leading-relaxed">
                         {message.text}
                       </p>
+
+                      {message.component === "url-form" &&
+                        chatState === "initial" && (
+                          <URLForm onSubmit={handleURLSubmit} />
+                        )}
+
+                      {message.component === "confirmation" &&
+                        chatState === "confirmation" &&
+                        websiteData && (
+                          <ConfirmationScreen
+                            data={websiteData}
+                            onConfirm={handleDataConfirmation}
+                          />
+                        )}
+
+                      {message.component === "questions" &&
+                        chatState === "questions" && (
+                          <div className="mt-6 w-full animate-slide-up">
+                            {/* Enhanced Progress Bar */}
+                            <div className="flex items-center gap-3 mb-6">
+                              <div className="flex-1 bg-muted/50 rounded-full h-3 overflow-hidden">
+                                <div 
+                                  className="bg-gradient-to-r from-primary to-primary/80 h-full rounded-full transition-all duration-500 ease-out relative"
+                                  style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
+                                >
+                                  <div className="absolute top-0 left-0 right-0 bottom-0 bg-white/20 animate-pulse" />
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full">
+                                <span className="text-sm font-semibold text-primary">
+                                  {currentQuestionIndex + 1}
+                                </span>
+                                <span className="text-xs text-primary/70">of</span>
+                                <span className="text-sm font-semibold text-primary">
+                                  {questions.length}
+                                </span>
+                              </div>
+                            </div>
+                            
+                            {/* Enhanced Current Question */}
+                            <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-6 mb-6 shadow-sm">
+                              <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                  <span className="text-2xl">
+                                    {questions[currentQuestionIndex].icon}
+                                  </span>
+                                </div>
+                                <div className="flex-1">
+                                  <h3 className="font-semibold text-lg text-foreground mb-1">
+                                    {questions[currentQuestionIndex].text}
+                                  </h3>
+                                  <p className="text-sm text-muted-foreground">
+                                    Choose the option that best describes your preference
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Enhanced Options */}
+                            <div className="grid gap-3">
+                              {questions[currentQuestionIndex].options.map(
+                                (option, index) => {
+                                  const isMultiSelect = questions[currentQuestionIndex].multiSelect;
+                                  const isSelected = isMultiSelect 
+                                    ? selectedClimates.includes(option)
+                                    : userAnswers[questions[currentQuestionIndex].id] === option;
+                                  
+                                  return (
+                                    <Button
+                                      key={index}
+                                      variant={isSelected ? "default" : "outline"}
+                                      className="w-full justify-start text-left"
+                                      onClick={() => handleQuestionAnswer(option)}
+                                    >
+                                      {isMultiSelect && isSelected && "✓ "}
+                                      {option}
+                                    </Button>
+                                  );
+                                }
+                              )}
+                              
+                              {/* Continue button for multi-select */}
+                              {questions[currentQuestionIndex].multiSelect && selectedClimates.length > 0 && (
+                                <div className="mt-4 pt-2 border-t">
+                                  <Button
+                                    onClick={handleClimateConfirm}
+                                    className="w-full"
+                                    variant="default"
+                                  >
+                                    Continue with {selectedClimates.length} preference{selectedClimates.length > 1 ? 's' : ''}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                      {message.component === "recommendations" &&
+                        chatState === "recommendations" && recommendations?.recommendations && (
+                        <div className="mt-3 sm:mt-4 xl:mt-6 w-full">
+                          {/* Enhanced Header for Desktop */}
+                          <div className="flex flex-col gap-1 sm:gap-2 xl:gap-3 mb-3 sm:mb-4 xl:mb-6">
+                            <h3 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                              Your Travel Recommendations
+                            </h3>
+                            <p className="text-[10px] sm:text-xs xl:text-sm text-muted-foreground">
+                              <span className="hidden xl:inline">Explore personalized destinations • </span>
+                              <span className="xl:hidden">Swipe to explore • </span>
+                              {recommendations.recommendations.length} destinations curated for content creators
+                            </p>
+                          </div>
+                          
+                          {/* Enhanced Destination Cards Grid for Desktop */}
+                          <div className="xl:hidden">
+                            {/* Mobile/Tablet Horizontal Scroll */}
+                            <div 
+                              ref={scrollContainerRef}
+                              className="overflow-x-auto pb-2 sm:pb-3 scrollbar-hide -mx-1"
+                              style={{scrollBehavior: 'smooth'}}
+                            >
+                              <div className="flex gap-2 sm:gap-3 w-max px-1">
+                                {recommendations.recommendations.map((rec: Recommendation, i: number) => (
+                                  <div
+                                    key={i}
+                                    className="group bg-card border border-border/50 rounded-lg overflow-hidden flex-shrink-0 w-56 sm:w-64 md:w-72 shadow-md hover:shadow-lg transition-all duration-200"
+                                  >
+                                {/* Compact Image */}
+                                <div className="relative overflow-hidden">
+                                  {rec.image && (
+                                    <Image 
+                                      src={rec.image} 
+                                      alt={rec.destination}
+                                      width={300}
+                                      height={120}
+                                      className="w-full h-24 sm:h-28 md:h-32 object-cover group-hover:scale-105 transition-transform duration-200" 
+                                    />
+                                  )}
+                                  <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                                  <div className="absolute top-1.5 right-1.5">
+                                    <span className="bg-white/90 text-primary text-[9px] sm:text-[10px] font-semibold px-1.5 py-0.5 rounded-full shadow-sm">
+                                      #{i + 1}
+                                    </span>
+                                  </div>
+                                </div>
+                                
+                                {/* Compact Content */}
+                                <div className="p-2 sm:p-2.5">
+                                  <div className="flex flex-col gap-1 sm:gap-1.5">
+                                    <div className="flex items-start justify-between gap-1">
+                                      <h4 className="font-bold text-xs sm:text-sm text-foreground truncate">{rec.destination}</h4>
+                                      <div className="flex items-center gap-0.5 flex-shrink-0">
+                                        <Star className="h-2.5 w-2.5 sm:h-3 sm:w-3 fill-yellow-400 text-yellow-400" />
+                                        <span className="text-[9px] sm:text-[10px] font-semibold text-muted-foreground">{rec.rating}</span>
+                                      </div>
+                                    </div>
+                                    <p className="text-[9px] sm:text-[10px] text-muted-foreground line-clamp-2 leading-relaxed">{rec.description}</p>
+                                  </div>
+                                  
+                                  {/* Enhanced Creator Card */}
+                                  {rec.suggestedCreators && rec.suggestedCreators.length > 0 && (
+                                    <div className="mt-2 pt-2 border-t border-border/50">
+                                      <div className="space-y-1">
+                                        <p className="text-[8px] sm:text-[9px] font-medium text-muted-foreground uppercase tracking-wide">Similar Creator</p>
+                                        <div className="flex items-center gap-1.5">
+                                          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20 flex items-center justify-center">
+                                            <User className="h-2 w-2 sm:h-2.5 sm:w-2.5 text-primary" />
+                                          </div>
+                                          <div className="flex-1 min-w-0">
+                                            <div className="font-medium text-[9px] sm:text-[10px] text-foreground truncate">{rec.suggestedCreators[0].name}</div>
+                                            <div className="text-[8px] sm:text-[9px] text-muted-foreground truncate">{rec.suggestedCreators[0].niche}</div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )}
+                                  
+                                  {/* Enhanced Tags */}
+                                  {rec.tags && rec.tags.length > 0 && (
+                                    <div className="flex flex-wrap gap-1 mt-2">
+                                      {rec.tags.slice(0, 2).map((tag: string) => (
+                                        <span key={tag} className="bg-secondary/60 text-secondary-foreground text-[8px] sm:text-[9px] px-1.5 py-0.5 rounded-full font-medium">
+                                          #{tag}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                                ))}
+                              </div>
+                              
+                              {/* Navigation buttons for Mobile/Tablet */}
+                              <div className="flex justify-center gap-3 mt-3 sm:mt-4">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => scrollRecommendations('left')}
+                                  className="h-7 w-7 sm:h-8 sm:w-8 p-0 rounded-full shadow-md"
+                                >
+                                  <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4" />
+                                </Button>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => scrollRecommendations('right')}
+                                  className="h-7 w-7 sm:h-8 sm:w-8 p-0 rounded-full shadow-md"
+                                >
+                                  <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4" />
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Enhanced Desktop Grid */}
+                          <div className="hidden xl:block">
+                            <div className="grid grid-cols-2 gap-6">
+                              {recommendations.recommendations.map((rec: Recommendation, i: number) => (
+                                <div
+                                  key={i}
+                                  className="group bg-card border border-border/50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                                >
+                                  {/* Enhanced Image for Desktop */}
+                                  <div className="relative overflow-hidden">
+                                    {rec.image && (
+                                      <Image 
+                                        src={rec.image} 
+                                        alt={rec.destination}
+                                        width={400}
+                                        height={200}
+                                        className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500" 
+                                      />
+                                    )}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                                    <div className="absolute top-4 right-4">
+                                      <span className="bg-white/95 text-primary text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
+                                        #{i + 1}
+                                      </span>
+                                    </div>
+                                    <div className="absolute bottom-4 left-4 right-4">
+                                      <h4 className="font-bold text-2xl text-white mb-2 drop-shadow-lg">{rec.destination}</h4>
+                                      <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-1 bg-white/90 px-2 py-1 rounded-full">
+                                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                                          <span className="text-sm font-semibold text-gray-800">{rec.rating}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                                  {/* Enhanced Content for Desktop */}
+                                  <div className="p-6">
+                                    <p className="text-sm text-muted-foreground leading-relaxed mb-4">{rec.description}</p>
+                                    
+                                    {/* Enhanced Creator Cards for Desktop */}
+                                    {rec.suggestedCreators && rec.suggestedCreators.length > 0 && (
+                                      <div className="mb-4">
+                                        <div className="flex items-center gap-2 mb-3">
+                                          <Users className="h-4 w-4 text-primary" />
+                                          <span className="text-sm font-semibold text-foreground">Similar Creators</span>
+                                        </div>
+                                        <div className="grid gap-3">
+                                          {rec.suggestedCreators.slice(0, 2).map((creator, idx) => (
+                                            <div key={idx} className="flex items-center gap-3 p-3 bg-secondary/30 rounded-lg">
+                                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 border-2 border-primary/20 flex items-center justify-center">
+                                                <User className="h-5 w-5 text-primary" />
+                                              </div>
+                                              <div className="flex-1">
+                                                <div className="font-semibold text-foreground">{creator.name}</div>
+                                                <div className="text-xs text-muted-foreground">{creator.niche}</div>
+                                                <div className="text-primary font-medium mt-1">{creator.collaboration}</div>
+                                              </div>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    )}
+                                    
+                                    {/* Enhanced Tags for Desktop */}
+                                    {rec.tags && rec.tags.length > 0 && (
+                                      <div className="flex flex-wrap gap-2">
+                                        {rec.tags.slice(0, 4).map((tag: string) => (
+                                          <span key={tag} className="bg-secondary/80 text-secondary-foreground text-xs px-3 py-1 rounded-full font-medium">
+                                            #{tag}
+                                          </span>
+                                        ))}
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                     
                     {/* Timestamp */}
@@ -782,370 +1098,12 @@ const ChatInterface: React.FC = () => {
                       </span>
                     </div>
 
-                  {/* Message bubble with proper styling */}
-                  <div className={`relative max-w-[85%] sm:max-w-[80%] lg:max-w-[75%] xl:max-w-[70%] px-3 py-2 sm:px-4 sm:py-3 xl:px-5 xl:py-4 rounded-2xl xl:rounded-3xl transition-all duration-200 ${
-                    message.isBot 
-                      ? "bg-muted text-muted-foreground border border-border/50 shadow-sm hover:shadow-md xl:shadow-lg"
-                      : "bg-gradient-to-br from-primary to-primary/90 text-primary-foreground shadow-md hover:shadow-lg xl:shadow-xl"
-                  }`}>
-                    {message.isBot && (
-                      <div className="flex items-center gap-1.5 sm:gap-2 xl:gap-3 mb-1.5 sm:mb-2 xl:mb-3 opacity-70">
-                        <Wand2 className="h-2.5 w-2.5 sm:h-3 sm:w-3 xl:h-4 xl:w-4" />
-                        <span className="text-[10px] sm:text-xs xl:text-sm font-medium">AI Assistant</span>
-                      </div>
-                    )}
-                    <p className="text-xs sm:text-sm xl:text-base leading-relaxed xl:leading-relaxed">
-                      {message.text}
-                    </p>
-                  </div>
-                  
-                  {/* Enhanced Timestamp for Desktop */}
-                  <div className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-1 xl:mt-2 ${
-                    message.isBot ? "text-left" : "text-right"
-                  }`}>
-                    <span className="text-[10px] sm:text-xs xl:text-sm text-muted-foreground">
-                      {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </span>
                   </div>
 
                   {/* User Avatar - Only show for user messages on the right */}
                   {!message.isBot && (
                     <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 lg:w-9 lg:h-9 rounded-full bg-gradient-to-br from-primary/80 to-primary border-2 border-primary/30 flex items-center justify-center shadow-md ml-2">
                       <User className="h-3 w-3 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-white" />
-                    </div>
-                  )}
-                </div>
-
-                {message.component === "url-form" &&
-                  chatState === "initial" && (
-                    <URLForm onSubmit={handleURLSubmit} />
-                  )}
-
-                {message.component === "confirmation" &&
-                  chatState === "confirmation" &&
-                  websiteData && (
-                    <ConfirmationScreen
-                      data={websiteData}
-                      onConfirm={handleDataConfirmation}
-                    />
-                  )}
-
-                {message.component === "questions" &&
-                  chatState === "questions" && (
-                    <div className="mt-6 w-full animate-slide-up">
-                      {/* Enhanced Progress Bar */}
-                      <div className="flex items-center gap-3 mb-6">
-                        <div className="flex-1 bg-muted/50 rounded-full h-3 overflow-hidden">
-                          <div 
-                            className="bg-gradient-to-r from-primary to-primary/80 h-full rounded-full transition-all duration-500 ease-out relative"
-                            style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
-                          >
-                            <div className="absolute top-0 left-0 right-0 bottom-0 bg-white/20 animate-pulse" />
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full">
-                          <span className="text-sm font-semibold text-primary">
-                            {currentQuestionIndex + 1}
-                          </span>
-                          <span className="text-xs text-primary/70">of</span>
-                          <span className="text-sm font-semibold text-primary">
-                            {questions.length}
-                          </span>
-                        </div>
-                      </div>
-                      
-                      {/* Enhanced Current Question */}
-                      <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-6 mb-6 shadow-sm">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                            <span className="text-2xl">
-                              {questions[currentQuestionIndex].icon}
-                            </span>
-                          </div>
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-lg text-foreground mb-1">
-                              {questions[currentQuestionIndex].text}
-                            </h3>
-                            <p className="text-sm text-muted-foreground">
-                              Choose the option that best describes your preference
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Enhanced Options */}
-                      <div className="grid gap-3">
-                        {questions[currentQuestionIndex].options.map(
-                          (option, index) => {
-                            const isMultiSelect = questions[currentQuestionIndex].multiSelect;
-                            const isSelected = isMultiSelect 
-                              ? selectedClimates.includes(option)
-                              : userAnswers[questions[currentQuestionIndex].id] === option;
-                            
-                            return (
-                              <Button
-                                key={index}
-                                variant={isSelected ? "default" : "outline"}
-                                className="w-full justify-start text-left"
-                                onClick={() => handleQuestionAnswer(option)}
-                              >
-                                {isMultiSelect && isSelected && "✓ "}
-                                {option}
-                              </Button>
-                            );
-                          }
-                        )}
-                        
-                        {/* Continue button for multi-select */}
-                        {questions[currentQuestionIndex].multiSelect && selectedClimates.length > 0 && (
-                          <div className="mt-4 pt-2 border-t">
-                            <Button
-                              onClick={handleClimateConfirm}
-                              className="w-full"
-                              variant="default"
-                            >
-                              Continue with {selectedClimates.length} preference{selectedClimates.length > 1 ? 's' : ''}
-                            </Button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-
-                {message.component === "recommendations" &&
-                  chatState === "recommendations" && recommendations?.recommendations && (
-                    <div className="mt-3 sm:mt-4 xl:mt-6 w-full">
-                      {/* Enhanced Header for Desktop */}
-                      <div className="flex flex-col gap-1 sm:gap-2 xl:gap-3 mb-3 sm:mb-4 xl:mb-6">
-                        <h3 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                          Your Travel Recommendations
-                        </h3>
-                        <p className="text-[10px] sm:text-xs xl:text-sm text-muted-foreground">
-                          <span className="hidden xl:inline">Explore personalized destinations • </span>
-                          <span className="xl:hidden">Swipe to explore • </span>
-                          {recommendations.recommendations.length} destinations curated for content creators
-                        </p>
-                      </div>
-                      
-                      {/* Enhanced Destination Cards Grid for Desktop */}
-                      <div className="xl:hidden">
-                        {/* Mobile/Tablet Horizontal Scroll */}
-                        <div 
-                          ref={scrollContainerRef}
-                          className="overflow-x-auto pb-2 sm:pb-3 scrollbar-hide -mx-1"
-                          style={{scrollBehavior: 'smooth'}}
-                        >
-                          <div className="flex gap-2 sm:gap-3 w-max px-1">
-                            {recommendations.recommendations.map((rec: Recommendation, i: number) => (
-                              <div
-                                key={i}
-                                className="group bg-card border border-border/50 rounded-lg overflow-hidden flex-shrink-0 w-56 sm:w-64 md:w-72 shadow-md hover:shadow-lg transition-all duration-200"
-                              >
-                            {/* Compact Image */}
-                            <div className="relative overflow-hidden">
-                              {rec.image && (
-                                <Image 
-                                  src={rec.image} 
-                                  alt={rec.destination}
-                                  width={300}
-                                  height={120}
-                                  className="w-full h-24 sm:h-28 md:h-32 object-cover group-hover:scale-105 transition-transform duration-200" 
-                                />
-                              )}
-                              <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                              <div className="absolute top-1.5 right-1.5">
-                                <span className="bg-white/90 text-primary text-[9px] sm:text-[10px] font-semibold px-1.5 py-0.5 rounded-full shadow-sm">
-                                  #{i + 1}
-                                </span>
-                              </div>
-                            </div>
-                            
-                            {/* Compact Content */}
-                            <div className="p-2 sm:p-2.5">
-                              <h4 className="font-bold text-xs sm:text-sm mb-1 group-hover:text-primary transition-colors line-clamp-1">
-                                {rec.destination}
-                              </h4>
-                              
-                              {rec.highlights && rec.highlights.length > 0 && (
-                                <p className="text-[9px] sm:text-[10px] text-muted-foreground mb-2 line-clamp-1">
-                                  {rec.highlights.slice(0, 2).join(' • ')}
-                                </p>
-                              )}
-                              
-                              {/* Essential Info Only */}
-                              <div className="space-y-1 text-[9px] sm:text-[10px] mb-2">
-                                {rec.budget?.range && (
-                                  <div className="flex items-center gap-1">
-                                    <span>💰</span>
-                                    <span className="truncate">{rec.budget.range}</span>
-                                  </div>
-                                )}
-                                {rec.engagement?.potential && (
-                                  <div className="flex items-center gap-1">
-                                    <span>📈</span>
-                                    <span className="truncate">{rec.engagement.potential}</span>
-                                  </div>
-                                )}
-                              </div>
-
-                              {/* Compact Creator Info */}
-                              {rec.creatorDetails && (
-                                <div className="p-1.5 sm:p-2 bg-gradient-to-br from-primary/5 to-primary/10 rounded border border-primary/20">
-                                  <div className="flex items-center justify-between mb-1">
-                                    <span className="text-[9px] sm:text-[10px] font-semibold text-primary">🎯 Creator Hub</span>
-                                    <span className="text-[8px] sm:text-[9px] text-muted-foreground">{rec.creatorDetails.totalActiveCreators}+</span>
-                                  </div>
-                                  
-                                  {/* Show only 1 top creator on mobile */}
-                                  {rec.creatorDetails.topCreators.slice(0, 1).map((creator, idx) => (
-                                    <div key={idx} className="bg-background/60 p-1 rounded text-[8px] sm:text-[9px]">
-                                      <div className="font-medium truncate">{creator.name}</div>
-                                      <div className="text-primary">{creator.collaboration}</div>
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
-                              
-                              {/* Compact Tags */}
-                              {rec.tags && rec.tags.length > 0 && (
-                                <div className="flex flex-wrap gap-1 mt-1.5">
-                                  {rec.tags.slice(0, 2).map((tag: string) => (
-                                    <span key={tag} className="bg-secondary text-secondary-foreground text-[8px] px-1 py-0.5 rounded">
-                                      #{tag}
-                                    </span>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      {/* Mobile Progress Indicator */}
-                      <div className="flex justify-center items-center gap-2 mt-2 sm:mt-3">
-                        <div className="flex items-center gap-1">
-                          {recommendations.recommendations.map((_, idx) => (
-                            <button
-                              key={idx}
-                              onClick={() => {
-                                setCurrentSlide(idx);
-                                if (scrollContainerRef.current) {
-                                  const cardWidth = window.innerWidth < 640 ? 224 : window.innerWidth < 768 ? 256 : 288; // w-56, w-64, w-72
-                                  const gap = 8; // gap-2
-                                  const scrollDistance = (cardWidth + gap) * idx;
-                                  scrollContainerRef.current.scrollTo({
-                                    left: scrollDistance,
-                                    behavior: 'smooth'
-                                  });
-                                }
-                              }}
-                              className={`transition-all duration-200 rounded-full ${
-                                idx === currentSlide 
-                                  ? 'w-4 sm:w-5 h-1 sm:h-1.5 bg-primary' 
-                                  : 'w-1 sm:w-1.5 h-1 sm:h-1.5 bg-muted-foreground/30'
-                              }`}
-                              aria-label={`Go to recommendation ${idx + 1}`}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      </div>
-
-                      {/* Desktop Grid Layout - Only visible on xl screens */}
-                      <div className="hidden xl:block">
-                        <div className="grid grid-cols-2 2xl:grid-cols-3 gap-6">
-                          {recommendations.recommendations.map((rec: Recommendation, i: number) => (
-                            <div
-                              key={i}
-                              className="group bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
-                            >
-                              {/* Enhanced Image for Desktop */}
-                              <div className="relative overflow-hidden h-48">
-                                {rec.image && (
-                                  <Image 
-                                    src={rec.image} 
-                                    alt={rec.destination}
-                                    width={400}
-                                    height={200}
-                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-                                  />
-                                )}
-                                <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                                <div className="absolute top-4 right-4">
-                                  <span className="bg-white/90 backdrop-blur-sm text-primary text-sm font-bold px-3 py-1 rounded-full shadow-lg">
-                                    #{i + 1}
-                                  </span>
-                                </div>
-                                <div className="absolute bottom-4 left-4 right-4">
-                                  <h4 className="font-bold text-xl text-white mb-2 drop-shadow-lg">
-                                    {rec.destination}
-                                  </h4>
-                                </div>
-                              </div>
-                              
-                              {/* Enhanced Content for Desktop */}
-                              <div className="p-6 space-y-4">
-                                {rec.highlights && rec.highlights.length > 0 && (
-                                  <p className="text-sm text-muted-foreground leading-relaxed">
-                                    {rec.highlights.slice(0, 3).join(' • ')}
-                                  </p>
-                                )}
-                                
-                                {/* Enhanced Info Grid */}
-                                <div className="grid grid-cols-2 gap-4 text-sm">
-                                  {rec.budget?.range && (
-                                    <div className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg">
-                                      <span className="text-lg">💰</span>
-                                      <span className="font-medium">{rec.budget.range}</span>
-                                    </div>
-                                  )}
-                                  {rec.engagement?.potential && (
-                                    <div className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg">
-                                      <span className="text-lg">📈</span>
-                                      <span className="font-medium">{rec.engagement.potential}</span>
-                                    </div>
-                                  )}
-                                </div>
-
-                                {/* Enhanced Creator Info for Desktop */}
-                                {rec.creatorDetails && (
-                                  <div className="p-4 bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg border border-primary/20">
-                                    <div className="flex items-center justify-between mb-3">
-                                      <span className="text-sm font-bold text-primary flex items-center gap-2">
-                                        🎯 Creator Community
-                                      </span>
-                                      <span className="text-sm font-semibold text-muted-foreground">{rec.creatorDetails.totalActiveCreators}+ Active</span>
-                                    </div>
-                                    
-                                    <div className="space-y-2">
-                                      {rec.creatorDetails.topCreators.slice(0, 2).map((creator, idx) => (
-                                        <div key={idx} className="bg-background/60 p-3 rounded-lg text-sm">
-                                          <div className="font-semibold text-foreground">{creator.name}</div>
-                                          <div className="text-xs text-muted-foreground">{creator.niche}</div>
-                                          <div className="text-primary font-medium mt-1">{creator.collaboration}</div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                )}
-                                
-                                {/* Enhanced Tags for Desktop */}
-                                {rec.tags && rec.tags.length > 0 && (
-                                  <div className="flex flex-wrap gap-2">
-                                    {rec.tags.slice(0, 4).map((tag: string) => (
-                                      <span key={tag} className="bg-secondary/80 text-secondary-foreground text-xs px-3 py-1 rounded-full font-medium">
-                                        #{tag}
-                                      </span>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
                     </div>
                   )}
                 </div>
@@ -1188,7 +1146,7 @@ const ChatInterface: React.FC = () => {
                     <div className="flex gap-1.5 sm:gap-2 xl:gap-3">
                       <Input
                         value={email}
-                        onChange={e => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="your@email.com"
                         className="flex-1 h-7 sm:h-8 xl:h-10 text-[10px] sm:text-xs xl:text-sm"
                         type="email"
