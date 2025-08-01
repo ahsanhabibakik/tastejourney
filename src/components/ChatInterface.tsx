@@ -606,39 +606,42 @@ const ChatInterface: React.FC = () => {
 
   return (
     <div className="flex h-[calc(100vh-60px)] sm:h-[calc(100vh-73px)] bg-gradient-to-br from-background via-background/95 to-muted/30">
-      {/* Desktop Sidebar - Only visible on large screens */}
-      <div className="hidden xl:flex flex-col w-80 bg-card/50 backdrop-blur-md border-r border-border/50">
+      {/* Desktop Sidebar - Visible on large screens */}
+      <div className="hidden lg:flex flex-col w-72 xl:w-80 bg-card/60 backdrop-blur-lg border-r border-border/40 shadow-lg">
         {/* Sidebar Header */}
-        <div className="p-6 border-b border-border/30">
+        <div className="p-4 lg:p-5 xl:p-6 border-b border-border/30 bg-gradient-to-r from-primary/5 to-primary/10">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <Bot className="h-8 w-8 text-primary" />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-background animate-pulse" />
+              <Bot className="h-7 w-7 xl:h-8 xl:w-8 text-primary drop-shadow-sm" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-card animate-pulse shadow-sm" />
             </div>
             <div>
-              <h2 className="font-bold text-lg text-foreground">Travel AI</h2>
-              <p className="text-sm text-muted-foreground">Your Content Creator Companion</p>
+              <h2 className="font-bold text-base xl:text-lg text-foreground">Travel AI</h2>
+              <p className="text-xs xl:text-sm text-muted-foreground">Content Creator Companion</p>
             </div>
           </div>
         </div>
 
         {/* Progress & Stats */}
-        <div className="p-6 space-y-4">
-          <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg p-4 border border-primary/20">
-            <h3 className="font-semibold text-sm mb-3 text-primary">Session Progress</h3>
+        <div className="p-4 lg:p-5 xl:p-6 space-y-4 overflow-y-auto flex-1">
+          <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl p-4 border border-primary/20 shadow-sm">
+            <h3 className="font-semibold text-sm mb-3 text-primary flex items-center gap-2">
+              <Sparkles className="h-4 w-4" />
+              Session Progress
+            </h3>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
                 <span className="text-xs text-muted-foreground">Messages</span>
-                <span className="text-sm font-medium">{messages.length}</span>
+                <span className="text-sm font-bold bg-primary/10 text-primary px-2 py-1 rounded-full">{messages.length}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-xs text-muted-foreground">Current Step</span>
-                <span className="text-sm font-medium capitalize">{chatState}</span>
+                <span className="text-sm font-medium capitalize bg-muted/50 px-2 py-1 rounded-md">{chatState}</span>
               </div>
               {websiteData && (
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-muted-foreground">Content Type</span>
-                  <span className="text-sm font-medium">{websiteData.contentType}</span>
+                  <span className="text-sm font-medium bg-accent/50 px-2 py-1 rounded-md text-accent-foreground">{websiteData.contentType}</span>
                 </div>
               )}
             </div>
@@ -646,17 +649,25 @@ const ChatInterface: React.FC = () => {
 
           {/* Website Analysis Summary */}
           {websiteData && (
-            <div className="bg-muted/30 rounded-lg p-4 border border-border/30">
-              <h3 className="font-semibold text-sm mb-3">Website Analysis</h3>
-              <div className="space-y-2">
+            <div className="bg-muted/30 rounded-xl p-4 border border-border/30 shadow-sm">
+              <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
+                <MessageSquare className="h-4 w-4" />
+                Website Analysis
+              </h3>
+              <div className="space-y-3">
                 <div className="text-xs">
-                  <span className="text-muted-foreground">Themes:</span>
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {websiteData.themes.slice(0, 3).map((theme, i) => (
-                      <span key={i} className="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded-full">
+                  <span className="text-muted-foreground block mb-2">Detected Themes:</span>
+                  <div className="flex flex-wrap gap-1">
+                    {websiteData.themes.slice(0, 4).map((theme, i) => (
+                      <span key={i} className="bg-primary/10 text-primary text-[10px] px-2 py-1 rounded-full font-medium">
                         {theme}
                       </span>
                     ))}
+                    {websiteData.themes.length > 4 && (
+                      <span className="bg-muted text-muted-foreground text-[10px] px-2 py-1 rounded-full">
+                        +{websiteData.themes.length - 4} more
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -664,14 +675,17 @@ const ChatInterface: React.FC = () => {
           )}
 
           {/* Quick Actions */}
-          <div className="space-y-2">
-            <h3 className="font-semibold text-sm text-foreground">Quick Actions</h3>
+          <div className="space-y-3">
+            <h3 className="font-semibold text-sm text-foreground flex items-center gap-2">
+              <Wand2 className="h-4 w-4" />
+              Quick Actions
+            </h3>
             <div className="grid gap-2">
-              <Button variant="outline" size="sm" className="justify-start h-8 text-xs">
+              <Button variant="outline" size="sm" className="justify-start h-9 text-xs hover:bg-primary/10 hover:text-primary hover:border-primary/30">
                 <Sparkles className="h-3 w-3 mr-2" />
                 New Analysis
               </Button>
-              <Button variant="outline" size="sm" className="justify-start h-8 text-xs">
+              <Button variant="outline" size="sm" className="justify-start h-9 text-xs hover:bg-primary/10 hover:text-primary hover:border-primary/30">
                 <MessageSquare className="h-3 w-3 mr-2" />
                 Export Chat
               </Button>
@@ -684,19 +698,19 @@ const ChatInterface: React.FC = () => {
       <div className="flex flex-col flex-1">
         {/* Enhanced Chat Header */}
         <div className="border-b border-border/50 bg-background/80 backdrop-blur-md">
-          <div className="max-w-none xl:max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-2.5 sm:py-3">
+          <div className="max-w-none lg:max-w-5xl xl:max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-2.5 sm:py-3">
             <div className="flex items-center gap-2 sm:gap-3 xl:gap-4">
-              {/* Hide bot icon on xl screens since it's in sidebar */}
-              <div className="relative flex-shrink-0 xl:hidden">
+              {/* Show bot icon on smaller screens when sidebar is hidden */}
+              <div className="relative flex-shrink-0 lg:hidden">
                 <Bot className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
                 <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full border-2 border-background animate-pulse" />
               </div>
               <div className="flex-1 min-w-0">
-                <h2 className="font-semibold text-sm sm:text-base xl:text-lg text-foreground flex items-center gap-1.5 sm:gap-2 truncate">
+                <h2 className="font-semibold text-sm sm:text-base lg:text-lg xl:text-xl text-foreground flex items-center gap-1.5 sm:gap-2 truncate">
                   <span className="truncate">AI Travel Companion</span>
-                  <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 xl:h-5 xl:w-5 text-primary flex-shrink-0" />
+                  <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 lg:h-5 lg:w-5 xl:h-6 xl:w-6 text-primary flex-shrink-0" />
                 </h2>
-                <p className="text-xs sm:text-sm xl:text-base text-muted-foreground truncate">
+                <p className="text-xs sm:text-sm lg:text-base xl:text-lg text-muted-foreground truncate">
                 {chatState === "initial" && "Ready to analyze your website"}
                 {chatState === "analyzing" && "Analyzing your content..."}
                 {chatState === "confirmation" && "Reviewing extracted data"}
@@ -717,60 +731,90 @@ const ChatInterface: React.FC = () => {
       </div>
 
         {/* Enhanced Chat Messages Area */}
-        <div className="flex-1 overflow-y-auto scrollbar-thin">
-          <div className="max-w-none xl:max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-6 xl:py-8">
-            <div className="space-y-4 sm:space-y-6 xl:space-y-8">
+        <div className="flex-1 overflow-y-auto scrollbar-thin bg-gradient-to-b from-background/50 to-muted/20">
+          <div className="max-w-none lg:max-w-4xl xl:max-w-5xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-6 xl:py-8">
+            <div className="space-y-3 sm:space-y-4 lg:space-y-6">
               {messages.map((message, index) => (
                 <div
                   key={message.id}
-                  className={`flex items-start gap-2 sm:gap-3 xl:gap-4 animate-fade-in ${
-                    message.isBot ? "justify-start" : "justify-end flex-row-reverse"
+                  className={`flex items-end gap-2 sm:gap-3 animate-fade-in ${
+                    message.isBot ? "justify-start" : "justify-end"
                   }`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  {/* Enhanced Avatar for Desktop */}
-                  <div className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 xl:w-10 xl:h-10 rounded-full flex items-center justify-center mt-1 xl:mt-2 ${
-                    message.isBot 
-                      ? "bg-primary/10 border-2 border-primary/20 xl:shadow-lg xl:shadow-primary/10" 
-                      : "bg-gradient-to-br from-primary/80 to-primary border-2 border-primary/30 xl:shadow-lg xl:shadow-primary/20"
-                  }`}>
-                    {message.isBot ? (
-                      <Bot className="h-3 w-3 sm:h-4 sm:w-4 xl:h-5 xl:w-5 text-primary" />
-                    ) : (
-                      <User className="h-3 w-3 sm:h-4 sm:w-4 xl:h-5 xl:w-5 text-white" />
-                    )}
-                  </div>
+                  {/* Bot Avatar - Only show for bot messages on the left */}
+                  {message.isBot && (
+                    <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 lg:w-9 lg:h-9 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center shadow-md">
+                      <Bot className="h-3 w-3 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-primary" />
+                    </div>
+                  )}
 
-                  {/* Enhanced Message Content for Desktop */}
-                  <div className={`group relative w-full max-w-[80%] xs:max-w-[85%] sm:max-w-[75%] md:max-w-[70%] lg:max-w-[65%] xl:max-w-[55%]`}>
+                  {/* Message Bubble */}
+                  <div className={`group relative max-w-[85%] sm:max-w-[80%] md:max-w-[75%] lg:max-w-[70%] xl:max-w-[65%] ${
+                    message.isBot ? "order-2" : "order-1"
+                  }`}>
                     <div
                       className={`
-                        px-3 py-2.5 sm:px-4 sm:py-3 xl:px-6 xl:py-4 rounded-2xl xl:rounded-3xl shadow-sm transition-all duration-200 hover:shadow-md xl:hover:shadow-lg
+                        px-3 py-2 sm:px-4 sm:py-3 lg:px-5 lg:py-4 shadow-md transition-all duration-200 hover:shadow-lg
                         ${message.isBot
-                          ? "bg-card border border-border/50 hover:border-border xl:bg-card/80 xl:backdrop-blur-sm"
-                          : "bg-gradient-to-br from-primary to-primary/90 text-primary-foreground shadow-md hover:shadow-lg xl:shadow-xl"
+                          ? "bg-card border border-border/50 rounded-2xl rounded-bl-md text-foreground"
+                          : "bg-gradient-to-br from-primary to-primary/90 rounded-2xl rounded-br-md text-primary-foreground shadow-primary/20"
                         }
                       `}
                     >
                       {message.isBot && (
-                        <div className="flex items-center gap-1.5 sm:gap-2 xl:gap-3 mb-1.5 sm:mb-2 xl:mb-3 opacity-70">
-                          <Wand2 className="h-2.5 w-2.5 sm:h-3 sm:w-3 xl:h-4 xl:w-4" />
-                          <span className="text-[10px] sm:text-xs xl:text-sm font-medium">AI Assistant</span>
+                        <div className="flex items-center gap-2 mb-2 opacity-70">
+                          <Wand2 className="h-3 w-3 sm:h-4 sm:w-4" />
+                          <span className="text-[10px] sm:text-xs font-medium">AI Assistant</span>
                         </div>
                       )}
-                      <p className="text-xs sm:text-sm xl:text-base leading-relaxed xl:leading-relaxed">
+                      <p className="text-xs sm:text-sm lg:text-base leading-relaxed">
                         {message.text}
                       </p>
                     </div>
                     
-                    {/* Enhanced Timestamp for Desktop */}
-                    <div className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-1 xl:mt-2 ${
+                    {/* Timestamp */}
+                    <div className={`mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${
                       message.isBot ? "text-left" : "text-right"
                     }`}>
-                      <span className="text-[10px] sm:text-xs xl:text-sm text-muted-foreground">
+                      <span className="text-[10px] sm:text-xs text-muted-foreground">
+                        {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </div>
+
+                  {/* Message bubble with proper styling */}
+                  <div className={`relative max-w-[85%] sm:max-w-[80%] lg:max-w-[75%] xl:max-w-[70%] px-3 py-2 sm:px-4 sm:py-3 xl:px-5 xl:py-4 rounded-2xl xl:rounded-3xl transition-all duration-200 ${
+                    message.isBot 
+                      ? "bg-muted text-muted-foreground border border-border/50 shadow-sm hover:shadow-md xl:shadow-lg"
+                      : "bg-gradient-to-br from-primary to-primary/90 text-primary-foreground shadow-md hover:shadow-lg xl:shadow-xl"
+                  }`}>
+                    {message.isBot && (
+                      <div className="flex items-center gap-1.5 sm:gap-2 xl:gap-3 mb-1.5 sm:mb-2 xl:mb-3 opacity-70">
+                        <Wand2 className="h-2.5 w-2.5 sm:h-3 sm:w-3 xl:h-4 xl:w-4" />
+                        <span className="text-[10px] sm:text-xs xl:text-sm font-medium">AI Assistant</span>
+                      </div>
+                    )}
+                    <p className="text-xs sm:text-sm xl:text-base leading-relaxed xl:leading-relaxed">
+                      {message.text}
+                    </p>
+                  </div>
+                  
+                  {/* Enhanced Timestamp for Desktop */}
+                  <div className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-1 xl:mt-2 ${
+                    message.isBot ? "text-left" : "text-right"
+                  }`}>
+                    <span className="text-[10px] sm:text-xs xl:text-sm text-muted-foreground">
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
+
+                  {/* User Avatar - Only show for user messages on the right */}
+                  {!message.isBot && (
+                    <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 lg:w-9 lg:h-9 rounded-full bg-gradient-to-br from-primary/80 to-primary border-2 border-primary/30 flex items-center justify-center shadow-md ml-2">
+                      <User className="h-3 w-3 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-white" />
+                    </div>
+                  )}
+                </div>
 
                 {message.component === "url-form" &&
                   chatState === "initial" && (
@@ -796,7 +840,7 @@ const ChatInterface: React.FC = () => {
                             className="bg-gradient-to-r from-primary to-primary/80 h-full rounded-full transition-all duration-500 ease-out relative"
                             style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
                           >
-                            <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                            <div className="absolute top-0 left-0 right-0 bottom-0 bg-white/20 animate-pulse" />
                           </div>
                         </div>
                         <div className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full">
@@ -909,7 +953,7 @@ const ChatInterface: React.FC = () => {
                                   className="w-full h-24 sm:h-28 md:h-32 object-cover group-hover:scale-105 transition-transform duration-200" 
                                 />
                               )}
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                              <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                               <div className="absolute top-1.5 right-1.5">
                                 <span className="bg-white/90 text-primary text-[9px] sm:text-[10px] font-semibold px-1.5 py-0.5 rounded-full shadow-sm">
                                   #{i + 1}
@@ -1028,7 +1072,7 @@ const ChatInterface: React.FC = () => {
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                                   />
                                 )}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                                <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                                 <div className="absolute top-4 right-4">
                                   <span className="bg-white/90 backdrop-blur-sm text-primary text-sm font-bold px-3 py-1 rounded-full shadow-lg">
                                     #{i + 1}
@@ -1105,27 +1149,26 @@ const ChatInterface: React.FC = () => {
                     </div>
                   )}
                 </div>
-            </div>
-          ))}
+              ))}
 
-            {isTyping && (
-              <div className="flex items-end gap-3 justify-start animate-fade-in">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
-                  <Bot className="h-4 w-4 text-primary" />
-                </div>
-                <div className="bg-card border border-border/50 px-4 py-3 rounded-2xl shadow-sm max-w-[200px]">
-                  <div className="flex items-center gap-2 mb-2 opacity-70">
-                    <Wand2 className="h-3 w-3" />
-                    <span className="text-xs font-medium">AI Assistant</span>
+              {isTyping && (
+                <div className="flex items-end gap-3 justify-start animate-fade-in">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
+                    <Bot className="h-4 w-4 text-primary" />
                   </div>
-                  <TypingIndicator />
+                  <div className="bg-card border border-border/50 px-4 py-3 rounded-2xl shadow-sm max-w-[200px]">
+                    <div className="flex items-center gap-2 mb-2 opacity-70">
+                      <Wand2 className="h-3 w-3" />
+                      <span className="text-xs font-medium">AI Assistant</span>
+                    </div>
+                    <TypingIndicator />
+                  </div>
                 </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
+              )}
+              <div ref={messagesEndRef} />
+            </div>
           </div>
         </div>
-      </div>
 
         {/* Enhanced Bottom Input Area for Desktop */}
         {chatState === "recommendations" && (
