@@ -627,7 +627,7 @@ const ChatInterface: React.FC = () => {
   }
 
   return (
-    <div className="flex h-[calc(100vh-60px)] sm:h-[calc(100vh-73px)] bg-gradient-to-br from-background via-background/95 to-muted/30">
+    <div className="flex h-[calc(100vh-48px)] sm:h-[calc(100vh-56px)] bg-gradient-to-br from-background via-background/95 to-muted/30">
       {/* Desktop Sidebar - Visible on large screens */}
       <div className="hidden lg:flex flex-col w-72 xl:w-80 bg-card/60 backdrop-blur-lg border-r border-border/40 shadow-lg">
         {/* Sidebar Header */}
@@ -720,7 +720,7 @@ const ChatInterface: React.FC = () => {
       <div className="flex flex-col flex-1">
         {/* Enhanced Chat Header */}
         <div className="border-b border-border/50 bg-background/80 backdrop-blur-md">
-          <div className="max-w-none lg:max-w-5xl xl:max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-2.5 sm:py-3">
+          <div className="max-w-none lg:max-w-5xl xl:max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-1.5 sm:py-2">
             <div className="flex items-center gap-2 sm:gap-3 xl:gap-4">
               {/* Show bot icon on smaller screens when sidebar is hidden */}
               <div className="relative flex-shrink-0 lg:hidden">
@@ -754,8 +754,8 @@ const ChatInterface: React.FC = () => {
 
         {/* Enhanced Chat Messages Area */}
         <div className="flex-1 overflow-y-auto scrollbar-thin bg-gradient-to-b from-background/50 to-muted/20">
-          <div className="max-w-none lg:max-w-4xl xl:max-w-5xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-6 xl:py-8">
-            <div className="space-y-3 sm:space-y-4 lg:space-y-6">
+          <div className="max-w-none lg:max-w-4xl xl:max-w-5xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-2 sm:py-3 xl:py-4">
+            <div className="space-y-2 sm:space-y-3 lg:space-y-4">
               {messages.map((message, index) => (
                 <div
                   key={message.id}
@@ -1133,32 +1133,33 @@ const ChatInterface: React.FC = () => {
           <div className="border-t border-border/50 bg-background/80 backdrop-blur-md">
             <div className="max-w-none xl:max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
               {!reportSent ? (
-                <div className="py-2 sm:py-3 xl:py-4 space-y-2 sm:space-y-3 xl:space-y-4">
-                  {/* Enhanced Report Section for Desktop */}
+                <div className="py-1.5 sm:py-2 xl:py-3 space-y-2 sm:space-y-2 xl:space-y-3">
+                  {/* Horizontal Email Report Section */}
                   <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-md sm:rounded-lg xl:rounded-xl p-2 sm:p-3 xl:p-4">
-                    <div className="flex items-center gap-2 xl:gap-3 mb-2 xl:mb-3">
-                      <span className="text-xs xl:text-sm">📧</span>
-                      <h4 className="font-semibold text-[10px] sm:text-xs xl:text-sm text-foreground">
-                        Get Detailed PDF Report
-                      </h4>
-                      <span className="hidden xl:inline text-xs text-muted-foreground">• Comprehensive travel insights & creator opportunities</span>
-                    </div>
-                    <div className="flex gap-1.5 sm:gap-2 xl:gap-3">
-                      <Input
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="your@email.com"
-                        className="flex-1 h-7 sm:h-8 xl:h-10 text-[10px] sm:text-xs xl:text-sm"
-                        type="email"
-                      />
-                      <Button 
-                        onClick={handleSendReport} 
-                        disabled={!email}
-                        className="h-7 sm:h-8 xl:h-10 px-2 sm:px-3 xl:px-4 font-medium text-[10px] sm:text-xs xl:text-sm"
-                      >
-                        <span className="xl:hidden">Send</span>
-                        <span className="hidden xl:inline">Send Report</span>
-                      </Button>
+                    <div className="flex items-center gap-2 sm:gap-3 xl:gap-4">
+                      <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+                        <span className="text-xs xl:text-sm">📧</span>
+                        <h4 className="font-semibold text-[10px] sm:text-xs xl:text-sm text-foreground whitespace-nowrap">
+                          Get PDF Report
+                        </h4>
+                      </div>
+                      <div className="flex gap-1.5 sm:gap-2 xl:gap-3 flex-1">
+                        <Input
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="your@email.com"
+                          className="flex-1 h-7 sm:h-8 xl:h-10 text-[10px] sm:text-xs xl:text-sm"
+                          type="email"
+                        />
+                        <Button 
+                          onClick={handleSendReport} 
+                          disabled={!email}
+                          className="h-7 sm:h-8 xl:h-10 px-2 sm:px-3 xl:px-4 font-medium text-[10px] sm:text-xs xl:text-sm flex-shrink-0"
+                        >
+                          <span className="xl:hidden">Send</span>
+                          <span className="hidden xl:inline">Send Report</span>
+                        </Button>
+                      </div>
                     </div>
                   </div>
                   
