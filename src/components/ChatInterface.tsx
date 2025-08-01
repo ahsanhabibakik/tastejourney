@@ -605,21 +605,98 @@ const ChatInterface: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-60px)] sm:h-[calc(100vh-73px)] bg-gradient-to-br from-background via-background/95 to-muted/30">
-      {/* Enhanced Chat Header */}
-      <div className="border-b border-border/50 bg-background/80 backdrop-blur-md">
-        <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6 py-2.5 sm:py-3">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="relative flex-shrink-0">
-              <Bot className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
-              <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full border-2 border-background animate-pulse" />
+    <div className="flex h-[calc(100vh-60px)] sm:h-[calc(100vh-73px)] bg-gradient-to-br from-background via-background/95 to-muted/30">
+      {/* Desktop Sidebar - Only visible on large screens */}
+      <div className="hidden xl:flex flex-col w-80 bg-card/50 backdrop-blur-md border-r border-border/50">
+        {/* Sidebar Header */}
+        <div className="p-6 border-b border-border/30">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <Bot className="h-8 w-8 text-primary" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-background animate-pulse" />
             </div>
-            <div className="flex-1 min-w-0">
-              <h2 className="font-semibold text-sm sm:text-base text-foreground flex items-center gap-1.5 sm:gap-2 truncate">
-                <span className="truncate">AI Travel Companion</span>
-                <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
-              </h2>
-              <p className="text-xs sm:text-sm text-muted-foreground truncate">
+            <div>
+              <h2 className="font-bold text-lg text-foreground">Travel AI</h2>
+              <p className="text-sm text-muted-foreground">Your Content Creator Companion</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Progress & Stats */}
+        <div className="p-6 space-y-4">
+          <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg p-4 border border-primary/20">
+            <h3 className="font-semibold text-sm mb-3 text-primary">Session Progress</h3>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-xs text-muted-foreground">Messages</span>
+                <span className="text-sm font-medium">{messages.length}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-xs text-muted-foreground">Current Step</span>
+                <span className="text-sm font-medium capitalize">{chatState}</span>
+              </div>
+              {websiteData && (
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-muted-foreground">Content Type</span>
+                  <span className="text-sm font-medium">{websiteData.contentType}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Website Analysis Summary */}
+          {websiteData && (
+            <div className="bg-muted/30 rounded-lg p-4 border border-border/30">
+              <h3 className="font-semibold text-sm mb-3">Website Analysis</h3>
+              <div className="space-y-2">
+                <div className="text-xs">
+                  <span className="text-muted-foreground">Themes:</span>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {websiteData.themes.slice(0, 3).map((theme, i) => (
+                      <span key={i} className="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded-full">
+                        {theme}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Quick Actions */}
+          <div className="space-y-2">
+            <h3 className="font-semibold text-sm text-foreground">Quick Actions</h3>
+            <div className="grid gap-2">
+              <Button variant="outline" size="sm" className="justify-start h-8 text-xs">
+                <Sparkles className="h-3 w-3 mr-2" />
+                New Analysis
+              </Button>
+              <Button variant="outline" size="sm" className="justify-start h-8 text-xs">
+                <MessageSquare className="h-3 w-3 mr-2" />
+                Export Chat
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Chat Area */}
+      <div className="flex flex-col flex-1">
+        {/* Enhanced Chat Header */}
+        <div className="border-b border-border/50 bg-background/80 backdrop-blur-md">
+          <div className="max-w-none xl:max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-2.5 sm:py-3">
+            <div className="flex items-center gap-2 sm:gap-3 xl:gap-4">
+              {/* Hide bot icon on xl screens since it's in sidebar */}
+              <div className="relative flex-shrink-0 xl:hidden">
+                <Bot className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
+                <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full border-2 border-background animate-pulse" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h2 className="font-semibold text-sm sm:text-base xl:text-lg text-foreground flex items-center gap-1.5 sm:gap-2 truncate">
+                  <span className="truncate">AI Travel Companion</span>
+                  <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 xl:h-5 xl:w-5 text-primary flex-shrink-0" />
+                </h2>
+                <p className="text-xs sm:text-sm xl:text-base text-muted-foreground truncate">
                 {chatState === "initial" && "Ready to analyze your website"}
                 {chatState === "analyzing" && "Analyzing your content..."}
                 {chatState === "confirmation" && "Reviewing extracted data"}
@@ -639,58 +716,58 @@ const ChatInterface: React.FC = () => {
         </div>
       </div>
 
-      {/* Chat Messages Area */}
-      <div className="flex-1 overflow-y-auto scrollbar-thin">
-        <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6">
-          <div className="space-y-4 sm:space-y-6">
-            {messages.map((message, index) => (
-              <div
-                key={message.id}
-                className={`flex items-start gap-2 sm:gap-3 animate-fade-in ${
-                  message.isBot ? "justify-start" : "justify-end flex-row-reverse"
-                }`}
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                {/* Avatar */}
-                <div className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center mt-1 ${
-                  message.isBot 
-                    ? "bg-primary/10 border-2 border-primary/20" 
-                    : "bg-gradient-to-br from-primary/80 to-primary border-2 border-primary/30"
-                }`}>
-                  {message.isBot ? (
-                    <Bot className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
-                  ) : (
-                    <User className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
-                  )}
-                </div>
-
-                {/* Message Content */}
-                <div className={`group relative w-full max-w-[80%] xs:max-w-[85%] sm:max-w-[75%] md:max-w-[70%] lg:max-w-[65%] xl:max-w-[60%]`}>
-                  <div
-                    className={`
-                      px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md
-                      ${message.isBot
-                        ? "bg-card border border-border/50 hover:border-border"
-                        : "bg-gradient-to-br from-primary to-primary/90 text-primary-foreground shadow-md hover:shadow-lg"
-                      }
-                    `}
-                  >
-                    {message.isBot && (
-                      <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2 opacity-70">
-                        <Wand2 className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
-                        <span className="text-[10px] sm:text-xs font-medium">AI Assistant</span>
-                      </div>
-                    )}
-                    <p className="text-xs sm:text-sm leading-relaxed">
-                      {message.text}
-                    </p>
-                  </div>
-                  
-                  {/* Timestamp on hover */}
-                  <div className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-1 ${
-                    message.isBot ? "text-left" : "text-right"
+        {/* Enhanced Chat Messages Area */}
+        <div className="flex-1 overflow-y-auto scrollbar-thin">
+          <div className="max-w-none xl:max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-6 xl:py-8">
+            <div className="space-y-4 sm:space-y-6 xl:space-y-8">
+              {messages.map((message, index) => (
+                <div
+                  key={message.id}
+                  className={`flex items-start gap-2 sm:gap-3 xl:gap-4 animate-fade-in ${
+                    message.isBot ? "justify-start" : "justify-end flex-row-reverse"
+                  }`}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  {/* Enhanced Avatar for Desktop */}
+                  <div className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 xl:w-10 xl:h-10 rounded-full flex items-center justify-center mt-1 xl:mt-2 ${
+                    message.isBot 
+                      ? "bg-primary/10 border-2 border-primary/20 xl:shadow-lg xl:shadow-primary/10" 
+                      : "bg-gradient-to-br from-primary/80 to-primary border-2 border-primary/30 xl:shadow-lg xl:shadow-primary/20"
                   }`}>
-                    <span className="text-[10px] sm:text-xs text-muted-foreground">
+                    {message.isBot ? (
+                      <Bot className="h-3 w-3 sm:h-4 sm:w-4 xl:h-5 xl:w-5 text-primary" />
+                    ) : (
+                      <User className="h-3 w-3 sm:h-4 sm:w-4 xl:h-5 xl:w-5 text-white" />
+                    )}
+                  </div>
+
+                  {/* Enhanced Message Content for Desktop */}
+                  <div className={`group relative w-full max-w-[80%] xs:max-w-[85%] sm:max-w-[75%] md:max-w-[70%] lg:max-w-[65%] xl:max-w-[55%]`}>
+                    <div
+                      className={`
+                        px-3 py-2.5 sm:px-4 sm:py-3 xl:px-6 xl:py-4 rounded-2xl xl:rounded-3xl shadow-sm transition-all duration-200 hover:shadow-md xl:hover:shadow-lg
+                        ${message.isBot
+                          ? "bg-card border border-border/50 hover:border-border xl:bg-card/80 xl:backdrop-blur-sm"
+                          : "bg-gradient-to-br from-primary to-primary/90 text-primary-foreground shadow-md hover:shadow-lg xl:shadow-xl"
+                        }
+                      `}
+                    >
+                      {message.isBot && (
+                        <div className="flex items-center gap-1.5 sm:gap-2 xl:gap-3 mb-1.5 sm:mb-2 xl:mb-3 opacity-70">
+                          <Wand2 className="h-2.5 w-2.5 sm:h-3 sm:w-3 xl:h-4 xl:w-4" />
+                          <span className="text-[10px] sm:text-xs xl:text-sm font-medium">AI Assistant</span>
+                        </div>
+                      )}
+                      <p className="text-xs sm:text-sm xl:text-base leading-relaxed xl:leading-relaxed">
+                        {message.text}
+                      </p>
+                    </div>
+                    
+                    {/* Enhanced Timestamp for Desktop */}
+                    <div className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-1 xl:mt-2 ${
+                      message.isBot ? "text-left" : "text-right"
+                    }`}>
+                      <span className="text-[10px] sm:text-xs xl:text-sm text-muted-foreground">
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
@@ -794,29 +871,33 @@ const ChatInterface: React.FC = () => {
 
                 {message.component === "recommendations" &&
                   chatState === "recommendations" && recommendations?.recommendations && (
-                    <div className="mt-3 sm:mt-4 w-full">
-                      {/* Compact Header */}
-                      <div className="flex flex-col gap-1 sm:gap-2 mb-3 sm:mb-4">
-                        <h3 className="text-base sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                    <div className="mt-3 sm:mt-4 xl:mt-6 w-full">
+                      {/* Enhanced Header for Desktop */}
+                      <div className="flex flex-col gap-1 sm:gap-2 xl:gap-3 mb-3 sm:mb-4 xl:mb-6">
+                        <h3 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                           Your Travel Recommendations
                         </h3>
-                        <p className="text-[10px] sm:text-xs text-muted-foreground">
-                          Swipe to explore • {recommendations.recommendations.length} destinations
+                        <p className="text-[10px] sm:text-xs xl:text-sm text-muted-foreground">
+                          <span className="hidden xl:inline">Explore personalized destinations • </span>
+                          <span className="xl:hidden">Swipe to explore • </span>
+                          {recommendations.recommendations.length} destinations curated for content creators
                         </p>
                       </div>
                       
-                      {/* Compact Destination Cards */}
-                      <div 
-                        ref={scrollContainerRef}
-                        className="overflow-x-auto pb-2 sm:pb-3 scrollbar-hide -mx-1"
-                        style={{scrollBehavior: 'smooth'}}
-                      >
-                        <div className="flex gap-2 sm:gap-3 w-max px-1">
-                          {recommendations.recommendations.map((rec: Recommendation, i: number) => (
-                            <div
-                              key={i}
-                              className="group bg-card border border-border/50 rounded-lg overflow-hidden flex-shrink-0 w-56 sm:w-64 md:w-72 shadow-md hover:shadow-lg transition-all duration-200"
-                            >
+                      {/* Enhanced Destination Cards Grid for Desktop */}
+                      <div className="xl:hidden">
+                        {/* Mobile/Tablet Horizontal Scroll */}
+                        <div 
+                          ref={scrollContainerRef}
+                          className="overflow-x-auto pb-2 sm:pb-3 scrollbar-hide -mx-1"
+                          style={{scrollBehavior: 'smooth'}}
+                        >
+                          <div className="flex gap-2 sm:gap-3 w-max px-1">
+                            {recommendations.recommendations.map((rec: Recommendation, i: number) => (
+                              <div
+                                key={i}
+                                className="group bg-card border border-border/50 rounded-lg overflow-hidden flex-shrink-0 w-56 sm:w-64 md:w-72 shadow-md hover:shadow-lg transition-all duration-200"
+                              >
                             {/* Compact Image */}
                             <div className="relative overflow-hidden">
                               {rec.image && (
@@ -898,7 +979,7 @@ const ChatInterface: React.FC = () => {
                         </div>
                       </div>
                       
-                      {/* Compact Progress Indicator */}
+                      {/* Mobile Progress Indicator */}
                       <div className="flex justify-center items-center gap-2 mt-2 sm:mt-3">
                         <div className="flex items-center gap-1">
                           {recommendations.recommendations.map((_, idx) => (
@@ -921,13 +1002,109 @@ const ChatInterface: React.FC = () => {
                                   ? 'w-4 sm:w-5 h-1 sm:h-1.5 bg-primary' 
                                   : 'w-1 sm:w-1.5 h-1 sm:h-1.5 bg-muted-foreground/30'
                               }`}
+                              aria-label={`Go to recommendation ${idx + 1}`}
                             />
+                          ))}
+                        </div>
+                      </div>
+                      </div>
+
+                      {/* Desktop Grid Layout - Only visible on xl screens */}
+                      <div className="hidden xl:block">
+                        <div className="grid grid-cols-2 2xl:grid-cols-3 gap-6">
+                          {recommendations.recommendations.map((rec: Recommendation, i: number) => (
+                            <div
+                              key={i}
+                              className="group bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
+                            >
+                              {/* Enhanced Image for Desktop */}
+                              <div className="relative overflow-hidden h-48">
+                                {rec.image && (
+                                  <Image 
+                                    src={rec.image} 
+                                    alt={rec.destination}
+                                    width={400}
+                                    height={200}
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                                  />
+                                )}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                                <div className="absolute top-4 right-4">
+                                  <span className="bg-white/90 backdrop-blur-sm text-primary text-sm font-bold px-3 py-1 rounded-full shadow-lg">
+                                    #{i + 1}
+                                  </span>
+                                </div>
+                                <div className="absolute bottom-4 left-4 right-4">
+                                  <h4 className="font-bold text-xl text-white mb-2 drop-shadow-lg">
+                                    {rec.destination}
+                                  </h4>
+                                </div>
+                              </div>
+                              
+                              {/* Enhanced Content for Desktop */}
+                              <div className="p-6 space-y-4">
+                                {rec.highlights && rec.highlights.length > 0 && (
+                                  <p className="text-sm text-muted-foreground leading-relaxed">
+                                    {rec.highlights.slice(0, 3).join(' • ')}
+                                  </p>
+                                )}
+                                
+                                {/* Enhanced Info Grid */}
+                                <div className="grid grid-cols-2 gap-4 text-sm">
+                                  {rec.budget?.range && (
+                                    <div className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg">
+                                      <span className="text-lg">💰</span>
+                                      <span className="font-medium">{rec.budget.range}</span>
+                                    </div>
+                                  )}
+                                  {rec.engagement?.potential && (
+                                    <div className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg">
+                                      <span className="text-lg">📈</span>
+                                      <span className="font-medium">{rec.engagement.potential}</span>
+                                    </div>
+                                  )}
+                                </div>
+
+                                {/* Enhanced Creator Info for Desktop */}
+                                {rec.creatorDetails && (
+                                  <div className="p-4 bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg border border-primary/20">
+                                    <div className="flex items-center justify-between mb-3">
+                                      <span className="text-sm font-bold text-primary flex items-center gap-2">
+                                        🎯 Creator Community
+                                      </span>
+                                      <span className="text-sm font-semibold text-muted-foreground">{rec.creatorDetails.totalActiveCreators}+ Active</span>
+                                    </div>
+                                    
+                                    <div className="space-y-2">
+                                      {rec.creatorDetails.topCreators.slice(0, 2).map((creator, idx) => (
+                                        <div key={idx} className="bg-background/60 p-3 rounded-lg text-sm">
+                                          <div className="font-semibold text-foreground">{creator.name}</div>
+                                          <div className="text-xs text-muted-foreground">{creator.niche}</div>
+                                          <div className="text-primary font-medium mt-1">{creator.collaboration}</div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                                
+                                {/* Enhanced Tags for Desktop */}
+                                {rec.tags && rec.tags.length > 0 && (
+                                  <div className="flex flex-wrap gap-2">
+                                    {rec.tags.slice(0, 4).map((tag: string) => (
+                                      <span key={tag} className="bg-secondary/80 text-secondary-foreground text-xs px-3 py-1 rounded-full font-medium">
+                                        #{tag}
+                                      </span>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
                           ))}
                         </div>
                       </div>
                     </div>
                   )}
-              </div>
+                </div>
             </div>
           ))}
 
@@ -950,93 +1127,100 @@ const ChatInterface: React.FC = () => {
         </div>
       </div>
 
-      {/* Compact Bottom Input Area */}
-      {chatState === "recommendations" && (
-        <div className="border-t border-border/50 bg-background/80 backdrop-blur-md">
-          <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6">
-            {!reportSent ? (
-              <div className="py-2 sm:py-3 space-y-2 sm:space-y-3">
-                {/* Compact Report Section */}
-                <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-md sm:rounded-lg p-2 sm:p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs">📧</span>
-                    <h4 className="font-semibold text-[10px] sm:text-xs text-foreground">
-                      Get Detailed Report
-                    </h4>
+        {/* Enhanced Bottom Input Area for Desktop */}
+        {chatState === "recommendations" && (
+          <div className="border-t border-border/50 bg-background/80 backdrop-blur-md">
+            <div className="max-w-none xl:max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
+              {!reportSent ? (
+                <div className="py-2 sm:py-3 xl:py-4 space-y-2 sm:space-y-3 xl:space-y-4">
+                  {/* Enhanced Report Section for Desktop */}
+                  <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-md sm:rounded-lg xl:rounded-xl p-2 sm:p-3 xl:p-4">
+                    <div className="flex items-center gap-2 xl:gap-3 mb-2 xl:mb-3">
+                      <span className="text-xs xl:text-sm">📧</span>
+                      <h4 className="font-semibold text-[10px] sm:text-xs xl:text-sm text-foreground">
+                        Get Detailed PDF Report
+                      </h4>
+                      <span className="hidden xl:inline text-xs text-muted-foreground">• Comprehensive travel insights & creator opportunities</span>
+                    </div>
+                    <div className="flex gap-1.5 sm:gap-2 xl:gap-3">
+                      <Input
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        placeholder="your@email.com"
+                        className="flex-1 h-7 sm:h-8 xl:h-10 text-[10px] sm:text-xs xl:text-sm"
+                        type="email"
+                      />
+                      <Button 
+                        onClick={handleSendReport} 
+                        disabled={!email}
+                        className="h-7 sm:h-8 xl:h-10 px-2 sm:px-3 xl:px-4 font-medium text-[10px] sm:text-xs xl:text-sm"
+                      >
+                        <span className="xl:hidden">Send</span>
+                        <span className="hidden xl:inline">Send Report</span>
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex gap-1.5 sm:gap-2">
-                    <Input
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      placeholder="your@email.com"
-                      className="flex-1 h-7 sm:h-8 text-[10px] sm:text-xs"
-                      type="email"
-                    />
-                    <Button 
-                      onClick={handleSendReport} 
-                      disabled={!email}
-                      className="h-7 sm:h-8 px-2 sm:px-3 font-medium text-[10px] sm:text-xs"
-                    >
-                      Send
-                    </Button>
-                  </div>
-                </div>
-                
-                {/* Compact Chat Input */}
-                <div className="relative">
-                  <Input
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Ask about recommendations..."
-                    className="w-full pr-8 sm:pr-9 h-7 sm:h-8 text-[10px] sm:text-xs"
-                  />
-                  <Button
-                    onClick={handleSendMessage}
-                    disabled={!inputValue.trim()}
-                    size="icon"
-                    className="absolute right-0.5 top-1/2 -translate-y-1/2 h-5 w-5 sm:h-6 sm:w-6"
-                  >
-                    <Send className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
-                  </Button>
-                </div>
-                
-                {/* Compact Quick Actions */}
-                <div className="flex flex-wrap gap-1 justify-center">
-                  {[
-                    "More destinations",
-                    "Budget breakdown", 
-                    "Collaboration tips"
-                  ].map((action) => (
-                    <Button
-                      key={action}
-                      variant="outline"
-                      size="sm"
-                      className="text-[8px] sm:text-[9px] px-1 sm:px-1.5 py-0.5 h-auto border-muted"
-                      onClick={() => {
-                        setInputValue(action);
-                        setTimeout(() => handleSendMessage(), 0);
-                      }}
-                    >
-                      {action}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div className="py-3 sm:py-4 text-center">
-                <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 rounded-lg">
-                  <span className="text-xs sm:text-sm">✅</span>
-                  <div className="text-left">
-                    <p className="font-semibold text-[10px] sm:text-xs">Report Sent!</p>
-                    <p className="text-[9px] sm:text-[10px] text-green-600">Check your email</p>
+                  
+                  {/* Enhanced Chat Input for Desktop */}
+                  <div className="xl:grid xl:grid-cols-3 xl:gap-4 xl:items-center">
+                    <div className="relative xl:col-span-2">
+                      <Input
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        placeholder="Ask about recommendations, budget details, or collaboration opportunities..."
+                        className="w-full pr-8 sm:pr-9 xl:pr-12 h-7 sm:h-8 xl:h-10 text-[10px] sm:text-xs xl:text-sm"
+                      />
+                      <Button
+                        onClick={handleSendMessage}
+                        disabled={!inputValue.trim()}
+                        size="icon"
+                        className="absolute right-0.5 top-1/2 -translate-y-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-8 xl:w-8"
+                      >
+                        <Send className="h-2.5 w-2.5 sm:h-3 sm:w-3 xl:h-4 xl:w-4" />
+                      </Button>
+                    </div>
+                    
+                    {/* Enhanced Quick Actions for Desktop */}
+                    <div className="xl:col-span-1 xl:flex xl:justify-end">
+                      <div className="flex flex-wrap gap-1 xl:gap-2 justify-center xl:justify-end">
+                        {[
+                          "More destinations",
+                          "Budget breakdown", 
+                          "Collaboration tips"
+                        ].map((action) => (
+                          <Button
+                            key={action}
+                            variant="outline"
+                            size="sm"
+                            className="text-[8px] sm:text-[9px] xl:text-xs px-1 sm:px-1.5 xl:px-3 py-0.5 xl:py-1 h-auto border-muted hover:bg-muted/50"
+                            onClick={() => {
+                              setInputValue(action);
+                              setTimeout(() => handleSendMessage(), 0);
+                            }}
+                          >
+                            {action}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              ) : (
+                <div className="py-3 sm:py-4 xl:py-6 text-center">
+                  <div className="inline-flex items-center gap-2 xl:gap-3 px-3 sm:px-4 xl:px-6 py-2 xl:py-3 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 rounded-lg xl:rounded-xl">
+                    <span className="text-xs sm:text-sm xl:text-base">✅</span>
+                    <div className="text-left">
+                      <p className="font-semibold text-[10px] sm:text-xs xl:text-sm">Report Sent!</p>
+                      <p className="text-[9px] sm:text-[10px] xl:text-xs text-green-600">Check your email</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
