@@ -17,7 +17,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Enhanced destinations with detailed creator collaboration info
+    // Example scoring: matchScore based on tasteVector and destination tags
+    // TasteVector should be generated using Qloo API (see https://docs.qloo.com/)
     const destinations = [
       {
         id: 1,
@@ -45,21 +46,6 @@ export async function POST(request: NextRequest) {
         ],
         creators: 142,
         bestMonths: ["April-May", "September-October"],
-        creatorDetails: {
-          totalActiveCreators: 142,
-          topCreators: [
-            { name: "BaliAdventureLife", followers: "850K", niche: "Adventure Travel", collaboration: "Content partnerships" },
-            { name: "TropicalFoodie", followers: "520K", niche: "Food & Culture", collaboration: "Restaurant reviews" },
-            { name: "IslandLifestyle", followers: "380K", niche: "Lifestyle", collaboration: "Accommodation features" }
-          ],
-          collaborationOpportunities: [
-            "Joint adventure content creation",
-            "Cultural immersion experiences",
-            "Food tour partnerships",
-            "Accommodation brand deals"
-          ]
-        },
-        tags: ["adventure", "culture", "food", "beach", "tropical"]
       },
       {
         id: 2,
@@ -87,21 +73,6 @@ export async function POST(request: NextRequest) {
         ],
         creators: 85,
         bestMonths: ["May-June", "September"],
-        creatorDetails: {
-          totalActiveCreators: 85,
-          topCreators: [
-            { name: "SantoriniSunsets", followers: "1.2M", niche: "Photography", collaboration: "Photo location guides" },
-            { name: "GreekIslandLife", followers: "680K", niche: "Luxury Travel", collaboration: "Hotel partnerships" },
-            { name: "MediterraneanVibes", followers: "420K", niche: "Lifestyle", collaboration: "Cultural experiences" }
-          ],
-          collaborationOpportunities: [
-            "Luxury accommodation reviews",
-            "Photography workshop collaborations",
-            "Wine tasting content",
-            "Sunset cruise partnerships"
-          ]
-        },
-        tags: ["photography", "luxury", "mediterranean", "culture", "romantic"]
       },
       {
         id: 3,
@@ -129,21 +100,6 @@ export async function POST(request: NextRequest) {
         ],
         creators: 95,
         bestMonths: ["March-April", "October-November"],
-        creatorDetails: {
-          totalActiveCreators: 95,
-          topCreators: [
-            { name: "KyotoTraditions", followers: "720K", niche: "Cultural", collaboration: "Temple & tradition content" },
-            { name: "JapanFoodExplorer", followers: "590K", niche: "Food Culture", collaboration: "Traditional cuisine features" },
-            { name: "ZenLifestyle", followers: "340K", niche: "Mindfulness", collaboration: "Meditation retreat content" }
-          ],
-          collaborationOpportunities: [
-            "Traditional craft workshops",
-            "Temple meditation sessions",
-            "Tea ceremony experiences",
-            "Seasonal festival coverage"
-          ]
-        },
-        tags: ["culture", "tradition", "food", "mindfulness", "photography"]
       },
     ];
 
