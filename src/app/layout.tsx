@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
@@ -20,11 +20,7 @@ export const metadata: Metadata = {
   description: "Get AI-powered travel destination recommendations optimized for content creation, audience engagement, and monetization opportunities.",
   keywords: ["travel", "content creator", "AI recommendations", "travel planning", "creator economy"],
   authors: [{ name: "TasteJourney Team" }],
-};
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({

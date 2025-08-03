@@ -13,6 +13,7 @@ SERPAPI_KEY=your_serpapi_key_here
 SENDGRID_API_KEY=your_sendgrid_key_here
 FROM_EMAIL=your_verified_sendgrid_email@domain.com
 QLOO_API_KEY=your_qloo_api_key_here
+QLOO_API_URL=https://api.qloo.com
 OPENAI_API_KEY=your_openai_key_here
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
@@ -33,6 +34,17 @@ To enable PDF report emailing functionality:
    - Verify the email address you want to send from
    - Add this email to `FROM_EMAIL` in your `.env.local`
 4. **Test the functionality**: Users can now receive personalized PDF travel reports via email
+
+## Qloo API Setup for Taste Vector Generation
+
+The application integrates with Qloo's API for advanced taste profile generation:
+
+1. **Get Qloo API Access**: Contact Qloo to obtain API credentials
+2. **Configure Environment Variables**:
+   - `QLOO_API_KEY`: Your Qloo API key
+   - `QLOO_API_URL`: Qloo API base URL (typically `https://api.qloo.com`)
+3. **Fallback Behavior**: If Qloo API is not configured or fails, the system automatically falls back to an enhanced mock system
+4. **Integration Status**: Check the API response metadata for `apiSource` to see if real Qloo API or mock system was used
 > This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

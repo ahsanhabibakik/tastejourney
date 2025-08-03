@@ -275,69 +275,225 @@ function calculateConfidence(themes: string[], hints: string[]): number {
   return Math.min(confidence, 0.95); // Cap at 95%
 }
 
-// Real Qloo API integration (commented out for demo)
+// Helper function to get tag IDs from Qloo /v2/tags endpoint
+async function getQlooTagIds(themes: string[]): Promise<string[]> {
+  const tagIds: string[] = [];
+  
+  for (const theme of themes.slice(0, 3)) { // Limit to first 3 themes to avoid too many requests
+    try {
+      const url = `${process.env.QLOO_API_URL}/v2/tags?filter.query=${encodeURIComponent(theme)}`;
+      console.log(`Fetching tags for "${theme}": ${url}`);
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'X-API-Key': process.env.QLOO_API_KEY!,
+          'Accept': 'application/json',
+          'User-Agent': 'TasteJourney/1.0'
+        }
+      });
+      
+      console.log(`Tag lookup for "${theme}": ${response.status} ${response.statusText}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log(`Tag data for "${theme}":`, JSON.stringify(data, null, 2));
+        
+        if (data.results && Array.isArray(data.results) && data.results.length > 0) {
+          const tagId = data.results[0].id;
+          console.log(`Found tag ID for "${theme}": ${tagId}`);
+          tagIds.push(tagId);
+        } else {
+          console.log(`No tags found for "${theme}"`);
+        }
+      } else {
+        const errorText = await response.text();
+        console.warn(`Tag lookup failed for "${theme}": ${response.status} - ${errorText}`);
+      }
+    } catch (error) {
+      console.warn(`Failed to get tag ID for "${theme}":`, error);
+    }
+  }
+  
+  return tagIds;
+}
+
+// Real Qloo API integration with enhanced error handling
 // See Qloo API docs: https://docs.qloo.com/
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
-  // Try different potential endpoints for Qloo hackathon API
-  const endpoints = [
-    '/v1/insights',
-    '/v1/recommendations', 
-    '/v1/taste',
-    '/v1/profile',
-    '/insights',
-    '/recommendations'
+  // Validate environment variables
+  if (!process.env.QLOO_API_KEY || !process.env.QLOO_API_URL) {
+    throw new Error('Missing required Qloo API configuration: QLOO_API_KEY and QLOO_API_URL must be set');
+  }
+
+  // First, try to get valid tag IDs for our themes
+  console.log('Getting tag IDs for themes:', request.themes);
+  const tagIds = await getQlooTagIds(request.themes);
+  console.log('Retrieved tag IDs:', tagIds);
+
+  // Try Qloo API endpoints with official URN format filter.type values from hackathon documentation
+  const endpoints: Array<{path: string, method: string, filterType?: string}> = [
+    { path: '/v2/insights', method: 'GET', filterType: 'urn:entity:destination' },
+    { path: '/v2/insights', method: 'GET', filterType: 'urn:entity:place' },
+    { path: '/v2/insights', method: 'GET', filterType: 'urn:entity:brand' },
+    { path: '/v2/insights', method: 'GET', filterType: 'urn:entity:movie' },
+    { path: '/v2/insights', method: 'GET', filterType: 'urn:entity:tv_show' },
   ];
+
+  const errors: string[] = [];
 
   for (const endpoint of endpoints) {
     try {
-      console.log(`Trying Qloo endpoint: ${process.env.QLOO_API_URL}${endpoint}`);
+      const endpointDesc = endpoint.filterType 
+        ? `${endpoint.path} (${endpoint.method}, filter.type=${endpoint.filterType})`
+        : `${endpoint.path} (${endpoint.method})`;
+      console.log(`Trying Qloo endpoint: ${process.env.QLOO_API_URL}${endpointDesc}`);
       
-      const response = await fetch(`${process.env.QLOO_API_URL}${endpoint}`, {
-        method: 'POST',
+      // Create AbortController for timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+      // Prepare request configuration
+      const requestConfig: RequestInit = {
+        method: endpoint.method,
         headers: {
-          'X-API-Key': process.env.QLOO_API_KEY!,
-          'Content-Type': 'application/json'
+          'X-API-Key': process.env.QLOO_API_KEY,
+          'Accept': 'application/json',
+          'User-Agent': 'TasteJourney/1.0'
         },
-        body: JSON.stringify({
+        signal: controller.signal
+      };
+
+      // Add body and content-type for POST requests
+      if (endpoint.method === 'POST') {
+        requestConfig.headers = {
+          ...requestConfig.headers,
+          'Content-Type': 'application/json'
+        };
+        requestConfig.body = JSON.stringify({
           content_themes: request.themes,
           content_hints: request.hints,
           content_type: request.contentType,
           social_profiles: request.socialLinks,
           demographics: request.demographics,
-          // Alternative payload formats
+          // Alternative payload formats for different API versions
           input: {
             themes: request.themes,
             hints: request.hints,
             contentType: request.contentType,
             interests: request.themes
+          },
+          // Additional fields that Qloo might expect
+          preferences: {
+            themes: request.themes,
+            hints: request.hints
           }
-        })
-      });
+        });
+      }
+
+      // Build URL with query parameters for GET requests
+      let url = `${process.env.QLOO_API_URL}${endpoint.path}`;
+      
+      if (endpoint.method === 'GET') {
+        const params = new URLSearchParams();
+        
+        // REQUIRED: filter.type parameter (official URN format)
+        if (endpoint.filterType) {
+          params.append('filter.type', endpoint.filterType);
+        }
+        
+        // REQUIRED: At least one valid signal or filter parameter (per hackathon docs)
+        // Use actual tag IDs if we got them, otherwise try documented signal formats
+        if (tagIds.length > 0) {
+          // Use valid tag IDs (this is the preferred approach)
+          params.append('signal.interests.tags', tagIds.join(','));
+          console.log('Using tag IDs for signal.interests.tags:', tagIds);
+        } else {
+          console.log('No tag IDs found, using fallback signals');
+          
+          // Fallback 1: Use theme-based filters since signals are not working
+          if (request.themes.length > 0) {
+            // Try using themes as search query filter
+            params.append('filter.query', request.themes.slice(0, 3).join(' '));
+            console.log('Added filter.query:', request.themes.slice(0, 3).join(' '));
+          }
+          
+          // Fallback 2: Use location filter if available
+          if (request.demographics?.location) {
+            params.append('filter.location.query', request.demographics.location);
+            console.log('Added filter.location.query:', request.demographics.location);
+          }
+          
+          // Fallback 3: Add minimum popularity filter to ensure we get results
+          params.append('filter.popularity.min', '0.1');
+          console.log('Added filter.popularity.min: 0.1');
+        }
+        
+        url += `?${params.toString()}`;
+      }
+
+      const response = await fetch(url, requestConfig);
+
+      clearTimeout(timeoutId);
 
       if (response.ok) {
         const data = await response.json();
-        console.log(`Success with endpoint ${endpoint}:`, data);
+        console.log(`Success with endpoint ${endpointDesc}:`, JSON.stringify(data, null, 2));
         
-        // Map Qloo API response to local QlooResponse type
+        // Validate response structure
+        if (!data || typeof data !== 'object') {
+          throw new Error('Invalid response format from Qloo API');
+        }
+        
+        // Map Qloo API response to local QlooResponse type with validation
+        const tasteVector = data.taste_vector || data.tasteVector || data.vector || {};
+        const recommendations = Array.isArray(data.recommendations) ? data.recommendations : 
+                               Array.isArray(data.destinations) ? data.destinations : [];
+        
         return {
-          tasteVector: data.taste_vector || data.tasteVector || {},
-          recommendations: data.recommendations || [],
-          confidence: data.confidence || 0.8,
-          culturalAffinities: data.cultural_affinities || data.culturalAffinities || [],
-          personalityTraits: data.personality_traits || data.personalityTraits || [],
-          processingTime: `API call to ${endpoint}`
+          tasteVector: {
+            adventure: tasteVector.adventure || 0.3,
+            culture: tasteVector.culture || 0.3,
+            luxury: tasteVector.luxury || 0.3,
+            food: tasteVector.food || 0.3,
+            nature: tasteVector.nature || 0.3,
+            urban: tasteVector.urban || 0.3,
+            budget: tasteVector.budget || 0.5,
+            ...tasteVector
+          },
+          recommendations: recommendations.slice(0, 10), // Limit recommendations
+          confidence: Math.min(Math.max(data.confidence || 0.8, 0), 1), // Ensure 0-1 range
+          culturalAffinities: Array.isArray(data.cultural_affinities || data.culturalAffinities) ? 
+            (data.cultural_affinities || data.culturalAffinities).slice(0, 6) : [],
+          personalityTraits: Array.isArray(data.personality_traits || data.personalityTraits) ? 
+            (data.personality_traits || data.personalityTraits).slice(0, 5) : [],
+          processingTime: `Qloo API via ${endpointDesc}`
         };
       } else {
-        const errorText = await response.text();
-        console.log(`Failed endpoint ${endpoint}: ${response.status} - ${errorText}`);
+        const errorText = await response.text().catch(() => 'Unknown error');
+        const errorMsg = `HTTP ${response.status}: ${errorText}`;
+        errors.push(`${endpointDesc} - ${errorMsg}`);
+        console.warn(`Failed endpoint ${endpointDesc}: ${errorMsg}`);
       }
     } catch (error) {
-      console.log(`Error with endpoint ${endpoint}:`, error);
+      const errorMsg = error instanceof Error ? error.message : 'Unknown error';
+      const endpointDesc = endpoint.filterType 
+        ? `${endpoint.path} (${endpoint.method}, filter.type=${endpoint.filterType})`
+        : `${endpoint.path} (${endpoint.method})`;
+      errors.push(`${endpointDesc} - ${errorMsg}`);
+      console.warn(`Error with endpoint ${endpointDesc}:`, errorMsg);
     }
   }
 
-  throw new Error('All Qloo API endpoints failed');
+  // All endpoints failed
+  const finalError = new Error(`All Qloo API endpoints failed. Errors: ${errors.join('; ')}`);
+  console.error('Qloo API integration failed:', finalError.message);
+  throw finalError;
+}
+
+// Helper function to check Qloo API configuration
+function isQlooConfigured(): boolean {
+  return !!(process.env.QLOO_API_KEY && process.env.QLOO_API_URL);
 }
 
 export async function POST(request: NextRequest) {
@@ -360,8 +516,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Prepare Qloo request (saved for future real API integration)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // Log configuration status
+    console.log(`Qloo API configured: ${isQlooConfigured()}`);
+    if (isQlooConfigured()) {
+      console.log(`Qloo API URL: ${process.env.QLOO_API_URL}`);
+      console.log(`Qloo API Key present: ${!!process.env.QLOO_API_KEY}`);
+    }
+
+    // Prepare Qloo request
     const qlooRequest: QlooRequest = {
       themes,
       hints,
@@ -370,27 +532,42 @@ export async function POST(request: NextRequest) {
       demographics: demographics || {},
     };
 
-    // For hackathon demo, use enhanced mock system (Qloo API endpoints unavailable)
-    console.log("Using enhanced mock taste vector system for demo");
-    const mockVector = generateMockTasteVector(themes, hints, contentType);
-    const qlooResponse: QlooResponse = {
-      tasteVector: mockVector,
-      recommendations: generateSmartRecommendations(mockVector, themes),
-      confidence: calculateConfidence(themes, hints),
-      culturalAffinities: generateCulturalAffinities(mockVector),
-      personalityTraits: generatePersonalityTraits(mockVector),
-      processingTime: "Enhanced AI analysis"
-    };
-
-    // Uncomment below to try real Qloo API when available
-    /*
-    try {
-      qlooResponse = await callQlooAPI(qlooRequest);
-    } catch (error) {
-      console.log("Qloo API unavailable, using mock data:", error);
-      // Use mock as fallback
+    // Try real Qloo API first, fallback to enhanced mock system
+    let qlooResponse: QlooResponse;
+    let usedRealAPI = false;
+    
+    if (isQlooConfigured()) {
+      try {
+        console.log("Attempting to use real Qloo API...");
+        qlooResponse = await callQlooAPI(qlooRequest);
+        console.log("Successfully received data from Qloo API");
+        usedRealAPI = true;
+      } catch (error) {
+        console.log("Qloo API failed, using enhanced mock system as fallback:", error);
+        // Use enhanced mock as fallback
+        const mockVector = generateMockTasteVector(themes, hints, contentType);
+        qlooResponse = {
+          tasteVector: mockVector,
+          recommendations: generateSmartRecommendations(mockVector, themes),
+          confidence: calculateConfidence(themes, hints),
+          culturalAffinities: generateCulturalAffinities(mockVector),
+          personalityTraits: generatePersonalityTraits(mockVector),
+          processingTime: "Mock AI analysis (Qloo API fallback)"
+        };
+      }
+    } else {
+      console.log("Qloo API not configured, using enhanced mock system");
+      // Use enhanced mock system
+      const mockVector = generateMockTasteVector(themes, hints, contentType);
+      qlooResponse = {
+        tasteVector: mockVector,
+        recommendations: generateSmartRecommendations(mockVector, themes),
+        confidence: calculateConfidence(themes, hints),
+        culturalAffinities: generateCulturalAffinities(mockVector),
+        personalityTraits: generatePersonalityTraits(mockVector),
+        processingTime: "Mock AI analysis (API not configured)"
+      };
     }
-    */
 
     // Simulate processing time for realistic UX
     await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -409,6 +586,8 @@ export async function POST(request: NextRequest) {
             : "Low",
         processingTime: qlooResponse.processingTime,
         timestamp: new Date().toISOString(),
+        apiSource: usedRealAPI ? "qloo-api" : "mock-system",
+        qlooConfigured: isQlooConfigured(),
       },
     });
   } catch (error) {
