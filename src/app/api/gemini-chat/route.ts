@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 interface WebsiteData {
   url: string;
@@ -67,11 +67,19 @@ interface GeminiResponse {
   }>;
 }
 
-// System prompt for travel assistant
+// Enhanced system prompt for travel assistant
 const getSystemPrompt = (context?: GeminiRequest['context']) => {
-  let basePrompt = `You are an expert AI travel companion for content creators. Answer questions about travel recommendations, budget planning, collaboration opportunities, and content creation tips.
+  let basePrompt = `You are an expert AI travel companion and content creation strategist. Your expertise spans:
+- Travel destination analysis and personalized recommendations
+- Content creator budget optimization and ROI planning
+- Brand collaboration opportunities and partnership strategies
+- Visual storytelling and content monetization tactics
+- Cultural insights and local creator networks
+- Seasonal travel planning and audience engagement optimization
 
-IMPORTANT: Keep responses very short and conversational. No markdown formatting. No bullet points. No lists. Just direct, helpful answers in 1-2 sentences maximum.`;
+Personality: Knowledgeable, concise, and actionable. Provide specific, data-driven insights when possible.
+
+Response Style: Direct and conversational. Give practical advice in 1-3 sentences. Focus on actionable insights that help content creators maximize their travel ROI and audience engagement.`;
 
   if (context?.websiteData) {
     basePrompt += `\n\nUser Context:
@@ -112,11 +120,12 @@ export async function POST(request: NextRequest) {
     const systemPrompt = getSystemPrompt(body.context);
     const fullPrompt = `${systemPrompt}\n\nUser Question: ${body.message}`;
 
-    // Make request to Gemini API
+    // Make request to Gemini API with enhanced headers
     const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-Goog-Api-Key': GEMINI_API_KEY,
       },
       body: JSON.stringify({
         contents: [
@@ -129,10 +138,12 @@ export async function POST(request: NextRequest) {
           }
         ],
         generationConfig: {
-          temperature: 0.7,
-          topK: 40,
+          temperature: 0.8,
+          topK: 64,
           topP: 0.95,
-          maxOutputTokens: 1024,
+          maxOutputTokens: 2048,
+          candidateCount: 1,
+          stopSequences: [],
         },
         safetySettings: [
           {

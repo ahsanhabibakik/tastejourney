@@ -17,7 +17,8 @@
       "Bash(git commit:*)",
       "Bash(npx tsc:*)",
       "Bash(npm run lint)",
-      "Bash(timeout 10 npm run dev)"
+      "Bash(timeout 10 npm run dev)",
+      "WebFetch(domain:hackathon.api.qloo.com)"
     ],
     "deny": []
   }

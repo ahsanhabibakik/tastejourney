@@ -403,30 +403,18 @@ async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
         }
         
         // REQUIRED: At least one valid signal or filter parameter (per hackathon docs)
-        // Use actual tag IDs if we got them, otherwise try documented signal formats
+        // Use actual tag IDs if we got them, otherwise use theme-based approach
         if (tagIds.length > 0) {
           // Use valid tag IDs (this is the preferred approach)
           params.append('signal.interests.tags', tagIds.join(','));
           console.log('Using tag IDs for signal.interests.tags:', tagIds);
         } else {
-          console.log('No tag IDs found, using fallback signals');
+          console.log('No tag IDs found, using theme-based signals');
           
-          // Fallback 1: Use theme-based filters since signals are not working
-          if (request.themes.length > 0) {
-            // Try using themes as search query filter
-            params.append('filter.query', request.themes.slice(0, 3).join(' '));
-            console.log('Added filter.query:', request.themes.slice(0, 3).join(' '));
-          }
-          
-          // Fallback 2: Use location filter if available
-          if (request.demographics?.location) {
-            params.append('filter.location.query', request.demographics.location);
-            console.log('Added filter.location.query:', request.demographics.location);
-          }
-          
-          // Fallback 3: Add minimum popularity filter to ensure we get results
-          params.append('filter.popularity.min', '0.1');
-          console.log('Added filter.popularity.min: 0.1');
+          // Convert themes to appropriate signal parameters based on successful test
+          const themeKeywords = request.themes.join(',');
+          params.append('signal.interests.tags', themeKeywords);
+          console.log('Added signal.interests.tags:', themeKeywords);
         }
         
         url += `?${params.toString()}`;
@@ -445,28 +433,25 @@ async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
           throw new Error('Invalid response format from Qloo API');
         }
         
-        // Map Qloo API response to local QlooResponse type with validation
-        const tasteVector = data.taste_vector || data.tasteVector || data.vector || {};
-        const recommendations = Array.isArray(data.recommendations) ? data.recommendations : 
-                               Array.isArray(data.destinations) ? data.destinations : [];
+        // Parse Qloo API response - handle actual hackathon API format
+        const entities = data.results?.entities || [];
+        const destinations = entities.map((entity: any) => entity.name).slice(0, 8);
+        
+        // Extract taste vector from entity tags and properties
+        const tasteVector = generateTasteVectorFromEntities(entities, request.themes);
+        
+        // Extract cultural affinities from entity tags
+        const culturalAffinities = extractCulturalAffinities(entities);
+        
+        // Generate personality traits based on destinations and preferences
+        const personalityTraits = generatePersonalityFromDestinations(destinations, request.themes);
         
         return {
-          tasteVector: {
-            adventure: tasteVector.adventure || 0.3,
-            culture: tasteVector.culture || 0.3,
-            luxury: tasteVector.luxury || 0.3,
-            food: tasteVector.food || 0.3,
-            nature: tasteVector.nature || 0.3,
-            urban: tasteVector.urban || 0.3,
-            budget: tasteVector.budget || 0.5,
-            ...tasteVector
-          },
-          recommendations: recommendations.slice(0, 10), // Limit recommendations
-          confidence: Math.min(Math.max(data.confidence || 0.8, 0), 1), // Ensure 0-1 range
-          culturalAffinities: Array.isArray(data.cultural_affinities || data.culturalAffinities) ? 
-            (data.cultural_affinities || data.culturalAffinities).slice(0, 6) : [],
-          personalityTraits: Array.isArray(data.personality_traits || data.personalityTraits) ? 
-            (data.personality_traits || data.personalityTraits).slice(0, 5) : [],
+          tasteVector,
+          recommendations: destinations,
+          confidence: Math.min(Math.max(0.85, 0), 1), // High confidence for real API data
+          culturalAffinities,
+          personalityTraits,
           processingTime: `Qloo API via ${endpointDesc}`
         };
       } else {
@@ -489,6 +474,99 @@ async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
   const finalError = new Error(`All Qloo API endpoints failed. Errors: ${errors.join('; ')}`);
   console.error('Qloo API integration failed:', finalError.message);
   throw finalError;
+}
+
+// Helper functions for parsing Qloo API responses
+
+// Generate taste vector from Qloo entities
+function generateTasteVectorFromEntities(entities: any[], themes: string[]): TasteVector {
+  const vector = generateMockTasteVector(themes, [], ''); // Start with base vector
+  
+  // Analyze entity tags to refine taste vector
+  entities.forEach(entity => {
+    const tags = entity.tags || [];
+    const popularity = entity.popularity || 0;
+    const affinity = entity.query?.affinity || 0;
+    
+    tags.forEach((tag: any) => {
+      const tagName = tag.name?.toLowerCase() || '';
+      const weight = (popularity + affinity) / 2;
+      
+      if (tagName.includes('outdoor') || tagName.includes('adventure')) {
+        vector.adventure = Math.min(vector.adventure + (weight * 0.3), 1.0);
+      }
+      if (tagName.includes('culture') || tagName.includes('art') || tagName.includes('history')) {
+        vector.culture = Math.min(vector.culture + (weight * 0.3), 1.0);
+      }
+      if (tagName.includes('luxury') || tagName.includes('premium')) {
+        vector.luxury = Math.min(vector.luxury + (weight * 0.3), 1.0);
+      }
+      if (tagName.includes('food') || tagName.includes('culinary')) {
+        vector.food = Math.min(vector.food + (weight * 0.3), 1.0);
+      }
+      if (tagName.includes('nature') || tagName.includes('scenic') || tagName.includes('beach')) {
+        vector.nature = Math.min(vector.nature + (weight * 0.3), 1.0);
+      }
+      if (tagName.includes('urban') || tagName.includes('city')) {
+        vector.urban = Math.min(vector.urban + (weight * 0.3), 1.0);
+      }
+    });
+  });
+  
+  return vector;
+}
+
+// Extract cultural affinities from Qloo entities
+function extractCulturalAffinities(entities: any[]): string[] {
+  const affinities = new Set<string>();
+  
+  entities.forEach(entity => {
+    const tags = entity.tags || [];
+    tags.forEach((tag: any) => {
+      const tagName = tag.name;
+      if (tagName && !tagName.includes('Destination')) {
+        affinities.add(tagName);
+      }
+    });
+  });
+  
+  return Array.from(affinities).slice(0, 6);
+}
+
+// Generate personality traits from destinations
+function generatePersonalityFromDestinations(destinations: string[], themes: string[]): string[] {
+  const traits = new Set<string>();
+  
+  // Add theme-based traits
+  themes.forEach(theme => {
+    switch (theme.toLowerCase()) {
+      case 'adventure':
+        traits.add('Adventure Seeker');
+        break;
+      case 'culture':
+        traits.add('Culture Enthusiast');
+        break;
+      case 'photography':
+        traits.add('Visual Storyteller');
+        break;
+      case 'travel':
+        traits.add('Global Explorer');
+        break;
+      case 'food':
+        traits.add('Culinary Explorer');
+        break;
+    }
+  });
+  
+  // Add destination-based traits
+  if (destinations.some(d => d.includes('Beach') || d.includes('Coast'))) {
+    traits.add('Beach Lover');
+  }
+  if (destinations.some(d => d.includes('Mountain') || d.includes('Alps'))) {
+    traits.add('Mountain Explorer');
+  }
+  
+  return Array.from(traits).slice(0, 5);
 }
 
 // Helper function to check Qloo API configuration
