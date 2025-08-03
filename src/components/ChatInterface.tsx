@@ -783,7 +783,6 @@ const ChatInterface: React.FC = () => {
                 { step: "Preferences", status: chatState === "generating" || chatState === "recommendations" ? "completed" : chatState === "questions" ? "current" : "pending", icon: MessageSquare },
                 { step: "Recommendations", status: chatState === "recommendations" ? "completed" : chatState === "generating" ? "current" : "pending", icon: Sparkles }
               ].map((item, idx) => {
-                const Icon = item.icon;
                 return (
                   <div key={idx} className="flex items-center gap-2">
                     <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-all duration-300 ${

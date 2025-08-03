@@ -169,7 +169,7 @@ const URLForm: React.FC<URLFormProps> = ({ onSubmit }) => {
         <div className="text-xs text-muted-foreground">
           <p className="flex items-start gap-2">
             <span className="text-primary">💡</span>
-            <span>I'll analyze your content themes, audience insights, and posting patterns to create personalized travel recommendations.</span>
+            <span>I&apos;ll analyze your content themes, audience insights, and posting patterns to create personalized travel recommendations.</span>
           </p>
         </div>
         

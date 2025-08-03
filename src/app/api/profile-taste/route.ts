@@ -435,7 +435,7 @@ async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
         
         // Parse Qloo API response - handle actual hackathon API format
         const entities = data.results?.entities || [];
-        const destinations = entities.map((entity: any) => entity.name).slice(0, 8);
+        const destinations = entities.map((entity: Record<string, unknown>) => entity.name).slice(0, 8);
         
         // Extract taste vector from entity tags and properties
         const tasteVector = generateTasteVectorFromEntities(entities, request.themes);
@@ -479,17 +479,18 @@ async function callQlooAPI(request: QlooRequest): Promise<QlooResponse> {
 // Helper functions for parsing Qloo API responses
 
 // Generate taste vector from Qloo entities
-function generateTasteVectorFromEntities(entities: any[], themes: string[]): TasteVector {
+function generateTasteVectorFromEntities(entities: Record<string, unknown>[], themes: string[]): TasteVector {
   const vector = generateMockTasteVector(themes, [], ''); // Start with base vector
   
   // Analyze entity tags to refine taste vector
   entities.forEach(entity => {
-    const tags = entity.tags || [];
-    const popularity = entity.popularity || 0;
-    const affinity = entity.query?.affinity || 0;
+    const tags = (entity.tags as Record<string, unknown>[]) || [];
+    const popularity = (entity.popularity as number) || 0;
+    const query = entity.query as Record<string, unknown> | undefined;
+    const affinity = (query?.affinity as number) || 0;
     
-    tags.forEach((tag: any) => {
-      const tagName = tag.name?.toLowerCase() || '';
+    tags.forEach((tag: Record<string, unknown>) => {
+      const tagName = (tag.name as string)?.toLowerCase() || '';
       const weight = (popularity + affinity) / 2;
       
       if (tagName.includes('outdoor') || tagName.includes('adventure')) {
@@ -517,13 +518,13 @@ function generateTasteVectorFromEntities(entities: any[], themes: string[]): Tas
 }
 
 // Extract cultural affinities from Qloo entities
-function extractCulturalAffinities(entities: any[]): string[] {
+function extractCulturalAffinities(entities: Record<string, unknown>[]): string[] {
   const affinities = new Set<string>();
   
   entities.forEach(entity => {
-    const tags = entity.tags || [];
-    tags.forEach((tag: any) => {
-      const tagName = tag.name;
+    const tags = (entity.tags as Record<string, unknown>[]) || [];
+    tags.forEach((tag: Record<string, unknown>) => {
+      const tagName = tag.name as string;
       if (tagName && !tagName.includes('Destination')) {
         affinities.add(tagName);
       }
