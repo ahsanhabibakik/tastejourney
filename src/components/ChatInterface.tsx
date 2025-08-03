@@ -706,38 +706,39 @@ const ChatInterface: React.FC = () => {
       {/* Main Chat Area */}
       <div className="flex flex-col flex-1">
         {/* Enhanced Chat Header */}
-        <div className="border-b border-border/50 bg-background/80 backdrop-blur-md">
-          <div className="max-w-none lg:max-w-5xl xl:max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-2.5 sm:py-3">
-            <div className="flex items-center gap-2 sm:gap-3 xl:gap-4">
-              {/* Show bot icon on smaller screens when sidebar is hidden */}
-              <div className="relative flex-shrink-0 lg:hidden">
-                <Bot className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
-                <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full border-2 border-background animate-pulse" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h2 className="font-semibold text-sm sm:text-base lg:text-lg xl:text-xl text-foreground flex items-center gap-1.5 sm:gap-2 truncate">
-                  <span className="truncate">AI Travel Companion</span>
-                  <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 lg:h-5 lg:w-5 xl:h-6 xl:w-6 text-primary flex-shrink-0" />
-                </h2>
-                <p className="text-xs sm:text-sm lg:text-base xl:text-lg text-muted-foreground truncate">
-                {chatState === "initial" && "Ready to analyze your website"}
-                {chatState === "analyzing" && "Analyzing your content..."}
-                {chatState === "confirmation" && "Reviewing extracted data"}
-                {chatState === "profiling" && "Building your taste profile..."}
-                {chatState === "questions" && `Question ${currentQuestionIndex + 1} of ${questions.length}`}
-                {chatState === "generating" && "Generating recommendations..."}
-                {chatState === "recommendations" && "Recommendations ready!"}
-              </p>
-            </div>
-            <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
-              <div className="flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1 bg-primary/10 rounded-full">
-                <MessageSquare className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-primary" />
-                <span className="text-[10px] sm:text-xs font-medium text-primary">{messages.length}</span>
-              </div>
-            </div>
-          </div>
+     <div className="border-b border-border/50 bg-background/80 backdrop-blur-md">
+  <div className="max-w-none lg:max-w-5xl xl:max-w-6xl mx-auto px-2 sm:px-3 lg:px-4 xl:px-6 py-1 sm:py-1.5">
+    <div className="flex items-center gap-1.5 sm:gap-2 xl:gap-3">
+      {/* Bot icon on small screens */}
+      <div className="relative flex-shrink-0 lg:hidden">
+        <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+        <div className="absolute -top-0.5 -right-0.5 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-green-500 rounded-full border-2 border-background animate-pulse" />
+      </div>
+      <div className="flex-1 min-w-0">
+        <h2 className="font-semibold text-xs sm:text-sm lg:text-base xl:text-lg text-foreground flex items-center gap-1 sm:gap-1.5 truncate">
+          <span className="truncate">AI Travel Companion</span>
+          <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 xl:h-5 xl:w-5 text-primary" />
+        </h2>
+        <p className="text-[9px] sm:text-xs lg:text-sm xl:text-base text-muted-foreground truncate">
+          {chatState === "initial" && "Ready to analyze your website"}
+          {chatState === "analyzing" && "Analyzing your content..."}
+          {chatState === "confirmation" && "Reviewing data"}
+          {chatState === "profiling" && "Building your taste profile..."}
+          {chatState === "questions" && `Question ${currentQuestionIndex + 1} of ${questions.length}`}
+          {chatState === "generating" && "Generating recommendations..."}
+          {chatState === "recommendations" && "Recommendations ready!"}
+        </p>
+      </div>
+      <div className="flex items-center gap-1 flex-shrink-0">
+        <div className="flex items-center gap-1 px-2 py-0.5 bg-primary/10 rounded-full">
+          <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
+          <span className="text-[9px] sm:text-[10px] font-medium text-primary">{messages.length}</span>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
 
         {/* Enhanced Chat Messages Area */}
         <div className="flex-1 overflow-y-auto scrollbar-thin bg-gradient-to-b from-background/50 to-muted/20">
