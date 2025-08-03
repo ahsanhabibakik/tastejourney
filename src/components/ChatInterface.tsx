@@ -104,6 +104,132 @@ const questions = [
   },
 ];
 
+// Markdown rendering function for chat messages
+const renderMarkdown = (text: string): React.ReactNode => {
+  // Split text by line breaks to handle paragraph formatting
+  const lines = text.split('\n');
+  
+  return lines.map((line, lineIndex) => {
+    if (line.trim() === '') {
+      return <br key={lineIndex} />;
+    }
+    
+    // Process inline markdown in each line
+    const processedLine = processInlineMarkdown(line);
+    
+    return (
+      <div key={lineIndex} className="mb-1 last:mb-0">
+        {processedLine}
+      </div>
+    );
+  });
+};
+
+// Process inline markdown elements
+const processInlineMarkdown = (text: string): React.ReactNode[] => {
+  const elements: React.ReactNode[] = [];
+  let remaining = text;
+  let key = 0;
+  
+  while (remaining.length > 0) {
+    // Bold+Italic (***text***) - must be first
+    const boldItalicMatch = remaining.match(/^(.*?)\*\*\*(.*?)\*\*\*(.*)$/);
+    if (boldItalicMatch) {
+      if (boldItalicMatch[1]) elements.push(boldItalicMatch[1]);
+      elements.push(
+        <span key={key++} className="font-bold italic">
+          {boldItalicMatch[2]}
+        </span>
+      );
+      remaining = boldItalicMatch[3];
+      continue;
+    }
+    
+    // Bold (**text**)
+    const boldMatch = remaining.match(/^(.*?)\*\*(.*?)\*\*(.*)$/);
+    if (boldMatch) {
+      if (boldMatch[1]) elements.push(boldMatch[1]);
+      elements.push(
+        <span key={key++} className="font-bold">
+          {boldMatch[2]}
+        </span>
+      );
+      remaining = boldMatch[3];
+      continue;
+    }
+    
+    // Code (`code`)
+    const codeMatch = remaining.match(/^(.*?)`([^`]+)`(.*)$/);
+    if (codeMatch) {
+      if (codeMatch[1]) elements.push(codeMatch[1]);
+      elements.push(
+        <code key={key++} className="bg-muted/50 px-1 py-0.5 rounded text-[0.875em] font-mono">
+          {codeMatch[2]}
+        </code>
+      );
+      remaining = codeMatch[3];
+      continue;
+    }
+    
+    // Links ([text](url))
+    const linkMatch = remaining.match(/^(.*?)\[([^\]]+)\]\(([^)]+)\)(.*)$/);
+    if (linkMatch) {
+      if (linkMatch[1]) elements.push(linkMatch[1]);
+      const url = linkMatch[3];
+      // Security check - only allow http/https
+      if (url.startsWith('http://') || url.startsWith('https://')) {
+        elements.push(
+          <a 
+            key={key++} 
+            href={url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-primary underline hover:opacity-80 transition-opacity"
+          >
+            {linkMatch[2]}
+          </a>
+        );
+      } else {
+        elements.push(`[${linkMatch[2]}](${linkMatch[3]})`);
+      }
+      remaining = linkMatch[4];
+      continue;
+    }
+    
+    // Italic (*text*) - after bold to avoid conflicts  
+    const italicMatch = remaining.match(/^(.*?)\*(?!\*)(.*?)\*(.*)$/);
+    if (italicMatch) {
+      if (italicMatch[1]) elements.push(italicMatch[1]);
+      elements.push(
+        <span key={key++} className="italic">
+          {italicMatch[2]}
+        </span>
+      );
+      remaining = italicMatch[3];
+      continue;
+    }
+    
+    // Bullet points (* text)
+    const bulletMatch = remaining.match(/^\s*\*\s+(.*)$/);
+    if (bulletMatch) {
+      elements.push(
+        <div key={key++} className="flex items-start gap-2 ml-4">
+          <span className="text-primary mt-1 text-xs">•</span>
+          <span className="flex-1">{processInlineMarkdown(bulletMatch[1])}</span>
+        </div>
+      );
+      remaining = '';
+      continue;
+    }
+    
+    // No more markdown found, add remaining text
+    elements.push(remaining);
+    break;
+  }
+  
+  return elements;
+};
+
 const ChatInterface: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -722,6 +848,14 @@ const ChatInterface: React.FC = () => {
                 Website Insights
               </h3>
               <div className="space-y-2.5">
+                {/* Analyzed URL */}
+                <div>
+                  <div className="text-[10px] text-muted-foreground mb-1">Analyzed Website</div>
+                  <div className="text-[10px] font-mono bg-background/50 text-foreground px-2 py-1 rounded border border-border/50 break-all">
+                    {websiteData.url}
+                  </div>
+                </div>
+                
                 <div>
                   <div className="text-[10px] text-muted-foreground mb-1">Content Type</div>
                   <div className="text-[11px] font-medium text-foreground bg-accent/10 px-2 py-1 rounded inline-flex items-center gap-1">
@@ -912,9 +1046,9 @@ const ChatInterface: React.FC = () => {
                             <span className="text-[11px] font-medium">AI Assistant</span>
                           </div>
                         )}
-                        <p className="text-[13px] lg:text-sm leading-relaxed">
-                          {message.text}
-                        </p>
+                        <div className="text-[13px] lg:text-sm leading-relaxed">
+                          {renderMarkdown(message.text)}
+                        </div>
                       </div>
                       
                       {/* Timestamp */}
