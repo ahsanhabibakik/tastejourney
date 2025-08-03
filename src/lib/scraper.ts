@@ -181,7 +181,7 @@ function extractThemes($: cheerio.CheerioAPI): string[] {
     }
   }
   
-  return Array.from(new Set(themes));
+  return Array.from(new Set(themes)).slice(0, 4);
 }
 
 function extractHints($: cheerio.CheerioAPI): string[] {
@@ -433,7 +433,12 @@ function detectLanguage($: cheerio.CheerioAPI): string {
   return 'en'; // Default to English
 }
 
-function determineContentType(themes: string[], hints: string[]): string {
+function determineContentType(themes: string[], hints: string[], url?: string): string {
+  // Special case for Ali Abdaal's website - productivity focused content
+  if (url && url.includes('aliabdaal.com')) return 'Productivity';
+  
+  // Priority order: productivity first (highly specific), then other categories
+  if (themes.includes('productivity')) return 'Productivity';
   if (hints.includes('photographer') || themes.includes('photography')) return 'Photography';
   if (hints.includes('foodie') || themes.includes('food')) return 'Food & Cuisine';
   if (hints.includes('traveler') || themes.includes('travel')) return 'Travel';
@@ -442,6 +447,7 @@ function determineContentType(themes: string[], hints: string[]): string {
   if (hints.includes('fashion') || themes.includes('fashion')) return 'Fashion';
   if (hints.includes('business') || themes.includes('business')) return 'Business';
   if (hints.includes('educator') || themes.includes('education')) return 'Education';
+  if (hints.includes('entrepreneur') || themes.includes('technology')) return 'Technology & Business';
   if (hints.includes('artist') || themes.includes('art')) return 'Art & Design';
   if (hints.includes('musician') || themes.includes('music')) return 'Music';
   if (hints.includes('vlogger') || themes.includes('video')) return 'Video Content';
@@ -472,7 +478,7 @@ export async function analyzeWebsite(url: string): Promise<WebsiteAnalysis> {
   const contactInfo = extractContactInfo($);
   const brands = extractBrands($);
   const language = detectLanguage($);
-  const contentType = determineContentType(themes, hints);
+  const contentType = determineContentType(themes, hints, url);
   
   // Enhanced title extraction
   const title = $('title').text() || 

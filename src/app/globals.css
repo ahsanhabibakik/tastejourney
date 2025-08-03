@@ -16,6 +16,10 @@
 @import "tailwindcss";
 
 @theme {
+  /* Inset utilities */
+  --inset-0: 0;
+  --inset-auto: auto;
+  
   /* Modern color palette with better contrast and accessibility */
   --color-background: oklch(0.99 0.005 106);
   --color-foreground: oklch(0.15 0.02 258);
@@ -63,8 +67,7 @@
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
 
-  /* Positioning utilities */
-  --inset-0: 0px;
+  /* Positioning utilities for Tailwind CSS 4 */
 }
 
 .dark {
@@ -218,13 +221,7 @@
     }
   }
 
-  /* Positioning utilities */
-  .inset-0 {
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
+  /* Positioning utilities removed - using native Tailwind utilities */
 
   /* Custom gradient backgrounds */
   .gradient-bg {

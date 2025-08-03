@@ -17,11 +17,7 @@
       "Bash(git commit:*)",
       "Bash(npx tsc:*)",
       "Bash(npm run lint)",
-      "Bash(timeout 10 npm run dev)",
-      "Bash(ls:*)",
-      "WebFetch(domain:nextjs.org)",
-      "Bash(true)",
-      "Bash(npx next lint:*)"
+      "Bash(timeout 10 npm run dev)"
     ],
     "deny": []
   }
