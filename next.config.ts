@@ -47,9 +47,17 @@ const nextConfig: NextConfig = {
   // Fast build optimization
   experimental: {
     optimizePackageImports: ["lucide-react"],
+    // Turbopack configuration
+    turbo: {
+      resolveAlias: {
+        fs: false,
+        net: false,
+        tls: false,
+      },
+    },
   },
 
-  // Minimal webpack config for fast builds
+  // Minimal webpack config for non-turbopack builds
   webpack: (config: any) => {
     config.resolve.fallback = {
       fs: false,

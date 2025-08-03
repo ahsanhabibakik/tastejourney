@@ -20,7 +20,11 @@ export const metadata: Metadata = {
   description: "Get AI-powered travel destination recommendations optimized for content creation, audience engagement, and monetization opportunities.",
   keywords: ["travel", "content creator", "AI recommendations", "travel planning", "creator economy"],
   authors: [{ name: "TasteJourney Team" }],
-  viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

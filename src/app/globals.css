@@ -68,6 +68,15 @@
   --radius-xl: 1.5rem;
 
   /* Positioning utilities for Tailwind CSS 4 */
+  --top-0: 0;
+  --right-0: 0;
+  --bottom-0: 0;
+  --left-0: 0;
+  --top-0_5: 0.125rem;
+  --right-0_5: 0.125rem;
+  --left-1_2: 50%;
+  --translate-x-1_2: -50%;
+  --translate-y-1: -0.25rem;
 }
 
 .dark {
