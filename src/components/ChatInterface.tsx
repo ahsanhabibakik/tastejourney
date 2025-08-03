@@ -117,6 +117,7 @@ const ChatInterface: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [email, setEmail] = useState("");
   const [reportSent, setReportSent] = useState(false);
+  const [showEmailSection, setShowEmailSection] = useState(true);
   const [isTyping, setIsTyping] = useState(false);
   const [chatState, setChatState] = useState<ChatState>("initial");
   const [websiteData, setWebsiteData] = useState<{
@@ -604,11 +605,10 @@ const ChatInterface: React.FC = () => {
       if (data.success) {
         setReportSent(true);
         addMessage("Great! Your personalized travel report has been sent to your email. Check your inbox (and spam folder) for the PDF attachment. You can continue chatting to explore more destinations or ask any questions!", true);
-        // Scroll to show the success message
+        // Auto-hide success message after 5 seconds
         setTimeout(() => {
-          const el = document.getElementById('email-report-section');
-          el?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 100);
+          setShowEmailSection(false);
+        }, 5000);
       } else {
         throw new Error(data.error || 'Failed to send report');
       }
@@ -804,12 +804,17 @@ const ChatInterface: React.FC = () => {
                   size="sm" 
                   className={`justify-start h-7 text-[11px] px-2.5 group ${
                     reportSent 
-                      ? "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-950/30" 
+                      ? "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-950/30" 
                       : "hover:bg-accent/10 hover:text-accent hover:border-accent/30"
                   }`}
                   onClick={() => {
-                    const el = document.getElementById('email-report-section');
-                    el?.scrollIntoView({ behavior: 'smooth' });
+                    if (!showEmailSection) {
+                      setShowEmailSection(true);
+                    }
+                    setTimeout(() => {
+                      const el = document.getElementById('email-report-section');
+                      el?.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
                   }}
                 >
                   <Mail className="h-3 w-3 mr-1.5" />
@@ -1290,60 +1295,81 @@ const ChatInterface: React.FC = () => {
           <div className="border-t border-border/50 bg-background/95 backdrop-blur-md">
             <div className="max-w-none xl:max-w-6xl mx-auto px-3 lg:px-4 xl:px-6">
               <div className="py-2 lg:py-3 space-y-2">
-                {/* Enhanced Email Report Section */}
-                {!reportSent ? (
-                  <div id="email-report-section" className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-lg p-3 transition-all duration-300">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <Mail className="h-4 w-4 text-primary" />
-                        <h4 className="font-semibold text-xs text-foreground">
-                          Get Your Personalized Travel Report
-                        </h4>
-                        <span className="hidden lg:inline text-[10px] text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-full">
-                          PDF • 10+ pages
-                        </span>
+                {/* Enhanced Email Report Section - Responsive & Compact */}
+                {showEmailSection && (
+                  <div className="transition-all duration-500 ease-in-out">
+                    {!reportSent ? (
+                      <div id="email-report-section" className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-lg p-2 sm:p-3 transition-all duration-300 shadow-sm">
+                        {/* Compact Header */}
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-1.5 sm:gap-2">
+                            <Mail className="h-3 w-3 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
+                            <h4 className="font-semibold text-[10px] sm:text-xs text-foreground truncate">
+                              Get Travel Report
+                            </h4>
+                            <span className="hidden sm:inline text-[9px] text-muted-foreground bg-muted/40 px-1.5 py-0.5 rounded-full whitespace-nowrap">
+                              PDF
+                            </span>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-5 w-5 p-0 opacity-60 hover:opacity-100 hover:bg-primary/10"
+                            onClick={() => setShowEmailSection(false)}
+                          >
+                            <X className="h-3 w-3 text-muted-foreground" />
+                          </Button>
+                        </div>
+                        
+                        {/* Responsive Input Row */}
+                        <div className="flex flex-col sm:flex-row gap-2">
+                          <Input
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            placeholder="your@email.com"
+                            className="flex-1 h-8 text-[11px] sm:text-xs bg-background/50 border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20"
+                            type="email"
+                          />
+                          <Button 
+                            onClick={handleSendReport} 
+                            disabled={!email || isTyping}
+                            className="h-8 px-3 sm:px-4 font-medium text-[11px] sm:text-xs bg-primary hover:bg-primary/90 disabled:opacity-50 flex-shrink-0"
+                          >
+                            <Mail className="h-3 w-3 mr-1" />
+                            <span className="hidden sm:inline">Send</span>
+                            <span className="sm:hidden">Send Report</span>
+                          </Button>
+                        </div>
+                        
+                        <p className="text-[9px] sm:text-[10px] text-muted-foreground mt-1.5 leading-relaxed">
+                          📄 Detailed recommendations, budget analysis & creator insights
+                        </p>
                       </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Input
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        placeholder="Enter your email"
-                        className="flex-1 h-8 text-xs bg-background/50 border-border/50 focus:border-primary/50"
-                        type="email"
-                      />
-                      <Button 
-                        onClick={handleSendReport} 
-                        disabled={!email || isTyping}
-                        className="h-8 px-4 font-medium text-xs bg-primary hover:bg-primary/90"
-                      >
-                        <Mail className="h-3 w-3 mr-1.5" />
-                        Send Report
-                      </Button>
-                    </div>
-                    <p className="text-[10px] text-muted-foreground mt-1.5">
-                      📄 Includes: Detailed recommendations, budget analysis, creator insights & collaboration tips
-                    </p>
-                  </div>
-                ) : (
-                  <div id="email-report-section" className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 border border-green-200 dark:border-green-800 rounded-lg p-3 transition-all duration-300">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-500" />
-                        <div>
-                          <p className="font-semibold text-xs text-green-800 dark:text-green-300">Report Sent Successfully!</p>
-                          <p className="text-[10px] text-green-600 dark:text-green-400">Check your email inbox (and spam folder)</p>
+                    ) : (
+                      <div id="email-report-section" className="bg-gradient-to-r from-emerald-500/10 to-green-500/10 dark:from-emerald-500/5 dark:to-green-500/5 border border-emerald-500/20 dark:border-emerald-500/30 rounded-lg p-2 sm:p-3 transition-all duration-300 shadow-sm">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                            <div className="min-w-0 flex-1">
+                              <p className="font-semibold text-[10px] sm:text-xs text-emerald-800 dark:text-emerald-300 truncate">
+                                Report Sent Successfully!
+                              </p>
+                              <p className="text-[9px] sm:text-[10px] text-emerald-600 dark:text-emerald-400 truncate">
+                                Check your inbox (and spam folder)
+                              </p>
+                            </div>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 w-6 p-0 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 flex-shrink-0"
+                            onClick={() => setShowEmailSection(false)}
+                          >
+                            <X className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
+                          </Button>
                         </div>
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-6 w-6 p-0 hover:bg-green-100 dark:hover:bg-green-900/20"
-                        onClick={() => setReportSent(false)}
-                      >
-                        <X className="h-3 w-3 text-green-600 dark:text-green-400" />
-                      </Button>
-                    </div>
+                    )}
                   </div>
                 )}
                   
