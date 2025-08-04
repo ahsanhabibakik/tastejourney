@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect, useCallback, useMemo } from "react"
 import { Send, Bot, User, Wand2, X, CheckCircle2, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "./TravelSwiper";
 import { Pagination } from "swiper/modules";
@@ -248,6 +247,18 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping, scrollToBottom]);
+
+  // Handle ESC key for closing mobile sidebar
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && showMobileSidebar) {
+        setShowMobileSidebar(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscapeKey);
+    return () => document.removeEventListener("keydown", handleEscapeKey);
+  }, [showMobileSidebar, setShowMobileSidebar]);
 
   const generateUniqueId = useCallback(() => {
     return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -634,10 +645,29 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
 
   return (
     <div className="flex h-[calc(100vh-40px)] lg:h-[calc(100vh-48px)] bg-gradient-to-br from-background via-background/95 to-muted/30">
-      {/* Mobile Sidebar Dialog */}
-      <div className="lg:hidden">
-        <Dialog open={showMobileSidebar} onOpenChange={setShowMobileSidebar}>
-          <DialogContent className="p-0 max-w-none w-64 h-full rounded-none inset-y-0 left-0 translate-x-0 translate-y-0 data-[state=closed]:slide-out-to-left-full data-[state=open]:slide-in-from-left-full">
+      {/* Mobile Sidebar Overlay */}
+      {showMobileSidebar && (
+        <div className="lg:hidden fixed inset-0 z-50">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-fade-in"
+            onClick={() => setShowMobileSidebar(false)}
+          />
+          
+          {/* Sidebar Panel */}
+          <div className="absolute left-0 top-0 h-full w-64 bg-card border-r border-border/40 shadow-2xl animate-slide-in-left">
+            {/* Close Button */}
+            <div className="absolute top-3 right-3 z-10">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 rounded-full bg-background/80 hover:bg-background border border-border/50"
+                onClick={() => setShowMobileSidebar(false)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            
             <SidebarContent
               chatState={chatState}
               currentQuestionIndex={currentQuestionIndex}
@@ -651,9 +681,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
               handleSendMessage={handleSendMessage}
               setShowEmailSection={setShowEmailSection}
             />
-          </DialogContent>
-        </Dialog>
-      </div>
+          </div>
+        </div>
+      )}
       
       {/* Desktop Sidebar */}
       <div className="hidden lg:flex flex-col w-60 xl:w-64 bg-card/60 backdrop-blur-lg border-r border-border/40 shadow-lg h-full">

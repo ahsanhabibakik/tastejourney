@@ -27,7 +27,7 @@ interface DestinationCardProps {
   rank: number;
 }
 
-const DestinationCard: React.FC<DestinationCardProps> = ({ rec, rank }) => {
+const DestinationCard: React.FC<DestinationCardProps> = React.memo(({ rec, rank }) => {
   return (
     <div className="w-full bg-card border border-border/50 rounded-2xl overflow-hidden shadow-lg">
       {/* Image Section */}
@@ -70,17 +70,17 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ rec, rank }) => {
         {/* Quick Stats */}
         <div className="grid grid-cols-2 gap-3">
           {rec.budget?.range && (
-            <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/50 rounded-xl p-3 text-center">
+            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-center">
               <div className="text-xl mb-1">💰</div>
-              <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+              <div className="text-xs font-semibold text-emerald-700">
                 {rec.budget.range}
               </div>
             </div>
           )}
           {rec.engagement?.potential && (
-            <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800/50 rounded-xl p-3 text-center">
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 text-center">
               <div className="text-xl mb-1">🏝️</div>
-              <div className="text-xs font-semibold text-blue-700 dark:text-blue-400">
+              <div className="text-xs font-semibold text-blue-700">
                 {rec.engagement.potential}
               </div>
             </div>
@@ -148,6 +148,8 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ rec, rank }) => {
       </div>
     </div>
   );
-};
+});
+
+DestinationCard.displayName = 'DestinationCard';
 
 export default DestinationCard;

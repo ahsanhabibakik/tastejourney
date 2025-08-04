@@ -41,7 +41,7 @@ interface SidebarContentProps {
   setShowEmailSection: (show: boolean) => void;
 }
 
-const SidebarContent: React.FC<SidebarContentProps> = ({
+const SidebarContent: React.FC<SidebarContentProps> = React.memo(({
   chatState,
   currentQuestionIndex,
   questions,
@@ -207,14 +207,14 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
 
         {/* Report Status */}
         {chatState === "recommendations" && reportSent && (
-          <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
+          <div className="bg-green-50 border border-green-200 rounded-lg p-3">
             <div className="flex items-center gap-2 mb-1">
-              <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-500" />
-              <h3 className="font-semibold text-[12px] text-green-800 dark:text-green-300">
+              <CheckCircle2 className="h-4 w-4 text-green-600" />
+              <h3 className="font-semibold text-[12px] text-green-800">
                 Report Delivered
               </h3>
             </div>
-            <p className="text-[10px] text-green-600 dark:text-green-400 leading-relaxed">
+            <p className="text-[10px] text-green-600 leading-relaxed">
               Your personalized PDF report has been sent to {email}
             </p>
           </div>
@@ -245,7 +245,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                 size="sm" 
                 className={`justify-start h-7 text-[11px] px-2.5 group ${
                   reportSent 
-                    ? "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-950/30" 
+                    ? "bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100" 
                     : "hover:bg-accent/10 hover:text-accent hover:border-accent/30"
                 }`}
                 onClick={() => {
@@ -277,6 +277,8 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
       </div>
     </div>
   );
-};
+});
+
+SidebarContent.displayName = 'SidebarContent';
 
 export default SidebarContent;

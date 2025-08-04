@@ -186,13 +186,6 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Dark mode specific styles */
-@media (prefers-color-scheme: dark) {
-  .glass {
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-}
 
 /* Enhanced focus states for accessibility */
 .enhanced-focus:focus-visible {
@@ -505,4 +498,9 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Mobile sidebar slide animation */
+.animate-slide-in-left {
+  animation: slideInLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
