@@ -49,13 +49,16 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["lucide-react"],
   },
 
-  // Minimal webpack config for Node.js modules
+  // Minimal webpack config for non-turbopack builds
   webpack: (config: any) => {
-    config.resolve.fallback = {
-      fs: false,
-      net: false,
-      tls: false,
-    };
+    // Only apply when not using turbopack
+    if (!process.env.TURBOPACK) {
+      config.resolve.fallback = {
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
     return config;
   },
 
