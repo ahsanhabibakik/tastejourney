@@ -321,39 +321,6 @@
   --z-50: 50;
 }
 
-.dark {
-  --color-background: oklch(0.08 0.01 258);
-  --color-foreground: oklch(0.95 0.01 258);
-  --color-card: oklch(0.12 0.01 258);
-  --color-card-foreground: oklch(0.95 0.01 258);
-  --color-popover: oklch(0.12 0.01 258);
-  --color-popover-foreground: oklch(0.95 0.01 258);
-
-  --color-primary: oklch(0.65 0.18 258);
-  --color-primary-foreground: oklch(0.08 0.01 258);
-
-  --color-secondary: oklch(0.18 0.01 258);
-  --color-secondary-foreground: oklch(0.95 0.01 258);
-
-  --color-muted: oklch(0.15 0.01 258);
-  --color-muted-foreground: oklch(0.65 0.02 258);
-
-  --color-accent: oklch(0.25 0.02 45);
-  --color-accent-foreground: oklch(0.95 0.01 258);
-
-  --color-success: oklch(0.65 0.15 142);
-  --color-success-foreground: oklch(0.08 0.01 142);
-
-  --color-warning: oklch(0.75 0.15 45);
-  --color-warning-foreground: oklch(0.08 0.01 45);
-
-  --color-destructive: oklch(0.65 0.18 15);
-  --color-destructive-foreground: oklch(0.08 0.01 15);
-
-  --color-border: oklch(0.2 0.01 258);
-  --color-input: oklch(0.18 0.01 258);
-  --color-ring: oklch(0.65 0.18 258);
-}
 
 @layer base {
   * {
@@ -483,13 +450,6 @@
     );
   }
 
-  .dark .gradient-bg {
-    background: linear-gradient(
-      135deg,
-      oklch(0.08 0.01 258) 0%,
-      oklch(0.06 0.01 258) 100%
-    );
-  }
 
   /* Glass morphism effect */
   .glass {
@@ -501,9 +461,6 @@
     box-shadow: 0 2px 20px -2px oklch(0.55 0.18 258 / 0.1);
   }
 
-  .dark .shadow-soft {
-    box-shadow: 0 2px 20px -2px oklch(0 0 0 / 0.3);
-  }
 
   /* Modern Animations */
   .animate-fade-in {
@@ -534,11 +491,6 @@
     background-size: 20px 20px;
   }
 
-  .dark .bg-grid-pattern {
-    background-image: 
-      linear-gradient(oklch(0.2 0.01 258 / 0.3) 1px, transparent 1px),
-      linear-gradient(90deg, oklch(0.2 0.01 258 / 0.3) 1px, transparent 1px);
-  }
 
   /* Enhanced hover effects */
   .hover-lift {
