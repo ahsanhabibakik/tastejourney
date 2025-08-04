@@ -13,6 +13,11 @@
     transform: translateY(0);
   }
 }
+
+/* Swiper CSS imports */
+@import "swiper/css";
+@import "swiper/css/pagination";
+
 @import "tailwindcss";
 
 @theme {
@@ -68,21 +73,238 @@
   --radius-xl: 1.5rem;
 
   /* Positioning utilities for Tailwind CSS 4 */
+  --inset-0: 0;
+  --inset-auto: auto;
+  --inset-px: 1px;
+  --inset-0_5: 0.125rem;
+  --inset-1: 0.25rem;
+  --inset-1_5: 0.375rem;
+  --inset-2: 0.5rem;
+  --inset-3: 0.75rem;
+  --inset-4: 1rem;
+  --inset-5: 1.25rem;
+  --inset-6: 1.5rem;
+  --inset-8: 2rem;
+  --inset-10: 2.5rem;
+  --inset-12: 3rem;
+  --inset-16: 4rem;
+  --inset-20: 5rem;
+  --inset-24: 6rem;
+  --inset-32: 8rem;
+  --inset-40: 10rem;
+  --inset-48: 12rem;
+  --inset-56: 14rem;
+  --inset-64: 16rem;
+  --inset-72: 18rem;
+  --inset-80: 20rem;
+  --inset-96: 24rem;
+  --inset-full: 100%;
+  --inset-1\/2: 50%;
+  --inset-1\/3: 33.333333%;
+  --inset-2\/3: 66.666667%;
+  --inset-1\/4: 25%;
+  --inset-2\/4: 50%;
+  --inset-3\/4: 75%;
+
+  /* X and Y positioning */
+  --inset-x-0: 0;
+  --inset-x-auto: auto;
+  --inset-x-px: 1px;
+  --inset-x-0_5: 0.125rem;
+  --inset-x-1: 0.25rem;
+  --inset-x-1_5: 0.375rem;
+  --inset-x-2: 0.5rem;
+  --inset-x-3: 0.75rem;
+  --inset-x-4: 1rem;
+  --inset-x-5: 1.25rem;
+  --inset-x-6: 1.5rem;
+  --inset-x-8: 2rem;
+  --inset-x-10: 2.5rem;
+  --inset-x-12: 3rem;
+  --inset-x-16: 4rem;
+  --inset-x-20: 5rem;
+  --inset-x-24: 6rem;
+  --inset-x-32: 8rem;
+  --inset-x-40: 10rem;
+  --inset-x-48: 12rem;
+  --inset-x-56: 14rem;
+  --inset-x-64: 16rem;
+  --inset-x-72: 18rem;
+  --inset-x-80: 20rem;
+  --inset-x-96: 24rem;
+  --inset-x-full: 100%;
+  --inset-x-1\/2: 50%;
+  --inset-x-1\/3: 33.333333%;
+  --inset-x-2\/3: 66.666667%;
+  --inset-x-1\/4: 25%;
+  --inset-x-2\/4: 50%;
+  --inset-x-3\/4: 75%;
+
+  --inset-y-0: 0;
+  --inset-y-auto: auto;
+  --inset-y-px: 1px;
+  --inset-y-0_5: 0.125rem;
+  --inset-y-1: 0.25rem;
+  --inset-y-1_5: 0.375rem;
+  --inset-y-2: 0.5rem;
+  --inset-y-3: 0.75rem;
+  --inset-y-4: 1rem;
+  --inset-y-5: 1.25rem;
+  --inset-y-6: 1.5rem;
+  --inset-y-8: 2rem;
+  --inset-y-10: 2.5rem;
+  --inset-y-12: 3rem;
+  --inset-y-16: 4rem;
+  --inset-y-20: 5rem;
+  --inset-y-24: 6rem;
+  --inset-y-32: 8rem;
+  --inset-y-40: 10rem;
+  --inset-y-48: 12rem;
+  --inset-y-56: 14rem;
+  --inset-y-64: 16rem;
+  --inset-y-72: 18rem;
+  --inset-y-80: 20rem;
+  --inset-y-96: 24rem;
+  --inset-y-full: 100%;
+  --inset-y-1\/2: 50%;
+  --inset-y-1\/3: 33.333333%;
+  --inset-y-2\/3: 66.666667%;
+  --inset-y-1\/4: 25%;
+  --inset-y-2\/4: 50%;
+  --inset-y-3\/4: 75%;
+
+  /* Individual positioning utilities */
   --top-0: 0;
-  --right-0: 0;
-  --bottom-0: 0;
-  --left-0: 0;
+  --top-auto: auto;
+  --top-px: 1px;
   --top-0_5: 0.125rem;
   --top-1: 0.25rem;
+  --top-1_5: 0.375rem;
   --top-2: 0.5rem;
+  --top-3: 0.75rem;
   --top-4: 1rem;
+  --top-5: 1.25rem;
+  --top-6: 1.5rem;
+  --top-8: 2rem;
+  --top-10: 2.5rem;
+  --top-12: 3rem;
+  --top-16: 4rem;
+  --top-20: 5rem;
+  --top-24: 6rem;
+  --top-32: 8rem;
+  --top-40: 10rem;
+  --top-48: 12rem;
+  --top-56: 14rem;
+  --top-64: 16rem;
+  --top-72: 18rem;
+  --top-80: 20rem;
+  --top-96: 24rem;
+  --top-full: 100%;
+  --top-1\/2: 50%;
+  --top-1\/3: 33.333333%;
+  --top-2\/3: 66.666667%;
+  --top-1\/4: 25%;
+  --top-2\/4: 50%;
+  --top-3\/4: 75%;
+
+  --right-0: 0;
+  --right-auto: auto;
+  --right-px: 1px;
   --right-0_5: 0.125rem;
   --right-1: 0.25rem;
   --right-1_5: 0.375rem;
   --right-2: 0.5rem;
+  --right-3: 0.75rem;
+  --right-4: 1rem;
+  --right-5: 1.25rem;
+  --right-6: 1.5rem;
+  --right-8: 2rem;
+  --right-10: 2.5rem;
+  --right-12: 3rem;
+  --right-16: 4rem;
+  --right-20: 5rem;
+  --right-24: 6rem;
+  --right-32: 8rem;
+  --right-40: 10rem;
+  --right-48: 12rem;
+  --right-56: 14rem;
+  --right-64: 16rem;
+  --right-72: 18rem;
+  --right-80: 20rem;
+  --right-96: 24rem;
+  --right-full: 100%;
+  --right-1\/2: 50%;
+  --right-1\/3: 33.333333%;
+  --right-2\/3: 66.666667%;
+  --right-1\/4: 25%;
+  --right-2\/4: 50%;
+  --right-3\/4: 75%;
+
+  --bottom-0: 0;
+  --bottom-auto: auto;
+  --bottom-px: 1px;
   --bottom-0_5: 0.125rem;
   --bottom-1: 0.25rem;
+  --bottom-1_5: 0.375rem;
+  --bottom-2: 0.5rem;
+  --bottom-3: 0.75rem;
   --bottom-4: 1rem;
+  --bottom-5: 1.25rem;
+  --bottom-6: 1.5rem;
+  --bottom-8: 2rem;
+  --bottom-10: 2.5rem;
+  --bottom-12: 3rem;
+  --bottom-16: 4rem;
+  --bottom-20: 5rem;
+  --bottom-24: 6rem;
+  --bottom-32: 8rem;
+  --bottom-40: 10rem;
+  --bottom-48: 12rem;
+  --bottom-56: 14rem;
+  --bottom-64: 16rem;
+  --bottom-72: 18rem;
+  --bottom-80: 20rem;
+  --bottom-96: 24rem;
+  --bottom-full: 100%;
+  --bottom-1\/2: 50%;
+  --bottom-1\/3: 33.333333%;
+  --bottom-2\/3: 66.666667%;
+  --bottom-1\/4: 25%;
+  --bottom-2\/4: 50%;
+  --bottom-3\/4: 75%;
+
+  --left-0: 0;
+  --left-auto: auto;
+  --left-px: 1px;
+  --left-0_5: 0.125rem;
+  --left-1: 0.25rem;
+  --left-1_5: 0.375rem;
+  --left-2: 0.5rem;
+  --left-3: 0.75rem;
+  --left-4: 1rem;
+  --left-5: 1.25rem;
+  --left-6: 1.5rem;
+  --left-8: 2rem;
+  --left-10: 2.5rem;
+  --left-12: 3rem;
+  --left-16: 4rem;
+  --left-20: 5rem;
+  --left-24: 6rem;
+  --left-32: 8rem;
+  --left-40: 10rem;
+  --left-48: 12rem;
+  --left-56: 14rem;
+  --left-64: 16rem;
+  --left-72: 18rem;
+  --left-80: 20rem;
+  --left-96: 24rem;
+  --left-full: 100%;
+  --left-1\/2: 50%;
+  --left-1\/3: 33.333333%;
+  --left-2\/3: 66.666667%;
+  --left-1\/4: 25%;
+  --left-2\/4: 50%;
+  --left-3\/4: 75%;
   --left-0_5: 0.125rem;
   --left-1: 0.25rem;
   --left-1_5: 0.375rem;
@@ -381,3 +603,18 @@
     -webkit-text-fill-color: transparent;
   }
 }
+
+/* Manual utility classes for positioning - Tailwind CSS 4 compatibility */
+.top-0 { top: 0; }
+.top-3 { top: 0.75rem; }
+.top-1\/2 { top: 50%; }
+.right-0 { right: 0; }
+.right-1 { right: 0.25rem; }
+.right-1\.5 { right: 0.375rem; }
+.right-3 { right: 0.75rem; }
+.bottom-0 { bottom: 0; }
+.bottom-3 { bottom: 0.75rem; }
+.left-0 { left: 0; }
+.left-3 { left: 0.75rem; }
+.inset-0 { inset: 0; }
+.inset-y-0 { top: 0; bottom: 0; }

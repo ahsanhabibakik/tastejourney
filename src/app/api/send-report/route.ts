@@ -315,14 +315,95 @@ const createEmailTransporter = () => {
 // };
 
 // =============================================================================
-// EMAIL TEMPLATE GENERATION
+// LLM-ENHANCED EMAIL TEMPLATE GENERATION
 // =============================================================================
+const generatePersonalizedSubject = (displayName: string, recommendations: Recommendation[], websiteData: WebsiteData): string => {
+  if (recommendations.length === 0) {
+    return `🌟 Your TasteJourney Analysis is Ready - ${displayName}`;
+  }
+  
+  const topDestination = recommendations[0]?.destination;
+  const themes = websiteData.themes?.slice(0, 2).join(' & ') || 'travel';
+  
+  const subjectVariations = [
+    `✈️ ${displayName}, Your Perfect ${topDestination} Adventure Awaits!`,
+    `🌍 ${displayName}: ${recommendations.length} Dream Destinations for ${themes} Creators`,
+    `🎨 ${displayName}'s Custom Travel Blueprint: ${topDestination} + More!`,
+    `🌟 Your ${themes} Creator Journey: ${topDestination} & Beyond!`,
+    `📍 ${displayName}: AI-Curated ${topDestination} Experience Ready!`
+  ];
+  
+  // Use simple hash of user data to ensure consistent subject selection
+  const hash = (displayName + topDestination).split('').reduce((a, b) => {
+    a = ((a << 5) - a) + b.charCodeAt(0);
+    return a & a;
+  }, 0);
+  
+  return subjectVariations[Math.abs(hash) % subjectVariations.length];
+};
+
+const generatePersonalizedOpening = (displayName: string, websiteData: WebsiteData, recommendations: Recommendation[]): string => {
+  const themes = websiteData.themes?.slice(0, 3) || [];
+  const contentType = websiteData.contentType || 'content';
+  const hasRecommendations = recommendations.length > 0;
+  
+  if (!hasRecommendations) {
+    return `Hi ${displayName}! 👋 We've completed your website analysis and have some insights to share, even though we couldn't generate specific destination recommendations at this time.`;
+  }
+  
+  const openingVariations = [
+    `Hi ${displayName}! 🌟 Your personalized travel intelligence is here! We've analyzed your ${contentType.toLowerCase()} style${themes.length > 0 ? ` focusing on ${themes.join(', ')}` : ''} and found ${recommendations.length} perfect destination${recommendations.length > 1 ? 's' : ''} for your next content creation adventure.`,
+    
+    `Hey ${displayName}! ✨ Ready for something amazing? Our AI has decoded your ${contentType.toLowerCase()} DNA${themes.length > 0 ? ` (especially your ${themes[0]} content)` : ''} and discovered ${recommendations.length} incredible destination${recommendations.length > 1 ? 's' : ''} that will supercharge your audience engagement!`,
+    
+    `${displayName}, your travel blueprint is ready! 🗺️ After deep-diving into your ${contentType.toLowerCase()}${themes.length > 0 ? ` and ${themes.slice(0, 2).join(' & ')} themes` : ''}, we've uncovered ${recommendations.length} destination${recommendations.length > 1 ? 's' : ''} perfectly aligned with your creative vision and monetization goals.`,
+    
+    `Hello ${displayName}! 🎯 Your AI-powered travel strategy is complete! We've matched your unique ${contentType.toLowerCase()} style${themes.length > 0 ? ` (particularly your ${themes[0]} focus)` : ''} with ${recommendations.length} game-changing destination${recommendations.length > 1 ? 's' : ''} that your audience will absolutely love.`,
+    
+    `${displayName}, this is exciting! 🚀 Your personalized travel roadmap is here! Based on your ${contentType.toLowerCase()}${themes.length > 0 ? ` and your passion for ${themes.slice(0, 2).join(' and ')}` : ''}, we've identified ${recommendations.length} perfect destination${recommendations.length > 1 ? 's' : ''} for maximum content impact and collaboration opportunities.`
+  ];
+  
+  // Use website URL hash for consistent personalization
+  const hash = websiteData.url.split('').reduce((a, b) => {
+    a = ((a << 5) - a) + b.charCodeAt(0);
+    return a & a;
+  }, 0);
+  
+  return openingVariations[Math.abs(hash) % openingVariations.length];
+};
+
+const generateInsightfulClosing = (displayName: string, recommendations: Recommendation[]): string => {
+  const hasRecommendations = recommendations.length > 0;
+  
+  if (!hasRecommendations) {
+    return `We're continuously improving our recommendation engine. Feel free to try again with updated preferences or contact us for personalized assistance!`;
+  }
+  
+  const closingVariations = [
+    `These destinations aren't just travel spots—they're strategic content goldmines chosen specifically for YOUR brand, ${displayName}. Each location offers unique storytelling opportunities, audience engagement potential, and collaboration possibilities that align with your creative vision.`,
+    
+    `${displayName}, every recommendation above has been carefully calibrated to your content style and audience preferences. These aren't generic travel suggestions—they're data-driven opportunities for content that converts, engages, and monetizes.`,
+    
+    `Remember ${displayName}, successful content creators don't just travel—they strategically position themselves in locations that amplify their message and expand their reach. These destinations do exactly that for your unique brand.`,
+    
+    `${displayName}, you now have the insider knowledge that top content creators use to choose their next destinations. Each recommendation includes the specific elements your audience craves and the collaboration opportunities that drive growth.`,
+    
+    `The travel industry is evolving, and smart creators like you, ${displayName}, are leading the charge by making data-informed destination choices. These recommendations give you the competitive edge to create content that truly resonates and generates results.`
+  ];
+  
+  return closingVariations[Math.floor(Math.random() * closingVariations.length)];
+};
+
 const generateEmailHTML = (displayName: string, data: {
   recommendations: Recommendation[];
   userProfile: UserProfile;
   websiteData: WebsiteData;
 }) => {
   const { recommendations, userProfile, websiteData } = data;
+  
+  // Generate personalized content using LLM-like logic
+  const personalizedOpening = generatePersonalizedOpening(displayName, websiteData, recommendations);
+  const insightfulClosing = generateInsightfulClosing(displayName, recommendations);
   
   return `
 <!DOCTYPE html>
@@ -342,39 +423,38 @@ const generateEmailHTML = (displayName: string, data: {
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); line-height: 1.6;">
   <div style="max-width: 680px; margin: 20px auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);">
     <!-- Enhanced Header -->
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); padding: 50px 30px; text-align: center; position: relative; overflow: hidden;">
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); padding: 40px 25px; text-align: center; position: relative; overflow: hidden;">
       <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMiIgZmlsbD0id2hpdGUiIGZpbGwtb3BhY2l0eT0iMC4xIi8+Cjwvc3ZnPgo='); opacity: 0.3;"></div>
       <div style="position: relative; z-index: 1;">
-        <h1 style="color: #ffffff; margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">🌟 TasteJourney</h1>
-        <p style="color: #e2e8f0; margin: 12px 0 0 0; font-size: 18px; font-weight: 500;">Your Personalized AI Travel Companion</p>
-        <div style="margin-top: 20px; padding: 12px 24px; background: rgba(255, 255, 255, 0.2); border-radius: 50px; display: inline-block; backdrop-filter: blur(10px);">
-          <span style="color: #ffffff; font-size: 14px; font-weight: 600;">✨ Custom Report Generated</span>
+        <h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">🌟 TasteJourney</h1>
+        <p style="color: #e2e8f0; margin: 10px 0 0 0; font-size: 16px; font-weight: 500;">Your Personalized AI Travel Companion</p>
+        <div style="margin-top: 18px; padding: 10px 20px; background: rgba(255, 255, 255, 0.2); border-radius: 50px; display: inline-block; backdrop-filter: blur(10px);">
+          <span style="color: #ffffff; font-size: 13px; font-weight: 600;">✨ Custom Report Generated</span>
         </div>
       </div>
     </div>
 
     <!-- Main Content -->
-    <div style="padding: 50px 35px;">
+    <div style="padding: 35px 25px;">
       <!-- Personal Greeting with User Data -->
-      <div style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 35px; border-radius: 20px; margin-bottom: 40px; border: 1px solid #e2e8f0; position: relative; overflow: hidden;">
-        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: 50%; opacity: 0.1;"></div>
+      <div style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 25px; border-radius: 16px; margin-bottom: 30px; border: 1px solid #e2e8f0; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -15px; right: -15px; width: 60px; height: 60px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: 50%; opacity: 0.1;"></div>
         <div style="position: relative; z-index: 1;">
-          <h2 style="color: #1e293b; margin: 0 0 20px 0; font-size: 28px; font-weight: 700;">Hi ${displayName}! 👋</h2>
-          <p style="color: #475569; margin: 0 0 20px 0; line-height: 1.7; font-size: 18px;">
-            Your personalized travel report is ready! We've analyzed <strong>${websiteData.title || 'your website'}</strong> and your preferences to create 
-            custom recommendations perfect for content creation and monetization opportunities.
+          <h2 style="color: #1e293b; margin: 0 0 15px 0; font-size: 24px; font-weight: 700;">Hi ${displayName}! 👋</h2>
+          <p style="color: #475569; margin: 0 0 15px 0; line-height: 1.6; font-size: 16px;">
+            ${personalizedOpening}
           </p>
-          ${websiteData.url ? `<div style="margin-top: 20px; padding: 15px; background: rgba(102, 126, 234, 0.1); border-radius: 12px; border-left: 4px solid #667eea;">
-            <p style="margin: 0; color: #475569; font-size: 14px;">📊 <strong>Analyzed Website:</strong> <a href="${websiteData.url}" style="color: #667eea; text-decoration: none;">${websiteData.url}</a></p>
+          ${websiteData.url ? `<div style="margin-top: 15px; padding: 12px; background: rgba(102, 126, 234, 0.1); border-radius: 10px; border-left: 3px solid #667eea;">
+            <p style="margin: 0; color: #475569; font-size: 13px;">📊 <strong>Analyzed Website:</strong> <a href="${websiteData.url}" style="color: #667eea; text-decoration: none; word-break: break-all;">${websiteData.url}</a></p>
           </div>` : ''}
         </div>
       </div>
 
       <!-- User Profile Summary -->
       ${Object.keys(userProfile).length > 0 ? `
-      <div style="background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%); padding: 30px; border-radius: 16px; margin-bottom: 35px; border: 1px solid #fbbf24;">
-        <h3 style="color: #92400e; margin: 0 0 20px 0; font-size: 20px; font-weight: 600; display: flex; align-items: center; gap: 8px;">🎯 Your Travel Profile</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+      <div style="background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%); padding: 20px; border-radius: 14px; margin-bottom: 25px; border: 1px solid #fbbf24;">
+        <h3 style="color: #92400e; margin: 0 0 15px 0; font-size: 18px; font-weight: 600;">🎯 Your Travel Profile</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
           ${Object.entries(userProfile).filter(([, value]) => value).map(([key, value]) => {
             const formattedKey = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
             const emoji = {
@@ -384,9 +464,9 @@ const generateEmailHTML = (displayName: string, data: {
               contentFocus: '📸',
               climate: '☀️'
             }[key] || '✨';
-            return `<div style="background: rgba(255, 255, 255, 0.8); padding: 12px 16px; border-radius: 10px; border-left: 3px solid #f59e0b;">
-              <span style="color: #92400e; font-weight: 600; font-size: 14px;">${emoji} ${formattedKey}:</span>
-              <span style="color: #451a03; margin-left: 8px; font-size: 14px;">${Array.isArray(value) ? value.join(', ') : value}</span>
+            return `<div style="background: rgba(255, 255, 255, 0.9); padding: 10px 12px; border-radius: 8px; border-left: 2px solid #f59e0b;">
+              <div style="color: #92400e; font-weight: 600; font-size: 13px; margin-bottom: 2px;">${emoji} ${formattedKey}</div>
+              <div style="color: #451a03; font-size: 13px;">${Array.isArray(value) ? value.join(', ') : value}</div>
             </div>`;
           }).join('')}
         </div>
@@ -394,76 +474,73 @@ const generateEmailHTML = (displayName: string, data: {
 
       <!-- Detailed Recommendations Section -->
       ${recommendations.length > 0 ? `
-      <div style="margin-bottom: 40px;">
-        <h3 style="color: #1e293b; margin: 0 0 25px 0; font-size: 24px; font-weight: 700; text-align: center;">🌍 Your Personalized Destinations</h3>
-        <p style="color: #64748b; text-align: center; margin-bottom: 30px; font-size: 16px;">We found <strong>${recommendations.length}</strong> perfect matches for your travel style and content goals</p>
+      <div style="margin-bottom: 30px;">
+        <h3 style="color: #1e293b; margin: 0 0 15px 0; font-size: 22px; font-weight: 700; text-align: center;">🌍 Your Personalized Destinations</h3>
+        <p style="color: #64748b; text-align: center; margin-bottom: 25px; font-size: 15px;">We found <strong>${recommendations.length}</strong> perfect matches for your travel style and content goals</p>
         
-        <div style="display: grid; gap: 25px;">
+        <div style="display: grid; gap: 20px;">
           ${recommendations.map((rec, index) => `
-          <div style="background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border: 1px solid #e2e8f0; border-radius: 20px; padding: 30px; position: relative; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);">
-            <div style="position: absolute; top: 20px; right: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600;">
-              #${index + 1} Match
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 0; position: relative; overflow: hidden; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);">
+            <!-- Card Header -->
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px 25px; position: relative;">
+              <div style="position: absolute; top: 15px; right: 20px; background: rgba(255, 255, 255, 0.2); color: white; padding: 6px 12px; border-radius: 15px; font-size: 11px; font-weight: 600; backdrop-filter: blur(10px);">
+                #${index + 1}
+              </div>
+              <h4 style="color: #ffffff; margin: 0; font-size: 20px; font-weight: 700; padding-right: 60px;">📍 ${rec.destination}</h4>
             </div>
             
-            <div style="margin-bottom: 20px;">
-              <h4 style="color: #1e293b; margin: 0 0 10px 0; font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 10px;">
-                📍 ${rec.destination}
-              </h4>
+            <!-- Card Content -->
+            <div style="padding: 25px;">
               ${rec.highlights && rec.highlights.length > 0 ? `
-              <p style="color: #64748b; margin: 0; font-size: 16px; line-height: 1.6;">
-                ${rec.highlights.join(' • ')}
-              </p>` : ''}
+              <div style="margin-bottom: 20px;">
+                <h5 style="color: #64748b; margin: 0 0 10px 0; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Why This Destination</h5>
+                <p style="color: #1e293b; margin: 0; font-size: 15px; line-height: 1.6; font-weight: 500;">
+                  ${rec.highlights.slice(0, 2).join(' • ')}
+                </p>
+              </div>` : ''}
+            
+              <!-- Quick Stats Grid -->
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                ${rec.budget?.range ? `
+                <div style="background: #f0fdf4; padding: 12px; border-radius: 10px; border: 1px solid #bbf7d0; text-align: center;">
+                  <div style="font-size: 18px; margin-bottom: 4px;">💰</div>
+                  <div style="color: #15803d; font-weight: 600; font-size: 12px; margin-bottom: 2px;">Budget Range</div>
+                  <div style="color: #166534; font-size: 14px; font-weight: 700;">${rec.budget.range}</div>
+                </div>` : ''}
+                
+                ${rec.bestMonths && rec.bestMonths.length > 0 ? `
+                <div style="background: #eff6ff; padding: 12px; border-radius: 10px; border: 1px solid #bfdbfe; text-align: center;">
+                  <div style="font-size: 18px; margin-bottom: 4px;">📅</div>
+                  <div style="color: #1d4ed8; font-weight: 600; font-size: 12px; margin-bottom: 2px;">Best Time</div>
+                  <div style="color: #1e40af; font-size: 14px; font-weight: 700;">${rec.bestMonths.slice(0, 2).join(', ')}</div>
+                </div>` : ''}
+                
+                ${rec.engagement?.potential ? `
+                <div style="background: #faf5ff; padding: 12px; border-radius: 10px; border: 1px solid #e9d5ff; text-align: center;">
+                  <div style="font-size: 18px; margin-bottom: 4px;">📈</div>
+                  <div style="color: #7c3aed; font-weight: 600; font-size: 12px; margin-bottom: 2px;">Engagement</div>
+                  <div style="color: #6b21a8; font-size: 14px; font-weight: 700;">${rec.engagement.potential}</div>
+                </div>` : ''}
+              </div>
+            
+              ${rec.tags && rec.tags.length > 0 ? `
+              <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                ${rec.tags.slice(0, 4).map(tag => `<span style="background: #f1f5f9; color: #64748b; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; border: 1px solid #e2e8f0;">#${tag}</span>`).join('')}
+                ${rec.tags.length > 4 ? `<span style="background: #f8fafc; color: #94a3b8; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; border: 1px solid #e2e8f0;">+${rec.tags.length - 4} more</span>` : ''}
+              </div>` : ''}
             </div>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
-              ${rec.budget?.range ? `
-              <div style="background: rgba(34, 197, 94, 0.1); padding: 15px; border-radius: 12px; border-left: 4px solid #22c55e;">
-                <div style="color: #15803d; font-weight: 600; font-size: 14px; margin-bottom: 5px;">💰 Budget Range</div>
-                <div style="color: #166534; font-size: 16px; font-weight: 700;">${rec.budget.range}</div>
-              </div>` : ''}
-              
-              ${rec.bestMonths && rec.bestMonths.length > 0 ? `
-              <div style="background: rgba(59, 130, 246, 0.1); padding: 15px; border-radius: 12px; border-left: 4px solid #3b82f6;">
-                <div style="color: #1d4ed8; font-weight: 600; font-size: 14px; margin-bottom: 5px;">📅 Best Time</div>
-                <div style="color: #1e40af; font-size: 16px; font-weight: 700;">${rec.bestMonths.join(', ')}</div>
-              </div>` : ''}
-              
-              ${rec.engagement?.potential ? `
-              <div style="background: rgba(168, 85, 247, 0.1); padding: 15px; border-radius: 12px; border-left: 4px solid #a855f7;">
-                <div style="color: #7c3aed; font-weight: 600; font-size: 14px; margin-bottom: 5px;">📈 Engagement</div>
-                <div style="color: #6b21a8; font-size: 16px; font-weight: 700;">${rec.engagement.potential}</div>
-              </div>` : ''}
-            </div>
-            
-            ${rec.tags && rec.tags.length > 0 ? `
-            <div style="margin-top: 20px;">
-              <div style="color: #475569; font-weight: 600; font-size: 14px; margin-bottom: 10px;">🏷️ Tags</div>
-              <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                ${rec.tags.map(tag => `<span style="background: linear-gradient(135deg, #f1f5f9, #e2e8f0); color: #475569; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid #cbd5e1;">${tag}</span>`).join('')}
-              </div>
-            </div>` : ''}
-            
-            ${rec.creatorDetails ? `
-            <div style="margin-top: 25px; padding: 20px; background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-radius: 12px; border: 1px solid #10b981;">
-              <div style="color: #047857; font-weight: 600; font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-                👥 Creator Community
-              </div>
-              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
-                <div>
-                  <div style="color: #065f46; font-weight: 600; font-size: 14px;">Active Creators</div>
-                  <div style="color: #047857; font-size: 18px; font-weight: 700;">${rec.creatorDetails && typeof rec.creatorDetails === 'object' && 'totalActiveCreators' in rec.creatorDetails ? (rec.creatorDetails as {totalActiveCreators: number}).totalActiveCreators : 0}+</div>
+              ${rec.creatorDetails ? `
+              <div style="padding: 18px; background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-radius: 12px; border: 1px solid #bbf7d0; margin-bottom: 15px;">
+                <div style="display: flex; align-items: center; justify-between; margin-bottom: 12px;">
+                  <div style="color: #047857; font-weight: 600; font-size: 15px;">👥 Creator Community</div>
+                  <div style="background: rgba(16, 185, 129, 0.1); color: #047857; font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 12px;">
+                    ${rec.creatorDetails && typeof rec.creatorDetails === 'object' && 'totalActiveCreators' in rec.creatorDetails ? (rec.creatorDetails as {totalActiveCreators: number}).totalActiveCreators : 0}+ Active
+                  </div>
                 </div>
-                <div>
-                  <div style="color: #065f46; font-weight: 600; font-size: 14px;">Collaboration Rate</div>
-                  <div style="color: #047857; font-size: 18px; font-weight: 700;">High</div>
-                </div>
-              </div>
-              ${rec.creatorDetails && typeof rec.creatorDetails === 'object' && 'collaborationOpportunities' in rec.creatorDetails && Array.isArray((rec.creatorDetails as {collaborationOpportunities: string[]}).collaborationOpportunities) && (rec.creatorDetails as {collaborationOpportunities: string[]}).collaborationOpportunities.length > 0 ? `
-              <div style="margin-top: 15px;">
-                <div style="color: #065f46; font-weight: 600; font-size: 14px; margin-bottom: 8px;">🤝 Opportunities</div>
-                <div style="color: #047857; font-size: 14px; line-height: 1.5;">${(rec.creatorDetails as {collaborationOpportunities: string[]}).collaborationOpportunities.join(' • ')}</div>
+                ${rec.creatorDetails && typeof rec.creatorDetails === 'object' && 'collaborationOpportunities' in rec.creatorDetails && Array.isArray((rec.creatorDetails as {collaborationOpportunities: string[]}).collaborationOpportunities) && (rec.creatorDetails as {collaborationOpportunities: string[]}).collaborationOpportunities.length > 0 ? `
+                <div style="color: #065f46; font-size: 13px; line-height: 1.5;">${(rec.creatorDetails as {collaborationOpportunities: string[]}).collaborationOpportunities.slice(0, 2).join(' • ')}</div>` : ''}
               </div>` : ''}
-            </div>` : ''}
           </div>
           `).join('')}
         </div>
@@ -475,75 +552,75 @@ const generateEmailHTML = (displayName: string, data: {
 
       <!-- Enhanced Website Analysis -->
       ${websiteData.themes && websiteData.themes.length > 0 ? `
-      <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 30px; border-radius: 16px; margin-bottom: 35px; border: 1px solid #0ea5e9;">
-        <h3 style="color: #0c4a6e; margin: 0 0 20px 0; font-size: 20px; font-weight: 600; display: flex; align-items: center; gap: 8px;">🔍 Website Analysis Insights</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+      <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 20px; border-radius: 14px; margin-bottom: 25px; border: 1px solid #0ea5e9;">
+        <h3 style="color: #0c4a6e; margin: 0 0 15px 0; font-size: 18px; font-weight: 600;">🔍 Website Analysis Insights</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
           ${websiteData.contentType ? `
-          <div style="background: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 12px;">
-            <div style="color: #0c4a6e; font-weight: 600; font-size: 14px; margin-bottom: 5px;">📄 Content Type</div>
-            <div style="color: #075985; font-size: 16px;">${websiteData.contentType}</div>
+          <div style="background: rgba(255, 255, 255, 0.9); padding: 12px; border-radius: 10px;">
+            <div style="color: #0c4a6e; font-weight: 600; font-size: 13px; margin-bottom: 3px;">📄 Content Type</div>
+            <div style="color: #075985; font-size: 14px; font-weight: 500;">${websiteData.contentType}</div>
           </div>` : ''}
           
           ${websiteData.themes.length > 0 ? `
-          <div style="background: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 12px;">
-            <div style="color: #0c4a6e; font-weight: 600; font-size: 14px; margin-bottom: 5px;">🎨 Main Themes</div>
-            <div style="color: #075985; font-size: 16px;">${websiteData.themes.join(', ')}</div>
+          <div style="background: rgba(255, 255, 255, 0.9); padding: 12px; border-radius: 10px;">
+            <div style="color: #0c4a6e; font-weight: 600; font-size: 13px; margin-bottom: 3px;">🎨 Main Themes</div>
+            <div style="color: #075985; font-size: 14px; font-weight: 500;">${websiteData.themes.slice(0, 3).join(', ')}${websiteData.themes.length > 3 ? '...' : ''}</div>
           </div>` : ''}
           
           ${websiteData.socialLinks && websiteData.socialLinks.length > 0 ? `
-          <div style="background: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 12px;">
-            <div style="color: #0c4a6e; font-weight: 600; font-size: 14px; margin-bottom: 5px;">📱 Social Presence</div>
-            <div style="color: #075985; font-size: 16px;">${websiteData.socialLinks.map(s => s.platform).join(', ')}</div>
+          <div style="background: rgba(255, 255, 255, 0.9); padding: 12px; border-radius: 10px;">
+            <div style="color: #0c4a6e; font-weight: 600; font-size: 13px; margin-bottom: 3px;">📱 Social Presence</div>
+            <div style="color: #075985; font-size: 14px; font-weight: 500;">${websiteData.socialLinks.map(s => s.platform).slice(0, 2).join(', ')}</div>
           </div>` : ''}
         </div>
       </div>` : ''}
 
       <!-- Enhanced Pro Tips Section -->
-      <div style="background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%); padding: 30px; border-radius: 16px; margin-bottom: 35px; position: relative; overflow: hidden;">
-        <div style="position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;"></div>
+      <div style="background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%); padding: 25px; border-radius: 14px; margin-bottom: 25px; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -8px; right: -8px; width: 50px; height: 50px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;"></div>
         <div style="position: relative; z-index: 1;">
-          <div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 20px;">
-            <div style="background: rgba(255, 255, 255, 0.2); padding: 12px; border-radius: 12px; flex-shrink: 0;">
-              <span style="font-size: 28px;">💡</span>
+          <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 18px;">
+            <div style="background: rgba(255, 255, 255, 0.2); padding: 10px; border-radius: 10px; flex-shrink: 0;">
+              <span style="font-size: 24px;">💡</span>
             </div>
             <div style="flex: 1;">
-              <h4 style="color: #ffffff; margin: 0 0 12px 0; font-size: 20px; font-weight: 700;">Pro Content Creator Tips</h4>
-              <p style="color: #d1fae5; margin: 0; line-height: 1.6; font-size: 16px;">
+              <h4 style="color: #ffffff; margin: 0 0 8px 0; font-size: 18px; font-weight: 700;">Pro Content Creator Tips</h4>
+              <p style="color: #d1fae5; margin: 0; line-height: 1.5; font-size: 14px;">
                 Each destination includes specific content themes, local creator contacts, and brand collaboration opportunities 
                 to help maximize your travel ROI and audience engagement!
               </p>
             </div>
           </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-            <div style="background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 12px; backdrop-filter: blur(10px);">
-              <div style="color: #ffffff; font-weight: 600; font-size: 14px; margin-bottom: 5px;">💰 Budget Optimization</div>
-              <div style="color: #d1fae5; font-size: 13px;">Smart cost breakdowns included</div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
+            <div style="background: rgba(255, 255, 255, 0.15); padding: 12px; border-radius: 10px; backdrop-filter: blur(10px);">
+              <div style="color: #ffffff; font-weight: 600; font-size: 13px; margin-bottom: 3px;">💰 Budget Optimization</div>
+              <div style="color: #d1fae5; font-size: 12px;">Smart cost breakdowns included</div>
             </div>
-            <div style="background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 12px; backdrop-filter: blur(10px);">
-              <div style="color: #ffffff; font-weight: 600; font-size: 14px; margin-bottom: 5px;">🤝 Collaboration Ready</div>
-              <div style="color: #d1fae5; font-size: 13px;">Local creator connections</div>
+            <div style="background: rgba(255, 255, 255, 0.15); padding: 12px; border-radius: 10px; backdrop-filter: blur(10px);">
+              <div style="color: #ffffff; font-weight: 600; font-size: 13px; margin-bottom: 3px;">🤝 Collaboration Ready</div>
+              <div style="color: #d1fae5; font-size: 12px;">Local creator connections</div>
             </div>
-            <div style="background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 12px; backdrop-filter: blur(10px);">
-              <div style="color: #ffffff; font-weight: 600; font-size: 14px; margin-bottom: 5px;">📅 Perfect Timing</div>
-              <div style="color: #d1fae5; font-size: 13px;">Optimal travel windows</div>
+            <div style="background: rgba(255, 255, 255, 0.15); padding: 12px; border-radius: 10px; backdrop-filter: blur(10px);">
+              <div style="color: #ffffff; font-weight: 600; font-size: 13px; margin-bottom: 3px;">📅 Perfect Timing</div>
+              <div style="color: #d1fae5; font-size: 12px;">Optimal travel windows</div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Enhanced Call to Action -->
-      <div style="text-align: center; margin-bottom: 35px;">
-        <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 30px; border-radius: 16px; border: 2px dashed #cbd5e1; position: relative; overflow: hidden;">
-          <div style="position: absolute; top: 20px; left: 20px; width: 40px; height: 40px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: 50%; opacity: 0.1;"></div>
-          <div style="position: absolute; bottom: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(45deg, #10b981, #059669); border-radius: 50%; opacity: 0.1;"></div>
+      <div style="text-align: center; margin-bottom: 25px;">
+        <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 25px; border-radius: 14px; border: 2px dashed #cbd5e1; position: relative; overflow: hidden;">
+          <div style="position: absolute; top: 15px; left: 15px; width: 30px; height: 30px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: 50%; opacity: 0.1;"></div>
+          <div style="position: absolute; bottom: 15px; right: 15px; width: 40px; height: 40px; background: linear-gradient(45deg, #10b981, #059669); border-radius: 50%; opacity: 0.1;"></div>
           <div style="position: relative; z-index: 1;">
-            <h4 style="color: #1e293b; margin: 0 0 15px 0; font-size: 22px; font-weight: 700;">📄 Your Complete Travel Analysis</h4>
-            <p style="color: #64748b; margin: 0 0 20px 0; font-size: 16px; line-height: 1.6;">
+            <h4 style="color: #1e293b; margin: 0 0 12px 0; font-size: 20px; font-weight: 700;">📄 Your Complete Travel Analysis</h4>
+            <p style="color: #64748b; margin: 0 0 15px 0; font-size: 15px; line-height: 1.5;">
               This email contains your comprehensive travel report with detailed recommendations, 
               creator insights, and actionable content strategies.
             </p>
-            <div style="background: rgba(102, 126, 234, 0.1); padding: 15px; border-radius: 12px; border-left: 4px solid #667eea;">
-              <p style="margin: 0; color: #475569; font-size: 14px; font-weight: 500;">
+            <div style="background: rgba(102, 126, 234, 0.1); padding: 12px; border-radius: 10px; border-left: 3px solid #667eea;">
+              <p style="margin: 0; color: #475569; font-size: 13px; font-weight: 500;">
                 🔍 Save this email for easy reference while planning your content creation journey!
               </p>
             </div>
@@ -554,11 +631,12 @@ const generateEmailHTML = (displayName: string, data: {
       <!-- Enhanced Closing -->
       <div style="text-align: center; margin-bottom: 25px;">
         <div style="background: linear-gradient(135deg, #fef7ff 0%, #f3e8ff 100%); padding: 25px; border-radius: 16px; border: 1px solid #d8b4fe;">
-          <p style="color: #7c3aed; margin: 0 0 10px 0; font-size: 18px; line-height: 1.6; font-weight: 600;">
-            Ready to create amazing travel content? 🌍✨
+          <p style="color: #7c3aed; margin: 0 0 15px 0; font-size: 16px; line-height: 1.6; font-weight: 500;">
+            ${insightfulClosing}
           </p>
           <p style="color: #64748b; margin: 0; font-size: 16px; line-height: 1.5;">
-            Happy travels and content creation!<br>
+            Ready to create amazing travel content? 🌍✨<br>
+            Happy travels and strategic content creation!<br>
             <strong style="color: #667eea;">— The TasteJourney Team</strong>
           </p>
           <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e2e8f0;">
@@ -774,7 +852,7 @@ export async function POST(request: NextRequest) {
       const mailOptions: MailOptions = {
         from: `TasteJourney <${process.env.GMAIL_USER}>`,
         to: email,
-        subject: `🌟 Your Personalized TasteJourney Travel Report - ${displayName}`,
+        subject: generatePersonalizedSubject(displayName, safeRecommendations, safeWebsiteData),
         html: generateEmailHTML(displayName, {
           recommendations: safeRecommendations,
           userProfile: safeUserProfile,

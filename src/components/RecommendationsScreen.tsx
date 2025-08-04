@@ -425,7 +425,7 @@ const RecommendationsScreen: React.FC = () => {
                 />
 
                 {/* Overlay with actions */}
-                <div className="absolute top-0 right-0 bottom-0 left-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-3">
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-3">
                   <Button
                     size="sm"
                     variant="secondary"
@@ -725,7 +725,7 @@ const RecommendationsScreen: React.FC = () => {
 
       {/* Enhanced Email Report Card */}
       <Card className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border-primary/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 bottom-0 left-0 bg-grid-pattern opacity-5"></div>
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <CardContent className="p-8 text-center relative">
           <div className="max-w-3xl mx-auto">
             <div className="flex items-center justify-center mb-4">
