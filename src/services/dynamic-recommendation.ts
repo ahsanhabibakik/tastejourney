@@ -469,9 +469,30 @@ Return as valid JSON with this structure:
       'Santorini, Greece': 'https://images.pexels.com/photos/1010657/pexels-photo-1010657.jpeg?auto=compress&cs=tinysrgb&w=400',
       'Dubai, UAE': 'https://images.pexels.com/photos/323775/pexels-photo-323775.jpeg?auto=compress&cs=tinysrgb&w=400',
       'Lisbon, Portugal': 'https://images.pexels.com/photos/1534630/pexels-photo-1534630.jpeg?auto=compress&cs=tinysrgb&w=400',
+      'Queenstown, New Zealand': 'https://images.pexels.com/photos/738832/pexels-photo-738832.jpeg?auto=compress&cs=tinysrgb&w=400',
+      'Kyoto, Japan': 'https://images.pexels.com/photos/161172/pexels-photo-161172.jpeg?auto=compress&cs=tinysrgb&w=400',
+      'Medellin, Colombia': 'https://images.pexels.com/photos/1624416/pexels-photo-1624416.jpeg?auto=compress&cs=tinysrgb&w=400',
+      'Reykjavik, Iceland': 'https://images.pexels.com/photos/90597/pexels-photo-90597.jpeg?auto=compress&cs=tinysrgb&w=400',
+      'Mexico City, Mexico': 'https://images.pexels.com/photos/121848/pexels-photo-121848.jpeg?auto=compress&cs=tinysrgb&w=400'
     };
 
-    return imageMap[destination] || 'https://images.pexels.com/photos/1591373/pexels-photo-1591373.jpeg?auto=compress&cs=tinysrgb&w=400';
+    // Fallback images for destinations not in the map
+    const fallbackImages = [
+      'https://images.pexels.com/photos/1591373/pexels-photo-1591373.jpeg?auto=compress&cs=tinysrgb&w=400',
+      'https://images.pexels.com/photos/1770775/pexels-photo-1770775.jpeg?auto=compress&cs=tinysrgb&w=400',
+      'https://images.pexels.com/photos/2265876/pexels-photo-2265876.jpeg?auto=compress&cs=tinysrgb&w=400'
+    ];
+    
+    if (imageMap[destination]) {
+      return imageMap[destination];
+    }
+    
+    // Use hash to consistently select fallback image
+    const hash = destination.split('').reduce((acc, char) => {
+      return ((acc << 5) - acc) + char.charCodeAt(0);
+    }, 0);
+    
+    return fallbackImages[Math.abs(hash) % fallbackImages.length];
   }
 
   private applyFinalScoring(recommendations: DynamicRecommendation[], preferences: UserPreferences): DynamicRecommendation[] {
