@@ -47,17 +47,9 @@ const nextConfig: NextConfig = {
   // Fast build optimization
   experimental: {
     optimizePackageImports: ["lucide-react"],
-    // Turbopack configuration
-    turbo: {
-      resolveAlias: {
-        fs: false,
-        net: false,
-        tls: false,
-      },
-    },
   },
 
-  // Minimal webpack config for non-turbopack builds
+  // Minimal webpack config for Node.js modules
   webpack: (config: any) => {
     config.resolve.fallback = {
       fs: false,
@@ -69,7 +61,6 @@ const nextConfig: NextConfig = {
 
   // Disable non-essential features for speed
   poweredByHeader: false,
-  compress: true,
 };
 
 export default nextConfig;
