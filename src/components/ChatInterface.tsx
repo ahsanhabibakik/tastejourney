@@ -485,6 +485,111 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
       }
     } catch (error) {
       console.error("Error generating recommendations:", error);
+      
+      // Set fallback recommendations data
+      const fallbackRecommendations = {
+        recommendations: [
+          {
+            id: 1,
+            destination: "Bali, Indonesia",
+            country: "Indonesia",
+            matchScore: 92,
+            image: "https://images.pexels.com/photos/2474690/pexels-photo-2474690.jpeg?auto=compress&cs=tinysrgb&w=400",
+            highlights: [
+              "Perfect for adventure & cultural content creation",
+              "180+ active travel creators in region",
+              "25+ brand partnerships opportunities available"
+            ],
+            budget: {
+              range: "$1,200 - $1,800 for 7 days",
+              breakdown: "Accommodation: $60-80/night • Food: $20-30/day • Activities: $40-60/day",
+              costEfficiency: "Excellent value for content creation ROI"
+            },
+            engagement: {
+              potential: "Very High",
+              reason: "Strong alignment with adventure & cultural content preferences"
+            },
+            creatorDetails: {
+              totalActiveCreators: 182,
+              topCreators: [
+                { name: "BaliBound", followers: "85K", niche: "Adventure Travel", collaboration: "Content partnerships available" }
+              ],
+              collaborationOpportunities: ["Creator meetups monthly", "Brand partnerships", "Cultural exchange programs"]
+            },
+            tags: ["adventure", "culture", "budget-friendly", "instagram-worthy", "food", "beach", "spiritual"],
+            bestMonths: ["April-May", "September-October"]
+          },
+          {
+            id: 2,
+            destination: "Lisbon, Portugal",
+            country: "Portugal",
+            matchScore: 88,
+            image: "https://images.pexels.com/photos/1534630/pexels-photo-1534630.jpeg?auto=compress&cs=tinysrgb&w=400",
+            highlights: [
+              "Emerging creative hub with vibrant arts scene",
+              "120+ digital nomads & content creators",
+              "Affordable European base for creators"
+            ],
+            budget: {
+              range: "$1,500 - $2,200 for 7 days",
+              breakdown: "Accommodation: $70-100/night • Food: $25-35/day • Activities: $30-50/day",
+              costEfficiency: "Best value in Western Europe"
+            },
+            engagement: {
+              potential: "High",
+              reason: "Perfect for European travel content and cultural exploration"
+            },
+            creatorDetails: {
+              totalActiveCreators: 125,
+              topCreators: [
+                { name: "LisbonLens", followers: "62K", niche: "City Photography", collaboration: "Co-working spaces available" }
+              ],
+              collaborationOpportunities: ["Creator co-working spaces", "Photography walks", "Food tour collaborations"]
+            },
+            tags: ["europe", "culture", "architecture", "food", "coastal", "budget-friendly", "digital-nomad"],
+            bestMonths: ["May-June", "September-October"]
+          },
+          {
+            id: 3,
+            destination: "Dubai, UAE",
+            country: "United Arab Emirates",
+            matchScore: 85,
+            image: "https://images.pexels.com/photos/323775/pexels-photo-323775.jpeg?auto=compress&cs=tinysrgb&w=400",
+            highlights: [
+              "Ultimate luxury content creation destination",
+              "200+ influencers & brand partnerships",
+              "Year-round content opportunities"
+            ],
+            budget: {
+              range: "$2,500 - $4,000 for 7 days",
+              breakdown: "Accommodation: $150-250/night • Food: $50-80/day • Activities: $80-150/day",
+              costEfficiency: "High investment, high return potential"
+            },
+            engagement: {
+              potential: "Exceptional",
+              reason: "Perfect for luxury lifestyle and aspirational content"
+            },
+            creatorDetails: {
+              totalActiveCreators: 210,
+              topCreators: [
+                { name: "DubaiDreams", followers: "125K", niche: "Luxury Travel", collaboration: "Hotel partnerships available" }
+              ],
+              collaborationOpportunities: ["Luxury brand events", "Hotel partnerships", "Desert experiences"]
+            },
+            tags: ["luxury", "modern", "desert", "shopping", "architecture", "year-round", "instagram"],
+            bestMonths: ["November-March"]
+          }
+        ],
+        totalCount: 3,
+        metadata: {
+          fallback: true,
+          processingTime: Date.now(),
+          apiVersion: 'fallback-v1',
+          message: 'Using cached recommendations due to temporary service issue'
+        }
+      };
+      
+      setRecommendations(fallbackRecommendations);
       setChatState("recommendations");
       await simulateTyping(() => {
         addMessage(
