@@ -230,7 +230,12 @@ const processInlineMarkdown = (text: string): React.ReactNode[] => {
   return elements;
 };
 
-const ChatInterface: React.FC = () => {
+interface ChatInterfaceProps {
+  showMobileSidebar: boolean;
+  setShowMobileSidebar: (show: boolean) => void;
+}
+
+const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setShowMobileSidebar }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -603,6 +608,7 @@ const ChatInterface: React.FC = () => {
               urban: 0.3,
               budget: 0.6,
             },
+            websiteData: websiteData,
             userPreferences: {
               budget: userAnswers.budget?.replace("$", "") || "1000-2500",
               duration: userAnswers.duration || "4-7 days",
@@ -610,9 +616,12 @@ const ChatInterface: React.FC = () => {
               contentFocus: userAnswers.contentFocus?.toLowerCase() || "photography",
               climate: selectedClimates,
             },
-            websiteData: websiteData,
           }),
         });
+
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+        }
 
         const result = await response.json();
 
@@ -746,8 +755,16 @@ const ChatInterface: React.FC = () => {
 
   return (
     <div className="flex h-[calc(100vh-40px)] lg:h-[calc(100vh-48px)] bg-gradient-to-br from-background via-background/95 to-muted/30">
-      {/* Desktop Sidebar - Visible on large screens */}
-      <div className="hidden lg:flex flex-col w-60 xl:w-64 bg-card/60 backdrop-blur-lg border-r border-border/40 shadow-lg">
+      {/* Mobile Sidebar Overlay */}
+      {showMobileSidebar && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={() => setShowMobileSidebar(false)}
+        />
+      )}
+      
+      {/* Sidebar - Desktop and Mobile */}
+      <div className={`${showMobileSidebar ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 fixed lg:relative flex flex-col w-60 xl:w-64 bg-card/95 lg:bg-card/60 backdrop-blur-lg border-r border-border/40 shadow-lg h-full z-50 transition-transform duration-300 ease-in-out`}>
         {/* Sidebar Header */}
         <div className="p-3 border-b border-border/30 bg-gradient-to-r from-primary/5 to-primary/10">
           <div className="flex items-center justify-between">
@@ -1007,54 +1024,55 @@ const ChatInterface: React.FC = () => {
         </div> */}
 
 
-        {/* Enhanced Chat Messages Area */}
-        <div className="flex-1 overflow-y-auto scrollbar-thin bg-gradient-to-b from-background/50 to-muted/20">
-          <div className="max-w-none lg:max-w-4xl xl:max-w-5xl mx-auto px-3 lg:px-4 xl:px-6 py-3 lg:py-4 xl:py-6">
-            <div className="space-y-3 lg:space-y-4">
+        {/* Enhanced Chat Messages Area - Mobile Optimized */}
+        <div className="flex-1 overflow-y-auto scrollbar-thin bg-gradient-to-b from-background/50 to-muted/20 overscroll-contain">
+          <div className="max-w-none lg:max-w-4xl xl:max-w-5xl mx-auto px-2 sm:px-3 lg:px-4 xl:px-6 py-2 sm:py-3 lg:py-4 xl:py-6">
+            <div className="space-y-2 sm:space-y-3 lg:space-y-4">
               {messages.map((message, index) => (
                 <React.Fragment key={message.id}>
                   <div
-                    className={`flex items-end gap-2 sm:gap-3 animate-fade-in ${
+                    className={`flex items-start gap-2 sm:gap-3 animate-fade-in ${
                       message.isBot ? "justify-start" : "justify-end"
                     }`}
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     {/* Bot Avatar - Only show for bot messages on the left */}
                     {message.isBot && (
-                      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shadow-sm">
-                        <Bot className="h-3.5 w-3.5 text-primary" />
+                      <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shadow-sm mt-1">
+                        <Bot className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-primary" />
                       </div>
                     )}
 
                     {/* Message Bubble */}
-                    <div className={`group relative max-w-[85%] sm:max-w-[80%] md:max-w-[75%] lg:max-w-[70%] xl:max-w-[65%] ${
-                      message.isBot ? "order-2" : "order-1"
-                    }`}>
+                    <div className={`group relative max-w-[85%] sm:max-w-[80%] md:max-w-[75%] lg:max-w-[70%] xl:max-w-[65%]`}>
                       <div
                         className={`
-                          px-3 py-2 lg:px-4 lg:py-3 shadow-sm transition-all duration-150 hover:shadow-md
+                          px-3 py-2 sm:px-4 sm:py-3 shadow-sm transition-all duration-150 hover:shadow-md
                           ${message.isBot
-                            ? "bg-card border border-border/50 rounded-xl rounded-bl-sm text-foreground"
-                            : "bg-gradient-to-br from-primary to-primary/90 rounded-xl rounded-br-sm text-primary-foreground shadow-primary/20"
+                            ? "bg-card border border-border/50 rounded-2xl rounded-bl-md text-foreground"
+                            : "bg-gradient-to-br from-primary to-primary/90 rounded-2xl rounded-br-md text-primary-foreground shadow-primary/20"
                           }
                         `}
                       >
+                        {/* AI Assistant Label - Only for bot messages */}
                         {message.isBot && (
-                          <div className="flex items-center gap-1.5 mb-1.5 opacity-70">
+                          <div className="flex items-center gap-1.5 mb-2 opacity-60">
                             <Wand2 className="h-3 w-3" />
-                            <span className="text-[11px] font-medium">AI Assistant</span>
+                            <span className="text-xs font-medium">AI Assistant</span>
                           </div>
                         )}
-                        <div className="text-[13px] lg:text-sm leading-relaxed">
+                        
+                        {/* Message Content */}
+                        <div className="text-sm leading-relaxed">
                           {renderMarkdown(message.text)}
                         </div>
                       </div>
                       
                       {/* Timestamp */}
                       <div className={`mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${
-                        message.isBot ? "text-left" : "text-right"
+                        message.isBot ? "text-left ml-1" : "text-right mr-1"
                       }`}>
-                        <span className="text-[10px] sm:text-xs text-muted-foreground">
+                        <span className="text-xs text-muted-foreground">
                           {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
                       </div>
@@ -1062,8 +1080,8 @@ const ChatInterface: React.FC = () => {
 
                     {/* User Avatar - Only show for user messages on the right */}
                     {!message.isBot && (
-                      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-gradient-to-br from-primary/80 to-primary border border-primary/30 flex items-center justify-center shadow-sm ml-2">
-                        <User className="h-3.5 w-3.5 text-white" />
+                      <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-br from-primary/80 to-primary border border-primary/30 flex items-center justify-center shadow-sm mt-1">
+                        <User className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-white" />
                       </div>
                     )}
                   </div>
@@ -1186,14 +1204,24 @@ const ChatInterface: React.FC = () => {
                         {/* Mobile/Tablet Horizontal Scroll */}
                         <div 
                           ref={scrollContainerRef}
-                          className="overflow-x-auto pb-2 sm:pb-3 scrollbar-hide -mx-1"
-                          style={{scrollBehavior: 'smooth'}}
+                          className="overflow-x-auto pb-2 sm:pb-3 -mx-3 sm:-mx-4"
+                          style={{
+                            scrollBehavior: 'smooth',
+                            scrollbarWidth: 'none',
+                            msOverflowStyle: 'none',
+                            WebkitOverflowScrolling: 'touch'
+                          }}
                         >
-                          <div className="flex gap-2 sm:gap-3 w-max px-1">
+                          <style jsx>{`
+                            div::-webkit-scrollbar {
+                              display: none;
+                            }
+                          `}</style>
+                          <div className="flex gap-3 w-max px-3 sm:px-4">
                             {recommendations.recommendations.map((rec: Recommendation, i: number) => (
                               <div
                                 key={i}
-                                className="group bg-card border border-border/50 rounded-lg overflow-hidden flex-shrink-0 w-56 sm:w-64 md:w-72 shadow-md hover:shadow-lg transition-all duration-200"
+                                className="group bg-card border border-border/50 rounded-lg overflow-hidden flex-shrink-0 w-[280px] sm:w-[320px] md:w-[360px] shadow-md hover:shadow-lg transition-all duration-200"
                               >
                             {/* Compact Image */}
                             <div className="relative overflow-hidden">
@@ -1203,7 +1231,7 @@ const ChatInterface: React.FC = () => {
                                   alt={rec.destination}
                                   width={300}
                                   height={120}
-                                  className="w-full h-24 sm:h-28 md:h-32 object-cover group-hover:scale-105 transition-transform duration-200" 
+                                  className="w-full h-32 sm:h-36 md:h-40 object-cover group-hover:scale-105 transition-transform duration-200" 
                                 />
                               )}
                               <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
@@ -1215,19 +1243,19 @@ const ChatInterface: React.FC = () => {
                             </div>
                             
                             {/* Compact Content */}
-                            <div className="p-2 sm:p-2.5">
-                              <h4 className="font-bold text-xs sm:text-sm mb-1 group-hover:text-primary transition-colors line-clamp-1">
+                            <div className="p-3 sm:p-4">
+                              <h4 className="font-bold text-sm sm:text-base mb-2 group-hover:text-primary transition-colors line-clamp-1">
                                 {rec.destination}
                               </h4>
                               
                               {rec.highlights && rec.highlights.length > 0 && (
-                                <p className="text-[9px] sm:text-[10px] text-muted-foreground mb-2 line-clamp-1">
+                                <p className="text-xs sm:text-sm text-muted-foreground mb-2 line-clamp-2">
                                   {rec.highlights.slice(0, 2).join(' • ')}
                                 </p>
                               )}
                               
                               {/* Essential Info Only */}
-                              <div className="space-y-1 text-[9px] sm:text-[10px] mb-2">
+                              <div className="space-y-1.5 text-xs sm:text-sm mb-3">
                                 {rec.budget?.range && (
                                   <div className="flex items-center gap-1">
                                     <span>💰</span>
@@ -1244,17 +1272,17 @@ const ChatInterface: React.FC = () => {
 
                               {/* Compact Creator Info */}
                               {rec.creatorDetails && (
-                                <div className="p-1.5 sm:p-2 bg-gradient-to-br from-primary/5 to-primary/10 rounded border border-primary/20">
-                                  <div className="flex items-center justify-between mb-1">
-                                    <span className="text-[9px] sm:text-[10px] font-semibold text-primary">🎯 Creator Hub</span>
-                                    <span className="text-[8px] sm:text-[9px] text-muted-foreground">{rec.creatorDetails.totalActiveCreators}+</span>
+                                <div className="p-2 sm:p-3 bg-gradient-to-br from-primary/5 to-primary/10 rounded-md border border-primary/20">
+                                  <div className="flex items-center justify-between mb-1.5">
+                                    <span className="text-xs sm:text-sm font-semibold text-primary">🎯 Creator Hub</span>
+                                    <span className="text-[10px] sm:text-xs text-muted-foreground">{rec.creatorDetails.totalActiveCreators}+</span>
                                   </div>
                                   
                                   {/* Show only 1 top creator on mobile */}
                                   {rec.creatorDetails.topCreators.slice(0, 1).map((creator, idx) => (
-                                    <div key={idx} className="bg-background/60 p-1 rounded text-[8px] sm:text-[9px]">
+                                    <div key={idx} className="bg-background/60 p-1.5 rounded text-[10px] sm:text-xs">
                                       <div className="font-medium truncate">{creator.name}</div>
-                                      <div className="text-primary">{creator.collaboration}</div>
+                                      <div className="text-primary truncate">{creator.collaboration}</div>
                                     </div>
                                   ))}
                                 </div>
@@ -1264,7 +1292,7 @@ const ChatInterface: React.FC = () => {
                               {rec.tags && rec.tags.length > 0 && (
                                 <div className="flex flex-wrap gap-1 mt-1.5">
                                   {rec.tags.slice(0, 2).map((tag: string) => (
-                                    <span key={tag} className="bg-secondary text-secondary-foreground text-[8px] px-1 py-0.5 rounded">
+                                    <span key={tag} className="bg-secondary text-secondary-foreground text-[10px] px-1.5 py-0.5 rounded-full">
                                       #{tag}
                                     </span>
                                   ))}
@@ -1277,16 +1305,16 @@ const ChatInterface: React.FC = () => {
                       </div>
                       
                       {/* Mobile Progress Indicator */}
-                      <div className="flex justify-center items-center gap-2 mt-2 sm:mt-3">
-                        <div className="flex items-center gap-1">
+                      <div className="flex justify-center items-center gap-2 mt-3 sm:mt-4 xl:hidden">
+                        <div className="flex items-center gap-1.5">
                           {recommendations.recommendations.map((_, idx) => (
                             <button
                               key={idx}
                               onClick={() => {
                                 setCurrentSlide(idx);
                                 if (scrollContainerRef.current) {
-                                  const cardWidth = window.innerWidth < 640 ? 224 : window.innerWidth < 768 ? 256 : 288; // w-56, w-64, w-72
-                                  const gap = 8; // gap-2
+                                  const cardWidth = window.innerWidth < 640 ? 280 : window.innerWidth < 768 ? 320 : 360;
+                                  const gap = 12; // gap-3
                                   const scrollDistance = (cardWidth + gap) * idx;
                                   scrollContainerRef.current.scrollTo({
                                     left: scrollDistance,
@@ -1296,8 +1324,8 @@ const ChatInterface: React.FC = () => {
                               }}
                               className={`transition-all duration-200 rounded-full ${
                                 idx === currentSlide 
-                                  ? 'w-4 sm:w-5 h-1 sm:h-1.5 bg-primary' 
-                                  : 'w-1 sm:w-1.5 h-1 sm:h-1.5 bg-muted-foreground/30'
+                                  ? 'w-6 h-1.5 bg-primary' 
+                                  : 'w-1.5 h-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50'
                               }`}
                               aria-label={`Go to recommendation ${idx + 1}`}
                             />
@@ -1405,14 +1433,14 @@ const ChatInterface: React.FC = () => {
               ))}
 
               {isTyping && (
-                <div className="flex items-end gap-2 justify-start animate-fade-in">
-                  <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
-                    <Bot className="h-3.5 w-3.5 text-primary" />
+                <div className="flex items-start gap-2 sm:gap-3 justify-start animate-fade-in">
+                  <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mt-1">
+                    <Bot className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-primary" />
                   </div>
-                  <div className="bg-card border border-border/50 px-3 py-2 rounded-xl shadow-sm max-w-[180px]">
-                    <div className="flex items-center gap-1.5 mb-1 opacity-70">
+                  <div className="bg-card border border-border/50 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl rounded-bl-md shadow-sm max-w-[200px]">
+                    <div className="flex items-center gap-1.5 mb-2 opacity-60">
                       <Wand2 className="h-3 w-3" />
-                      <span className="text-[11px] font-medium">AI Assistant</span>
+                      <span className="text-xs font-medium">AI Assistant</span>
                     </div>
                     <TypingIndicator />
                   </div>
@@ -1423,82 +1451,92 @@ const ChatInterface: React.FC = () => {
           </div>
         </div>
 
-        {/* Enhanced Bottom Input Area */}
+        {/* Enhanced Bottom Input Area - Mobile Optimized */}
         {chatState === "recommendations" && (
-          <div className="border-t border-border/50 bg-background/95 backdrop-blur-md">
-            <div className="max-w-none xl:max-w-6xl mx-auto px-3 lg:px-4 xl:px-6">
-              <div className="py-2 lg:py-3 space-y-2">
-                {/* Enhanced Email Report Section - Responsive & Compact */}
+          <div className="border-t border-border/50 bg-background/95 backdrop-blur-md sticky bottom-0 z-30">
+            <div className="max-w-none xl:max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
+              <div className="py-2 sm:py-3 lg:py-4 space-y-2 sm:space-y-3">
+                {/* Enhanced Email Report Section - Mobile First Design */}
                 {showEmailSection && (
-                  <div className="transition-all duration-500 ease-in-out">
+                  <div className="transition-all duration-300 ease-in-out">
                     {!reportSent ? (
-                      <div id="email-report-section" className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-lg p-2 sm:p-3 transition-all duration-300 shadow-sm">
-                        {/* Compact Header */}
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-1.5 sm:gap-2">
-                            <Mail className="h-3 w-3 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
-                            <h4 className="font-semibold text-[10px] sm:text-xs text-foreground truncate">
-                              Get Travel Report
-                            </h4>
-                            <span className="hidden sm:inline text-[9px] text-muted-foreground bg-muted/40 px-1.5 py-0.5 rounded-full whitespace-nowrap">
-                              PDF
-                            </span>
-                          </div>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-5 w-5 p-0 opacity-60 hover:opacity-100 hover:bg-primary/10"
-                            onClick={() => setShowEmailSection(false)}
-                          >
-                            <X className="h-3 w-3 text-muted-foreground" />
-                          </Button>
-                        </div>
-                        
-                        {/* Responsive Input Row */}
-                        <div className="flex flex-col sm:flex-row gap-2">
-                          <Input
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            placeholder="your@email.com"
-                            className="flex-1 h-8 text-[11px] sm:text-xs bg-background/50 border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20"
-                            type="email"
-                          />
-                          <Button 
-                            onClick={handleSendReport} 
-                            disabled={!email || isTyping}
-                            className="h-8 px-3 sm:px-4 font-medium text-[11px] sm:text-xs bg-primary hover:bg-primary/90 disabled:opacity-50 flex-shrink-0"
-                          >
-                            <Mail className="h-3 w-3 mr-1" />
-                            <span className="hidden sm:inline">Send</span>
-                            <span className="sm:hidden">Send Report</span>
-                          </Button>
-                        </div>
-                        
-                        <p className="text-[9px] sm:text-[10px] text-muted-foreground mt-1.5 leading-relaxed">
-                          📄 Detailed recommendations, budget analysis & creator insights
-                        </p>
-                      </div>
-                    ) : (
-                      <div id="email-report-section" className="bg-gradient-to-r from-emerald-500/10 to-green-500/10 dark:from-emerald-500/5 dark:to-green-500/5 border border-emerald-500/20 dark:border-emerald-500/30 rounded-lg p-2 sm:p-3 transition-all duration-300 shadow-sm">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
-                            <div className="min-w-0 flex-1">
-                              <p className="font-semibold text-[10px] sm:text-xs text-emerald-800 dark:text-emerald-300 truncate">
-                                Report Sent Successfully!
-                              </p>
-                              <p className="text-[9px] sm:text-[10px] text-emerald-600 dark:text-emerald-400 truncate">
-                                Check your inbox (and spam folder)
+                      <div id="email-report-section" className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-lg sm:rounded-xl p-3 sm:p-4 transition-all duration-300 shadow-sm">
+                        {/* Mobile Optimized Header */}
+                        <div className="flex items-start justify-between mb-3 gap-2">
+                          <div className="flex items-start gap-2 flex-1 min-w-0">
+                            <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0 mt-0.5" />
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-semibold text-sm text-foreground leading-tight">
+                                Get Travel Report
+                              </h4>
+                              <p className="text-xs text-muted-foreground mt-0.5 leading-tight">
+                                PDF with all recommendations
                               </p>
                             </div>
                           </div>
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="h-6 w-6 p-0 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 flex-shrink-0"
+                            className="h-7 w-7 p-0 opacity-60 hover:opacity-100 hover:bg-primary/10 rounded-full flex-shrink-0"
                             onClick={() => setShowEmailSection(false)}
                           >
-                            <X className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
+                            <X className="h-3.5 w-3.5 text-muted-foreground" />
+                          </Button>
+                        </div>
+                        
+                        {/* Mobile Optimized Input */}
+                        <div className="space-y-2">
+                          <Input
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            placeholder="Enter your email"
+                            className="w-full h-10 sm:h-11 text-sm bg-background/50 border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 px-3 sm:px-4 rounded-lg"
+                            type="email"
+                          />
+                          <Button 
+                            onClick={handleSendReport} 
+                            disabled={!email || isTyping}
+                            className="w-full h-10 sm:h-11 font-medium text-sm bg-primary hover:bg-primary/90 disabled:opacity-50 rounded-lg"
+                          >
+                            <Mail className="h-4 w-4 mr-2" />
+                            <span className="hidden xs:inline">Send PDF Report</span>
+                            <span className="xs:hidden">Send Report</span>
+                          </Button>
+                        </div>
+                        
+                        {/* Mobile Optimized Features */}
+                        <div className="mt-3 space-y-1.5">
+                          <p className="text-xs text-muted-foreground flex items-start gap-1.5">
+                            <span className="mt-0.5 text-xs">📄</span>
+                            <span className="leading-tight">Complete recommendations & budget breakdown</span>
+                          </p>
+                          <p className="text-xs text-muted-foreground flex items-start gap-1.5">
+                            <span className="mt-0.5 text-xs">🎯</span>
+                            <span className="leading-tight">Creator collaboration insights</span>
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div id="email-report-section" className="bg-gradient-to-r from-emerald-500/10 to-green-500/10 dark:from-emerald-500/5 dark:to-green-500/5 border border-emerald-500/20 dark:border-emerald-500/30 rounded-lg sm:rounded-xl p-3 sm:p-4 transition-all duration-300 shadow-sm">
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2.5 flex-1 min-w-0">
+                            <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                            <div className="min-w-0 flex-1">
+                              <p className="font-semibold text-sm text-emerald-800 dark:text-emerald-300 leading-tight">
+                                Report Sent!
+                              </p>
+                              <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-0.5 leading-tight truncate">
+                                Check {email}
+                              </p>
+                            </div>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 w-7 p-0 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 flex-shrink-0 rounded-full"
+                            onClick={() => setShowEmailSection(false)}
+                          >
+                            <X className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                           </Button>
                         </div>
                       </div>
@@ -1506,54 +1544,56 @@ const ChatInterface: React.FC = () => {
                   </div>
                 )}
                   
-                {/* Chat Input - Always Available */}
-                <div className="bg-background/50 rounded-lg p-2 border border-border/30">
+                {/* Chat Input - Mobile Optimized */}
+                <div className="bg-background/50 rounded-lg sm:rounded-xl p-2.5 sm:p-3 border border-border/30">
                   <div className="flex items-center gap-2">
-                    <Bot className="h-4 w-4 text-muted-foreground hidden sm:block" />
+                    <Bot className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground hidden sm:block flex-shrink-0" />
                     <div className="relative flex-1">
                       <Input
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyPress={handleKeyPress}
-                        placeholder={reportSent ? "Continue chatting - ask about other destinations, tips, or details..." : "Ask me anything about your recommendations..."}
-                        className="w-full pr-10 h-9 text-xs lg:text-[13px] bg-background border-border/50 focus:border-primary/50"
+                        placeholder={reportSent ? "Ask another question..." : "Ask about recommendations..."}
+                        className="w-full pr-10 sm:pr-12 h-10 sm:h-11 text-sm bg-background border-border/50 focus:border-primary/50 px-3 sm:px-4 rounded-lg"
                         disabled={isTyping}
                       />
                       <Button
                         onClick={handleSendMessage}
                         disabled={!inputValue.trim() || isTyping}
                         size="icon"
-                        className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 bg-primary hover:bg-primary/90"
+                        className="absolute right-1 sm:right-1.5 top-1/2 -translate-y-1/2 h-7 w-7 sm:h-8 sm:w-8 bg-primary hover:bg-primary/90 rounded-md"
                       >
-                        <Send className="h-3 w-3" />
+                        <Send className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       </Button>
                     </div>
                   </div>
                     
-                  {/* Quick Suggestions */}
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    <span className="text-[10px] text-muted-foreground">Suggestions:</span>
-                    {[
-                      { text: "Compare destinations", icon: "🔄" },
-                      { text: "Budget breakdown", icon: "💰" }, 
-                      { text: "Best time to visit", icon: "📅" },
-                      { text: "Creator opportunities", icon: "🎯" }
-                    ].map((action) => (
-                      <Button
-                        key={action.text}
-                        variant="ghost"
-                        size="sm"
-                        className="text-[10px] px-2 py-1 h-5 border border-border/30 hover:bg-primary/10 hover:border-primary/30"
-                        onClick={() => {
-                          setInputValue(action.text);
-                          setTimeout(() => handleSendMessage(), 0);
-                        }}
-                        disabled={isTyping}
-                      >
-                        <span className="mr-1">{action.icon}</span>
-                        {action.text}
-                      </Button>
-                    ))}
+                  {/* Mobile Optimized Quick Suggestions */}
+                  <div className="mt-2.5 sm:mt-3">
+                    <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-1 -mx-2.5 sm:-mx-3 px-2.5 sm:px-3 scrollbar-hide">
+                      {[
+                        { text: "Compare destinations", icon: "🔄", short: "Compare" },
+                        { text: "Budget breakdown", icon: "💰", short: "Budget" }, 
+                        { text: "Best time to visit", icon: "📅", short: "Best time" },
+                        { text: "Creator opportunities", icon: "🎯", short: "Creator" }
+                      ].map((action) => (
+                        <Button
+                          key={action.text}
+                          variant="outline"
+                          size="sm"
+                          className="text-xs px-2.5 sm:px-3 py-1.5 sm:py-2 h-7 sm:h-8 border-border/50 hover:bg-primary/10 hover:border-primary/30 flex-shrink-0 whitespace-nowrap rounded-full"
+                          onClick={() => {
+                            setInputValue(action.text);
+                            setTimeout(() => handleSendMessage(), 0);
+                          }}
+                          disabled={isTyping}
+                        >
+                          <span className="mr-1">{action.icon}</span>
+                          <span className="hidden xs:inline">{action.text}</span>
+                          <span className="xs:hidden">{action.short}</span>
+                        </Button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
