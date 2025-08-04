@@ -40,11 +40,53 @@ export interface Recommendation {
   collaborations: string[];
   creators: number;
   bestMonths: string[];
+  extended?: {
+    detailedDescription?: string;
+    contentOpportunities?: {
+      videoIdeas?: string[];
+      photoSpots?: string[];
+      storytellingAngles?: string[];
+    };
+    localCreators?: {
+      topCollaborators?: Array<{
+        name: string;
+        platform: string;
+        followers: number;
+        collaborationReason: string;
+      }>;
+      networkingOpportunities?: string[];
+    };
+    budgetBreakdown?: {
+      summary?: string;
+      costEfficiency?: string;
+      savingTips?: string[];
+      splurgeRecommendations?: string[];
+    };
+    practicalInfo?: {
+      visa?: string;
+      language?: string;
+      currency?: string;
+      safetyTips?: string[];
+      culturalTips?: string[];
+    };
+    confidence?: number;
+    factChecked?: boolean;
+    scoringBreakdown?: Record<string, unknown>;
+  };
 }
 
 export interface RecommendationResponse {
   recommendations: Recommendation[];
   totalCount: number;
+  metadata?: {
+    tasteProfile?: {
+      culturalAffinities: string[];
+      confidence: number;
+    };
+    processedAt?: string;
+    apiVersion?: string;
+    fallback?: boolean;
+  };
 }
 
 // API Base URL - you can change this to your actual API endpoint
@@ -96,7 +138,7 @@ export async function analyzeWebsite(
   }
 }
 
-// Get Travel Recommendations API
+// Get Travel Recommendations API - Now supports dynamic recommendations
 export async function getRecommendations(
   data: RecommendationRequest
 ): Promise<RecommendationResponse> {
@@ -106,48 +148,40 @@ export async function getRecommendations(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        websiteData: data.websiteData,
+        preferences: data.preferences
+      }),
     });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    return await response.json();
+    const result = await response.json();
+    
+    // Handle both new dynamic format and legacy format
+    if (result.metadata?.apiVersion === 'dynamic-v1') {
+      console.log('Received dynamic recommendations with metadata:', result.metadata);
+      return {
+        recommendations: result.recommendations,
+        totalCount: result.totalCount,
+        metadata: result.metadata
+      };
+    }
+    
+    return result;
   } catch (error) {
     console.error("Error getting recommendations:", error);
-    // Return mock data for development
+    // Minimal fallback - main fallback logic is in route.ts
     return {
-      recommendations: [
-        {
-          id: 1,
-          destination: "Bali, Indonesia",
-          matchScore: 94,
-          image:
-            "https://images.pexels.com/photos/2474690/pexels-photo-2474690.jpeg?auto=compress&cs=tinysrgb&w=400",
-          highlights: [
-            "Perfect for adventure & food content",
-            "140+ active travel creators",
-            "15 brand partnerships available",
-          ],
-          budget: {
-            range: "$1,200 - $1,800",
-            breakdown: "7 days including flights, accommodation & activities",
-          },
-          engagement: {
-            potential: "High",
-            reason: "Strong alignment with adventure & cultural content",
-          },
-          collaborations: [
-            "AdventureBound Gear",
-            "TasteTrek Culinary",
-            "WanderStay Boutique Hotels",
-          ],
-          creators: 142,
-          bestMonths: ["April-May", "September-October"],
-        },
-      ],
-      totalCount: 1,
+      recommendations: [],
+      totalCount: 0,
+      metadata: {
+        fallback: true,
+        processedAt: new Date().toISOString(),
+        apiVersion: 'api-fallback-v2'
+      } as any
     };
   }
 }

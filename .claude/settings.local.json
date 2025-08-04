@@ -24,7 +24,10 @@
       "Bash(npx next build:*)",
       "Bash(npm run lint:*)",
       "Bash(npm run typecheck:*)",
-      "Bash(npx next lint:*)"
+      "Bash(npx next lint:*)",
+      "Bash(npm start)",
+      "Bash(npm install:*)",
+      "Bash(timeout 8 npm run dev)"
     ],
     "deny": []
   }
