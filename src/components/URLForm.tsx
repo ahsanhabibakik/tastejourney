@@ -98,9 +98,9 @@ const URLForm: React.FC<URLFormProps> = ({ onSubmit }) => {
                 placeholder="Enter URL (e.g., example.com, https://example.com)"
                 className={`pl-10 pr-10 transition-all duration-200 ${
                   urlStatus === 'valid' 
-                    ? 'border-green-500/50 focus:border-green-500 focus:ring-green-500/20' 
+                    ? 'border-green-500/50 dark:border-green-400/50 focus:border-green-500 dark:focus:border-green-400 focus:ring-green-500/20 dark:focus:ring-green-400/20' 
                     : urlStatus === 'invalid' 
-                    ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/20'
+                    ? 'border-red-500/50 dark:border-red-400/50 focus:border-red-500 dark:focus:border-red-400 focus:ring-red-500/20 dark:focus:ring-red-400/20'
                     : 'focus:border-primary/50 focus:ring-primary/20'
                 }`}
                 required
@@ -119,14 +119,14 @@ const URLForm: React.FC<URLFormProps> = ({ onSubmit }) => {
 
             {/* URL Preview */}
             {fixedUrl && urlStatus === 'valid' && (
-              <div className=" border border-green-200  rounded-md p-2 animate-slide-up">
+              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/50 rounded-md p-2 animate-slide-up">
                 <div className="flex items-center gap-2 text-xs">
-                  <Check className="h-3 w-3 text-green-600  flex-shrink-0" />
-                  <span className="text-green-800  font-medium">
+                  <Check className="h-3 w-3 text-green-600 dark:text-green-400 flex-shrink-0" />
+                  <span className="text-green-800 dark:text-green-200 font-medium">
                     URL will be analyzed as:
                   </span>
                 </div>
-                <div className="mt-1 font-mono text-xs text-green-800  bg-green-100 px-2 py-1 rounded break-all">
+                <div className="mt-1 font-mono text-xs text-green-800 dark:text-green-200 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded break-all">
                   {fixedUrl}
                 </div>
               </div>
@@ -134,10 +134,10 @@ const URLForm: React.FC<URLFormProps> = ({ onSubmit }) => {
 
             {/* Error Message */}
             {url.trim() && urlStatus === 'invalid' && (
-              <div className="bg-red-50  border border-red-200  rounded-md p-2 animate-slide-up">
+              <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/50 rounded-md p-2 animate-slide-up">
                 <div className="flex items-center gap-2 text-xs">
-                  <AlertCircle className="h-3 w-3 text-red-600  flex-shrink-0" />
-                  <span className="text-red-700">
+                  <AlertCircle className="h-3 w-3 text-red-600 dark:text-red-400 flex-shrink-0" />
+                  <span className="text-red-700 dark:text-red-300">
                     Please enter a valid website URL
                   </span>
                 </div>

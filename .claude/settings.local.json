@@ -20,7 +20,11 @@
       "Bash(timeout 10 npm run dev)",
       "WebFetch(domain:hackathon.api.qloo.com)",
       "Bash(pnpm dev:*)",
-      "Bash(cmd /c \"pnpm dev\")"
+      "Bash(cmd /c \"pnpm dev\")",
+      "Bash(npx next build:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(npx next lint:*)"
     ],
     "deny": []
   }

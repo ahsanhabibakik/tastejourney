@@ -49,16 +49,24 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["lucide-react"],
   },
 
-  // Minimal webpack config for non-turbopack builds
+  // Turbopack configuration (stable)
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
+  },
+
+  // Webpack config for all builds
   webpack: (config: any) => {
-    // Only apply when not using turbopack
-    if (!process.env.TURBOPACK) {
-      config.resolve.fallback = {
-        fs: false,
-        net: false,
-        tls: false,
-      };
-    }
+    config.resolve.fallback = {
+      fs: false,
+      net: false,
+      tls: false,
+      dns: false,
+    };
     return config;
   },
 
