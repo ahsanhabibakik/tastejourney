@@ -256,11 +256,16 @@ class QlooService {
   }
 
   private calculateAffinityScore(tasteVector: Record<string, number>, attributes: Record<string, number>): number {
+    // Handle null or undefined tasteVector
+    if (!tasteVector || typeof tasteVector !== 'object') {
+      return 0.5; // Default middle score
+    }
+    
     let score = 0;
     let totalWeight = 0;
 
     Object.keys(tasteVector).forEach(key => {
-      if (attributes[key] !== undefined) {
+      if (attributes && attributes[key] !== undefined) {
         const weight = tasteVector[key];
         score += weight * attributes[key];
         totalWeight += weight;

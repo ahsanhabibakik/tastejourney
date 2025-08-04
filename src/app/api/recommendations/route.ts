@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { integratedRecommendationService } from "@/services/integrated-recommendation";
 import { dynamicRecommendationService } from "@/services/dynamic-recommendation";
 import { errorHandler } from "@/services/errorHandler";
 
@@ -17,7 +18,7 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      console.log('🚀 Starting optimized recommendation generation for:', websiteData.url);
+      console.log('🚀 Starting integrated recommendation generation with PRD compliance...');
 
       // Prepare user profile from website data
       const userProfile = {
@@ -45,8 +46,8 @@ export async function POST(request: NextRequest) {
         personalityTraits: ['explorer', 'creative']
       };
 
-      // Generate dynamic recommendations with optimized flow
-      const result = await dynamicRecommendationService.generateDynamicRecommendations(
+      // Use integrated recommendation service with all PRD components
+      const result = await integratedRecommendationService.generateRecommendations(
         userProfile,
         tasteProfile,
         userPreferences

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 
 interface Recommendation {
@@ -28,23 +28,64 @@ interface DestinationCardProps {
 }
 
 const DestinationCard: React.FC<DestinationCardProps> = React.memo(({ rec, rank }) => {
+  const [imageError, setImageError] = useState(false);
+  
+  // Default fallback images
+  const fallbackImages = [
+    'https://images.pexels.com/photos/1591373/pexels-photo-1591373.jpeg?auto=compress&cs=tinysrgb&w=400',
+    'https://images.pexels.com/photos/1770775/pexels-photo-1770775.jpeg?auto=compress&cs=tinysrgb&w=400',
+    'https://images.pexels.com/photos/2265876/pexels-photo-2265876.jpeg?auto=compress&cs=tinysrgb&w=400'
+  ];
+  
+  // Get a consistent fallback image based on destination name
+  const getFallbackImage = () => {
+    const hash = rec.destination.split('').reduce((acc, char) => {
+      return ((acc << 5) - acc) + char.charCodeAt(0);
+    }, 0);
+    return fallbackImages[Math.abs(hash) % fallbackImages.length];
+  };
+  
+  // Check if image URL is valid
+  const isValidImageUrl = (url: string | undefined): boolean => {
+    if (!url) return false;
+    try {
+      const parsedUrl = new URL(url);
+      return parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:';
+    } catch {
+      return false;
+    }
+  };
+  
   return (
     <div className="w-full bg-card border border-border/50 rounded-2xl overflow-hidden shadow-lg">
       {/* Image Section */}
-      <div className="relative h-48 overflow-hidden">
-        {rec.image ? (
+      <div className="relative h-48 overflow-hidden group">
+        {isValidImageUrl(rec.image) && !imageError ? (
           <Image 
-            src={rec.image} 
+            src={rec.image!} 
             alt={rec.destination}
-            width={320}
+            width={400}
             height={192}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             priority={rank <= 2}
+            onError={() => setImageError(true)}
+            onLoadingComplete={(result) => {
+              if (result.naturalWidth === 0) {
+                setImageError(true);
+              }
+            }}
+            unoptimized
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-            <span className="text-4xl">🏝️</span>
-          </div>
+          <Image 
+            src={getFallbackImage()} 
+            alt={rec.destination}
+            width={400}
+            height={192}
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            priority={rank <= 2}
+            unoptimized
+          />
         )}
         
         {/* Gradient Overlay */}

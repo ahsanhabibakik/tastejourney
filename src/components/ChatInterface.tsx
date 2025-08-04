@@ -1221,9 +1221,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                       onClick={handleSendMessage}
                       disabled={!inputValue.trim() || isTyping || chatState === "analyzing" || chatState === "profiling" || chatState === "generating"}
                       size="icon"
-                      className="absolute right-1 sm:right-1.5 top-1/2 -translate-y-1/2 h-7 w-7 sm:h-8 sm:w-8 bg-primary hover:bg-primary/90 rounded-md"
+                      className="absolute right-1 sm:right-1.5 top-6/7 -translate-y-1/2 h-7 w-7 sm:h-8 sm:w-8 bg-primary hover:bg-primary/90 rounded-md flex items-center justify-center"
                     >
-                      <Send className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <Send className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
                     </Button>
                   </div>
                 </div>
