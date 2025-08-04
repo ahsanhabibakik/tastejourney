@@ -137,13 +137,13 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
                 </div>
               )}
               
-              {((data.images?.length || 0) > 0 || (data.videoLinks?.length || 0) > 0) && (
+              {/* {((data.images?.length || 0) > 0 || (data.videoLinks?.length || 0) > 0) && (
                 <div className="text-sm text-muted-foreground">
                   Media found: 
                   {data.images && data.images.length > 0 && ` ${data.images.length} images`}
                   {data.videoLinks && data.videoLinks.length > 0 && ` ${data.videoLinks.length} videos`}
                 </div>
-              )}
+              )} */}
 
               {data.fallbackUsed && (
                 <div className="bg-amber-50 text-amber-700 border border-amber-200 rounded-lg p-3 text-sm">
