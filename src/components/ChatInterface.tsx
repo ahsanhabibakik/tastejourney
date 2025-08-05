@@ -63,35 +63,35 @@ interface Recommendation {
 const questions = [
   {
     id: "budget",
-    text: "💸 What's your budget range for this trip?",
+    text: "What's your budget range for this trip?",
     options: ["$500-1000", "$1000-2500", "$2500-5000", "$5000+"],
     icon: "💸",
     multiSelect: false,
   },
   {
     id: "duration",
-    text: "🗓️ How long would you like to travel?",
+    text: "How long would you like to travel?",
     options: ["1-3 days", "4-7 days", "1-2 weeks", "2+ weeks"],
     icon: "🗓️",
     multiSelect: false,
   },
   {
     id: "style",
-    text: "🌍 What's your preferred travel style?",
+    text: "What's your preferred travel style?",
     options: ["Adventure", "Luxury", "Cultural", "Beach", "Urban"],
     icon: "🌍",
     multiSelect: false,
   },
   {
     id: "contentFocus",
-    text: "📸 What type of content do you focus on?",
+    text: "What type of content do you focus on?",
     options: ["Photography", "Food", "Lifestyle", "Adventure"],
     icon: "📸",
     multiSelect: false,
   },
   {
     id: "climate",
-    text: "☀️ Select all climate preferences that apply (you can choose multiple):",
+    text: "Select all climate preferences that apply (you can choose multiple):",
     options: [
       "Tropical/Sunny",
       "Mild/Temperate",
