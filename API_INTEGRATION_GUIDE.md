@@ -26,14 +26,14 @@ Below are the API keys you need to obtain. I'll provide signup links and impleme
 ### Qloo Taste AI™ (Already configured)
 - **Status:** ✅ CONFIGURED
 - **Purpose:** Core taste profiling and recommendation engine (90% weight)
-- **Current Key:** `QicUpH0FFi-tiavofPhULOL_SUUqMFw9Qlv7-ze1f8Q`
+- **Current Key:** `[CONFIGURED - Check .env.local]`
 - **URL:** https://hackathon.api.qloo.com
 - **Docs:** https://docs.qloo.com/
 
 ### SendGrid Email API (Already configured)
 - **Status:** ✅ CONFIGURED  
 - **Purpose:** PDF report delivery
-- **Current Key:** `[SENDGRID_API_KEY_REDACTED]`
+- **Current Key:** `[CONFIGURED - Check .env.local]`
 - **Free Tier:** 100 emails/day
 
 ---
@@ -120,13 +120,13 @@ Below are the API keys you need to obtain. I'll provide signup links and impleme
 ### ScraperAPI (Already configured)
 - **Status:** ✅ CONFIGURED
 - **Purpose:** Website scraping for content analysis
-- **Current Key:** `27a2f18c8ee921fab2e4f2433b6a3f72`
+- **Current Key:** `[CONFIGURED - Check .env.local]`
 - **Free Tier:** 1,000 requests/month
 
 ### SerpAPI (Already configured)
 - **Status:** ✅ CONFIGURED
 - **Purpose:** Search results and web data
-- **Current Key:** `c78773e5e8a40609175d24c2211c27cdbb2b55a171566b57a2d0f6523e61060a`
+- **Current Key:** `[CONFIGURED - Check .env.local]`
 - **Free Tier:** 100 searches/month
 
 ---
