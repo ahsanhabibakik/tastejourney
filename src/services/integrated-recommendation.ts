@@ -323,8 +323,10 @@ export class IntegratedRecommendationService {
       // First, try to use the advanced Gemini service directly
       const geminiService = await import('./gemini');
       
-      // Generate base destinations using taste profile
-      const baseDestinations = ['Tokyo, Japan', 'Bali, Indonesia', 'Lisbon, Portugal', 'Mexico City, Mexico', 'Istanbul, Turkey'];
+
+      // Generate dynamic base destinations using taste profile and themes
+      const baseDestinations = this.generateDynamicBaseDestinations(userProfile, tasteProfile);
+
       
       // Use the advanced generateMultipleRecommendations method from Gemini
       const advancedRecommendations = await geminiService.geminiService.generateMultipleRecommendations(
@@ -537,7 +539,9 @@ export class IntegratedRecommendationService {
     } catch (error) {
       console.error(`Creator error for ${destination.name}:`, error);
       return {
-        totalActiveCreators: Math.floor(Math.random() * 100) + 50,
+
+        totalActiveCreators: 0, // Will be populated by real creator data service
+
         topCreators: [],
         collaborationOpportunities: ['Local creator community available']
       };
@@ -727,47 +731,141 @@ export class IntegratedRecommendationService {
     }));
   }
 
-  private generateTasteBasedDestinations(tasteProfile: any) {
-    // Fallback destinations based on taste profile
+
+  // Generate dynamic base destinations for AI processing
+  private generateDynamicBaseDestinations(userProfile: any, tasteProfile: any): string[] {
     const destinations = [];
-    
-    if (tasteProfile?.tasteVector?.adventure > 0.5) {
-      destinations.push({
-        name: 'Queenstown, New Zealand',
-        country: 'New Zealand',
-        qlooScore: 0.85,
-        qlooInsights: { reason: 'High adventure affinity match' }
-      });
+    const themes = userProfile.themes || [];
+    const tasteVector = tasteProfile?.tasteVector || {};
+
+    console.log('🎯 INTEGRATED: Generating dynamic base destinations for themes:', themes);
+    console.log('🎯 INTEGRATED: Taste vector scores:', tasteVector);
+
+    // Technology-focused destinations
+    if (themes.includes('technology') || themes.includes('tech') || tasteVector.urban > 0.7) {
+      destinations.push('Singapore, Singapore', 'Seoul, South Korea', 'Shenzhen, China', 'Tel Aviv, Israel', 'Tallinn, Estonia');
     }
-    
-    if (tasteProfile?.tasteVector?.culture > 0.5) {
-      destinations.push({
-        name: 'Kyoto, Japan',
-        country: 'Japan',
-        qlooScore: 0.82,
-        qlooInsights: { reason: 'Strong cultural preference match' }
-      });
+
+    // Adventure destinations
+    if (themes.includes('adventure') || themes.includes('outdoor') || tasteVector.adventure > 0.7) {
+      destinations.push('Queenstown, New Zealand', 'Patagonia, Chile', 'Iceland, Iceland', 'Nepal, Nepal', 'Tanzania, Tanzania');
     }
-    
-    if (tasteProfile?.tasteVector?.luxury > 0.5) {
-      destinations.push({
-        name: 'Dubai, UAE',
-        country: 'United Arab Emirates',
-        qlooScore: 0.78,
-        qlooInsights: { reason: 'Luxury travel preference match' }
-      });
+
+    // Culture and art destinations
+    if (themes.includes('culture') || themes.includes('art') || themes.includes('history') || tasteVector.culture > 0.7) {
+      destinations.push('Florence, Italy', 'Prague, Czech Republic', 'Angkor Wat, Cambodia', 'Jerusalem, Israel', 'Fez, Morocco');
     }
-    
-    // Default destinations if no strong preferences
+
+    // Food destinations
+    if (themes.includes('food') || themes.includes('culinary') || themes.includes('cooking') || tasteVector.food > 0.6) {
+      destinations.push('Lyon, France', 'Lima, Peru', 'Oaxaca, Mexico', 'Melbourne, Australia', 'Chengdu, China');
+    }
+
+    // Photography destinations
+    if (themes.includes('photography') || themes.includes('visual') || themes.includes('photo')) {
+      destinations.push('Salar de Uyuni, Bolivia', 'Faroe Islands, Faroe Islands', 'Lofoten, Norway', 'Socotra, Yemen', 'Raja Ampat, Indonesia');
+    }
+
+    // Wellness and spiritual destinations
+    if (themes.includes('wellness') || themes.includes('spiritual') || themes.includes('yoga') || themes.includes('meditation')) {
+      destinations.push('Rishikesh, India', 'Tulum, Mexico', 'Ubud, Indonesia', 'Bhutan, Bhutan', 'Tibet, China');
+    }
+
+    // Nature destinations
+    if (themes.includes('nature') || themes.includes('wildlife') || themes.includes('eco') || tasteVector.nature > 0.7) {
+      destinations.push('Costa Rica, Costa Rica', 'Madagascar, Madagascar', 'Galápagos, Ecuador', 'Botswana, Botswana', 'Alaska, USA');
+    }
+
+    // Business and finance themes
+    if (themes.includes('business') || themes.includes('finance') || themes.includes('startup')) {
+      destinations.push('Zurich, Switzerland', 'Luxembourg, Luxembourg', 'Hong Kong, Hong Kong', 'Dubai, UAE', 'London, UK');
+    }
+
+    // If no specific themes, use diverse global destinations
     if (destinations.length === 0) {
+      destinations.push('Lisbon, Portugal', 'Vietnam, Vietnam', 'Georgia, Georgia', 'Jordan, Jordan', 'Estonia, Estonia');
+    }
+
+    // Remove duplicates and limit to 8 destinations
+    const uniqueDestinations = [...new Set(destinations)].slice(0, 8);
+    
+    console.log('✅ INTEGRATED: Generated dynamic destinations:', uniqueDestinations);
+    return uniqueDestinations;
+  }
+
+  private generateTasteBasedDestinations(tasteProfile: any) {
+    console.log('🚀 INTEGRATED: Generating taste-based destinations with enhanced algorithm...');
+    
+    const destinations = [];
+    const tasteVector = tasteProfile?.tasteVector || {};
+    
+    // Enhanced taste-based destination selection with more variety
+    if (tasteVector.adventure > 0.5) {
       destinations.push(
-        { name: 'Bali, Indonesia', country: 'Indonesia', qlooScore: 0.75, qlooInsights: { reason: 'Popular travel destination' } },
-        { name: 'Lisbon, Portugal', country: 'Portugal', qlooScore: 0.72, qlooInsights: { reason: 'Well-rounded destination' } },
-        { name: 'Mexico City, Mexico', country: 'Mexico', qlooScore: 0.70, qlooInsights: { reason: 'Diverse cultural experience' } }
+        { name: 'Queenstown', country: 'New Zealand', qlooScore: 0.85, qlooInsights: { reason: 'High adventure affinity match' } },
+        { name: 'Interlaken', country: 'Switzerland', qlooScore: 0.83, qlooInsights: { reason: 'Alpine adventure destination' } },
+        { name: 'Banff', country: 'Canada', qlooScore: 0.81, qlooInsights: { reason: 'Mountain adventure paradise' } }
       );
     }
     
-    return destinations;
+    if (tasteVector.culture > 0.5) {
+      destinations.push(
+        { name: 'Kyoto', country: 'Japan', qlooScore: 0.82, qlooInsights: { reason: 'Strong cultural preference match' } },
+        { name: 'Florence', country: 'Italy', qlooScore: 0.80, qlooInsights: { reason: 'Renaissance culture and art' } },
+        { name: 'Varanasi', country: 'India', qlooScore: 0.78, qlooInsights: { reason: 'Ancient cultural heritage' } }
+      );
+    }
+
+    if (tasteVector.urban > 0.6) {
+      destinations.push(
+        { name: 'Singapore', country: 'Singapore', qlooScore: 0.84, qlooInsights: { reason: 'Urban innovation hub' } },
+        { name: 'Tokyo', country: 'Japan', qlooScore: 0.82, qlooInsights: { reason: 'Urban technology center' } },
+        { name: 'Seoul', country: 'South Korea', qlooScore: 0.80, qlooInsights: { reason: 'Modern urban experience' } }
+      );
+    }
+
+    if (tasteVector.nature > 0.6) {
+      destinations.push(
+        { name: 'Costa Rica', country: 'Costa Rica', qlooScore: 0.86, qlooInsights: { reason: 'Biodiversity and eco-tourism' } },
+        { name: 'Iceland', country: 'Iceland', qlooScore: 0.84, qlooInsights: { reason: 'Pristine natural landscapes' } },
+        { name: 'Madagascar', country: 'Madagascar', qlooScore: 0.82, qlooInsights: { reason: 'Unique wildlife and nature' } }
+      );
+    }
+
+    if (tasteVector.food > 0.6) {
+      destinations.push(
+        { name: 'Lyon', country: 'France', qlooScore: 0.87, qlooInsights: { reason: 'Culinary capital of France' } },
+        { name: 'Lima', country: 'Peru', qlooScore: 0.85, qlooInsights: { reason: 'Innovative fusion cuisine' } },
+        { name: 'Oaxaca', country: 'Mexico', qlooScore: 0.83, qlooInsights: { reason: 'Traditional Mexican gastronomy' } }
+      );
+    }
+
+    if (tasteVector.luxury > 0.5) {
+      destinations.push(
+        { name: 'Monaco', country: 'Monaco', qlooScore: 0.85, qlooInsights: { reason: 'Luxury and glamour' } },
+        { name: 'Maldives', country: 'Maldives', qlooScore: 0.84, qlooInsights: { reason: 'Luxury resort destination' } },
+        { name: 'Aspen', country: 'USA', qlooScore: 0.82, qlooInsights: { reason: 'Exclusive mountain retreat' } }
+      );
+    }
+
+    // Add unique/emerging destinations for variety
+    destinations.push(
+      { name: 'Estonia', country: 'Estonia', qlooScore: 0.75, qlooInsights: { reason: 'Digital innovation hub' } },
+      { name: 'Rwanda', country: 'Rwanda', qlooScore: 0.73, qlooInsights: { reason: 'Conservation and transformation story' } },
+      { name: 'Georgia', country: 'Georgia', qlooScore: 0.71, qlooInsights: { reason: 'Emerging cultural destination' } }
+    );
+    
+    // Sort by Qloo score and remove duplicates
+    const uniqueDestinations = destinations
+      .filter((dest, index, self) => 
+        index === self.findIndex(d => d.name === dest.name)
+      )
+      .sort((a, b) => b.qlooScore - a.qlooScore)
+      .slice(0, 10); // Return more options for variety
+
+    console.log(`✅ INTEGRATED: Generated ${uniqueDestinations.length} taste-based destinations`);
+    return uniqueDestinations;
+
   }
 
   private calculateCostEfficiency(budget: any, userBudget?: string): string {

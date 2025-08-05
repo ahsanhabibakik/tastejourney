@@ -1,0 +1,995 @@
+ {
+        "parents": [
+          {
+            "type": "urn:entity:brand"
+          }
+        ],
+        "type": "urn:tag:genre:brand",
+        "id": "urn:tag:genre:brand:fashion:footwear:sneaker:lifestyle",
+        "name": "Lifestyle / Casual",
+        "popularity": 0.97263813,
+        "properties": {},
+        "tags": [
+          {
+            "name": "Canonical",
+            "tag_id": "urn:tag:collection:canonical",
+            "type": "urn:tag:collection",
+            "value": "urn:tag:collection:canonical"
+          }
+        ]
+      },
+      {
+        "parents": [
+          {
+            "type": "urn:entity:person"
+          }
+        ],
+        "type": "urn:tag:occupation:wikidata",
+        "id": "urn:tag:occupation:wikidata:lifestyle_guru",
+        "name": "Lifestyle Guru",
+        "popularity": 0.8248302,
+        "properties": {},
+        "tags": []
+      },
+      {
+        "parents": [
+          {
+            "type": "urn:entity:podcast"
+          }
+        ],
+        "type": "urn:tag:keyword:qloo",
+        "id": "urn:tag:keyword:qloo:lifestyle_design",
+        "name": "Lifestyle Design",
+        "popularity": 0.40445638,
+        "properties": {},
+        "tags": []
+      },
+      {
+        "parents": [
+          {
+            "type": "urn:entity:tv_show"
+          },
+          {
+            "type": "urn:entity:podcast"
+          }
+        ],
+        "type": "urn:tag:audience:qloo",
+        "id": "urn:tag:audience:qloo:lifestyle_enthusiasts",
+        "name": "Lifestyle enthusiasts",
+        "popularity": 0.38794795,
+        "properties": {},
+        "tags": []
+      },
+      {
+        "parents": [
+          {
+            "type": "urn:entity:tv_show"
+          },
+          {
+            "type": "urn:entity:podcast"
+          },
+          {
+            "type": "urn:entity:movie"
+          }
+        ],
+        "type": "urn:tag:keyword:qloo",
+        "id": "urn:tag:keyword:qloo:lifestyle_change",
+        "name": "Lifestyle change",
+        "popularity": 0.37008637,
+        "properties": {},
+        "tags": []
+      },
+      {
+        "parents": [
+          {
+            "type": "urn:entity:tv_show"
+          },
+          {
+            "type": "urn:entity:podcast"
+          }
+        ],
+        "type": "urn:tag:audience:qloo",
+        "id": "urn:tag:audience:qloo:lifestyle_focused",
+        "name": "Lifestyle-focused",
+        "popularity": 0.20130353,
+        "properties": {},
+        "tags": []
+      },
+      {
+        "parents": [
+          {
+            "type": "urn:entity:podcast"
+          }
+        ],
+        "type": "urn:tag:theme:qloo",
+        "id": "urn:tag:theme:qloo:lifestyle_design",
+        "name": "Lifestyle Design",
+        "popularity": 0.20130353,
+        "properties": {},
+        "tags": []
+      },
+      {
+        "parents": [
+          {
+            "type": "urn:entity:podcast"
+          }
+        ],
+        "type": "urn:tag:theme:qloo",
+        "id": "urn:tag:theme:qloo:lifestyle_changes",
+        "name": "Lifestyle Changes",
+        "popularity": 0.16693354,
+        "properties": {},
+        "tags": []
+      },
+      {
+        "parents": [
+          {
+            "type": "urn:entity:person"
+          }
+        ],
+        "type": "urn:tag:occupation:wikidata",
+        "id": "urn:tag:occupation:wikidata:lifestyle",
+        "name": "Lifestyle",
+        "popularity": 0,
+        "properties": {},
+        "tags": []
+      },
+      {
+        "parents": [
+          {
+            "type": "urn:entity:podcast"
+          }
+        ],
+        "type": "urn:tag:theme:qloo",
+        "id": "urn:tag:theme:qloo:healthy_lifestyle",
+        "name": "Healthy lifestyle",
+        "popularity": 0.43557882,
+        "properties": {},
+        "tags": []
+      },
+      {
+        "parents": [
+          {
+            "type": "urn:entity:artist"
+          }
+        ],
+        "type": "urn:tag:theme:qloo",
+        "id": "urn:tag:theme:qloo:party_lifestyle",
+        "name": "Party Lifestyle",
+        "popularity": 0.43557882,
+        "properties": {},
+        "tags": []
+      },
+      {
+        "parents": [
+          {
+            "type": "urn:entity:tv_show"
+          },
+          {
+            "type": "urn:entity:podcast"
+          }
+        ],
+        "type": "urn:tag:audience:qloo",
+        "id": "urn:tag:audience:qloo:lifestyle_oriented",
+        "name": "Lifestyle-oriented",
+        "popularity": 0,
+        "properties": {},
+        "tags": []
+      },
+      {
+        "parents": [
+          {
+            "type": "urn:entity:podcast"
+          }
+        ],
+        "type": "urn:tag:theme:qloo",
+        "id": "urn:tag:theme:qloo:outdoor_lifestyle",
+        "name": "Outdoor Lifestyle",
+        "popularity": 0.30748066,
+        "properties": {},
+        "tags": []
+      }
+    ]
+  }
+}
+No tags found for "lifestyle"
+Retrieved tag IDs: []
+Trying Qloo endpoint: https://hackathon.api.qloo.com/v2/insights (GET, filter.type=urn:entity:destination)
+No tag IDs found, using theme-based signals
+Added signal.interests.tags: travel,photography,lifestyle,adventure
+Success with endpoint /v2/insights (GET, filter.type=urn:entity:destination): {
+  "success": true,
+  "results": {
+    "entities": [
+      {
+        "name": "Coolum Beach",
+        "entity_id": "002D2A67-FB3C-4D23-8C1A-AA5FB3BA72CC",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Coolum Beach",
+            "admin1_region": "Queensland",
+            "admin2_region": "Sunshine Coast",
+            "country_code": "AU"
+          }
+        },
+        "popularity": 0.27697189483227563,
+        "location": {
+          "lat": -26.527851,
+          "lon": 153.08394,
+          "geohash": "r7kc5db2461u"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:beaches",
+            "name": "Beaches",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Val Thorens",
+        "entity_id": "00411E02-0928-4FED-9A59-D32F6B737D16",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Val Thorens",
+            "admin1_region": "Rhone-Alpes",
+            "admin2_region": "Departement de la Savoie",
+            "country_code": "FR"
+          }
+        },
+        "popularity": 0.05258386219401632,
+        "location": {
+          "lat": 45.29768,
+          "lon": 6.579789,
+          "geohash": "u0h9twpq05w3"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:snow_ski",
+            "name": "Snow and Ski",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:scenic_picturesque",
+            "name": "Scenic & Picturesque",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:foodie_destination",
+            "name": "Foodie Destination",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Saugatuck",
+        "entity_id": "00470AED-82CF-457F-B25C-40DE94D2FD5E",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Douglas",
+            "admin1_region": "Michigan",
+            "admin2_region": "Allegan County",
+            "country_code": "US"
+          }
+        },
+        "popularity": 0.1631912964641886,
+        "location": {
+          "lat": 42.655,
+          "lon": -86.20194,
+          "geohash": "dpddwmjemhhf"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:outdoor_activities",
+            "name": "Outdoor Activities",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:beaches",
+            "name": "Beaches",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Katowice",
+        "entity_id": "00538E6E-8317-414E-90B7-5E8EF945837F",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Katowice",
+            "admin1_region": "Silesian Voivodeship",
+            "admin2_region": "Katowice",
+            "country_code": "PL"
+          }
+        },
+        "popularity": 0.685856754306437,
+        "location": {
+          "lat": 50.2667,
+          "lon": 19.0167,
+          "geohash": "u2vtbwz8c0pv"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:art_culture",
+            "name": "Art & Culture",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Brussels",
+        "entity_id": "005AE488-9712-4637-BB28-E646DCBD0BD8",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Brussels",
+            "admin1_region": "Brussels Capital",
+            "admin2_region": "Bruxelles-Capitale",
+            "country_code": "BE"
+          }
+        },
+        "popularity": 0.7842248413417952,
+        "location": {
+          "lat": 50.85,
+          "lon": 4.35,
+          "geohash": "u1516bzwdqg0"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:great_shopping",
+            "name": "Great Shopping",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:art_culture",
+            "name": "Art & Culture",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:great_architecture",
+            "name": "Great Architecture",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Beaujolais",
+        "entity_id": "00739C6E-39EB-4E75-8CE7-8E486D643A7B",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Charentay",
+            "admin1_region": "Rhone-Alpes",
+            "admin2_region": "Departement du Rhone",
+            "country_code": "FR"
+          }
+        },
+        "popularity": 0.051677243880326386,
+        "location": {
+          "lat": 46.083332,
+          "lon": 4.6666665,
+          "geohash": "u05q4jnnv5wz"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:peace_tranquility",
+            "name": "Peace and Tranquility",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:scenic_picturesque",
+            "name": "Scenic & Picturesque",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:wine_country",
+            "name": "Wine Country",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:outdoor_activities",
+            "name": "Outdoor Activities",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Fajardo",
+        "entity_id": "007A5A1D-FED9-466E-B40D-EA459C9C060B",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Fajardo",
+            "admin1_region": "Fajardo",
+            "admin2_region": "",
+            "country_code": "PR"
+          }
+        },
+        "popularity": 0.2184950135992747,
+        "location": {
+          "lat": 18.3278,
+          "lon": -65.6528,
+          "geohash": "de32603p4ven"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:outdoor_activities",
+            "name": "Outdoor Activities",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:beaches",
+            "name": "Beaches",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Bonita Springs",
+        "entity_id": "00898011-5114-49BB-9CBD-DF5BB713BA8E",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Bonita Springs",
+            "admin1_region": "Florida",
+            "admin2_region": "Lee County",
+            "country_code": "US"
+          }
+        },
+        "popularity": 0.4605621033544878,
+        "location": {
+          "lat": 26.3396,
+          "lon": -81.779,
+          "geohash": "dhtvg4fr71nr"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:beaches",
+            "name": "Beaches",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Brasília",
+        "entity_id": "00C4AD79-AAA4-4C5B-B9BF-B8FCE806E00E",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Brasilia",
+            "admin1_region": "Federal District",
+            "admin2_region": "Brasilia",
+            "country_code": "BR"
+          }
+        },
+        "popularity": 0.9084315503173164,
+        "location": {
+          "lat": -15.8,
+          "lon": -47.9,
+          "geohash": "6vjyn58q346p"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:great_architecture",
+            "name": "Great Architecture",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Cappadocia",
+        "entity_id": "00E2CAD2-D330-444D-9881-084FAB4556E7",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Eminoenue",
+            "admin1_region": "Istanbul",
+            "admin2_region": "",
+            "country_code": "TR"
+          }
+        },
+        "popularity": 0.07479601087941977,
+        "location": {
+          "lat": 41.009056,
+          "lon": 28.978779,
+          "geohash": "sxk973mxn6ps"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:scenic_picturesque",
+            "name": "Scenic & Picturesque",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:nature",
+            "name": "Nature",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:off_beaten_path",
+            "name": "Off the Beaten Path",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Santarém",
+        "entity_id": "00E3F461-68A7-4715-A90F-31156B17C8CE",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Santarem",
+            "admin1_region": "Para",
+            "admin2_region": "Santarem",
+            "country_code": "BR"
+          }
+        },
+        "popularity": 0.1541251133272892,
+        "location": {
+          "lat": -2.43333,
+          "lon": -54.7,
+          "geohash": "6z945m08vd7h"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:outdoor_activities",
+            "name": "Outdoor Activities",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:beaches",
+            "name": "Beaches",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "San Jose",
+        "entity_id": "00F0ACCB-BBF7-43DC-BFFC-DF0A2B72F807",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "San Jose",
+            "admin1_region": "California",
+            "admin2_region": "Santa Clara County",
+            "country_code": "US"
+          }
+        },
+        "popularity": 0.8839528558476881,
+        "location": {
+          "lat": 37.3376,
+          "lon": -121.8865,
+          "geohash": "9q9k6mhgqc0p"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:urban_destinations",
+            "name": "Urban Destinations",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Guelph",
+        "entity_id": "0103393C-4175-45FD-B12C-CF3459B58FF8",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Guelph",
+            "admin1_region": "Ontario",
+            "admin2_region": "Wellington County",
+            "country_code": "CA"
+          }
+        },
+        "popularity": 0.44514959202175886,
+        "location": {
+          "lat": 43.55,
+          "lon": -80.25,
+          "geohash": "dpwzvb59pkqb"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:outdoor_activities",
+            "name": "Outdoor Activities",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Saint-Bonnet-le-Froid",
+        "entity_id": "011CFB4C-30B0-4EF7-A205-6BB4EE677974",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Riotord",
+            "admin1_region": "Auvergne",
+            "admin2_region": "Departement de la Haute-Loire",
+            "country_code": "FR"
+          }
+        },
+        "popularity": 0.03218495013599275,
+        "location": {
+          "lat": 45.143604,
+          "lon": 4.4330196,
+          "geohash": "u050ufhh8cg0"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:off_beaten_path",
+            "name": "Off the Beaten Path",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:foodie_destination",
+            "name": "Foodie Destination",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "McMinnville",
+        "entity_id": "01200DA0-D74C-49A9-BDB2-966E05B6DB2C",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "McMinnville",
+            "admin1_region": "Oregon",
+            "admin2_region": "Yamhill County",
+            "country_code": "US"
+          }
+        },
+        "popularity": 0.1600181323662738,
+        "location": {
+          "lat": 45.2099,
+          "lon": -123.1968,
+          "geohash": "c203hw4yf2pt"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:wine_country",
+            "name": "Wine Country",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Groningen",
+        "entity_id": "01364A9F-91F7-4E70-9679-E3B5163B7551",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Groningen",
+            "admin1_region": "Groningen",
+            "admin2_region": "Gemeente Groningen",
+            "country_code": "NL"
+          }
+        },
+        "popularity": 0.39347234814143245,
+        "location": {
+          "lat": 53.217255,
+          "lon": 6.5696826,
+          "geohash": "u1kwtrzuuxq3"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:urban_destinations",
+            "name": "Urban Destinations",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Alappuzha",
+        "entity_id": "0183BE71-741F-459A-9560-858140760628",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Alleppey",
+            "admin1_region": "Kerala",
+            "admin2_region": "Alappuzha",
+            "country_code": "IN"
+          }
+        },
+        "popularity": 0.49229374433363554,
+        "location": {
+          "lat": 9.4903,
+          "lon": 76.3294,
+          "geohash": "t9wmbztm5bjj"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:beaches",
+            "name": "Beaches",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Glenwood Springs",
+        "entity_id": "019D4BEF-84C0-4611-A30D-0A39F419A0BB",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Glenwood Springs",
+            "admin1_region": "Colorado",
+            "admin2_region": "Garfield County",
+            "country_code": "US"
+          }
+        },
+        "popularity": 0.4528558476881233,
+        "location": {
+          "lat": 39.5396,
+          "lon": -107.329,
+          "geohash": "9x58vtvqugxr"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:outdoor_activities",
+            "name": "Outdoor Activities",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Kendal",
+        "entity_id": "01FA7B53-19B0-4DF8-9211-2E16C0100A7B",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Kendal",
+            "admin1_region": "England",
+            "admin2_region": "Cumbria",
+            "country_code": "GB"
+          }
+        },
+        "popularity": 0.12919310970081596,
+        "location": {
+          "lat": 54.3242,
+          "lon": -2.7474,
+          "geohash": "gcwj13rmkuy1"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:history",
+            "name": "For the History",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      },
+      {
+        "name": "Lake Louise",
+        "entity_id": "000B9F41-1B3B-4051-94FC-A7E1BB38550B",
+        "type": "urn:entity",
+        "subtype": "urn:entity:destination",
+        "properties": {
+          "geocode": {
+            "name": "Lake Louise",
+            "admin1_region": "Alberta",
+            "admin2_region": "",
+            "country_code": "CA"
+          }
+        },
+        "popularity": 0.8916591115140526,
+        "location": {
+          "lat": 51.4333,
+          "lon": -116.183,
+          "geohash": "c3jks5nheyj1"
+        },
+        "tags": [
+          {
+            "id": "urn:tag:genre:destination:scenic_picturesque",
+            "name": "Scenic & Picturesque",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:nature",
+            "name": "Nature",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:outdoor_activities",
+            "name": "Outdoor Activities",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:romantic_getaways",
+            "name": "Romantic Getaways",
+            "type": "urn:tag:genre:destination"
+          },
+          {
+            "id": "urn:tag:genre:destination:peace_tranquility",
+            "name": "Peace and Tranquility",
+            "type": "urn:tag:genre:destination"
+          }
+        ],
+        "query": {
+          "affinity": 0.7649962877984056
+        },
+        "disambiguation": ""
+      }
+    ]
+  },
+  "duration": 110
+}
+✅ Successfully received data from Qloo API
+✅ Generated taste profile with 0.85 confidence
+📊 Recommendations: 10, Cultural Affinities: 8
+ POST /api/profile-taste 200 in 6340ms
+ ✓ Compiled /api/dynamic-questions in 223ms
+ ⨯ ./src/app/api/dynamic-questions/route.ts:3:1
+Export ErrorHandler doesn't exist in target module
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import { dynamicQuestionServiceV2 } from '@/services/dynamic-questions-v2';
+> 3 | import { ErrorHandler } from '@/services/errorHandler';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(request: NextRequest) {
+  6 |   const errorHandler = new ErrorHandler('dynamic-questions-api');
+
+The export ErrorHandler was not found in module [project]/src/services/errorHandler.ts [app-route] 
+(ecmascript).
+Did you mean to import errorHandler?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+
+./src/services/dynamic-questions-v2.ts:4:1
+Export GeminiService doesn't exist in target module
+  2 | // Generates truly dynamic questions that adapt based on user context and previous answers   
+  3 |
+> 4 | import { GeminiService } from './gemini';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | interface DynamicQuestionV2 {
+  7 |   id: string;
+
+The export GeminiService was not found in module [project]/src/services/gemini.ts [app-route] (ecmascript).
+Did you mean to import geminiService?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  ./src/services/dynamic-questions-v2.ts
+  ./src/app/api/dynamic-questions/route.ts
+
+
+ ⨯ ./src/app/api/dynamic-questions/route.ts:3:1
+Export ErrorHandler doesn't exist in target module
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import { dynamicQuestionServiceV2 } from '@/services/dynamic-questions-v2';
+> 3 | import { ErrorHandler } from '@/services/errorHandler';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(request: NextRequest) {
+  6 |   const errorHandler = new ErrorHandler('dynamic-questions-api');
+
+The export ErrorHandler was not found in module [project]/src/services/errorHandler.ts [app-route] 
+(ecmascript).
+Did you mean to import errorHandler?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+
+./src/services/dynamic-questions-v2.ts:4:1
+Export GeminiService doesn't exist in target module
+  2 | // Generates truly dynamic questions that adapt based on user context and previous answers   
+  3 |
+> 4 | import { GeminiService } from './gemini';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | interface DynamicQuestionV2 {
+  7 |   id: string;
+
+The export GeminiService was not found in module [project]/src/services/gemini.ts [app-route] (ecmascript).
+Did you mean to import geminiService?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  ./src/services/dynamic-questions-v2.ts
+  ./src/app/api/dynamic-questions/route.ts
+
+
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 3.1s
+ POST /api/dynamic-questions 500 in 3929ms
+ POST /api/dynamic-questions 500 in 3954ms
+ POST /api/recommendations 500 in 652ms
+ POST /api/recommendations 500 in 784ms
