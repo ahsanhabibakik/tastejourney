@@ -8,12 +8,14 @@ export default function Home() {
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-background to-background/95">
       <Header onMobileMenuClick={() => setShowMobileSidebar(!showMobileSidebar)} />
-      <ChatInterface 
-        showMobileSidebar={showMobileSidebar}
-        setShowMobileSidebar={setShowMobileSidebar}
-      />
+      <div className="flex-1 overflow-hidden">
+        <ChatInterface 
+          showMobileSidebar={showMobileSidebar}
+          setShowMobileSidebar={setShowMobileSidebar}
+        />
+      </div>
     </div>
   );
 }
