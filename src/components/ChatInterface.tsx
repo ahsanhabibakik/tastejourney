@@ -749,7 +749,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
   ], []);
 
   return (
-    <div className="flex h-[calc(100vh-40px)] lg:h-[calc(100vh-48px)] bg-gradient-to-br from-background via-background/95 to-muted/30">
+    <div className="flex h-full bg-gradient-to-br from-background via-background/95 to-muted/20">
       {/* Mobile Sidebar Overlay */}
       {showMobileSidebar && (
         <div className="lg:hidden fixed inset-0 z-50">
@@ -760,7 +760,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
           />
           
           {/* Sidebar Panel */}
-          <div className="absolute left-0 top-0 h-full w-64 bg-card border-r border-border/40 shadow-2xl animate-slide-in-left">
+          <div className="absolute left-0 top-0 h-full w-72 bg-card border-r border-border/40 shadow-2xl animate-slide-in-left">
             {/* Close Button */}
             <div className="absolute top-3 right-3 z-10">
               <Button
@@ -791,7 +791,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
       )}
       
       {/* Desktop Sidebar */}
-      <div className="hidden lg:flex flex-col w-60 xl:w-64 bg-card/60 backdrop-blur-lg border-r border-border/40 shadow-lg h-full">
+      <div className="hidden lg:flex flex-col w-72 xl:w-80 bg-card/60 backdrop-blur-lg border-r border-border/40 shadow-lg h-full flex-shrink-0">
         <SidebarContent
           chatState={chatState}
           currentQuestionIndex={currentQuestionIndex}
@@ -808,11 +808,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
       </div>
 
       {/* Main Chat Area */}
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 max-w-[100vw]">
         {/* Chat Messages Area */}
         <div className="flex-1 overflow-y-auto scrollbar-thin bg-gradient-to-b from-background/50 to-muted/20 overscroll-contain" style={{ maxHeight: 'calc(100vh - 200px)' }}>
-          <div className="max-w-none lg:max-w-4xl xl:max-w-5xl mx-auto px-2 sm:px-3 lg:px-4 xl:px-6 py-2 sm:py-3 lg:py-4 xl:py-6">
-            <div className="space-y-2 sm:space-y-3 lg:space-y-4">
+          <div className="w-full max-w-3xl mx-auto px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+            <div className="space-y-4">
               {messages.map((message, index) => (
                 <React.Fragment key={message.id}>
                   <div
@@ -822,18 +822,18 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     {message.isBot && (
-                      <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shadow-sm mt-1">
-                        <Bot className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-primary" />
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 flex items-center justify-center shadow-sm">
+                        <Bot className="h-4 w-4 text-primary" />
                       </div>
                     )}
 
-                    <div className={`group relative max-w-[85%] sm:max-w-[80%] md:max-w-[75%] lg:max-w-[70%] xl:max-w-[65%]`}>
+                    <div className={`group relative ${message.isBot ? 'max-w-[90%] sm:max-w-[85%] md:max-w-[80%]' : 'max-w-[85%] sm:max-w-[80%] md:max-w-[70%]'}`}>
                       <div
                         className={`
-                          px-3 py-2 sm:px-4 sm:py-3 shadow-sm transition-all duration-150 hover:shadow-md
+                          px-4 py-3 shadow-sm transition-all duration-150 hover:shadow-md
                           ${message.isBot
-                            ? "bg-card border border-border/50 rounded-2xl rounded-bl-md text-foreground"
-                            : "bg-gradient-to-br from-primary to-primary/90 rounded-2xl rounded-br-md text-primary-foreground shadow-primary/20"
+                            ? "bg-card/90 backdrop-blur-sm border border-border/40 rounded-2xl rounded-bl-sm text-foreground"
+                            : "bg-gradient-to-br from-primary to-primary/90 rounded-2xl rounded-br-sm text-primary-foreground shadow-primary/10"
                           }
                         `}
                       >
@@ -859,8 +859,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                     </div>
 
                     {!message.isBot && (
-                      <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-br from-primary/80 to-primary border border-primary/30 flex items-center justify-center shadow-sm mt-1">
-                        <User className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-white" />
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/80 border border-primary/30 flex items-center justify-center shadow-sm">
+                        <User className="h-4 w-4 text-white" />
                       </div>
                     )}
                   </div>
@@ -995,7 +995,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
 
                             {/* Desktop Grid */}
                             <div className="hidden lg:block">
-                              <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 xl:gap-6">
+                              <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 xl:gap-6">
                                 {recommendations.recommendations.map((rec: Recommendation, i: number) => (
                                   <div
                                     key={i}
@@ -1091,11 +1091,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
               ))}
 
               {isTyping && (
-                <div className="flex items-start gap-2 sm:gap-3 justify-start animate-fade-in">
-                  <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mt-1">
-                    <Bot className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-primary" />
+                <div className="flex items-start gap-3 justify-start animate-fade-in">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 flex items-center justify-center shadow-sm">
+                    <Bot className="h-4 w-4 text-primary" />
                   </div>
-                  <div className="bg-card border border-border/50 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl rounded-bl-md shadow-sm max-w-[200px]">
+                  <div className="bg-card/90 backdrop-blur-sm border border-border/40 px-4 py-3 rounded-2xl rounded-bl-sm shadow-sm max-w-[200px]">
                     <div className="flex items-center gap-1.5 mb-2 opacity-60">
                       <Wand2 className="h-3 w-3" />
                       <span className="text-xs font-medium">AI Assistant</span>
@@ -1111,12 +1111,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
 
         {/* Bottom Input Area */}
         <div className="flex-none border-t border-border/50 bg-background/95 backdrop-blur-md">
-          <div className="max-w-none xl:max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
+          <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="py-2 sm:py-3 lg:py-4 space-y-2 sm:space-y-3">
               {chatState === "recommendations" && showEmailSection && (
                 <div className="transition-all duration-300 ease-in-out">
                   {!reportSent ? (
-                    <div id="email-report-section" className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-lg sm:rounded-xl p-3 sm:p-4 transition-all duration-300 shadow-sm">
+                    <div id="email-report-section" className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-4 transition-all duration-300 shadow-sm">
                       <div className="flex items-start justify-between mb-3 gap-2">
                         <div className="flex items-start gap-2 flex-1 min-w-0">
                           <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0 mt-0.5" />
@@ -1144,13 +1144,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                           value={email}
                           onChange={e => setEmail(e.target.value)}
                           placeholder="Enter your email"
-                          className="w-full h-10 sm:h-11 text-sm bg-background/50 border-border/50 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 px-3 sm:px-4 rounded-lg"
+                          className="w-full h-11 text-[15px] bg-background/80 border-border/50 focus:border-primary/50 focus:ring-2 focus:ring-primary/10 px-4 rounded-lg transition-all"
                           type="email"
                         />
                         <Button 
                           onClick={handleSendReport} 
                           disabled={!email || isTyping}
-                          className="w-full h-10 sm:h-11 font-medium text-sm bg-primary hover:bg-primary/90 disabled:opacity-50 rounded-lg"
+                          className="w-full h-11 font-medium text-[15px] bg-primary hover:bg-primary/90 disabled:opacity-50 transition-all rounded-lg"
                         >
                           <Mail className="h-4 w-4 mr-2" />
                           <span className="hidden xs:inline">Send PDF Report</span>
@@ -1170,7 +1170,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                       </div>
                     </div>
                   ) : (
-                    <div id="email-report-section" className="bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-500/20 rounded-lg sm:rounded-xl p-3 sm:p-4 transition-all duration-300 shadow-sm">
+                    <div id="email-report-section" className="bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-500/20 rounded-xl p-4 transition-all duration-300 shadow-sm">
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2.5 flex-1 min-w-0">
                           <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600 flex-shrink-0" />
@@ -1197,7 +1197,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                 </div>
               )}
                 
-              <div className="bg-background/50 rounded-lg sm:rounded-xl p-2.5 sm:p-3 border border-border/30">
+              <div className="bg-card/80 backdrop-blur-sm rounded-xl p-3 border border-border/40 shadow-sm">
                 <div className="flex items-center gap-2">
                   <Bot className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground hidden sm:block flex-shrink-0" />
                   <div className="relative flex-1">
@@ -1214,16 +1214,16 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                         chatState === "generating" ? "Generating recommendations..." :
                         reportSent ? "Ask another question..." : "Ask about recommendations..."
                       }
-                      className="w-full pr-10 sm:pr-12 h-10 sm:h-11 text-sm bg-background border-border/50 focus:border-primary/50 px-3 sm:px-4 rounded-lg"
+                      className="w-full pr-12 h-11 text-[15px] bg-background/80 border-border/50 focus:border-primary/50 focus:ring-2 focus:ring-primary/10 px-4 rounded-lg transition-all"
                       disabled={isTyping || chatState === "analyzing" || chatState === "profiling" || chatState === "generating"}
                     />
                     <Button
                       onClick={handleSendMessage}
                       disabled={!inputValue.trim() || isTyping || chatState === "analyzing" || chatState === "profiling" || chatState === "generating"}
                       size="icon"
-                      className="absolute right-1 sm:right-1.5 top-6/7 -translate-y-1/2 h-7 w-7 sm:h-8 sm:w-8 bg-primary hover:bg-primary/90 rounded-md flex items-center justify-center"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg flex items-center justify-center transition-all"
                     >
-                      <Send className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
+                      <Send className="h-4 w-4 flex-shrink-0" />
                     </Button>
                   </div>
                 </div>
@@ -1236,7 +1236,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                           key={action.text}
                           variant="outline"
                           size="sm"
-                          className="text-xs px-2.5 sm:px-3 py-1.5 sm:py-2 h-7 sm:h-8 border-border/50 hover:bg-primary/10 hover:border-primary/30 flex-shrink-0 whitespace-nowrap rounded-full"
+                          className="text-sm px-3 py-2 h-9 bg-card/50 border-border/40 hover:bg-primary/5 hover:border-primary/30 hover:shadow-sm flex-shrink-0 whitespace-nowrap rounded-lg transition-all"
                           onClick={() => {
                             setInputValue(action.text);
                             setTimeout(() => handleSendMessage(), 0);

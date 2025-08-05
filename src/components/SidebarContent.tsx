@@ -57,30 +57,30 @@ const SidebarContent: React.FC<SidebarContentProps> = React.memo(({
   return (
     <div className="flex flex-col h-full">
       {/* Sidebar Header */}
-      <div className="p-3 border-b border-border/30 bg-gradient-to-r from-primary/5 to-primary/10">
+      <div className="p-4 border-b border-border/30 bg-gradient-to-r from-primary/5 to-primary/10">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <div className="relative">
-              <Bot className="h-5 w-5 text-primary drop-shadow-sm" />
-              <div className="absolute inset-y-0 right-0 w-2 h-2 bg-green-500 rounded-full border border-card animate-pulse shadow-sm transform -translate-y-0.5 -translate-x-0.5" />
+              <Bot className="h-6 w-6 text-primary drop-shadow-sm" />
+              <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-card animate-pulse shadow-sm" />
             </div>
             <div>
-              <h2 className="font-semibold text-[13px] text-foreground">Travel AI Assistant</h2>
-              <p className="text-[10px] text-muted-foreground">Analyzing your journey</p>
+              <h2 className="font-semibold text-sm text-foreground">Travel AI Assistant</h2>
+              <p className="text-xs text-muted-foreground">Analyzing your journey</p>
             </div>
           </div>
-          <div className="text-[10px] font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+          <div className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full">
             Live
           </div>
         </div>
       </div>
 
       {/* Progress & Stats */}
-      <div className="p-3 space-y-3 overflow-y-auto flex-1">
+      <div className="p-4 space-y-4 overflow-y-auto flex-1">
         {/* Journey Progress Steps */}
-        <div className="bg-gradient-to-br from-primary/5 to-transparent rounded-lg p-3 border border-border/30">
-          <h3 className="font-semibold text-[12px] mb-3 text-foreground flex items-center gap-1.5">
-            <ArrowRight className="h-3.5 w-3.5" />
+        <div className="bg-gradient-to-br from-primary/5 to-transparent rounded-xl p-4 border border-border/30">
+          <h3 className="font-semibold text-sm mb-3 text-foreground flex items-center gap-2">
+            <ArrowRight className="h-4 w-4" />
             Journey Progress
           </h3>
           <div className="space-y-2">
@@ -106,7 +106,7 @@ const SidebarContent: React.FC<SidebarContentProps> = React.memo(({
                       <Circle className="h-3 w-3" />
                     )}
                   </div>
-                  <span className={`text-[11px] flex-1 transition-all duration-300 ${
+                  <span className={`text-xs flex-1 transition-all duration-300 ${
                     item.status === "completed" ? "font-medium text-foreground" :
                     item.status === "current" ? "font-medium text-primary" :
                     "text-muted-foreground"
@@ -123,18 +123,18 @@ const SidebarContent: React.FC<SidebarContentProps> = React.memo(({
         </div>
 
         {/* Live Stats */}
-        <div className="bg-card/50 rounded-lg p-3 border border-border/30">
-          <h3 className="font-semibold text-[12px] mb-2 text-foreground flex items-center gap-1.5">
-            <Sparkles className="h-3.5 w-3.5 text-primary" />
+        <div className="bg-card/50 rounded-xl p-4 border border-border/30">
+          <h3 className="font-semibold text-sm mb-3 text-foreground flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-primary" />
             Session Stats
           </h3>
           <div className="grid grid-cols-2 gap-2">
-            <div className="bg-background/50 rounded p-2 text-center">
-              <div className="text-lg font-bold text-primary">{messages.length}</div>
-              <div className="text-[10px] text-muted-foreground">Messages</div>
+            <div className="bg-background/50 rounded-lg p-2.5 text-center">
+              <div className="text-xl font-bold text-primary">{messages.length}</div>
+              <div className="text-xs text-muted-foreground">Messages</div>
             </div>
-            <div className="bg-background/50 rounded p-2 text-center">
-              <div className="text-lg font-bold text-green-600">
+            <div className="bg-background/50 rounded-lg p-2.5 text-center">
+              <div className="text-xl font-bold text-green-600">
                 {chatState === "recommendations" ? "100%" : 
                  chatState === "generating" ? "80%" :
                  chatState === "questions" ? `${Math.round(((currentQuestionIndex + 1) / questions.length) * 60 + 20)}%` :
@@ -142,7 +142,7 @@ const SidebarContent: React.FC<SidebarContentProps> = React.memo(({
                  chatState === "confirmation" ? "15%" :
                  chatState === "analyzing" ? "10%" : "0%"}
               </div>
-              <div className="text-[10px] text-muted-foreground">Complete</div>
+              <div className="text-xs text-muted-foreground">Complete</div>
             </div>
           </div>
         </div>
