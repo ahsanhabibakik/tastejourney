@@ -300,7 +300,10 @@ export class IntegratedRecommendationService {
         async () => {
           // Fallback: use taste vector to generate destinations
           return {
-            destinations: this.generateTasteBasedDestinations(tasteProfile)
+            destinations: this.generateTasteBasedDestinations(tasteProfile).map(dest => ({
+              ...dest,
+              qlooInsights: {}
+            }))
           };
         },
         'qloo',

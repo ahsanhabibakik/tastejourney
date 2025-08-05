@@ -28,9 +28,8 @@
       "Bash(npm start)",
       "Bash(npm install:*)",
       "Bash(timeout 8 npm run dev)",
-      "Bash(npx eslint:*)",
-      "Bash(grep:*)",
-      "Bash(cp:*)"
+      "Bash(pnpm run:*)",
+      "Bash(cmd /c \"pnpm run build\")"
     ],
     "deny": []
   }
