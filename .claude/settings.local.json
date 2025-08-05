@@ -29,7 +29,9 @@
       "Bash(npm install:*)",
       "Bash(timeout 8 npm run dev)",
       "Bash(pnpm run:*)",
-      "Bash(cmd /c \"pnpm run build\")"
+      "Bash(cmd /c \"pnpm run build\")",
+      "Bash(timeout:*)",
+      "Bash(find:*)"
     ],
     "deny": []
   }
