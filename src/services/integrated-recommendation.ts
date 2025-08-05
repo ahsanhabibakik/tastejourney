@@ -320,24 +320,75 @@ export class IntegratedRecommendationService {
 
   private async getAIDestinations(userProfile: any, tasteProfile: any, userPreferences: any) {
     try {
-      const result = await dynamicRecommendationService.generateDynamicRecommendations(
-        userProfile,
-        tasteProfile,
-        userPreferences
+      // First, try to use the advanced Gemini service directly
+      const geminiService = await import('./gemini');
+      
+      // Generate base destinations using taste profile
+      const baseDestinations = ['Tokyo, Japan', 'Bali, Indonesia', 'Lisbon, Portugal', 'Mexico City, Mexico', 'Istanbul, Turkey'];
+      
+      // Use the advanced generateMultipleRecommendations method from Gemini
+      const advancedRecommendations = await geminiService.geminiService.generateMultipleRecommendations(
+        baseDestinations, 
+        {
+          userProfile: {
+            website: userProfile.url || '',
+            contentThemes: userProfile.themes || [],
+            audienceInterests: userProfile.hints || [],
+            contentType: userProfile.contentType || 'Mixed',
+            audienceLocation: userProfile.audienceLocation || 'Global'
+          },
+          tasteProfile,
+          userPreferences: {
+            budget: userPreferences?.budget,
+            travelStyle: userPreferences?.travelStyle || 'mid-range',
+            duration: userPreferences?.duration || '7 days',
+            contentType: userPreferences?.contentType || userProfile.contentType,
+            climate: userPreferences?.climate || []
+          }
+        }
       );
       
-      return result.recommendations.map(rec => ({
+      console.log(`✅ Generated ${advancedRecommendations.length} advanced Gemini recommendations`);
+      
+      return advancedRecommendations.map(rec => ({
         name: rec.destination,
-        country: rec.country,
+        country: rec.destination.split(',')[1]?.trim() || 'Unknown',
         aiScore: rec.matchScore / 100,
         aiInsights: {
           highlights: rec.highlights,
-          reasoning: rec.reasoning
+          reasoning: rec.summary,
+          contentOpportunities: rec.contentOpportunities,
+          brandCollaborations: rec.brandCollaborations,
+          localCreators: rec.localCreators,
+          budgetBreakdown: rec.budgetBreakdown,
+          bestTimeToVisit: rec.bestTimeToVisit,
+          practicalInfo: rec.practicalInfo
         }
       }));
     } catch (error) {
-      console.error('Error getting AI destinations:', error);
-      return [];
+      console.error('Error getting advanced AI destinations, falling back to dynamic service:', error);
+      
+      // Fallback to existing dynamic recommendation service
+      try {
+        const result = await dynamicRecommendationService.generateDynamicRecommendations(
+          userProfile,
+          tasteProfile,
+          userPreferences
+        );
+        
+        return result.recommendations.map(rec => ({
+          name: rec.destination,
+          country: rec.country,
+          aiScore: rec.matchScore / 100,
+          aiInsights: {
+            highlights: rec.highlights,
+            reasoning: rec.reasoning
+          }
+        }));
+      } catch (fallbackError) {
+        console.error('Fallback dynamic service also failed:', fallbackError);
+        return [];
+      }
     }
   }
 
