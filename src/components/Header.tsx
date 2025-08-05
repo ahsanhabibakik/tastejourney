@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { MapPin, User, Bell, Menu } from "lucide-react";
+import { Bell, Menu, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface HeaderProps {
@@ -14,17 +14,7 @@ const Header: React.FC<HeaderProps> = ({ onMobileMenuClick }) => {
       <div className="max-w-7xl mx-auto px-4 lg:px-6 py-2.5 lg:py-3 flex items-center justify-between">
         {/* Logo Section */}
         <div className="flex items-center gap-2">
-          <div className="bg-primary/10 p-1.5 rounded-md">
-            <MapPin className="h-4 w-4 text-primary" />
-          </div>
-          <div>
-            <h1 className="text-base font-semibold text-foreground">
-              TasteJourney
-            </h1>
-            <p className="text-[11px] text-muted-foreground hidden sm:block leading-none">
-              AI Travel Companion
-            </p>
-          </div>
+          <img src="/logo.png" alt="TasteJourney Logo" className="h-8 w-auto" />
         </div>
 
         {/* Desktop Navigation */}
