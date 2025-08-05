@@ -1,0 +1,5 @@
+ignoredBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - puppeteer
+  - sharp
+  - unrs-resolver
