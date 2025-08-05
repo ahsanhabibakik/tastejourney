@@ -9,7 +9,12 @@
       "match_score": 94,
       "potential_audience_engagement": {
         "score": 9.2,
-        "reasons": ["Tech innovation content", "Unique cultural experiences", "Food photography opportunities", "Urban exploration appeal"],
+        "reasons": [
+          "Tech innovation content",
+          "Unique cultural experiences",
+          "Food photography opportunities",
+          "Urban exploration appeal"
+        ],
         "estimated_reach": "250K-500K views per video",
         "engagement_rate": "8.5%"
       },
@@ -155,7 +160,11 @@
       },
       "fact_check_confidence": {
         "overall_score": 9.5,
-        "data_sources": ["Official tourism board", "Local creator network", "Real-time pricing APIs"],
+        "data_sources": [
+          "Official tourism board",
+          "Local creator network",
+          "Real-time pricing APIs"
+        ],
         "last_updated": "2025-07-15",
         "verification_status": "Verified"
       },
@@ -180,7 +189,12 @@
       "match_score": 92,
       "potential_audience_engagement": {
         "score": 9.5,
-        "reasons": ["Instagram-worthy landscapes", "Wellness content trending", "Affordable luxury appeal", "Digital nomad lifestyle"],
+        "reasons": [
+          "Instagram-worthy landscapes",
+          "Wellness content trending",
+          "Affordable luxury appeal",
+          "Digital nomad lifestyle"
+        ],
         "estimated_reach": "300K-600K views per video",
         "engagement_rate": "9.1%"
       },
@@ -306,7 +320,12 @@
       "match_score": 89,
       "potential_audience_engagement": {
         "score": 8.8,
-        "reasons": ["Rich architectural content", "Vibrant food scene", "Art and culture appeal", "Mediterranean lifestyle"],
+        "reasons": [
+          "Rich architectural content",
+          "Vibrant food scene",
+          "Art and culture appeal",
+          "Mediterranean lifestyle"
+        ],
         "estimated_reach": "200K-450K views per video",
         "engagement_rate": "8.2%"
       },
@@ -432,7 +451,12 @@
       "match_score": 88,
       "potential_audience_engagement": {
         "score": 9.0,
-        "reasons": ["Luxury lifestyle content", "Futuristic architecture", "Desert adventures", "Shopping experiences"],
+        "reasons": [
+          "Luxury lifestyle content",
+          "Futuristic architecture",
+          "Desert adventures",
+          "Shopping experiences"
+        ],
         "estimated_reach": "280K-520K views per video",
         "engagement_rate": "8.7%"
       },
@@ -558,7 +582,12 @@
       "match_score": 91,
       "potential_audience_engagement": {
         "score": 9.3,
-        "reasons": ["Stunning natural landscapes", "Northern lights content", "Adventure activities", "Unique geological features"],
+        "reasons": [
+          "Stunning natural landscapes",
+          "Northern lights content",
+          "Adventure activities",
+          "Unique geological features"
+        ],
         "estimated_reach": "350K-650K views per video",
         "engagement_rate": "9.5%"
       },
@@ -684,7 +713,12 @@
       "match_score": 87,
       "potential_audience_engagement": {
         "score": 8.9,
-        "reasons": ["Romantic city appeal", "Fashion and art content", "Culinary experiences", "Historic landmarks"],
+        "reasons": [
+          "Romantic city appeal",
+          "Fashion and art content",
+          "Culinary experiences",
+          "Historic landmarks"
+        ],
         "estimated_reach": "220K-480K views per video",
         "engagement_rate": "8.4%"
       },
@@ -779,7 +813,12 @@
       "match_score": 90,
       "potential_audience_engagement": {
         "score": 9.1,
-        "reasons": ["Urban lifestyle content", "Entertainment industry access", "Diverse food scene", "Fashion and art"],
+        "reasons": [
+          "Urban lifestyle content",
+          "Entertainment industry access",
+          "Diverse food scene",
+          "Fashion and art"
+        ],
         "estimated_reach": "400K-700K views per video",
         "engagement_rate": "8.8%"
       },
@@ -828,7 +867,12 @@
       "match_score": 86,
       "potential_audience_engagement": {
         "score": 8.7,
-        "reasons": ["Eco-adventure content", "Wildlife photography", "Sustainable travel appeal", "Outdoor activities"],
+        "reasons": [
+          "Eco-adventure content",
+          "Wildlife photography",
+          "Sustainable travel appeal",
+          "Outdoor activities"
+        ],
         "estimated_reach": "180K-400K views per video",
         "engagement_rate": "9.0%"
       },
@@ -860,7 +904,12 @@
       "match_score": 88,
       "potential_audience_engagement": {
         "score": 8.9,
-        "reasons": ["Budget travel appeal", "Street food content", "Cultural diversity", "Island hopping"],
+        "reasons": [
+          "Budget travel appeal",
+          "Street food content",
+          "Cultural diversity",
+          "Island hopping"
+        ],
         "estimated_reach": "250K-500K views per video",
         "engagement_rate": "8.6%"
       },
@@ -892,7 +941,12 @@
       "match_score": 85,
       "potential_audience_engagement": {
         "score": 8.6,
-        "reasons": ["Exotic cultural content", "Desert landscapes", "Colorful markets", "Unique architecture"],
+        "reasons": [
+          "Exotic cultural content",
+          "Desert landscapes",
+          "Colorful markets",
+          "Unique architecture"
+        ],
         "estimated_reach": "200K-450K views per video",
         "engagement_rate": "8.3%"
       },
@@ -924,7 +978,12 @@
       "match_score": 89,
       "potential_audience_engagement": {
         "score": 8.8,
-        "reasons": ["Futuristic city content", "Food paradise", "Cultural diversity", "Business hub appeal"],
+        "reasons": [
+          "Futuristic city content",
+          "Food paradise",
+          "Cultural diversity",
+          "Business hub appeal"
+        ],
         "estimated_reach": "220K-480K views per video",
         "engagement_rate": "8.5%"
       },
@@ -957,7 +1016,12 @@
       "match_score": 87,
       "potential_audience_engagement": {
         "score": 8.7,
-        "reasons": ["Fjord landscapes", "Northern lights", "Outdoor adventures", "Sustainable travel"],
+        "reasons": [
+          "Fjord landscapes",
+          "Northern lights",
+          "Outdoor adventures",
+          "Sustainable travel"
+        ],
         "estimated_reach": "190K-420K views per video",
         "engagement_rate": "8.9%"
       },
@@ -990,7 +1054,12 @@
       "match_score": 84,
       "potential_audience_engagement": {
         "score": 8.4,
-        "reasons": ["Coastal beauty", "Historic charm", "Budget-friendly luxury", "Wine culture"],
+        "reasons": [
+          "Coastal beauty",
+          "Historic charm",
+          "Budget-friendly luxury",
+          "Wine culture"
+        ],
         "estimated_reach": "160K-350K views per video",
         "engagement_rate": "8.1%"
       },
@@ -1022,7 +1091,12 @@
       "match_score": 83,
       "potential_audience_engagement": {
         "score": 8.3,
-        "reasons": ["Street food culture", "Natural beauty", "Budget travel appeal", "Adventure activities"],
+        "reasons": [
+          "Street food culture",
+          "Natural beauty",
+          "Budget travel appeal",
+          "Adventure activities"
+        ],
         "estimated_reach": "170K-380K views per video",
         "engagement_rate": "8.7%"
       },
@@ -1054,7 +1128,12 @@
       "match_score": 86,
       "potential_audience_engagement": {
         "score": 8.6,
-        "reasons": ["Island paradise content", "Ancient history", "Mediterranean lifestyle", "Stunning sunsets"],
+        "reasons": [
+          "Island paradise content",
+          "Ancient history",
+          "Mediterranean lifestyle",
+          "Stunning sunsets"
+        ],
         "estimated_reach": "210K-460K views per video",
         "engagement_rate": "8.4%"
       },
@@ -1086,7 +1165,12 @@
       "match_score": 82,
       "potential_audience_engagement": {
         "score": 8.2,
-        "reasons": ["Cultural diversity", "Spiritual content", "Budget travel", "Colorful experiences"],
+        "reasons": [
+          "Cultural diversity",
+          "Spiritual content",
+          "Budget travel",
+          "Colorful experiences"
+        ],
         "estimated_reach": "180K-400K views per video",
         "engagement_rate": "8.6%"
       },
@@ -1118,7 +1202,12 @@
       "match_score": 85,
       "potential_audience_engagement": {
         "score": 8.5,
-        "reasons": ["Unique wildlife", "Outdoor adventures", "Coastal lifestyle", "Urban exploration"],
+        "reasons": [
+          "Unique wildlife",
+          "Outdoor adventures",
+          "Coastal lifestyle",
+          "Urban exploration"
+        ],
         "estimated_reach": "200K-440K views per video",
         "engagement_rate": "8.3%"
       },
@@ -1151,7 +1240,12 @@
       "match_score": 81,
       "potential_audience_engagement": {
         "score": 8.1,
-        "reasons": ["Archaeological wonders", "Desert landscapes", "Cultural heritage", "Adventure activities"],
+        "reasons": [
+          "Archaeological wonders",
+          "Desert landscapes",
+          "Cultural heritage",
+          "Adventure activities"
+        ],
         "estimated_reach": "150K-320K views per video",
         "engagement_rate": "8.0%"
       },
@@ -1183,7 +1277,12 @@
       "match_score": 84,
       "potential_audience_engagement": {
         "score": 8.4,
-        "reasons": ["Vibrant culture", "Beach destinations", "Food scene", "Ancient history"],
+        "reasons": [
+          "Vibrant culture",
+          "Beach destinations",
+          "Food scene",
+          "Ancient history"
+        ],
         "estimated_reach": "190K-420K views per video",
         "engagement_rate": "8.5%"
       },
@@ -1215,7 +1314,12 @@
       "match_score": 88,
       "potential_audience_engagement": {
         "score": 8.8,
-        "reasons": ["K-culture content", "Technology showcase", "Food experiences", "Urban lifestyle"],
+        "reasons": [
+          "K-culture content",
+          "Technology showcase",
+          "Food experiences",
+          "Urban lifestyle"
+        ],
         "estimated_reach": "240K-520K views per video",
         "engagement_rate": "9.1%"
       },
