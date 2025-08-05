@@ -348,7 +348,8 @@ Return JSON array with format:
         const jsonMatch = aiResponse?.match(/\[[\s\S]*\]/);
         
         if (jsonMatch) {
-          const aiDestinations = JSON.parse(jsonMatch[0]);
+          try {
+            const aiDestinations = JSON.parse(jsonMatch[0]);
           console.log(`✅ AI: Generated ${aiDestinations.length} unique destinations`);
           
           return aiDestinations.map((dest: any, index: number) => ({
@@ -367,6 +368,11 @@ Return JSON array with format:
             contentOpportunities: dest.contentOpportunities,
             matchReason: dest.whyMatch
           }));
+          } catch (parseError) {
+            console.error('❌ AI: JSON parsing failed:', parseError);
+            console.log('Raw AI response:', aiResponse);
+            throw new Error('Failed to parse AI-generated destinations');
+          }
         }
       }
     } catch (error) {

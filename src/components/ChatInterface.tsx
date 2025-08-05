@@ -13,13 +13,14 @@ import ConfirmationScreen from "./ConfirmationScreen";
 import DestinationCard from "./DestinationCard";
 import SidebarContent from "./SidebarContent";
 import { dynamicQuestionService } from "@/services/dynamic-questions";
+import { SmartQuestionFlow } from "./SmartQuestionFlow";
 
 interface Message {
   id: string;
   text: string;
   isBot: boolean;
   timestamp: Date;
-  component?: "url-form" | "confirmation" | "questions" | "recommendations";
+  component?: "url-form" | "confirmation" | "questions" | "recommendations" | "smart-questions";
 }
 
 type ChatState =
@@ -361,10 +362,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
             setCurrentQuestionIndex(0);
             await simulateTyping(() => {
               addMessage(
-                `Perfect! I've created your taste profile based on your ${websiteData.contentType} content. Now I have ${questions.length} personalized questions to optimize your recommendations:`,
+                `Perfect! I've created your taste profile based on your ${websiteData.contentType} content. Now I'll ask you smart questions that adapt to your answers:`,
                 true
               );
-              addMessage(questions[0].text, true, "questions");
+              addMessage("Let's start with your budget-aware travel planning:", true, "smart-questions");
             }, 2000);
           } catch (questionError) {
             console.error("Error loading dynamic questions:", questionError);
@@ -383,10 +384,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
             setCurrentQuestionIndex(0);
             await simulateTyping(() => {
               addMessage(
-                "Perfect! I've created your taste profile. Now I need to ask you a few quick questions to personalize your recommendations:",
+                "Perfect! I've created your taste profile. Now I'll ask you smart questions that adapt to your budget and preferences:",
                 true
               );
-              addMessage(fallbackQuestions[0].text, true, "questions");
+              addMessage("Let's start with your travel planning:", true, "smart-questions");
             }, 2000);
           }
         } else {
@@ -411,10 +412,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
           setCurrentQuestionIndex(0);
           await simulateTyping(() => {
             addMessage(
-              "Great! Now let me ask you a few personalized questions to create the best recommendations:",
+              "Great! Now let me ask you smart questions that adapt to your preferences:",
               true
             );
-            addMessage(fallbackQuestions[0].text, true, "questions");
+            addMessage("Let's start with your travel planning:", true, "smart-questions");
           }, 1500);
         } catch (fallbackError) {
           console.error("Error loading fallback questions:", fallbackError);
@@ -632,6 +633,14 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
       }, 2000);
     }
   }, [addMessage, simulateTyping, tasteProfile, websiteData, selectedClimates]);
+
+  const handleSmartQuestionsComplete = useCallback(async (answers: Record<string, any>) => {
+    setUserAnswers(answers);
+    addMessage("Thanks for answering all the questions! Your answers will help me create perfect recommendations.", false);
+    
+    console.log('🎯 Smart questions completed with answers:', answers);
+    await generateRecommendations(answers);
+  }, [generateRecommendations, addMessage]);
 
   const handleQuestionAnswer = useCallback(async (answer: string) => {
     if (!questionsLoaded || dynamicQuestions.length === 0) {
@@ -938,7 +947,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                       />
                     )}
 
-                  {message.component === "questions" &&
+                  {message.component === "smart-questions" && message.isBot && websiteData ? (
+                    <SmartQuestionFlow
+                      websiteData={websiteData}
+                      onComplete={handleSmartQuestionsComplete}
+                    />
+                  ) : message.component === "questions" &&
                     chatState === "questions" && (
                       <div>
                         {questionsLoaded && dynamicQuestions.length > 0 ? (
