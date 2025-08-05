@@ -23,6 +23,7 @@ interface Recommendation {
       type: string;
       status: string;
     }>;
+
   };
   tags?: string[];
 }
@@ -145,6 +146,7 @@ const DestinationCard: React.FC<DestinationCardProps> = React.memo(({ rec, rank 
           </div>
         )}
 
+
         {/* Brand Partnerships - Prominent Section */}
         {rec.creatorDetails?.brandPartnerships && rec.creatorDetails.brandPartnerships.length > 0 && (
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-3 shadow-sm">
@@ -184,6 +186,7 @@ const DestinationCard: React.FC<DestinationCardProps> = React.memo(({ rec, rank 
             )}
           </div>
         )}
+
 
         {/* Creator Community */}
         {rec.creatorDetails && (

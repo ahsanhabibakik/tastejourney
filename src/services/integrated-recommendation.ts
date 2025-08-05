@@ -323,8 +323,10 @@ export class IntegratedRecommendationService {
       // First, try to use the advanced Gemini service directly
       const geminiService = await import('./gemini');
       
+
       // Generate dynamic base destinations using taste profile and themes
       const baseDestinations = this.generateDynamicBaseDestinations(userProfile, tasteProfile);
+
       
       // Use the advanced generateMultipleRecommendations method from Gemini
       const advancedRecommendations = await geminiService.geminiService.generateMultipleRecommendations(
@@ -537,7 +539,9 @@ export class IntegratedRecommendationService {
     } catch (error) {
       console.error(`Creator error for ${destination.name}:`, error);
       return {
+
         totalActiveCreators: 0, // Will be populated by real creator data service
+
         topCreators: [],
         collaborationOpportunities: ['Local creator community available']
       };
@@ -727,6 +731,7 @@ export class IntegratedRecommendationService {
     }));
   }
 
+
   // Generate dynamic base destinations for AI processing
   private generateDynamicBaseDestinations(userProfile: any, tasteProfile: any): string[] {
     const destinations = [];
@@ -860,6 +865,7 @@ export class IntegratedRecommendationService {
 
     console.log(`✅ INTEGRATED: Generated ${uniqueDestinations.length} taste-based destinations`);
     return uniqueDestinations;
+
   }
 
   private calculateCostEfficiency(budget: any, userBudget?: string): string {

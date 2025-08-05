@@ -12,8 +12,10 @@ import URLForm from "./URLForm";
 import ConfirmationScreen from "./ConfirmationScreen";
 import DestinationCard from "./DestinationCard";
 import SidebarContent from "./SidebarContent";
+
 import { dynamicQuestionService } from "@/services/dynamic-questions";
 import { SmartQuestionFlow } from "./SmartQuestionFlow";
+
 
 interface Message {
   id: string;
@@ -61,6 +63,54 @@ interface Recommendation {
     collaborationOpportunities: string[];
   };
 }
+
+
+const questions = [
+  {
+    id: "budget",
+    text: "What's your budget range for this trip?",
+    options: ["$500-1000", "$1000-2500", "$2500-5000", "$5000+"],
+    icon: "💸",
+    multiSelect: false,
+  },
+  {
+    id: "duration",
+    text: "How long would you like to travel?",
+    options: ["1-3 days", "4-7 days", "1-2 weeks", "2+ weeks"],
+    icon: "🗓️",
+    multiSelect: false,
+  },
+  {
+    id: "style",
+    text: "What's your preferred travel style?",
+    options: ["Adventure", "Luxury", "Cultural", "Beach", "Urban"],
+    icon: "🌍",
+    multiSelect: false,
+  },
+  {
+    id: "contentFocus",
+    text: "What type of content do you focus on?",
+    options: ["Photography", "Food", "Lifestyle", "Adventure"],
+    icon: "📸",
+    multiSelect: false,
+  },
+  {
+    id: "climate",
+    text: "Select all climate preferences that apply (you can choose multiple):",
+    options: [
+      "Tropical/Sunny",
+      "Mild/Temperate",
+      "Cold/Snowy",
+      "Desert/Arid",
+      "No preference",
+      "Avoid hot",
+      "Avoid cold",
+      "Avoid rainy",
+    ],
+    icon: "☀️",
+    multiSelect: true,
+  },
+];
 
 
 // Optimized markdown rendering function
@@ -187,8 +237,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
   const [selectedClimates, setSelectedClimates] = useState<string[]>([]);
+
   const [dynamicQuestions, setDynamicQuestions] = useState<any[]>([]);
   const [questionsLoaded, setQuestionsLoaded] = useState(false);
+
   const [recommendations, setRecommendations] = useState<
     | {
         recommendations: Recommendation[];
@@ -206,6 +258,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     scrollToBottom();
   }, [messages, isTyping, scrollToBottom]);
 
+
   // Handle ESC key for closing mobile sidebar
   useEffect(() => {
     const handleEscapeKey = (event: KeyboardEvent) => {
@@ -217,6 +270,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     document.addEventListener("keydown", handleEscapeKey);
     return () => document.removeEventListener("keydown", handleEscapeKey);
   }, [showMobileSidebar, setShowMobileSidebar]);
+
 
   const generateUniqueId = useCallback(() => {
     return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -422,6 +476,19 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
           setChatState("questions");
           setQuestionsLoaded(false);
         }
+
+      } catch (error) {
+        console.error("Error creating taste profile:", error);
+        setChatState("questions");
+        setCurrentQuestionIndex(0);
+        await simulateTyping(() => {
+          addMessage(
+            "Great! Now let me ask you a few questions to personalize your recommendations:",
+            true
+          );
+          addMessage(questions[0].text, true, "questions");
+        }, 1500);
+
       }
     } else {
       addMessage("The information needs corrections.", false);
@@ -433,6 +500,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
       });
     }
   }, [addMessage, simulateTyping, websiteData]);
+
 
   const handleClimateSelection = useCallback((climate: string) => {
     setSelectedClimates(prev => {
@@ -716,6 +784,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     }
   }, [selectedClimates, userAnswers, currentQuestionIndex, addMessage, simulateTyping, generateRecommendations, questionsLoaded, dynamicQuestions]);
 
+
   const handleSendMessage = useCallback(async () => {
     if (!inputValue.trim()) return;
 
@@ -843,7 +912,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
             <SidebarContent
               chatState={chatState}
               currentQuestionIndex={currentQuestionIndex}
+
               questions={questionsLoaded ? dynamicQuestions : []}
+
               messages={messages}
               websiteData={websiteData}
               tasteProfile={tasteProfile}
@@ -862,7 +933,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
         <SidebarContent
           chatState={chatState}
           currentQuestionIndex={currentQuestionIndex}
+
           questions={questionsLoaded ? dynamicQuestions : []}
+
           messages={messages}
           websiteData={websiteData}
           tasteProfile={tasteProfile}
@@ -924,6 +997,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                         </span>
                       </div>
                     </div>
+
 
                     {!message.isBot && (
                       <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/80 border border-primary/30 flex items-center justify-center shadow-sm">
@@ -1299,6 +1373,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                             </p>
                           </div>
                         </div>
+
                         <Button
                           variant="ghost"
                           size="sm"
