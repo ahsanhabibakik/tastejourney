@@ -183,11 +183,89 @@ export class IntegratedRecommendationService {
     } catch (error) {
       console.error('Error in integrated recommendation generation:', error);
       // Fall back to dynamic recommendation service
-      return dynamicRecommendationService.generateDynamicRecommendations(
+      const dynamicResult = await dynamicRecommendationService.generateDynamicRecommendations(
         userProfile,
         tasteProfile,
         userPreferences
       );
+      
+      // Transform DynamicRecommendation to IntegratedRecommendation
+      const transformedRecommendations: IntegratedRecommendation[] = dynamicResult.recommendations.map(dynamic => ({
+        ...dynamic,
+        budget: {
+          ...dynamic.budget,
+          flights: {
+            price: 0,
+            currency: 'USD',
+            roundTrip: true
+          },
+          accommodation: {
+            pricePerNight: 0,
+            totalPrice: 0,
+            currency: 'USD',
+            category: 'Standard'
+          },
+          livingExpenses: {
+            dailyBudget: 0,
+            totalBudget: 0,
+            currency: 'USD',
+            breakdown: {
+              meals: 0,
+              transport: 0,
+              activities: 0,
+              miscellaneous: 0
+            }
+          }
+        },
+        engagement: {
+          ...dynamic.engagement,
+          metrics: {
+            averageEngagement: 0,
+            contentViews: 0,
+            socialMediaReach: 0
+          }
+        },
+        creators: {
+          ...dynamic.creators,
+          topCreators: dynamic.creators.topCreators.map(creator => ({
+            ...creator,
+            platform: 'Unknown'
+          }))
+        },
+        brands: {
+          ...dynamic.brands,
+          estimatedEarnings: '0'
+        },
+        places: {
+          attractions: [],
+          events: []
+        },
+        scoring: {
+          total: dynamic.matchScore,
+          breakdown: {
+            qlooAffinity: 0,
+            communityEngagement: 0,
+            brandCollaboration: 0,
+            budgetAlignment: 0,
+            creatorCollaboration: 0
+          },
+          confidence: dynamic.confidence
+        },
+        factCheck: {
+          verified: false,
+          confidence: dynamic.confidence,
+          sources: []
+        },
+        practical: {
+          ...dynamic.practical,
+          bestMonths: []
+        }
+      }));
+      
+      return {
+        recommendations: transformedRecommendations,
+        metadata: dynamicResult.metadata
+      };
     }
   }
 
@@ -206,7 +284,8 @@ export class IntegratedRecommendationService {
           const destinations = await qlooService.getDestinationRecommendations({
             culturalAffinities,
             personalityTraits,
-            affinityScore: tasteProfile?.confidence || 0.6
+            tasteVector: tasteProfile?.tasteVector || {},
+            confidence: tasteProfile?.confidence || 0.6
           });
           
           return {
@@ -333,10 +412,12 @@ export class IntegratedRecommendationService {
       
       const duration = parseInt(userPreferences.duration?.replace(/\D/g, '') || '7');
       const budget = await budgetService.calculateBudget({
-        origin: 'New York',
-        destination: destination.name,
-        startDate: new Date(),
-        endDate: new Date(Date.now() + duration * 24 * 60 * 60 * 1000),
+        origin: { city: 'New York', country: 'United States' },
+        destination: { 
+          city: destination.name.split(',')[0].trim(), 
+          country: destination.country 
+        },
+        duration: duration,
         travelers: 1,
         travelStyle: this.getTravelStyle(userPreferences.budget)
       });
@@ -369,10 +450,12 @@ export class IntegratedRecommendationService {
       await rateLimiter.waitIfLimited('youtube');
       
       const creators = await creatorService.findLocalCreators({
-        location: destination.name,
-        niche: userProfile.contentType || 'travel',
-        minFollowers: 1000,
-        contentTypes: userProfile.themes || ['travel']
+        location: { 
+          city: destination.name.split(',')[0].trim(), 
+          country: destination.country 
+        },
+        contentCategory: userProfile.contentType || 'travel',
+        minFollowers: 1000
       });
       
       const result = {
@@ -528,9 +611,9 @@ export class IntegratedRecommendationService {
           return {
             ...dest,
             factCheck: {
-              verified: factCheck.overallVerified,
-              confidence: factCheck.confidence,
-              sources: factCheck.sources
+              verified: factCheck.overallConfidence > 0.7,
+              confidence: factCheck.overallConfidence,
+              sources: factCheck.facts.location.sources?.map(s => s.url) || []
             }
           };
         } catch (error) {
@@ -598,7 +681,8 @@ export class IntegratedRecommendationService {
       destinations.push({
         name: 'Queenstown, New Zealand',
         country: 'New Zealand',
-        qlooScore: 0.85
+        qlooScore: 0.85,
+        qlooInsights: { reason: 'High adventure affinity match' }
       });
     }
     
@@ -606,7 +690,8 @@ export class IntegratedRecommendationService {
       destinations.push({
         name: 'Kyoto, Japan',
         country: 'Japan',
-        qlooScore: 0.82
+        qlooScore: 0.82,
+        qlooInsights: { reason: 'Strong cultural preference match' }
       });
     }
     
@@ -614,16 +699,17 @@ export class IntegratedRecommendationService {
       destinations.push({
         name: 'Dubai, UAE',
         country: 'United Arab Emirates',
-        qlooScore: 0.78
+        qlooScore: 0.78,
+        qlooInsights: { reason: 'Luxury travel preference match' }
       });
     }
     
     // Default destinations if no strong preferences
     if (destinations.length === 0) {
       destinations.push(
-        { name: 'Bali, Indonesia', country: 'Indonesia', qlooScore: 0.75 },
-        { name: 'Lisbon, Portugal', country: 'Portugal', qlooScore: 0.72 },
-        { name: 'Mexico City, Mexico', country: 'Mexico', qlooScore: 0.70 }
+        { name: 'Bali, Indonesia', country: 'Indonesia', qlooScore: 0.75, qlooInsights: { reason: 'Popular travel destination' } },
+        { name: 'Lisbon, Portugal', country: 'Portugal', qlooScore: 0.72, qlooInsights: { reason: 'Well-rounded destination' } },
+        { name: 'Mexico City, Mexico', country: 'Mexico', qlooScore: 0.70, qlooInsights: { reason: 'Diverse cultural experience' } }
       );
     }
     
