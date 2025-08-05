@@ -1,0 +1,507 @@
+ at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:65:23)
+  101 |
+  102 |       if (!response.ok) {
+> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
+      |              ^
+  104 |       }
+  105 |
+  106 |       const data = await response.json();  
+Cached data for key: budget:{"dates":{"duration":"4-7 days"},"destination":"Madagascar","origin":"New 
+York"}
+Error getting Amadeus token: Error: Amadeus auth failed: 401
+    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
+    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
+    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
+    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:65:23)
+  101 |
+  102 |       if (!response.ok) {
+> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
+      |              ^
+  104 |       }
+  105 |
+  106 |       const data = await response.json();  
+Error getting flight prices: Error: Amadeus auth failed: 401
+    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
+    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
+    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
+    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:65:23)
+  101 |
+  102 |       if (!response.ok) {
+> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
+      |              ^
+  104 |       }
+  105 |
+  106 |       const data = await response.json();  
+Cached data for key: budget:{"dates":{"duration":"4-7 days"},"destination":"Kyoto","origin":"New York"}
+Cached data for key: recommendations:{"preferences":{"budget":"Custom amount","duration":"4-7 days","style":"adventure","contentFocus":"entrepreneurship","climate":["Mild/Temperate"]},"themes":["business","technology","travel","writing"]}
+✅ PRIMARY ENGINE SUCCESS: Generated 3 optimized rec
+ommendations
+[MEDIUM] qloo.get-recommendations: Error: Operation timeout
+    at Timeout._onTimeout (src\services\errorHandler.ts:69:34)
+  67 |         // Set timeout for the operation    
+  68 |         const timeoutPromise = new Promise<never>((_, reject) => 
+> 69 |           setTimeout(() => reject(new Error('Operation timeout')), timeout)
+     |                                  ^
+  70 |         );
+  71 |
+  72 |         const result = await Promise.race([ 
+🎯 QLOO: Attempting to get dynamic destinations...
+🔍 QLOO: Trying endpoint /recommendations/destinations...
+📡 QLOO: Response status for /recommendations/destinations: 401
+🔍 QLOO: Trying endpoint /recommendations/travel...✅ AI: Generated 12 unique destinations
+✅ AI Generation: Created 12 destinations via AI
+📡 QLOO: Response status for /recommendations/travel: 401
+🔍 QLOO: Trying endpoint /recommendations...
+📡 QLOO: Response status for /recommendations: 401
+🔍 QLOO: Trying endpoint /search/travel...
+📡 QLOO: Response status for /search/travel: 401
+⚠️ QLOO: All endpoints failed, using enhanced dynam
+ic generation
+🚀 QLOO: Generating TRULY dynamic destinations - no fixed pools, pure AI generation...
+🔍 QLOO: Attempting real-time destination discovery via API...
+🔍 QLOO: Trying discovery endpoint /discover/destinations...
+🔍 QLOO: Trying discovery endpoint /search/places...
+🔍 QLOO: Trying discovery endpoint /recommendations/travel/discover...
+🔍 QLOO: Trying discovery endpoint /taste/destinations...
+❌ QLOO: All discovery endpoints failed
+🤖 AI: Generating destinations using AI analysis of taste vectors...
+[HIGH] recommendations-api.generate-recommendations: Error: Operation timeout
+    at Timeout._onTimeout (src\services\errorHandler.ts:69:34)
+  67 |         // Set timeout for the operation    
+  68 |         const timeoutPromise = new Promise<never>((_, reject) => 
+> 69 |           setTimeout(() => reject(new Error('Operation timeout')), timeout)
+     |                                  ^
+  70 |         );
+  71 |
+  72 |         const result = await Promise.race([ 
+Primary service failed, using dynamic fallback with Gemini API
+🚨 Generating advanced dynamic fallback recommendations using enhanced Gemini service...
+🎯 DYNAMIC: Generating truly dynamic destinations using AI for fallback...
+[HIGH] qloo.get-recommendations: Error: Operation timeout
+    at Timeout._onTimeout (src\services\errorHandler.ts:69:34)
+  67 |         // Set timeout for the operation    
+  68 |         const timeoutPromise = new Promise<never>((_, reject) => 
+> 69 |           setTimeout(() => reject(new Error('Operation timeout')), timeout)
+     |                                  ^
+  70 |         );
+  71 |
+  72 |         const result = await Promise.race([ 
+🚀 INTEGRATED: Generating taste-based destinations 
+with enhanced algorithm...
+✅ INTEGRATED: Generated 10 taste-based destinations
+Using fallback for qloo.get-recommendations        
+🎯 INTEGRATED: Generating dynamic base destinations for themes: [ 'business', 'technology', 'travel', 
+'writing' ]
+🎯 INTEGRATED: Taste vector scores: {
+  adventure: 0.9323,
+  culture: 0.96855,
+  luxury: 0.45099999999999996,
+  food: 0.41799278737012074,
+  nature: 0.929,
+  urban: 0.9815,
+  budget: 0.6000000000000001
+}
+✅ INTEGRATED: Generated dynamic destinations: [    
+  'Singapore, Singapore',
+  'Seoul, South Korea',
+  'Shenzhen, China',
+  'Tel Aviv, Israel',
+  'Tallinn, Estonia',
+  'Queenstown, New Zealand',
+  'Patagonia, Chile',
+  'Iceland, Iceland'
+]
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check 
+your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"4s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28)
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:65:23)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();        
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check 
+your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"4s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28)
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:65:23)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();        
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check 
+your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"4s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28)
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:65:23)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();        
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check 
+your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"4s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28)
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:65:23)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();        
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check 
+your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"4s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28)
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:65:23)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();        
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check 
+your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"model":"gemini-1.5-flash","location":"global"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"4s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28)
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:65:23)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();        
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check 
+your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"4s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28)
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:65:23)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();        
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check 
+your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"4s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28)
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:65:23)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();        
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+✅ Generated 8 advanced Gemini recommendations      
+Enriching destination: Costa Rica
+Cache hit for key: budget:{"dates":{"duration":"4-7 days"},"destination":"Costa Rica","origin":"New York"}
+Cache hit for key: creator:{"location":"Costa Rica","niche":"Travel"}
+Cache hit for key: places:{"location":"Costa Rica"}Enriching destination: Interlaken
+Cache hit for key: budget:{"dates":{"duration":"4-7 days"},"destination":"Interlaken","origin":"New York"}
+Cache hit for key: creator:{"location":"Interlaken","niche":"Travel"}
+Cache hit for key: places:{"location":"Interlaken"}Enriching destination: Kyoto
+Cache hit for key: budget:{"dates":{"duration":"4-7 days"},"destination":"Kyoto","origin":"New York"} 
+Cache hit for key: places:{"location":"Kyoto"}     
+Enriching destination: Tokyo
+Cache hit for key: budget:{"dates":{"duration":"4-7 days"},"destination":"Tokyo","origin":"New York"} 
+Cache hit for key: creator:{"location":"Tokyo","niche":"Travel"}
+Cache hit for key: places:{"location":"Tokyo"}     
+Enriching destination: Madagascar
+Cache hit for key: budget:{"dates":{"duration":"4-7 days"},"destination":"Madagascar","origin":"New York"}
+Cache hit for key: creator:{"location":"Madagascar","niche":"Travel"}
+Cache hit for key: places:{"location":"Madagascar"}Instagram access token not found, using fallback creators
+Error searching YouTube creators: Error: YouTube search failed: 400
+    at CreatorService.searchYouTubeCreators (src\services\creator.ts:99:14)
+    at async CreatorService.findLocalCreators (src\services\creator.ts:53:51)
+    at async IntegratedRecommendationService.getCreatorData (src\services\integrated-recommendation.ts:506:23)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:65:23)
+   97 |
+   98 |       if (!searchResponse.ok) {
+>  99 |         throw new Error(`YouTube search failed: ${searchResponse.status}`);
+      |              ^
+  100 |       }
+  101 |
+  102 |       const searchData = await searchResponse.json();
+Creator error for Kyoto: TypeError: Cannot read properties of undefined (reading 'toString')
+    at <unknown> (src\services\integrated-recommendation.ts:521:35)
+    at Array.map (<anonymous>)
+    at IntegratedRecommendationService.getCreatorData (src\services\integrated-recommendation.ts:517:42)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:65:23)
+  519 |           followers: creator.totalFollowers > 1000 ?
+  520 |             `${Math.round(creator.totalFollowers / 1000)}K` : 
+> 521 |             creator.totalFollowers.toString(),
+      |                                   ^        
+  522 |           niche: creator.niche,
+  523 |           collaboration: creator.collaborationInfo || 'Open to collaborations',
+  524 |           platform: creator.primaryPlatformCached data for key: recommendations:{"preferences":{"budget":"Custom amount","duration":"4-7 days","style":"adventure","contentFocus":"entrepreneurship","climate":["Mild/Temperate"]},"themes":["business","technology","travel","writing"]}
+✅ PRIMARY ENGINE SUCCESS: Generated 3 optimized rec
+ommendations
+✅ DYNAMIC: Generated 3 unique destinations via AI
+🎯 Generated destinations: [ 'Tallinn, Estonia', 'Medellín, Colombia', 'Dunedin, New Zealand' ]       
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check 
+your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"model":"gemini-1.5-flash","location":"global"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"0s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
+    at async (src\app\api\recommendations\route.ts:138:15)
+    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:136:36)
+    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
+    at async POST (src\app\api\recommendations\route.ts:13:9)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();        
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+✅ AI: Generated 12 unique destinations
+✅ AI Generation: Created 12 destinations via AI
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check 
+your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"model":"gemini-1.5-flash","location":"global"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"58s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
+    at async (src\app\api\recommendations\route.ts:138:15)
+    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:136:36)
+    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
+    at async POST (src\app\api\recommendations\route.ts:13:9)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();        
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check 
+your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"58s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
+    at async (src\app\api\recommendations\route.ts:138:15)
+    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:136:36)
+    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
+    at async POST (src\app\api\recommendations\route.ts:13:9)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();        
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+🔍 PROCESSING: Applying creator and budget filtering to recommendations...
+🎯 CREATOR: Fetching real creator data for Tallinn, Unknown
+🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:person&filter.location=Tallinn&signal.interests.tags=business,technology,travel,writing
+🎯 CREATOR: Fetching real creator data for Medellín, Unknown
+🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:person&filter.location=Medell%C3%ADn&signal.interests.tags=business,technology,travel,writing
+🎯 CREATOR: Fetching real creator data for Dunedin, Unknown
+🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:person&filter.location=Dunedin&signal.interests.tags=business,technology,travel,writing
+🔍 QLOO: Trying creator endpoint /search?term=Dunedin%20creators&types=urn:entity:person
+🔍 QLOO: Trying creator endpoint /search?term=Medell%C3%ADn%20creators&types=urn:entity:person        
+🔍 QLOO: Trying creator endpoint /search?term=Tallinn%20creators&types=urn:entity:person
+🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:influencer&filter.location=Unknown
+🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:influencer&filter.location=Unknown
+⚠️ QLOO: Creator data fetch failed: All Qloo creato
+r endpoints failed
+❌ CREATOR: Error fetching creator data: Error: All 
+Qloo creator endpoints failed
+    at CreatorDataService.getCreatorsFromQloo (src\services\creator-data.ts:117:12)
+    at async CreatorDataService.getCreatorDataForDestination (src\services\creator-data.ts:34:27)     
+    at async (src\app\api\recommendations\route.ts:169:28)
+    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:163:39)
+    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
+    at async POST (src\app\api\recommendations\route.ts:13:9)
+  115 |       }
+  116 |
+> 117 |       throw new Error('All Qloo creator endpoints failed');
+      |            ^
+  118 |     } catch (error) {
+  119 |       console.warn('⚠️ QLOO: Creator data f
+etch failed:', error instanceof Error ? error.message : String(error));
+  120 |       throw error;
+🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:influencer&filter.location=Unknown
+⚠️ QLOO: Creator data fetch failed: All Qloo creato
+r endpoints failed
+❌ CREATOR: Error fetching creator data: Error: All 
+Qloo creator endpoints failed
+    at CreatorDataService.getCreatorsFromQloo (src\services\creator-data.ts:117:12)
+    at async CreatorDataService.getCreatorDataForDestination (src\services\creator-data.ts:34:27)     
+    at async (src\app\api\recommendations\route.ts:169:28)
+    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:163:39)
+    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
+    at async POST (src\app\api\recommendations\route.ts:13:9)
+  115 |       }
+  116 |
+> 117 |       throw new Error('All Qloo creator endpoints failed');
+      |            ^
+  118 |     } catch (error) {
+  119 |       console.warn('⚠️ QLOO: Creator data f
+etch failed:', error instanceof Error ? error.message : String(error));
+  120 |       throw error;
+⚠️ QLOO: Creator data fetch failed: All Qloo creato
+r endpoints failed
+❌ CREATOR: Error fetching creator data: Error: All 
+Qloo creator endpoints failed
+    at CreatorDataService.getCreatorsFromQloo (src\services\creator-data.ts:117:12)
+    at async CreatorDataService.getCreatorDataForDestination (src\services\creator-data.ts:34:27)     
+    at async (src\app\api\recommendations\route.ts:169:28)
+    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:163:39)
+    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
+    at async POST (src\app\api\recommendations\route.ts:13:9)
+  115 |       }
+  116 |
+> 117 |       throw new Error('All Qloo creator endpoints failed');
+      |            ^
+  118 |     } catch (error) {
+  119 |       console.warn('⚠️ QLOO: Creator data f
+etch failed:', error instanceof Error ? error.message : String(error));
+  120 |       throw error;
+❌ CREATOR: Filtering out Tallinn - insufficient cre
+ator community (0)
+❌ CREATOR: Filtering out Medellín - insufficient cr
+eator community (0)
+❌ CREATOR: Filtering out Dunedin - insufficient cr❌ CREATOR: Filtering out Dunedin - insuftor community (0)
+ficient creator community (0)           get: Custom
+❌ CREATOR: Filtering out Dunedin - insufficient creator community (0)
+💰 BUDGET: Filtering destinations by budget: Custom amount, duration: 4-7 days
+💰 BUDGET: Parsed constraints: {
+  userBudget: 1500,
+  duration: 4,
+  budgetType: 'total',
+  flexibility: 0.1,
+  currency: 'USD'
+}
+💰 BUDGET: Filtered 0 destinations (0 within budget)
+✅ FILTERING: 3 → 0 → 0 (after creator and budget filtering)
+✅ Generated 0 PRD-compliant recommendations with creator and budget validation
+Using fallback for recommendations-api.generate-recommendations
+ POST /api/recommendations 200 in 74847ms
+ ✓ Compiled /api/send-report in 153ms
+Email sent successfully to: delwerhossain006@gmail.com
+Email metrics: {
+  recipient: 'delwerhossain006@gmail.com',
+  recommendationCount: 0,
+  hasUserProfile: true,
+  hasWebsiteData: true,
+  timestamp: '2025-08-05T16:17:35.234Z'
+}
+ POST /api/send-report 200 in 3176ms

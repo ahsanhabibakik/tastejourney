@@ -18,6 +18,11 @@ interface Recommendation {
       niche: string;
       collaboration: string;
     }>;
+    brandPartnerships?: Array<{
+      brand: string;
+      type: string;
+      status: string;
+    }>;
   };
   tags?: string[];
 }
@@ -137,6 +142,46 @@ const DestinationCard: React.FC<DestinationCardProps> = React.memo(({ rec, rank 
             <p className="text-sm text-foreground leading-relaxed">
               {rec.highlights.slice(0, 2).join(' • ')}
             </p>
+          </div>
+        )}
+
+        {/* Brand Partnerships - Prominent Section */}
+        {rec.creatorDetails?.brandPartnerships && rec.creatorDetails.brandPartnerships.length > 0 && (
+          <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-3 shadow-sm">
+            <div className="flex items-center justify-between mb-3">
+              <h5 className="text-sm font-bold text-amber-800 flex items-center gap-2">
+                🤝 Brand Partnerships
+              </h5>
+              <span className="text-xs font-semibold bg-amber-200 text-amber-800 px-2 py-1 rounded-full">
+                {rec.creatorDetails.brandPartnerships.length} Available
+              </span>
+            </div>
+            
+            <div className="grid grid-cols-1 gap-2">
+              {rec.creatorDetails.brandPartnerships.slice(0, 2).map((partnership, idx) => (
+                <div key={idx} className="bg-white/80 rounded-lg p-2 border border-amber-100">
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm font-semibold text-amber-900">
+                      {partnership.brand}
+                    </div>
+                    <div className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                      {partnership.status}
+                    </div>
+                  </div>
+                  <div className="text-xs text-amber-700 mt-1">
+                    {partnership.type}
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {rec.creatorDetails.brandPartnerships.length > 2 && (
+              <div className="mt-2 text-center">
+                <span className="text-xs text-amber-700 bg-amber-100 px-2 py-1 rounded-full">
+                  +{rec.creatorDetails.brandPartnerships.length - 2} more partnerships
+                </span>
+              </div>
+            )}
           </div>
         )}
 

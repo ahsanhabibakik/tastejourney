@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
         }
       });
     },
-    async () => {
+    async (): Promise<NextResponse> => {
       // Fallback: Return simplified multi-destination processing
       const body: MultiDestinationRequest = await request.json();
       

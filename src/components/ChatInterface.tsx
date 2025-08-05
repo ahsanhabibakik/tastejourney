@@ -12,13 +12,15 @@ import URLForm from "./URLForm";
 import ConfirmationScreen from "./ConfirmationScreen";
 import DestinationCard from "./DestinationCard";
 import SidebarContent from "./SidebarContent";
+import { dynamicQuestionService } from "@/services/dynamic-questions";
+import { SmartQuestionFlow } from "./SmartQuestionFlow";
 
 interface Message {
   id: string;
   text: string;
   isBot: boolean;
   timestamp: Date;
-  component?: "url-form" | "confirmation" | "questions" | "recommendations";
+  component?: "url-form" | "confirmation" | "questions" | "recommendations" | "smart-questions";
 }
 
 type ChatState =
@@ -60,52 +62,6 @@ interface Recommendation {
   };
 }
 
-const questions = [
-  {
-    id: "budget",
-    text: "What's your budget range for this trip?",
-    options: ["$500-1000", "$1000-2500", "$2500-5000", "$5000+"],
-    icon: "💸",
-    multiSelect: false,
-  },
-  {
-    id: "duration",
-    text: "How long would you like to travel?",
-    options: ["1-3 days", "4-7 days", "1-2 weeks", "2+ weeks"],
-    icon: "🗓️",
-    multiSelect: false,
-  },
-  {
-    id: "style",
-    text: "What's your preferred travel style?",
-    options: ["Adventure", "Luxury", "Cultural", "Beach", "Urban"],
-    icon: "🌍",
-    multiSelect: false,
-  },
-  {
-    id: "contentFocus",
-    text: "What type of content do you focus on?",
-    options: ["Photography", "Food", "Lifestyle", "Adventure"],
-    icon: "📸",
-    multiSelect: false,
-  },
-  {
-    id: "climate",
-    text: "Select all climate preferences that apply (you can choose multiple):",
-    options: [
-      "Tropical/Sunny",
-      "Mild/Temperate",
-      "Cold/Snowy",
-      "Desert/Arid",
-      "No preference",
-      "Avoid hot",
-      "Avoid cold",
-      "Avoid rainy",
-    ],
-    icon: "☀️",
-    multiSelect: true,
-  },
-];
 
 // Optimized markdown rendering function
 const renderMarkdown = (text: string): React.ReactNode => {
@@ -231,6 +187,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
   const [selectedClimates, setSelectedClimates] = useState<string[]>([]);
+  const [dynamicQuestions, setDynamicQuestions] = useState<any[]>([]);
+  const [questionsLoaded, setQuestionsLoaded] = useState(false);
   const [recommendations, setRecommendations] = useState<
     | {
         recommendations: Recommendation[];
@@ -382,29 +340,88 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
 
         if (result.success) {
           setTasteProfile(result.data);
-          setChatState("questions");
-          setCurrentQuestionIndex(0);
-          await simulateTyping(() => {
-            addMessage(
-              "Perfect! I've created your taste profile. Now I need to ask you a few quick questions to personalize your recommendations:",
-              true
-            );
-            addMessage(questions[0].text, true, "questions");
-          }, 2000);
+          
+          // Load dynamic questions based on user context
+          console.log('🧠 QUESTIONS: Loading dynamic questions for user...');
+          try {
+            const userContext = {
+              themes: websiteData.themes,
+              contentType: websiteData.contentType,
+              hints: websiteData.hints,
+              socialLinks: websiteData.socialLinks,
+              audienceLocation: websiteData.location || 'Global',
+              previousAnswers: {}
+            };
+            
+            const questions = await dynamicQuestionService.generateQuestionsForUser(userContext);
+            setDynamicQuestions(questions);
+            setQuestionsLoaded(true);
+            console.log(`✅ QUESTIONS: Loaded ${questions.length} dynamic questions`);
+            
+            setChatState("questions");
+            setCurrentQuestionIndex(0);
+            await simulateTyping(() => {
+              addMessage(
+                `Perfect! I've created your taste profile based on your ${websiteData.contentType} content. Now I'll ask you smart questions that adapt to your answers:`,
+                true
+              );
+              addMessage("Let's start with your budget-aware travel planning:", true, "smart-questions");
+            }, 2000);
+          } catch (questionError) {
+            console.error("Error loading dynamic questions:", questionError);
+            // Fallback to basic questions
+            const fallbackQuestions = await dynamicQuestionService.generateQuestionsForUser({
+              themes: ['travel'],
+              contentType: 'Mixed',
+              hints: [],
+              socialLinks: [],
+              audienceLocation: 'Global'
+            });
+            setDynamicQuestions(fallbackQuestions);
+            setQuestionsLoaded(true);
+            
+            setChatState("questions");
+            setCurrentQuestionIndex(0);
+            await simulateTyping(() => {
+              addMessage(
+                "Perfect! I've created your taste profile. Now I'll ask you smart questions that adapt to your budget and preferences:",
+                true
+              );
+              addMessage("Let's start with your travel planning:", true, "smart-questions");
+            }, 2000);
+          }
         } else {
           throw new Error(result.error);
         }
       } catch (error) {
         console.error("Error creating taste profile:", error);
-        setChatState("questions");
-        setCurrentQuestionIndex(0);
-        await simulateTyping(() => {
-          addMessage(
-            "Great! Now let me ask you a few questions to personalize your recommendations:",
-            true
-          );
-          addMessage(questions[0].text, true, "questions");
-        }, 1500);
+        
+        // Load fallback questions even when taste profiling fails
+        try {
+          const fallbackQuestions = await dynamicQuestionService.generateQuestionsForUser({
+            themes: websiteData?.themes || ['travel'],
+            contentType: websiteData?.contentType || 'Mixed',
+            hints: websiteData?.hints || [],
+            socialLinks: websiteData?.socialLinks || [],
+            audienceLocation: 'Global'
+          });
+          setDynamicQuestions(fallbackQuestions);
+          setQuestionsLoaded(true);
+          
+          setChatState("questions");
+          setCurrentQuestionIndex(0);
+          await simulateTyping(() => {
+            addMessage(
+              "Great! Now let me ask you smart questions that adapt to your preferences:",
+              true
+            );
+            addMessage("Let's start with your travel planning:", true, "smart-questions");
+          }, 1500);
+        } catch (fallbackError) {
+          console.error("Error loading fallback questions:", fallbackError);
+          setChatState("questions");
+          setQuestionsLoaded(false);
+        }
       }
     } else {
       addMessage("The information needs corrections.", false);
@@ -514,7 +531,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
               topCreators: [
                 { name: "BaliBound", followers: "85K", niche: "Adventure Travel", collaboration: "Content partnerships available" }
               ],
-              collaborationOpportunities: ["Creator meetups monthly", "Brand partnerships", "Cultural exchange programs"]
+              collaborationOpportunities: ["Creator meetups monthly", "Brand partnerships", "Cultural exchange programs"],
+              brandPartnerships: [
+                { brand: "Bali Tourism Board", type: "Content Partnership", status: "Available" },
+                { brand: "Indonesian Hotels", type: "Sponsored Content", status: "Active" },
+                { brand: "Adventure Gear Co", type: "Product Placement", status: "Available" }
+              ]
             },
             tags: ["adventure", "culture", "budget-friendly", "instagram-worthy", "food", "beach", "spiritual"],
             bestMonths: ["April-May", "September-October"]
@@ -544,7 +566,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
               topCreators: [
                 { name: "LisbonLens", followers: "62K", niche: "City Photography", collaboration: "Co-working spaces available" }
               ],
-              collaborationOpportunities: ["Creator co-working spaces", "Photography walks", "Food tour collaborations"]
+              collaborationOpportunities: ["Creator co-working spaces", "Photography walks", "Food tour collaborations"],
+              brandPartnerships: [
+                { brand: "Visit Portugal", type: "Tourism Campaign", status: "Available" },
+                { brand: "Portuguese Wines", type: "Tasting Events", status: "Active" },
+                { brand: "Nomad Co-working", type: "Space Partnership", status: "Available" }
+              ]
             },
             tags: ["europe", "culture", "architecture", "food", "coastal", "budget-friendly", "digital-nomad"],
             bestMonths: ["May-June", "September-October"]
@@ -574,7 +601,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
               topCreators: [
                 { name: "DubaiDreams", followers: "125K", niche: "Luxury Travel", collaboration: "Hotel partnerships available" }
               ],
-              collaborationOpportunities: ["Luxury brand events", "Hotel partnerships", "Desert experiences"]
+              collaborationOpportunities: ["Luxury brand events", "Hotel partnerships", "Desert experiences"],
+              brandPartnerships: [
+                { brand: "Dubai Tourism", type: "Luxury Campaign", status: "Available" },
+                { brand: "Emirates Airlines", type: "Travel Partnership", status: "Active" },
+                { brand: "Luxury Hotels Group", type: "Accommodation Deal", status: "Premium" },
+                { brand: "Desert Safari Co", type: "Experience Package", status: "Available" }
+              ]
             },
             tags: ["luxury", "modern", "desert", "shopping", "architecture", "year-round", "instagram"],
             bestMonths: ["November-March"]
@@ -601,8 +634,21 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     }
   }, [addMessage, simulateTyping, tasteProfile, websiteData, selectedClimates]);
 
+  const handleSmartQuestionsComplete = useCallback(async (answers: Record<string, any>) => {
+    setUserAnswers(answers);
+    addMessage("Thanks for answering all the questions! Your answers will help me create perfect recommendations.", false);
+    
+    console.log('🎯 Smart questions completed with answers:', answers);
+    await generateRecommendations(answers);
+  }, [generateRecommendations, addMessage]);
+
   const handleQuestionAnswer = useCallback(async (answer: string) => {
-    const currentQuestion = questions[currentQuestionIndex];
+    if (!questionsLoaded || dynamicQuestions.length === 0) {
+      console.error('Questions not loaded yet');
+      return;
+    }
+    
+    const currentQuestion = dynamicQuestions[currentQuestionIndex];
     
     if (currentQuestion.id === "climate" && currentQuestion.multiSelect) {
       handleClimateSelection(answer);
@@ -617,18 +663,30 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     };
     setUserAnswers(newAnswers);
 
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex((prev) => prev + 1);
-      await simulateTyping(() => {
-        addMessage(questions[currentQuestionIndex + 1].text, true, "questions");
-      });
+    // Check if there are more questions
+    if (currentQuestionIndex < dynamicQuestions.length - 1) {
+      // Get next question using dynamic question service
+      const nextQuestion = await dynamicQuestionService.getNextQuestion(
+        dynamicQuestions.slice(currentQuestionIndex + 1),
+        newAnswers
+      );
+      
+      if (nextQuestion) {
+        setCurrentQuestionIndex((prev) => prev + 1);
+        await simulateTyping(() => {
+          addMessage(nextQuestion.text, true, "questions");
+        });
+      } else {
+        // No more relevant questions, generate recommendations
+        await generateRecommendations(newAnswers);
+      }
     } else {
       await generateRecommendations(newAnswers);
     }
-  }, [currentQuestionIndex, userAnswers, addMessage, simulateTyping, handleClimateSelection, generateRecommendations]);
+  }, [currentQuestionIndex, userAnswers, addMessage, simulateTyping, handleClimateSelection, generateRecommendations, questionsLoaded, dynamicQuestions]);
 
   const handleClimateConfirm = useCallback(async () => {
-    if (selectedClimates.length === 0) return;
+    if (selectedClimates.length === 0 || !questionsLoaded || dynamicQuestions.length === 0) return;
     
     const climateAnswerText = selectedClimates.join(", ");
     addMessage(climateAnswerText, false);
@@ -639,15 +697,24 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     };
     setUserAnswers(newAnswers);
 
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex((prev) => prev + 1);
-      await simulateTyping(() => {
-        addMessage(questions[currentQuestionIndex + 1].text, true, "questions");
-      });
+    if (currentQuestionIndex < dynamicQuestions.length - 1) {
+      const nextQuestion = await dynamicQuestionService.getNextQuestion(
+        dynamicQuestions.slice(currentQuestionIndex + 1),
+        newAnswers
+      );
+      
+      if (nextQuestion) {
+        setCurrentQuestionIndex((prev) => prev + 1);
+        await simulateTyping(() => {
+          addMessage(nextQuestion.text, true, "questions");
+        });
+      } else {
+        await generateRecommendations(newAnswers);
+      }
     } else {
       await generateRecommendations(newAnswers);
     }
-  }, [selectedClimates, userAnswers, currentQuestionIndex, addMessage, simulateTyping, generateRecommendations]);
+  }, [selectedClimates, userAnswers, currentQuestionIndex, addMessage, simulateTyping, generateRecommendations, questionsLoaded, dynamicQuestions]);
 
   const handleSendMessage = useCallback(async () => {
     if (!inputValue.trim()) return;
@@ -776,7 +843,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
             <SidebarContent
               chatState={chatState}
               currentQuestionIndex={currentQuestionIndex}
-              questions={questions}
+              questions={questionsLoaded ? dynamicQuestions : []}
               messages={messages}
               websiteData={websiteData}
               tasteProfile={tasteProfile}
@@ -795,7 +862,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
         <SidebarContent
           chatState={chatState}
           currentQuestionIndex={currentQuestionIndex}
-          questions={questions}
+          questions={questionsLoaded ? dynamicQuestions : []}
           messages={messages}
           websiteData={websiteData}
           tasteProfile={tasteProfile}
@@ -880,81 +947,100 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                       />
                     )}
 
-                  {message.component === "questions" &&
+                  {message.component === "smart-questions" && message.isBot && websiteData ? (
+                    <SmartQuestionFlow
+                      websiteData={websiteData}
+                      onComplete={handleSmartQuestionsComplete}
+                    />
+                  ) : message.component === "questions" &&
                     chatState === "questions" && (
-                      <div className="mt-6 w-full animate-slide-up">
-                        <div className="flex items-center gap-3 mb-6">
-                          <div className="flex-1 bg-muted/50 rounded-full h-3 overflow-hidden">
-                            <div 
-                              className="bg-gradient-to-r from-primary to-primary/80 h-full rounded-full transition-all duration-500 ease-out relative"
-                              style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
-                            >
-                              <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                      <div>
+                        {questionsLoaded && dynamicQuestions.length > 0 ? (
+                        <div className="mt-6 w-full animate-slide-up">
+                          <div className="flex items-center gap-3 mb-6">
+                            <div className="flex-1 bg-muted/50 rounded-full h-3 overflow-hidden">
+                              <div 
+                                className="bg-gradient-to-r from-primary to-primary/80 h-full rounded-full transition-all duration-500 ease-out relative"
+                                style={{ width: `${((currentQuestionIndex + 1) / dynamicQuestions.length) * 100}%` }}
+                              >
+                                <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                              </div>
                             </div>
-                          </div>
-                          <div className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full">
-                            <span className="text-sm font-semibold text-primary">
-                              {currentQuestionIndex + 1}
-                            </span>
-                            <span className="text-xs text-primary/70">of</span>
-                            <span className="text-sm font-semibold text-primary">
-                              {questions.length}
-                            </span>
-                          </div>
-                        </div>
-                        
-                        <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-6 mb-6 shadow-sm">
-                          <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                              <span className="text-2xl">
-                                {questions[currentQuestionIndex].icon}
+                            <div className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full">
+                              <span className="text-sm font-semibold text-primary">
+                                {currentQuestionIndex + 1}
+                              </span>
+                              <span className="text-xs text-primary/70">of</span>
+                              <span className="text-sm font-semibold text-primary">
+                                {dynamicQuestions.length}
                               </span>
                             </div>
-                            <div className="flex-1">
-                              <h3 className="font-semibold text-lg text-foreground mb-1">
-                                {questions[currentQuestionIndex].text}
-                              </h3>
-                              <p className="text-sm text-muted-foreground">
-                                Choose the option that best describes your preference
-                              </p>
+                          </div>
+                        
+                          <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-6 mb-6 shadow-sm">
+                            <div className="flex items-center gap-4">
+                              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                <span className="text-2xl">
+                                  {dynamicQuestions[currentQuestionIndex]?.icon || '❓'}
+                                </span>
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="font-semibold text-lg text-foreground mb-1">
+                                  {dynamicQuestions[currentQuestionIndex]?.text || 'Loading question...'}
+                                </h3>
+                                <p className="text-sm text-muted-foreground">
+                                  {dynamicQuestions[currentQuestionIndex]?.multiSelect 
+                                    ? 'You can choose multiple options'
+                                    : 'Choose the option that best describes your preference'
+                                  }
+                                </p>
+                              </div>
                             </div>
                           </div>
-                        </div>
                         
-                        <div className="grid gap-3">
-                          {questions[currentQuestionIndex].options.map(
-                            (option, index) => {
-                              const isMultiSelect = questions[currentQuestionIndex].multiSelect;
-                              const isSelected = isMultiSelect 
-                                ? selectedClimates.includes(option)
-                                : userAnswers[questions[currentQuestionIndex].id] === option;
-                              
-                              return (
+                          <div className="grid gap-3">
+                            {dynamicQuestions[currentQuestionIndex]?.options?.map(
+                              (option: string, index: number) => {
+                                const currentQuestion = dynamicQuestions[currentQuestionIndex];
+                                const isMultiSelect = currentQuestion?.multiSelect;
+                                const isSelected = isMultiSelect 
+                                  ? selectedClimates.includes(option)
+                                  : userAnswers[currentQuestion?.id] === option;
+                                
+                                return (
+                                  <Button
+                                    key={index}
+                                    variant={isSelected ? "default" : "outline"}
+                                    className="w-full justify-start text-left"
+                                    onClick={() => handleQuestionAnswer(option)}
+                                  >
+                                    {isMultiSelect && isSelected && "✓ "}
+                                    {option}
+                                  </Button>
+                                );
+                              }
+                            ) || <div className="text-center text-muted-foreground">Loading options...</div>}
+                            
+                            {dynamicQuestions[currentQuestionIndex]?.multiSelect && selectedClimates.length > 0 && (
+                              <div className="mt-4 pt-2 border-t">
                                 <Button
-                                  key={index}
-                                  variant={isSelected ? "default" : "outline"}
-                                  className="w-full justify-start text-left"
-                                  onClick={() => handleQuestionAnswer(option)}
+                                  onClick={handleClimateConfirm}
+                                  className="w-full"
+                                  variant="default"
                                 >
-                                  {isMultiSelect && isSelected && "✓ "}
-                                  {option}
+                                  Continue with {selectedClimates.length} preference{selectedClimates.length > 1 ? 's' : ''}
                                 </Button>
-                              );
-                            }
-                          )}
-                          
-                          {questions[currentQuestionIndex].multiSelect && selectedClimates.length > 0 && (
-                            <div className="mt-4 pt-2 border-t">
-                              <Button
-                                onClick={handleClimateConfirm}
-                                className="w-full"
-                                variant="default"
-                              >
-                                Continue with {selectedClimates.length} preference{selectedClimates.length > 1 ? 's' : ''}
-                              </Button>
-                            </div>
-                          )}
+                              </div>
+                            )}
+                          </div>
                         </div>
+                      ) : (
+                        <div className="mt-6 w-full animate-slide-up text-center">
+                          <div className="bg-muted/30 rounded-xl p-6">
+                            <div className="text-muted-foreground mb-2">Loading personalized questions...</div>
+                          </div>
+                        </div>
+                      )}
                       </div>
                     )}
 

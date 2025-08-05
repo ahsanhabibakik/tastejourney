@@ -43,8 +43,8 @@ interface UserAnswers {
   duration?: string;
   style?: string;
   contentFocus?: string;
-  climate?: string;
-  [key: string]: string | undefined;
+  climate?: string | string[];
+  [key: string]: string | string[] | undefined;
 }
 
 interface GeminiRequest {
@@ -177,7 +177,7 @@ export async function POST(request: NextRequest) {
       try {
         const enhancedResponse = await getEnhancedDestinationResponse(
           body.message,
-          isDestinationQuery.destination,
+          isDestinationQuery.destination || 'Unknown',
           body.context
         );
         aiResponse = enhancedResponse.response;
@@ -225,7 +225,7 @@ async function getStandardResponse(message: string, context?: GeminiRequest['con
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Goog-Api-Key': GEMINI_API_KEY,
+      'X-Goog-Api-Key': GEMINI_API_KEY || '',
     },
     body: JSON.stringify({
       contents: [{ parts: [{ text: fullPrompt }] }],
@@ -284,7 +284,17 @@ async function getEnhancedDestinationResponse(
       name: destination,
       country: destination.split(',')[1]?.trim() || 'Unknown'
     },
-    userPreferences: context.userAnswers || {}
+    userPreferences: {
+      budget: context.userAnswers?.budget,
+      travelStyle: context.userAnswers?.style,
+      duration: context.userAnswers?.duration,
+      contentType: context.userAnswers?.contentFocus,
+      climate: Array.isArray(context.userAnswers?.climate) 
+        ? context.userAnswers.climate 
+        : context.userAnswers?.climate 
+          ? [context.userAnswers.climate] 
+          : undefined
+    }
   });
 
   // Create enhanced response based on user question and destination data
