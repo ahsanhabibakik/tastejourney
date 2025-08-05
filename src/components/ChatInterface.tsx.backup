@@ -107,16 +107,34 @@ const questions = [
   },
 ];
 
-// Optimized markdown rendering function
+// Simplified markdown rendering function
 const renderMarkdown = (text: string): React.ReactNode => {
-  const lines = text.split('\n');
-  
-  return lines.map((line, lineIndex) => {
-    if (line.trim() === '') {
+  return text.split('\n').map((line, lineIndex) => {
+    if (!line.trim()) {
       return <br key={lineIndex} />;
     }
     
-    const processedLine = processInlineMarkdown(line);
+    // Simple markdown parsing without complex regex
+    let processedLine: React.ReactNode = line;
+    
+    // Bold text
+    if (line.includes('**')) {
+      const parts = line.split('**');
+      processedLine = parts.map((part, i) => 
+        i % 2 === 1 ? <span key={i} className="font-bold">{part}</span> : part
+      );
+    }
+    
+    // Bullet points
+    if (line.trim().startsWith('*') || line.trim().startsWith('-')) {
+      const content = line.trim().substring(1).trim();
+      return (
+        <div key={lineIndex} className="flex items-start gap-2 ml-4 mb-1">
+          <span className="text-primary mt-1 text-xs">•</span>
+          <span className="flex-1">{content}</span>
+        </div>
+      );
+    }
     
     return (
       <div key={lineIndex} className="mb-1 last:mb-0">
@@ -124,61 +142,6 @@ const renderMarkdown = (text: string): React.ReactNode => {
       </div>
     );
   });
-};
-
-// Process inline markdown elements
-const processInlineMarkdown = (text: string): React.ReactNode[] => {
-  const elements: React.ReactNode[] = [];
-  let remaining = text;
-  let key = 0;
-  
-  const patterns = [
-    { regex: /^(.*?)\*\*\*(.*?)\*\*\*(.*)$/, component: (match: RegExpMatchArray) => <span key={key++} className="font-bold italic">{match[2]}</span> },
-    { regex: /^(.*?)\*\*(.*?)\*\*(.*)$/, component: (match: RegExpMatchArray) => <span key={key++} className="font-bold">{match[2]}</span> },
-    { regex: /^(.*?)`([^`]+)`(.*)$/, component: (match: RegExpMatchArray) => <code key={key++} className="bg-muted/50 px-1 py-0.5 rounded text-[0.875em] font-mono">{match[2]}</code> },
-    { regex: /^(.*?)\[([^\]]+)\]\(([^)]+)\)(.*)$/, component: (match: RegExpMatchArray) => {
-      const url = match[3];
-      if (url.startsWith('http://') || url.startsWith('https://')) {
-        return <a key={key++} href={url} target="_blank" rel="noopener noreferrer" className="text-primary underline hover:opacity-80 transition-opacity">{match[2]}</a>;
-      }
-      return <span key={key++}>{`[${match[2]}](${match[3]})`}</span>;
-    }},
-    { regex: /^(.*?)\*(?!\*)(.*?)\*(.*)$/, component: (match: RegExpMatchArray) => <span key={key++} className="italic">{match[2]}</span> },
-  ];
-  
-  while (remaining.length > 0) {
-    let matched = false;
-    
-    for (const { regex, component } of patterns) {
-      const match = remaining.match(regex);
-      if (match) {
-        if (match[1]) elements.push(match[1]);
-        elements.push(component(match));
-        remaining = match[match.length - 1];
-        matched = true;
-        break;
-      }
-    }
-    
-    // Bullet points
-    const bulletMatch = remaining.match(/^\s*\*\s+(.*)$/);
-    if (bulletMatch) {
-      elements.push(
-        <div key={key++} className="flex items-start gap-2 ml-4">
-          <span className="text-primary mt-1 text-xs">•</span>
-          <span className="flex-1">{processInlineMarkdown(bulletMatch[1])}</span>
-        </div>
-      );
-      break;
-    }
-    
-    if (!matched) {
-      elements.push(remaining);
-      break;
-    }
-  }
-  
-  return elements;
 };
 
 interface ChatInterfaceProps {
@@ -1277,6 +1240,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                     </div>
                   </div>
                 )}
+              </div>
             </div>
           </div>
         </div>
