@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 import { NextRequest, NextResponse } from "next/server";
 import { integratedRecommendationService } from "@/services/integrated-recommendation";
 import { dynamicRecommendationService } from "@/services/dynamic-recommendation";
@@ -777,3 +779,4 @@ function getStaticFallbackRecommendations() {
   };
 }
 
+>>>>>>> 5a1f6e60d23211062a654c226f1c9b5f5e3f4403
