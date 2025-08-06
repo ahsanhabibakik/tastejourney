@@ -4,6 +4,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { smartDynamicQuestionService, SmartQuestion, QuestionContext } from '@/services/smart-dynamic-questions';
+import { QuestionEditPanel } from './QuestionEditPanel';
 
 interface SmartQuestionFlowProps {
   websiteData: {
@@ -37,6 +38,7 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [loading, setLoading] = useState(false);
   const [validationError, setValidationError] = useState<string>('');
+  const [editingQuestionId, setEditingQuestionId] = useState<string | null>(null);
 
   // Load the first question
   useEffect(() => {
@@ -106,7 +108,7 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
     });
 
     // Check if this was the final question
-    if (questionNumber >= 5) {
+    if (questionNumber >= 4) {
       onComplete(newContext.previousAnswers);
       return;
     }
@@ -163,6 +165,18 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
     }
   }, [handleCustomSubmit]);
 
+  const handleEditQuestion = useCallback((questionId: string) => {
+    // Find the question to edit
+    const questionMap = { duration: 1, budget: 2, contentFormat: 3, climate: 4 };
+    const targetQuestionNumber = questionMap[questionId as keyof typeof questionMap];
+    
+    if (targetQuestionNumber) {
+      setEditingQuestionId(questionId);
+      setQuestionNumber(targetQuestionNumber);
+      loadNextQuestion();
+    }
+  }, [loadNextQuestion]);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
@@ -182,13 +196,22 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
 
   return (
     <div className="space-y-4">
+      {/* Show edit panel if user has answered questions */}
+      {Object.keys(context.previousAnswers).length > 0 && (
+        <QuestionEditPanel
+          answers={context.previousAnswers}
+          onEditQuestion={handleEditQuestion}
+          className="mb-4"
+        />
+      )}
+      
       <div className="flex items-start gap-3">
         <span className="text-2xl">{currentQuestion.icon}</span>
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
             <h3 className="text-lg font-medium">{currentQuestion.text}</h3>
             <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
-              {questionNumber}/5
+              {questionNumber}/4
             </span>
           </div>
           
@@ -285,7 +308,7 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
       {/* Progress indicator */}
       <div className="flex justify-center mt-4">
         <div className="flex gap-1">
-          {Array.from({ length: 5 }, (_, i) => (
+          {Array.from({ length: 4 }, (_, i) => (
             <div
               key={i}
               className={`w-2 h-2 rounded-full ${

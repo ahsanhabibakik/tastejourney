@@ -1,7 +1,7 @@
 // Enhanced Dynamic Question System V2 - LLM-Driven with Budget Awareness
 // Generates truly dynamic questions that adapt based on user context and previous answers
 
-import { GeminiService } from './gemini';
+import { geminiService } from './gemini';
 
 interface DynamicQuestionV2 {
   id: string;
@@ -39,11 +39,9 @@ interface QuestionGenerationPrompt {
 }
 
 class DynamicQuestionServiceV2 {
-  private geminiService: GeminiService;
   private maxQuestions = 5;
   
   constructor() {
-    this.geminiService = new GeminiService();
   }
 
   async generateNextQuestion(
@@ -66,30 +64,11 @@ class DynamicQuestionServiceV2 {
         return this.createFinalQuestion(userContext);
       }
 
-      // Generate question using LLM based on context
-      const prompt = this.buildQuestionGenerationPrompt({
-        context: userContext,
-        questionNumber,
-        totalQuestions: this.maxQuestions,
-        previousQuestions
-      });
-
-      const result = await this.geminiService.model.generateContent(prompt);
-      const response = await result.response;
-      const text = response.text();
-
-      // Parse the LLM response
-      const questionData = this.parseQuestionFromLLM(text, userContext);
-      
-      // Validate and enhance the question
-      const enhancedQuestion = await this.enhanceQuestionWithContext(questionData, userContext);
-      
-      console.log('✅ QUESTIONS V2: Generated adaptive question:', enhancedQuestion.text);
-      console.log('Options:', enhancedQuestion.options);
-      
-      return enhancedQuestion;
+      // Currently using template-based generation instead of LLM
+      // Fallback to smart template-based generation
+      return this.generateSmartFallbackQuestion(userContext, questionNumber);
     } catch (error) {
-      console.error('❌ QUESTIONS V2: Error generating LLM question:', error);
+      console.error('❌ QUESTIONS V2: Error generating question:', error);
       // Fallback to smart template-based generation
       return this.generateSmartFallbackQuestion(userContext, questionNumber);
     }

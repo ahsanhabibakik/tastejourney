@@ -323,10 +323,8 @@ export class IntegratedRecommendationService {
       // First, try to use the advanced Gemini service directly
       const geminiService = await import('./gemini');
       
-
       // Generate dynamic base destinations using taste profile and themes
       const baseDestinations = this.generateDynamicBaseDestinations(userProfile, tasteProfile);
-
       
       // Use the advanced generateMultipleRecommendations method from Gemini
       const advancedRecommendations = await geminiService.geminiService.generateMultipleRecommendations(
@@ -517,13 +515,13 @@ export class IntegratedRecommendationService {
       const result = {
         totalActiveCreators: creators.length,
         topCreators: creators.slice(0, 3).map((creator: any) => ({
-          name: creator.name,
-          followers: creator.totalFollowers > 1000 ? 
+          name: creator.name || 'Unknown Creator',
+          followers: creator.totalFollowers && creator.totalFollowers > 1000 ? 
             `${Math.round(creator.totalFollowers / 1000)}K` : 
-            creator.totalFollowers.toString(),
-          niche: creator.niche,
+            (creator.totalFollowers || 0).toString(),
+          niche: creator.niche || 'Content Creator',
           collaboration: creator.collaborationInfo || 'Open to collaborations',
-          platform: creator.primaryPlatform
+          platform: creator.primaryPlatform || 'Multi-platform'
         })),
         collaborationOpportunities: [
           'Content partnerships',
@@ -539,9 +537,7 @@ export class IntegratedRecommendationService {
     } catch (error) {
       console.error(`Creator error for ${destination.name}:`, error);
       return {
-
         totalActiveCreators: 0, // Will be populated by real creator data service
-
         topCreators: [],
         collaborationOpportunities: ['Local creator community available']
       };
@@ -731,7 +727,6 @@ export class IntegratedRecommendationService {
     }));
   }
 
-
   // Generate dynamic base destinations for AI processing
   private generateDynamicBaseDestinations(userProfile: any, tasteProfile: any): string[] {
     const destinations = [];
@@ -865,7 +860,6 @@ export class IntegratedRecommendationService {
 
     console.log(`✅ INTEGRATED: Generated ${uniqueDestinations.length} taste-based destinations`);
     return uniqueDestinations;
-
   }
 
   private calculateCostEfficiency(budget: any, userBudget?: string): string {

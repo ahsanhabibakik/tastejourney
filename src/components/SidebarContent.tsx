@@ -136,11 +136,12 @@ const SidebarContent: React.FC<SidebarContentProps> = React.memo(({
             <div className="bg-background/50 rounded-lg p-2.5 text-center">
               <div className="text-xl font-bold text-green-600">
                 {chatState === "recommendations" ? "100%" : 
-                 chatState === "generating" ? "80%" :
-                 chatState === "questions" ? `${Math.round(((currentQuestionIndex + 1) / questions.length) * 60 + 20)}%` :
-                 chatState === "profiling" ? "20%" :
+                 chatState === "generating" ? "85%" :
+                 chatState === "review-edit" ? "75%" :
+                 chatState === "questions" ? "50%" :
+                 chatState === "profiling" ? "25%" :
                  chatState === "confirmation" ? "15%" :
-                 chatState === "analyzing" ? "10%" : "0%"}
+                 chatState === "analyzing" ? "10%" : "5%"}
               </div>
               <div className="text-xs text-muted-foreground">Complete</div>
             </div>
