@@ -13,8 +13,8 @@ import ConfirmationScreen from "./ConfirmationScreen";
 import DestinationCard from "./DestinationCard";
 import SidebarContent from "./SidebarContent";
 
-import { dynamicQuestionService } from "@/services/dynamic-questions";
-import { SmartQuestionFlow } from "./SmartQuestionFlow";
+import { DynamicQuestionFlow } from "./DynamicQuestionFlow";
+import { DynamicQuestionV2 } from "@/services/dynamic-questions-v2";
 
 
 interface Message {
@@ -22,7 +22,7 @@ interface Message {
   text: string;
   isBot: boolean;
   timestamp: Date;
-  component?: "url-form" | "confirmation" | "questions" | "recommendations" | "smart-questions";
+  component?: "url-form" | "confirmation" | "questions" | "recommendations" | "dynamic-questions";
 }
 
 type ChatState =
@@ -497,6 +497,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
         return [...prev, climate];
       }
     });
+  }, []);
+
+  const handleQuestionChange = useCallback((question: DynamicQuestionV2, questionNumber: number) => {
+    setCurrentQuestionIndex(questionNumber - 1); // Convert to 0-based index
+    console.log(`Question ${questionNumber}: ${question.text}`);
   }, []);
 
   const generateRecommendations = useCallback(async (finalAnswers: UserAnswers) => {
