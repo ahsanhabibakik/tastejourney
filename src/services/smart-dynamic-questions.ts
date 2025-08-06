@@ -36,16 +36,28 @@ interface BudgetConstraint {
 
 class SmartDynamicQuestionService {
   private questions: SmartQuestion[] = [
-    // Question 1: Budget (Always first)
+    // Question 1: Trip Length (PRD requirement)
     {
-      id: 'budget',
-      text: 'What\'s your total travel budget?',
-      options: [], // Dynamic based on location
-      icon: '💸',
+      id: 'duration',
+      text: 'Preferred trip length?',
+      options: [], // Dynamic options
+      icon: '🗓️',
       multiSelect: false,
       priority: 1,
       budgetSensitive: false,
-      durationSensitive: false,
+      durationSensitive: false
+    },
+
+    // Question 2: Budget (PRD requirement)  
+    {
+      id: 'budget',
+      text: 'Rough budget per person (US$)?',
+      options: [], // Dynamic based on location
+      icon: '💸',
+      multiSelect: false,
+      priority: 2,
+      budgetSensitive: false,
+      durationSensitive: true,
       validation: (answer, context) => {
         const budget = this.parseBudgetAmount(answer);
         if (budget < 50) {
@@ -55,61 +67,26 @@ class SmartDynamicQuestionService {
       }
     },
 
-    // Question 2: Duration (Budget-aware)
+    // Question 3: Content Format (PRD requirement)
     {
-      id: 'duration',
-      text: 'How long would you like to travel?',
-      options: [], // Dynamic based on budget
-      icon: '🗓️',
-      multiSelect: false,
-      priority: 2,
-      budgetSensitive: true,
-      durationSensitive: false,
-      validation: (answer, context) => {
-        const days = this.parseDurationToDays(answer);
-        const dailyBudget = context.budget ? context.budget / days : 0;
-        if (dailyBudget < 20) {
-          return { 
-            valid: false, 
-            message: `With your budget, ${days} days would mean only ${context.currency || '$'}${dailyBudget.toFixed(0)}/day. Consider shorter duration.` 
-          };
-        }
-        return { valid: true };
-      }
-    },
-
-    // Question 3: Travel Style (Budget + Duration aware)
-    {
-      id: 'style',
-      text: 'What travel style fits your budget?',
-      options: [], // Dynamic based on daily budget
-      icon: '🌍',
+      id: 'contentFormat',
+      text: 'Primary content format?',
+      options: [], // Based on content type
+      icon: '📸',
       multiSelect: false,
       priority: 3,
       budgetSensitive: true,
       durationSensitive: true
     },
 
-    // Question 4: Priorities (Highly contextual)
+    // Question 4: Climate/Regions (PRD requirement)
     {
-      id: 'priorities',
-      text: 'What are your top priorities?',
-      options: [], // Based on daily budget and content type
-      icon: '🎯',
+      id: 'climate',
+      text: 'Preferred or avoided climates/regions?',
+      options: [], // Climate options
+      icon: '🌍',
       multiSelect: true,
       priority: 4,
-      budgetSensitive: true,
-      durationSensitive: true
-    },
-
-    // Question 5: Accommodation (Budget-aware)
-    {
-      id: 'accommodation',
-      text: 'Preferred accommodation type?',
-      options: [], // Based on accommodation budget (30% of total)
-      icon: '🏨',
-      multiSelect: false,
-      priority: 5,
       budgetSensitive: true,
       durationSensitive: true
     }
@@ -127,8 +104,8 @@ class SmartDynamicQuestionService {
       dailyBudget: context.dailyBudget
     });
 
-    // Complete after 5 questions
-    if (questionNumber > 5) {
+    // Complete after 4 questions (per PRD)
+    if (questionNumber > 4) {
       return null;
     }
 
@@ -155,34 +132,20 @@ class SmartDynamicQuestionService {
     const { budget, currency, duration } = context;
 
     switch (question.id) {
-      case 'budget':
-        return 'What\'s your total travel budget?';
-      
       case 'duration':
-        if (budget) {
-          return `With your ${currency}${budget} budget, how long would you like to travel?`;
-        }
-        return question.text;
+        return 'Preferred trip length?';
       
-      case 'style':
-        if (context.dailyBudget) {
-          const category = this.getBudgetCategory(context.dailyBudget);
-          return `With ${currency}${context.dailyBudget}/day (${category}), what travel style do you prefer?`;
+      case 'budget':
+        if (duration) {
+          return `Rough budget per person (US$) for your ${duration}-day trip?`;
         }
-        return question.text;
+        return 'Rough budget per person (US$)?';
       
-      case 'priorities':
-        if (duration && context.dailyBudget) {
-          return `For your ${duration}-day trip with ${currency}${context.dailyBudget}/day, what matters most?`;
-        }
-        return question.text;
+      case 'contentFormat':
+        return 'Primary content format?';
       
-      case 'accommodation':
-        if (context.dailyBudget) {
-          const accomBudget = Math.floor(context.dailyBudget * 0.3);
-          return `With ~${currency}${accomBudget}/night for accommodation, what do you prefer?`;
-        }
-        return question.text;
+      case 'climate':
+        return 'Preferred or avoided climates/regions?';
       
       default:
         return question.text;
@@ -191,20 +154,17 @@ class SmartDynamicQuestionService {
 
   private generateOptionsForQuestion(question: SmartQuestion, context: QuestionContext): string[] {
     switch (question.id) {
-      case 'budget':
-        return this.generateBudgetOptions(context);
-      
       case 'duration':
         return this.generateDurationOptions(context);
       
-      case 'style':
-        return this.generateStyleOptions(context);
+      case 'budget':
+        return this.generateBudgetOptions(context);
       
-      case 'priorities':
-        return this.generatePriorityOptions(context);
+      case 'contentFormat':
+        return this.generateContentFormatOptions(context);
       
-      case 'accommodation':
-        return this.generateAccommodationOptions(context);
+      case 'climate':
+        return this.generateClimateOptions(context);
       
       default:
         return question.options;
@@ -249,187 +209,54 @@ class SmartDynamicQuestionService {
   }
 
   private generateDurationOptions(context: QuestionContext): string[] {
-    const { budget, currency } = context;
-    
-    if (!budget) {
-      return ['1-2 days', '3-5 days', '1 week', '2 weeks', '1 month'];
-    }
-
-    // Calculate realistic duration options based on budget
-    const options: string[] = [];
-    
-    // Minimum daily budget thresholds
-    const minDailyBudgets = {
-      ultraBudget: 25,  // $25/day minimum
-      budget: 50,       // $50/day minimum
-      midRange: 100,    // $100/day minimum
-      premium: 200      // $200/day minimum
-    };
-
-    // Convert to local currency if needed
-    const multiplier = this.getCurrencyMultiplier(currency || '$');
-    const adjustedMinimums = Object.fromEntries(
-      Object.entries(minDailyBudgets).map(([key, value]) => [key, value * multiplier])
-    );
-
-    // Calculate max days for each category
-    const maxDays = {
-      ultraBudget: Math.floor(budget / adjustedMinimums.ultraBudget),
-      budget: Math.floor(budget / adjustedMinimums.budget),
-      midRange: Math.floor(budget / adjustedMinimums.midRange),
-      premium: Math.floor(budget / adjustedMinimums.premium)
-    };
-
-    // Add realistic options
-    if (maxDays.premium >= 1) options.push('1 day');
-    if (maxDays.premium >= 2) options.push('2 days');
-    if (maxDays.midRange >= 3) options.push('3-4 days');
-    if (maxDays.midRange >= 5) options.push('5-7 days');
-    if (maxDays.budget >= 7) options.push('1 week');
-    if (maxDays.budget >= 10) options.push('10 days');
-    if (maxDays.budget >= 14) options.push('2 weeks');
-    if (maxDays.ultraBudget >= 21) options.push('3 weeks');
-    if (maxDays.ultraBudget >= 30) options.push('1 month');
-
-    // Ensure at least 3 options
-    if (options.length < 3) {
-      const days = Math.floor(budget / (adjustedMinimums.budget * 0.7)); // More flexible
-      options.push(`${Math.max(1, Math.floor(days * 0.5))} days`);
-      options.push(`${Math.max(2, Math.floor(days * 0.7))} days`);
-      options.push(`${Math.max(3, days)} days`);
-    }
-
-    return [...new Set(options)].slice(0, 6);
+    // Simple duration options as first question
+    return [
+      '1-2 days (weekend trip)',
+      '3-5 days (short getaway)', 
+      '1 week (standard vacation)',
+      '2 weeks (extended trip)',
+      '3-4 weeks (long adventure)',
+      '1+ months (extended travel)'
+    ];
   }
 
-  private generateStyleOptions(context: QuestionContext): string[] {
-    const dailyBudget = context.dailyBudget || 50;
-    const category = this.getBudgetCategory(dailyBudget);
-    
-    const stylesByCategory = {
-      'ultra-budget': [
-        'Backpacking & hostels',
-        'Local experiences',
-        'Street food adventures',
-        'Free walking tours',
-        'Couchsurfing culture'
-      ],
-      'budget': [
-        'Budget-friendly exploration',
-        'Local transport & food',
-        'Hostel socializing',
-        'Free attractions focus',
-        'Authentic local experiences'
-      ],
-      'mid-range': [
-        'Comfortable travel',
-        'Mix of experiences',
-        'Good hotels & local food',
-        'Some guided tours',
-        'Balanced adventure & comfort'
-      ],
-      'premium': [
-        'Quality accommodations',
-        'Curated experiences',
-        'Fine dining occasions',
-        'Private transportation',
-        'Exclusive access'
-      ],
-      'luxury': [
-        'Luxury accommodations',
-        'VIP experiences',
-        'Fine dining focus',
-        'Private guides',
-        'Exclusive venues'
-      ]
-    };
-
-    return stylesByCategory[category] || stylesByCategory['budget'];
-  }
-
-  private generatePriorityOptions(context: QuestionContext): string[] {
-    const dailyBudget = context.dailyBudget || 50;
+  private generateContentFormatOptions(context: QuestionContext): string[] {
     const themes = context.themes.join(' ').toLowerCase();
+    const contentType = context.contentType.toLowerCase();
     
-    const options: string[] = [];
+    const options = [
+      'Video content (vlogs, reels)',
+      'Photography (Instagram, blog)',
+      'Mixed content (photo + video)',
+      'Live streaming & stories',
+      'Long-form content (YouTube)',
+      'Short-form content (TikTok, Shorts)'
+    ];
     
-    // Budget-appropriate base options
-    if (dailyBudget < 40) {
-      options.push('Free attractions & nature');
-      options.push('Street food & markets');
-      options.push('Walking tours');
-      options.push('Local transportation');
-    } else if (dailyBudget < 100) {
-      options.push('Cultural sites & museums');
-      options.push('Local restaurants');
-      options.push('Public attractions');
-      options.push('Some guided experiences');
-    } else if (dailyBudget < 200) {
-      options.push('Premium attractions');
-      options.push('Quality dining');
-      options.push('Private transportation');
-      options.push('Guided tours');
-    } else {
-      options.push('Exclusive experiences');
-      options.push('Fine dining');
-      options.push('VIP access');
-      options.push('Private guides');
+    // Prioritize based on existing content type
+    if (contentType.includes('video') || contentType.includes('vlog')) {
+      return ['Video content (vlogs, reels)', 'Live streaming & stories', 'Long-form content (YouTube)', 'Mixed content (photo + video)', 'Short-form content (TikTok, Shorts)', 'Photography (Instagram, blog)'];
     }
-
-    // Add theme-based options
-    if (themes.includes('photography')) {
-      options.push('Photography opportunities');
+    
+    if (contentType.includes('photo') || themes.includes('photography')) {
+      return ['Photography (Instagram, blog)', 'Mixed content (photo + video)', 'Video content (vlogs, reels)', 'Short-form content (TikTok, Shorts)', 'Live streaming & stories', 'Long-form content (YouTube)'];
     }
-    if (themes.includes('food')) {
-      options.push('Culinary experiences');
-    }
-    if (themes.includes('adventure')) {
-      options.push('Adventure activities');
-    }
-    if (themes.includes('culture')) {
-      options.push('Cultural immersion');
-    }
-    if (themes.includes('business')) {
-      options.push('Networking opportunities');
-    }
-
-    return [...new Set(options)].slice(0, 8);
+    
+    return options;
   }
 
-  private generateAccommodationOptions(context: QuestionContext): string[] {
-    const dailyBudget = context.dailyBudget || 50;
-    const accomBudget = Math.floor(dailyBudget * 0.3); // 30% of daily budget
-    
-    const options: string[] = [];
-    
-    if (accomBudget < 15) {
-      options.push('Hostels (shared rooms)');
-      options.push('Couchsurfing');
-      options.push('Camping');
-      options.push('Ultra-budget guesthouses');
-    } else if (accomBudget < 40) {
-      options.push('Private hostel rooms');
-      options.push('Budget hotels');
-      options.push('Guesthouses');
-      options.push('Shared Airbnb');
-    } else if (accomBudget < 80) {
-      options.push('Mid-range hotels');
-      options.push('Private Airbnb');
-      options.push('Boutique guesthouses');
-      options.push('Business hotels');
-    } else if (accomBudget < 150) {
-      options.push('Quality hotels');
-      options.push('Upscale Airbnb');
-      options.push('Boutique hotels');
-      options.push('Resort properties');
-    } else {
-      options.push('Luxury hotels');
-      options.push('Premium resorts');
-      options.push('Five-star properties');
-      options.push('Exclusive accommodations');
-    }
-
-    return options.slice(0, 6);
+  private generateClimateOptions(context: QuestionContext): string[] {
+    return [
+      'Tropical & warm climates',
+      'Temperate & mild weather',
+      'Cool & mountainous regions',
+      'Desert & arid landscapes',
+      'Coastal & beach destinations',
+      'Urban & city environments',
+      'Avoid extreme cold',
+      'Avoid extreme heat',
+      'No specific preference'
+    ];
   }
 
   // Helper methods
@@ -497,7 +324,7 @@ class SmartDynamicQuestionService {
 
   private getCurrencyMultiplier(currency: string): number {
     // Rough conversion multipliers for budget calculations
-    const multipliers = {
+    const multipliers: Record<string, number> = {
       '৳': 0.01,  // 1 USD = ~100 BDT
       '₹': 0.012, // 1 USD = ~83 INR
       '€': 1.1,   // 1 USD = ~0.9 EUR
@@ -536,10 +363,12 @@ class SmartDynamicQuestionService {
       }
     }
 
-    if (questionId === 'duration' && newContext.budget) {
+    if (questionId === 'duration') {
       const days = this.parseDurationToDays(answer);
       newContext.duration = days;
-      newContext.dailyBudget = Math.floor(newContext.budget / days);
+      if (newContext.budget) {
+        newContext.dailyBudget = Math.floor(newContext.budget / days);
+      }
     }
 
     return newContext;
@@ -552,6 +381,20 @@ class SmartDynamicQuestionService {
       return question.validation(answer, context);
     }
     return { valid: true };
+  }
+
+  // Generate initial questions based on context
+  generateInitialQuestions(context: QuestionContext): SmartQuestion[] {
+    const baseContext: QuestionContext = {
+      ...context,
+      previousAnswers: {}
+    };
+
+    return this.questions.map(question => ({
+      ...question,
+      text: this.customizeQuestionText(question, baseContext),
+      options: this.generateOptionsForQuestion(question, baseContext)
+    }));
   }
 }
 

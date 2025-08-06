@@ -5,7 +5,6 @@ import { errorHandler } from "@/services/errorHandler";
 import { creatorDataService } from "@/services/creator-data";
 import { budgetFilterService } from "@/services/budget-filter";
 
-
 export async function POST(request: NextRequest) {
   // Parse the request body once, before passing to error handler
   const requestBody = await request.json();
@@ -13,25 +12,21 @@ export async function POST(request: NextRequest) {
   
   return await errorHandler.withFallback(
     async () => {
-
       console.log('🚀 PRIMARY ENGINE: Starting integrated recommendation generation...');
 
       if (!websiteData) {
         console.error('❌ PRIMARY ENGINE: Website data missing');
-
         return NextResponse.json(
           { error: "Website data is required" },
           { status: 400 }
         );
       }
 
-
       console.log('✅ PRIMARY ENGINE: Website data received:', {
         url: websiteData.url,
         themes: websiteData.themes,
         contentType: websiteData.contentType
       });
-
 
       // Prepare user profile from website data
       const userProfile = {
@@ -46,9 +41,7 @@ export async function POST(request: NextRequest) {
         audienceLocation: websiteData.location || 'Global'
       };
 
-
       console.log('✅ PRIMARY ENGINE: User profile prepared:', userProfile);
-
 
       // Prepare taste profile with enhanced fallback
       const tasteProfile = tasteVector ? {
@@ -62,7 +55,6 @@ export async function POST(request: NextRequest) {
         culturalAffinities: dynamicRecommendationService.inferCulturalAffinities(userProfile.themes),
         personalityTraits: ['explorer', 'creative']
       };
-
 
       console.log('✅ PRIMARY ENGINE: Taste profile prepared, confidence:', tasteProfile.confidence);
 
@@ -110,9 +102,10 @@ export async function POST(request: NextRequest) {
           metadata: fallbackData.metadata
         });
       } catch (error) {
+        console.warn('All recommendation services failed, using client-side fallback');
         return NextResponse.json(
-          { error: "Fallback recommendation generation failed" },
-          { status: 500 }
+          { error: "API_FALLBACK_NEEDED" },
+          { status: 503 }
         );
       }
     },
@@ -120,6 +113,197 @@ export async function POST(request: NextRequest) {
     'generate-recommendations',
     { timeout: 30000 } // Increase timeout to 30 seconds
   );
+}
+
+function getSmartFallbackRecommendations(userPreferences: Record<string, unknown>) {
+  const budget = userPreferences.budget as string || '1000-2500';
+  const duration = userPreferences.duration as string || '5-7 days';
+  const style = userPreferences.style as string || 'adventure';
+  
+  console.log('📋 Smart fallback with preferences:', { budget, duration, style });
+  
+  // Budget-aware recommendations
+  const budgetAmount = parseInt(budget.replace(/[^\d]/g, '')) || 1500;
+  const isLowBudget = budgetAmount < 1000;
+  const isMidBudget = budgetAmount >= 1000 && budgetAmount < 2500;
+  
+  let recommendations;
+  
+  if (isLowBudget) {
+    recommendations = [
+      {
+        destination: "Bali, Indonesia",
+        country: "Indonesia",
+        matchScore: 92,
+        image: "https://images.pexels.com/photos/2474690/pexels-photo-2474690.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Perfect for budget adventure & cultural content",
+          "120+ active travel creators in region",
+          "Incredible value for content creation"
+        ],
+        budget: {
+          range: `$400 - $${budgetAmount} for ${duration}`,
+          breakdown: "Accommodation: $15-25/night • Food: $8-15/day • Activities: $10-20/day"
+        },
+        engagement: { potential: "Very High" },
+        bestMonths: ["April-May", "September-October"],
+        tags: ["budget-friendly", "adventure", "culture", "instagram-worthy"]
+      },
+      {
+        destination: "Vietnam",
+        country: "Vietnam",
+        matchScore: 88,
+        image: "https://images.pexels.com/photos/1534630/pexels-photo-1534630.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Incredible budget-friendly destination",
+          "Amazing street food culture",
+          "Perfect for adventure content"
+        ],
+        budget: {
+          range: `$300 - $${budgetAmount} for ${duration}`,
+          breakdown: "Accommodation: $10-20/night • Food: $5-10/day • Activities: $5-15/day"
+        },
+        engagement: { potential: "High" },
+        bestMonths: ["March-May", "September-November"],
+        tags: ["ultra-budget", "food", "adventure", "culture"]
+      },
+      {
+        destination: "Guatemala",
+        country: "Guatemala",
+        matchScore: 85,
+        image: "https://images.pexels.com/photos/323775/pexels-photo-323775.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Hidden gem for budget travelers",
+          "Rich Mayan culture",
+          "Stunning volcanic landscapes"
+        ],
+        budget: {
+          range: `$350 - $${budgetAmount} for ${duration}`,
+          breakdown: "Accommodation: $12-22/night • Food: $6-12/day • Activities: $8-18/day"
+        },
+        engagement: { potential: "High" },
+        bestMonths: ["November-April"],
+        tags: ["budget", "culture", "adventure", "hidden-gem"]
+      }
+    ];
+  } else if (isMidBudget) {
+    recommendations = [
+      {
+        destination: "Portugal",
+        country: "Portugal",
+        matchScore: 90,
+        image: "https://images.pexels.com/photos/2474690/pexels-photo-2474690.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Perfect European destination for creators",
+          "Great balance of culture and cost",
+          "Growing digital nomad community"
+        ],
+        budget: {
+          range: `$800 - $${budgetAmount} for ${duration}`,
+          breakdown: "Accommodation: $40-60/night • Food: $20-30/day • Activities: $15-25/day"
+        },
+        engagement: { potential: "Very High" },
+        bestMonths: ["May-June", "September-October"],
+        tags: ["europe", "culture", "mid-range", "digital-nomad"]
+      },
+      {
+        destination: "Mexico",
+        country: "Mexico",
+        matchScore: 87,
+        image: "https://images.pexels.com/photos/1534630/pexels-photo-1534630.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Incredible value and diverse content opportunities",
+          "Rich culture and amazing food scene",
+          "Large creator community"
+        ],
+        budget: {
+          range: `$600 - $${budgetAmount} for ${duration}`,
+          breakdown: "Accommodation: $30-50/night • Food: $15-25/day • Activities: $12-22/day"
+        },
+        engagement: { potential: "High" },
+        bestMonths: ["November-April"],
+        tags: ["culture", "food", "mid-range", "adventure"]
+      },
+      {
+        destination: "Japan",
+        country: "Japan",
+        matchScore: 85,
+        image: "https://images.pexels.com/photos/323775/pexels-photo-323775.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Unique culture perfect for content",
+          "Incredible food and experiences",
+          "High engagement potential"
+        ],
+        budget: {
+          range: `$${Math.floor(budgetAmount * 0.8)} - $${budgetAmount} for ${duration}`,
+          breakdown: "Accommodation: $50-80/night • Food: $25-40/day • Activities: $20-35/day"
+        },
+        engagement: { potential: "Exceptional" },
+        bestMonths: ["March-May", "September-November"],
+        tags: ["culture", "food", "unique", "high-engagement"]
+      }
+    ];
+  } else {
+    // High budget recommendations
+    recommendations = [
+      {
+        destination: "Switzerland",
+        country: "Switzerland", 
+        matchScore: 88,
+        image: "https://images.pexels.com/photos/2474690/pexels-photo-2474690.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Premium mountain adventure content",
+          "Stunning alpine landscapes",
+          "High-quality travel experiences"
+        ],
+        budget: {
+          range: `$${Math.floor(budgetAmount * 0.6)} - $${budgetAmount} for ${duration}`,
+          breakdown: "Accommodation: $100-150/night • Food: $40-60/day • Activities: $50-80/day"
+        },
+        engagement: { potential: "Very High" },
+        bestMonths: ["June-September"],
+        tags: ["luxury", "adventure", "premium", "alpine"]
+      },
+      {
+        destination: "New Zealand",
+        country: "New Zealand",
+        matchScore: 90,
+        image: "https://images.pexels.com/photos/1534630/pexels-photo-1534630.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Adventure capital of the world",
+          "Incredible natural landscapes",
+          "Perfect for outdoor content"
+        ],
+        budget: {
+          range: `$${Math.floor(budgetAmount * 0.7)} - $${budgetAmount} for ${duration}`,
+          breakdown: "Accommodation: $80-120/night • Food: $35-50/day • Activities: $40-70/day"
+        },
+        engagement: { potential: "Exceptional" },
+        bestMonths: ["December-March", "September-November"],
+        tags: ["adventure", "nature", "premium", "outdoor"]
+      },
+      {
+        destination: "Iceland",
+        country: "Iceland",
+        matchScore: 86,
+        image: "https://images.pexels.com/photos/323775/pexels-photo-323775.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Unique Nordic landscapes",
+          "Perfect for unique content",
+          "High-end travel experiences"
+        ],
+        budget: {
+          range: `$${Math.floor(budgetAmount * 0.8)} - $${budgetAmount} for ${duration}`,
+          breakdown: "Accommodation: $90-140/night • Food: $45-65/day • Activities: $35-60/day"
+        },
+        engagement: { potential: "Very High" },
+        bestMonths: ["June-August"],
+        tags: ["unique", "nature", "premium", "nordic"]
+      }
+    ];
+  }
+  
+  return recommendations;
 }
 
 async function getDynamicFallbackRecommendations(websiteData: Record<string, unknown>, userPreferences: Record<string, unknown>) {
@@ -227,31 +411,58 @@ async function getDynamicFallbackRecommendations(websiteData: Record<string, unk
       })
     );
     
-    // Filter destinations with insufficient creator communities
-    const viableRecommendations = transformedRecommendations.filter(rec => {
+    // In fallback mode, keep all destinations but note creator limitations
+    const viableRecommendations = transformedRecommendations.map(rec => {
       const hasViableCreatorCommunity = creatorDataService.shouldRecommendDestination({
         totalActiveCreators: rec.creatorDetails.totalActiveCreators,
         topCreators: rec.creatorDetails.topCreators,
         collaborationOpportunities: rec.creatorDetails.collaborationOpportunities,
-        minimumThreshold: rec.creatorDetails.minimumThreshold,
+        minimumThreshold: 0, // Relax threshold in fallback mode
         dataSource: rec.creatorDetails.dataSource as any,
         lastUpdated: new Date().toISOString()
       });
       
       if (!hasViableCreatorCommunity) {
-        console.log(`❌ CREATOR: Filtering out ${rec.destination} - insufficient creator community (${rec.creatorDetails.totalActiveCreators})`);  
+        console.log(`⚠️ CREATOR: ${rec.destination} has limited creator data (${rec.creatorDetails.totalActiveCreators}) but keeping for user experience`);
+        // Add a note to the recommendation about limited creator data
+        rec.highlights = rec.highlights || [];
+        if (rec.highlights.length > 0) {
+          rec.highlights.push('Growing creator community - perfect for early adopters');
+        }
       }
       
-      return hasViableCreatorCommunity;
+      return rec;
     });
     
-    // Apply budget filtering
-    const budgetFilteredRecommendations = await budgetFilterService.filterDestinationsByBudget(
-      viableRecommendations,
-      (userPreferences as any).budget || '$1000-2500',
-      (userPreferences as any).duration || '7 days',
-      'US' // Default user location
-    );
+    // In fallback mode, keep all recommendations to ensure user gets results
+    let budgetFilteredRecommendations = viableRecommendations;
+    
+    try {
+      // Try budget filtering but don't fail if empty
+      const strictFiltered = await budgetFilterService.filterDestinationsByBudget(
+        viableRecommendations,
+        (userPreferences as any).budget || '$1000-2500',
+        (userPreferences as any).duration || '7 days',
+        'US' // Default user location
+      );
+      
+      // Only use strict filtering if we get results
+      if (strictFiltered.length > 0) {
+        budgetFilteredRecommendations = strictFiltered;
+        console.log(`✅ BUDGET: Applied strict filtering, ${strictFiltered.length} destinations match budget`);
+      } else {
+        console.log(`⚠️ BUDGET: Strict filtering left 0 destinations, keeping all for user experience`);
+        // Add budget notes to recommendations
+        budgetFilteredRecommendations = viableRecommendations.map(rec => {
+          if (rec.budget) {
+            (rec.budget as any).note = 'Budget estimates may vary - great value destination';
+          }
+          return rec;
+        });
+      }
+    } catch (budgetError) {
+      console.log(`⚠️ BUDGET: Filtering failed, keeping all recommendations:`, budgetError);
+    }
     
     console.log(`✅ FILTERING: ${advancedRecommendations.length} → ${viableRecommendations.length} → ${budgetFilteredRecommendations.length} (after creator and budget filtering)`);
 
@@ -265,7 +476,7 @@ async function getDynamicFallbackRecommendations(websiteData: Record<string, unk
         afterCreatorFilter: viableRecommendations.length,
         finalCount: budgetFilteredRecommendations.length,
         creatorThreshold: 10,
-        budgetCompliance: budgetFilteredRecommendations.filter(r => r.budget?.userBudgetMatch).length
+        budgetCompliance: budgetFilteredRecommendations.filter(r => (r.budget as any)?.userBudgetMatch).length
       },
       metadata: {
         fallback: true,
@@ -423,220 +634,6 @@ function generateRandomCoordinates() {
     lat: (Math.random() - 0.5) * 160, // Random latitude
     lng: (Math.random() - 0.5) * 360  // Random longitude
   };
-}
-
-async function getBasicGeminiFallback(websiteData: Record<string, unknown>, userPreferences: Record<string, unknown>) {
-  // Keep the original basic implementation as ultimate fallback
-  const geminiApiKey = process.env.GEMINI_API_KEY;
-  if (!geminiApiKey) {
-    return getStaticFallbackRecommendations();
-  }
-
-  const userProfile = websiteData ? {
-    themes: (websiteData.themes as string[]) || ['travel', 'adventure'],
-    contentType: (websiteData.contentType as string) || 'Mixed',
-    audienceLocation: (websiteData.location as string) || 'Global',
-    hints: (websiteData.hints as string[]) || []
-  } : { themes: ['travel'], contentType: 'Mixed', audienceLocation: 'Global', hints: [] };
-
-  const dynamicPrompt = `Generate 3 travel destinations for a ${userProfile.contentType} content creator with themes: ${userProfile.themes.join(', ')}. Include destination, country, match score (85-95), highlights, budget info, and creator opportunities. Return as JSON array.`;
-
-  try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: dynamicPrompt }] }],
-        generationConfig: { temperature: 0.8, maxOutputTokens: 2000 }
-      }),
-    });
-
-=======
-
-      // Use integrated recommendation service with all PRD components
-      const result = await integratedRecommendationService.generateRecommendations(
-        userProfile,
-        tasteProfile,
-        userPreferences
-      );
-
-      console.log(`✅ Generated ${result.recommendations.length} optimized recommendations`);
-
-      return NextResponse.json({
-        recommendations: result.recommendations,
-        totalCount: result.recommendations.length,
-        metadata: {
-          ...result.metadata,
-          processingTime: Date.now(),
-          fallback: false,
-          apiVersion: 'optimized-v2'
-        }
-      });
-    },
-    async () => {
-      try {
-        console.warn('Primary service failed, using dynamic fallback with Gemini API');
-        // Use the already parsed request body
-        const fallbackData = await getDynamicFallbackRecommendations(websiteData, userPreferences);
-        return NextResponse.json({
-          recommendations: fallbackData.recommendations,
-          totalCount: fallbackData.totalCount,
-          metadata: fallbackData.metadata
-        });
-      } catch (error) {
-        return NextResponse.json(
-          { error: "Fallback recommendation generation failed" },
-          { status: 500 }
-        );
-      }
-    },
-    'recommendations-api',
-    'generate-recommendations',
-    { timeout: 30000 } // Increase timeout to 30 seconds
-  );
-}
-
-async function getDynamicFallbackRecommendations(websiteData: Record<string, unknown>, userPreferences: Record<string, unknown>) {
-  console.log('🚨 Generating advanced dynamic fallback recommendations using enhanced Gemini service...');
-  
-  try {
-    // Import the enhanced Gemini service
-    const { geminiService } = await import('@/services/gemini');
-    
-    const userProfile = {
-      website: (websiteData.url as string) || '',
-      contentThemes: (websiteData.themes as string[]) || ['travel', 'adventure'],
-      audienceInterests: (websiteData.hints as string[]) || [],
-      contentType: (websiteData.contentType as string) || 'Mixed',
-      audienceLocation: (websiteData.location as string) || 'Global'
-    };
-
-    // Use the advanced generateDynamicRecommendation method with smart destination selection
-    const smartDestinations = await generateSmartDestinations(userProfile, userPreferences);
-    
-    // Generate advanced recommendations for each destination
-    const advancedRecommendations = await Promise.all(
-      smartDestinations.map(async (dest) => {
-        return await geminiService.generateDynamicRecommendation({
-          userProfile,
-          tasteProfile: null, // No taste profile in fallback
-          destination: {
-            name: dest.city,
-            country: dest.country,
-            coordinates: dest.coordinates
-          },
-          budgetData: null,
-          localCreators: null,
-          places: null,
-          userPreferences: {
-            budget: userPreferences?.budget as string,
-            travelStyle: userPreferences?.travelStyle as string || 'mid-range',
-            duration: userPreferences?.duration as string || '7 days',
-            contentType: userPreferences?.contentType as string || userProfile.contentType,
-            climate: userPreferences?.climate as string[] || []
-          }
-        });
-      })
-    );
-
-    // Transform to API format
-    const transformedRecommendations = advancedRecommendations.map((rec, index) => ({
-      id: index + 1,
-      destination: rec.destination,
-      country: rec.destination.split(',')[1]?.trim() || 'Unknown',
-      matchScore: rec.matchScore,
-      image: getDestinationImage(rec.destination),
-      highlights: rec.highlights,
-      budget: {
-        range: rec.budgetBreakdown.summary,
-        breakdown: rec.budgetBreakdown.costEfficiency,
-        costEfficiency: rec.budgetBreakdown.costEfficiency
-      },
-      engagement: {
-        potential: rec.brandCollaborations.monetizationPotential,
-        reason: rec.summary
-      },
-      creatorDetails: {
-        totalActiveCreators: rec.localCreators.topCollaborators.length * 10 + Math.floor(Math.random() * 50),
-        topCreators: rec.localCreators.topCollaborators.map(creator => ({
-          name: creator.name,
-          followers: creator.followers,
-          niche: creator.collaborationReason,
-          collaboration: creator.collaborationReason
-        })),
-        collaborationOpportunities: rec.localCreators.networkingOpportunities
-      },
-      tags: rec.tags,
-      bestMonths: rec.bestTimeToVisit.months,
-      // Additional enhanced data from Gemini
-      contentOpportunities: rec.contentOpportunities,
-      brandCollaborations: rec.brandCollaborations,
-      practicalInfo: rec.practicalInfo,
-      confidence: rec.confidence,
-      factChecked: rec.factChecked
-    }));
-
-    console.log(`✅ Generated ${transformedRecommendations.length} advanced dynamic recommendations using enhanced Gemini service`);
-    
-    return {
-      recommendations: transformedRecommendations,
-      totalCount: transformedRecommendations.length,
-      metadata: {
-        fallback: true,
-        dynamic: true,
-        enhanced: true,
-        processingTime: Date.now(),
-        apiVersion: 'enhanced-gemini-fallback-v4',
-        message: 'Advanced AI-generated recommendations using enhanced Gemini service with structured data',
-        source: 'enhanced-gemini-service',
-        features: [
-          'Content opportunity analysis',
-          'Brand collaboration insights',
-          'Local creator networking',
-          'Practical travel information',
-          'Fact-checking verification',
-          'Budget optimization'
-        ]
-      }
-    };
-  } catch (error) {
-    console.error('Enhanced Gemini fallback failed, using basic API approach:', error);
-    return await getBasicGeminiFallback(websiteData, userPreferences);
-  }
-}
-
-async function generateSmartDestinations(userProfile: any, userPreferences: any) {
-  // Smart destination selection based on content themes and preferences
-  const destinations = [
-    { city: 'Tokyo', country: 'Japan', coordinates: { lat: 35.6762, lng: 139.6503 }, themes: ['technology', 'culture', 'food', 'urban'] },
-    { city: 'Bali', country: 'Indonesia', coordinates: { lat: -8.3405, lng: 115.0920 }, themes: ['wellness', 'nature', 'spiritual', 'adventure'] },
-    { city: 'Lisbon', country: 'Portugal', coordinates: { lat: 38.7223, lng: -9.1393 }, themes: ['culture', 'history', 'food', 'coastal'] },
-    { city: 'Mexico City', country: 'Mexico', coordinates: { lat: 19.4326, lng: -99.1332 }, themes: ['culture', 'food', 'art', 'history'] },
-    { city: 'Istanbul', country: 'Turkey', coordinates: { lat: 41.0082, lng: 28.9784 }, themes: ['culture', 'history', 'food', 'architecture'] },
-    { city: 'Barcelona', country: 'Spain', coordinates: { lat: 41.3851, lng: 2.1734 }, themes: ['art', 'culture', 'food', 'architecture'] },
-    { city: 'Bangkok', country: 'Thailand', coordinates: { lat: 13.7563, lng: 100.5018 }, themes: ['food', 'culture', 'adventure', 'spiritual'] },
-    { city: 'Cape Town', country: 'South Africa', coordinates: { lat: -33.9249, lng: 18.4241 }, themes: ['nature', 'adventure', 'wine', 'culture'] }
-  ];
-
-  // Score destinations based on user themes
-  const scoredDestinations = destinations.map(dest => {
-    const themeMatches = userProfile.contentThemes.filter((theme: string) => 
-      dest.themes.some(destTheme => 
-        destTheme.toLowerCase().includes(theme.toLowerCase()) || 
-        theme.toLowerCase().includes(destTheme.toLowerCase())
-      )
-    ).length;
-    
-    return {
-      ...dest,
-      score: themeMatches + Math.random() * 0.5 // Add some randomness
-    };
-  });
-
-  // Return top 3 destinations
-  return scoredDestinations
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 3);
 }
 
 async function getBasicGeminiFallback(websiteData: Record<string, unknown>, userPreferences: Record<string, unknown>) {

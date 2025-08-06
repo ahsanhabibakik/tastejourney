@@ -25,14 +25,12 @@
   --inset-0: 0;
   --inset-auto: auto;
   
-
   /* Position utilities */
   --top-0: 0;
   --right-0: 0;
   --bottom-0: 0;
   --left-0: 0;
   
-
   /* Modern color palette with better contrast and accessibility */
   --color-background: oklch(0.99 0.005 106);
   --color-foreground: oklch(0.15 0.02 258);

@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dynamicQuestionServiceV2 } from '@/services/dynamic-questions-v2';
-import { ErrorHandler } from '@/services/errorHandler';
+import { errorHandler } from '@/services/errorHandler';
 
 export async function POST(request: NextRequest) {
-  const errorHandler = new ErrorHandler('dynamic-questions-api');
   
   return errorHandler.withFallback(async () => {
     try {
@@ -86,5 +85,5 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  });
+  }, 'dynamic-questions', 'generate-question');
 }

@@ -12,17 +12,14 @@ import URLForm from "./URLForm";
 import ConfirmationScreen from "./ConfirmationScreen";
 import DestinationCard from "./DestinationCard";
 import SidebarContent from "./SidebarContent";
-
-import { dynamicQuestionService } from "@/services/dynamic-questions";
 import { SmartQuestionFlow } from "./SmartQuestionFlow";
-
 
 interface Message {
   id: string;
   text: string;
   isBot: boolean;
   timestamp: Date;
-  component?: "url-form" | "confirmation" | "questions" | "recommendations" | "smart-questions";
+  component?: "url-form" | "confirmation" | "recommendations" | "smart-questions";
 }
 
 type ChatState =
@@ -63,54 +60,6 @@ interface Recommendation {
     collaborationOpportunities: string[];
   };
 }
-
-
-const questions = [
-  {
-    id: "budget",
-    text: "What's your budget range for this trip?",
-    options: ["$500-1000", "$1000-2500", "$2500-5000", "$5000+"],
-    icon: "💸",
-    multiSelect: false,
-  },
-  {
-    id: "duration",
-    text: "How long would you like to travel?",
-    options: ["1-3 days", "4-7 days", "1-2 weeks", "2+ weeks"],
-    icon: "🗓️",
-    multiSelect: false,
-  },
-  {
-    id: "style",
-    text: "What's your preferred travel style?",
-    options: ["Adventure", "Luxury", "Cultural", "Beach", "Urban"],
-    icon: "🌍",
-    multiSelect: false,
-  },
-  {
-    id: "contentFocus",
-    text: "What type of content do you focus on?",
-    options: ["Photography", "Food", "Lifestyle", "Adventure"],
-    icon: "📸",
-    multiSelect: false,
-  },
-  {
-    id: "climate",
-    text: "Select all climate preferences that apply (you can choose multiple):",
-    options: [
-      "Tropical/Sunny",
-      "Mild/Temperate",
-      "Cold/Snowy",
-      "Desert/Arid",
-      "No preference",
-      "Avoid hot",
-      "Avoid cold",
-      "Avoid rainy",
-    ],
-    icon: "☀️",
-    multiSelect: true,
-  },
-];
 
 
 // Optimized markdown rendering function
@@ -234,13 +183,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     culturalAffinities?: string[];
     personalityTraits?: string[];
   } | null>(null);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
-  const [selectedClimates, setSelectedClimates] = useState<string[]>([]);
-
-  const [dynamicQuestions, setDynamicQuestions] = useState<any[]>([]);
-  const [questionsLoaded, setQuestionsLoaded] = useState(false);
-
   const [recommendations, setRecommendations] = useState<
     | {
         recommendations: Recommendation[];
@@ -258,7 +201,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     scrollToBottom();
   }, [messages, isTyping, scrollToBottom]);
 
-
   // Handle ESC key for closing mobile sidebar
   useEffect(() => {
     const handleEscapeKey = (event: KeyboardEvent) => {
@@ -271,7 +213,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     return () => document.removeEventListener("keydown", handleEscapeKey);
   }, [showMobileSidebar, setShowMobileSidebar]);
 
-
   const generateUniqueId = useCallback(() => {
     return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   }, []);
@@ -279,7 +220,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
   const addMessage = useCallback((
     text: string,
     isBot: boolean,
-    component?: "url-form" | "confirmation" | "questions" | "recommendations"
+    component?: "url-form" | "confirmation" | "recommendations" | "smart-questions"
   ) => {
     const newMessage: Message = {
       id: generateUniqueId(),
@@ -395,100 +336,28 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
         if (result.success) {
           setTasteProfile(result.data);
           
-          // Load dynamic questions based on user context
-          console.log('🧠 QUESTIONS: Loading dynamic questions for user...');
-          try {
-            const userContext = {
-              themes: websiteData.themes,
-              contentType: websiteData.contentType,
-              hints: websiteData.hints,
-              socialLinks: websiteData.socialLinks,
-              audienceLocation: websiteData.location || 'Global',
-              previousAnswers: {}
-            };
-            
-            const questions = await dynamicQuestionService.generateQuestionsForUser(userContext);
-            setDynamicQuestions(questions);
-            setQuestionsLoaded(true);
-            console.log(`✅ QUESTIONS: Loaded ${questions.length} dynamic questions`);
-            
-            setChatState("questions");
-            setCurrentQuestionIndex(0);
-            await simulateTyping(() => {
-              addMessage(
-                `Perfect! I've created your taste profile based on your ${websiteData.contentType} content. Now I'll ask you smart questions that adapt to your answers:`,
-                true
-              );
-              addMessage("Let's start with your budget-aware travel planning:", true, "smart-questions");
-            }, 2000);
-          } catch (questionError) {
-            console.error("Error loading dynamic questions:", questionError);
-            // Fallback to basic questions
-            const fallbackQuestions = await dynamicQuestionService.generateQuestionsForUser({
-              themes: ['travel'],
-              contentType: 'Mixed',
-              hints: [],
-              socialLinks: [],
-              audienceLocation: 'Global'
-            });
-            setDynamicQuestions(fallbackQuestions);
-            setQuestionsLoaded(true);
-            
-            setChatState("questions");
-            setCurrentQuestionIndex(0);
-            await simulateTyping(() => {
-              addMessage(
-                "Perfect! I've created your taste profile. Now I'll ask you smart questions that adapt to your budget and preferences:",
-                true
-              );
-              addMessage("Let's start with your travel planning:", true, "smart-questions");
-            }, 2000);
-          }
+          setChatState("questions");
+          await simulateTyping(() => {
+            addMessage(
+              `Perfect! I've created your taste profile based on your ${websiteData.contentType} content. Now I'll ask you smart questions that adapt to your answers:`,
+              true
+            );
+            addMessage("Let's start with your budget-aware travel planning:", true, "smart-questions");
+          }, 2000);
         } else {
           throw new Error(result.error);
         }
       } catch (error) {
         console.error("Error creating taste profile:", error);
         
-        // Load fallback questions even when taste profiling fails
-        try {
-          const fallbackQuestions = await dynamicQuestionService.generateQuestionsForUser({
-            themes: websiteData?.themes || ['travel'],
-            contentType: websiteData?.contentType || 'Mixed',
-            hints: websiteData?.hints || [],
-            socialLinks: websiteData?.socialLinks || [],
-            audienceLocation: 'Global'
-          });
-          setDynamicQuestions(fallbackQuestions);
-          setQuestionsLoaded(true);
-          
-          setChatState("questions");
-          setCurrentQuestionIndex(0);
-          await simulateTyping(() => {
-            addMessage(
-              "Great! Now let me ask you smart questions that adapt to your preferences:",
-              true
-            );
-            addMessage("Let's start with your travel planning:", true, "smart-questions");
-          }, 1500);
-        } catch (fallbackError) {
-          console.error("Error loading fallback questions:", fallbackError);
-          setChatState("questions");
-          setQuestionsLoaded(false);
-        }
-
-      } catch (error) {
-        console.error("Error creating taste profile:", error);
         setChatState("questions");
-        setCurrentQuestionIndex(0);
         await simulateTyping(() => {
           addMessage(
-            "Great! Now let me ask you a few questions to personalize your recommendations:",
+            "Great! Now let me ask you smart questions that adapt to your preferences:",
             true
           );
-          addMessage(questions[0].text, true, "questions");
+          addMessage("Let's start with your travel planning:", true, "smart-questions");
         }, 1500);
-
       }
     } else {
       addMessage("The information needs corrections.", false);
@@ -502,16 +371,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
   }, [addMessage, simulateTyping, websiteData]);
 
 
-  const handleClimateSelection = useCallback((climate: string) => {
-    setSelectedClimates(prev => {
-      if (prev.includes(climate)) {
-        return prev.filter(c => c !== climate);
-      } else {
-        return [...prev, climate];
-      }
-    });
-  }, []);
-
   const generateRecommendations = useCallback(async (finalAnswers: UserAnswers) => {
     setChatState("generating");
     await simulateTyping(() => {
@@ -520,6 +379,25 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
         true
       );
     });
+
+    // Show loading progress messages
+    setTimeout(() => {
+      if (chatState === "generating") {
+        addMessage("🔍 Analyzing your taste profile and content preferences...", true);
+      }
+    }, 2000);
+
+    setTimeout(() => {
+      if (chatState === "generating") {
+        addMessage("🌍 Finding destinations that match your budget and style...", true);
+      }
+    }, 4000);
+
+    setTimeout(() => {
+      if (chatState === "generating") {
+        addMessage("👥 Checking creator communities and collaboration opportunities...", true);
+      }
+    }, 6000);
 
     try {
       const response = await fetch("/api/recommendations", {
@@ -540,7 +418,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
             duration: finalAnswers.duration || "4-7 days",
             style: finalAnswers.style?.toLowerCase() || "adventure",
             contentFocus: finalAnswers.contentFocus?.toLowerCase() || "photography",
-            climate: finalAnswers.climate || selectedClimates.length > 0 ? selectedClimates : ["No preference"],
+            climate: finalAnswers.climate || ["No preference"],
           },
           websiteData: websiteData,
         }),
@@ -566,122 +444,34 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
           );
         }, 3000);
       } else {
+        console.warn("No recommendations received from API, using fallback");
         throw new Error("No recommendations received");
       }
     } catch (error) {
       console.error("Error generating recommendations:", error);
       
+      // Show fallback message  
+      const budgetRange = finalAnswers.budget || "mid-range";
+      const duration = finalAnswers.duration || "7 days";
+      addMessage(`I encountered a temporary issue with the recommendation service. Based on your ${budgetRange} budget for ${duration}, let me provide you with some excellent curated recommendations that perfectly match your preferences!`, true);
+      
+      // Generate smart fallback based on user preferences
+      const smartFallbackRecommendations = generateSmartFallbackRecommendations(finalAnswers, websiteData);
+      
+      // Check if we have any recommendations to show
+      if (!smartFallbackRecommendations || smartFallbackRecommendations.length === 0) {
+        addMessage(
+          `I apologize, but I'm unable to generate travel recommendations at the moment due to temporary service issues. This could be due to:\n\n• **Qloo API**: Authentication or rate limits\n• **Gemini AI**: Daily quota exceeded (429 errors)\n• **YouTube/Instagram APIs**: Missing tokens or bad requests\n• **Network connectivity issues**\n\nYour preferences have been saved:\n• Budget: ${finalAnswers.budget}\n• Duration: ${finalAnswers.duration}\n• Style: ${finalAnswers.style || 'Not specified'}\n\n**What you can do:**\n• Wait a few minutes and try again\n• Check the [Health Status](/api/health-check) \n• Clear cache and retry\n\nWould you like me to help you with travel planning questions instead?`,
+          true
+        );
+        setChatState("initial");
+        return;
+      }
+      
       // Set fallback recommendations data
       const fallbackRecommendations = {
-        recommendations: [
-          {
-            id: 1,
-            destination: "Bali, Indonesia",
-            country: "Indonesia",
-            matchScore: 92,
-            image: "https://images.pexels.com/photos/2474690/pexels-photo-2474690.jpeg?auto=compress&cs=tinysrgb&w=400",
-            highlights: [
-              "Perfect for adventure & cultural content creation",
-              "180+ active travel creators in region",
-              "25+ brand partnerships opportunities available"
-            ],
-            budget: {
-              range: "$1,200 - $1,800 for 7 days",
-              breakdown: "Accommodation: $60-80/night • Food: $20-30/day • Activities: $40-60/day",
-              costEfficiency: "Excellent value for content creation ROI"
-            },
-            engagement: {
-              potential: "Very High",
-              reason: "Strong alignment with adventure & cultural content preferences"
-            },
-            creatorDetails: {
-              totalActiveCreators: 182,
-              topCreators: [
-                { name: "BaliBound", followers: "85K", niche: "Adventure Travel", collaboration: "Content partnerships available" }
-              ],
-              collaborationOpportunities: ["Creator meetups monthly", "Brand partnerships", "Cultural exchange programs"],
-              brandPartnerships: [
-                { brand: "Bali Tourism Board", type: "Content Partnership", status: "Available" },
-                { brand: "Indonesian Hotels", type: "Sponsored Content", status: "Active" },
-                { brand: "Adventure Gear Co", type: "Product Placement", status: "Available" }
-              ]
-            },
-            tags: ["adventure", "culture", "budget-friendly", "instagram-worthy", "food", "beach", "spiritual"],
-            bestMonths: ["April-May", "September-October"]
-          },
-          {
-            id: 2,
-            destination: "Lisbon, Portugal",
-            country: "Portugal",
-            matchScore: 88,
-            image: "https://images.pexels.com/photos/1534630/pexels-photo-1534630.jpeg?auto=compress&cs=tinysrgb&w=400",
-            highlights: [
-              "Emerging creative hub with vibrant arts scene",
-              "120+ digital nomads & content creators",
-              "Affordable European base for creators"
-            ],
-            budget: {
-              range: "$1,500 - $2,200 for 7 days",
-              breakdown: "Accommodation: $70-100/night • Food: $25-35/day • Activities: $30-50/day",
-              costEfficiency: "Best value in Western Europe"
-            },
-            engagement: {
-              potential: "High",
-              reason: "Perfect for European travel content and cultural exploration"
-            },
-            creatorDetails: {
-              totalActiveCreators: 125,
-              topCreators: [
-                { name: "LisbonLens", followers: "62K", niche: "City Photography", collaboration: "Co-working spaces available" }
-              ],
-              collaborationOpportunities: ["Creator co-working spaces", "Photography walks", "Food tour collaborations"],
-              brandPartnerships: [
-                { brand: "Visit Portugal", type: "Tourism Campaign", status: "Available" },
-                { brand: "Portuguese Wines", type: "Tasting Events", status: "Active" },
-                { brand: "Nomad Co-working", type: "Space Partnership", status: "Available" }
-              ]
-            },
-            tags: ["europe", "culture", "architecture", "food", "coastal", "budget-friendly", "digital-nomad"],
-            bestMonths: ["May-June", "September-October"]
-          },
-          {
-            id: 3,
-            destination: "Dubai, UAE",
-            country: "United Arab Emirates",
-            matchScore: 85,
-            image: "https://images.pexels.com/photos/323775/pexels-photo-323775.jpeg?auto=compress&cs=tinysrgb&w=400",
-            highlights: [
-              "Ultimate luxury content creation destination",
-              "200+ influencers & brand partnerships",
-              "Year-round content opportunities"
-            ],
-            budget: {
-              range: "$2,500 - $4,000 for 7 days",
-              breakdown: "Accommodation: $150-250/night • Food: $50-80/day • Activities: $80-150/day",
-              costEfficiency: "High investment, high return potential"
-            },
-            engagement: {
-              potential: "Exceptional",
-              reason: "Perfect for luxury lifestyle and aspirational content"
-            },
-            creatorDetails: {
-              totalActiveCreators: 210,
-              topCreators: [
-                { name: "DubaiDreams", followers: "125K", niche: "Luxury Travel", collaboration: "Hotel partnerships available" }
-              ],
-              collaborationOpportunities: ["Luxury brand events", "Hotel partnerships", "Desert experiences"],
-              brandPartnerships: [
-                { brand: "Dubai Tourism", type: "Luxury Campaign", status: "Available" },
-                { brand: "Emirates Airlines", type: "Travel Partnership", status: "Active" },
-                { brand: "Luxury Hotels Group", type: "Accommodation Deal", status: "Premium" },
-                { brand: "Desert Safari Co", type: "Experience Package", status: "Available" }
-              ]
-            },
-            tags: ["luxury", "modern", "desert", "shopping", "architecture", "year-round", "instagram"],
-            bestMonths: ["November-March"]
-          }
-        ],
-        totalCount: 3,
+        recommendations: smartFallbackRecommendations,
+        totalCount: smartFallbackRecommendations.length,
         metadata: {
           fallback: true,
           processingTime: Date.now(),
@@ -700,89 +490,214 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
         );
       }, 2000);
     }
-  }, [addMessage, simulateTyping, tasteProfile, websiteData, selectedClimates]);
+  }, [addMessage, simulateTyping, tasteProfile, websiteData]);
+
+  // Generate smart fallback recommendations based on user preferences
+  const generateSmartFallbackRecommendations = useCallback((answers: UserAnswers, websiteData: any) => {
+    const budget = answers.budget || "1000-2500";
+    const duration = answers.duration || "7 days";
+    const style = answers.style || "mid-range";
+    const contentFocus = answers.contentFocus || "mixed";
+    const climate = Array.isArray(answers.climate) ? answers.climate : [answers.climate || "temperate"];
+    
+    const budgetNum = parseInt(budget.replace(/[^0-9]/g, '')) || 1500;
+    const isBudget = budgetNum < 1000;
+    const isLuxury = budgetNum > 3000;
+    
+    // Define recommendation pools based on different criteria
+    const budgetRecommendations = [
+      {
+        id: 1,
+        destination: "Bali, Indonesia",
+        country: "Indonesia",
+        matchScore: 92,
+        image: "https://images.pexels.com/photos/2474690/pexels-photo-2474690.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Perfect for adventure & cultural content creation",
+          "180+ active travel creators in region",
+          "Incredible value for money"
+        ],
+        budget: { range: `$500 - $800 for ${duration}` },
+        tags: ["budget-friendly", "adventure", "culture", "instagram-worthy"],
+        bestMonths: ["April-May", "September-October"]
+      },
+      {
+        id: 2,
+        destination: "Vietnam",
+        country: "Vietnam", 
+        matchScore: 88,
+        image: "https://images.pexels.com/photos/1534630/pexels-photo-1534630.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Amazing street food culture for content",
+          "Ultra budget-friendly destination", 
+          "Growing creator community"
+        ],
+        budget: { range: `$400 - $600 for ${duration}` },
+        tags: ["ultra-budget", "food", "adventure", "culture"],
+        bestMonths: ["March-May", "September-November"]
+      },
+      {
+        id: 3,
+        destination: "Guatemala",
+        country: "Guatemala",
+        matchScore: 85,
+        image: "https://images.pexels.com/photos/323775/pexels-photo-323775.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Hidden gem for budget travelers",
+          "Rich Mayan culture perfect for content",
+          "Stunning volcanic landscapes"
+        ],
+        budget: { range: `$350 - $550 for ${duration}` },
+        tags: ["budget", "culture", "adventure", "hidden-gem"],
+        bestMonths: ["November-April"]
+      }
+    ];
+
+    const midRangeRecommendations = [
+      {
+        id: 1,
+        destination: "Portugal",
+        country: "Portugal",
+        matchScore: 90,
+        image: "https://images.pexels.com/photos/2474690/pexels-photo-2474690.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Perfect European destination for creators",
+          "Great balance of culture and cost",
+          "Growing digital nomad community"
+        ],
+        budget: { range: `$1000 - $1500 for ${duration}` },
+        tags: ["europe", "culture", "mid-range", "digital-nomad"],
+        bestMonths: ["May-June", "September-October"]
+      },
+      {
+        id: 2,
+        destination: "Mexico",
+        country: "Mexico",
+        matchScore: 87,
+        image: "https://images.pexels.com/photos/1534630/pexels-photo-1534630.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Incredible value and diverse content opportunities",
+          "Rich culture and amazing food scene",
+          "Large creator community"
+        ],
+        budget: { range: `$800 - $1200 for ${duration}` },
+        tags: ["culture", "food", "mid-range", "adventure"],
+        bestMonths: ["November-April"]
+      },
+      {
+        id: 3,
+        destination: "Japan",
+        country: "Japan",
+        matchScore: 85,
+        image: "https://images.pexels.com/photos/323775/pexels-photo-323775.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Unique culture perfect for content",
+          "Incredible food and experiences",
+          "High engagement potential"
+        ],
+        budget: { range: `$1200 - $2000 for ${duration}` },
+        tags: ["culture", "food", "unique", "high-engagement"],
+        bestMonths: ["March-May", "September-November"]
+      }
+    ];
+
+    const luxuryRecommendations = [
+      {
+        id: 1,
+        destination: "Dubai, UAE",
+        country: "United Arab Emirates",
+        matchScore: 88,
+        image: "https://images.pexels.com/photos/323775/pexels-photo-323775.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Ultimate luxury content creation destination",
+          "200+ influencers & brand partnerships",
+          "Year-round content opportunities"
+        ],
+        budget: { range: `$2500 - $4000 for ${duration}` },
+        tags: ["luxury", "modern", "desert", "shopping"],
+        bestMonths: ["November-March"]
+      },
+      {
+        id: 2,
+        destination: "Switzerland",
+        country: "Switzerland",
+        matchScore: 90,
+        image: "https://images.pexels.com/photos/2474690/pexels-photo-2474690.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Premium mountain adventure content",
+          "Stunning alpine landscapes",
+          "High-quality travel experiences"
+        ],
+        budget: { range: `$3000 - $5000 for ${duration}` },
+        tags: ["luxury", "adventure", "premium", "alpine"],
+        bestMonths: ["June-September"]
+      },
+      {
+        id: 3,
+        destination: "New Zealand",
+        country: "New Zealand", 
+        matchScore: 86,
+        image: "https://images.pexels.com/photos/1534630/pexels-photo-1534630.jpeg?auto=compress&cs=tinysrgb&w=400",
+        highlights: [
+          "Adventure capital of the world",
+          "Incredible natural landscapes",
+          "Perfect for outdoor content"
+        ],
+        budget: { range: `$2800 - $4500 for ${duration}` },
+        tags: ["adventure", "nature", "premium", "outdoor"],
+        bestMonths: ["December-March", "September-November"]
+      }
+    ];
+
+    // Select appropriate recommendation pool
+    let selectedPool = midRangeRecommendations;
+    if (isBudget) {
+      selectedPool = budgetRecommendations;
+    } else if (isLuxury) {
+      selectedPool = luxuryRecommendations;
+    }
+
+    // Update budget ranges to reflect user's actual budget
+    const userBudgetMin = Math.max(budgetNum * 0.6, 300);  // At least 60% of budget or $300
+    const userBudgetMax = Math.min(budgetNum * 1.2, budgetNum + 1000);  // Up to 120% of budget or +$1000
+
+    // Add creator details and engagement info to each recommendation
+    return selectedPool.map((rec, index) => ({
+      ...rec,
+      budget: {
+        ...rec.budget,
+        range: `$${Math.floor(userBudgetMin)} - $${Math.floor(userBudgetMax)} for ${duration}`,
+        breakdown: `Accommodation: $${Math.floor(userBudgetMin * 0.4)}-${Math.floor(userBudgetMax * 0.4)}/night • Food: $${Math.floor(userBudgetMin * 0.3 / 7)}-${Math.floor(userBudgetMax * 0.3 / 7)}/day • Activities: $${Math.floor(userBudgetMin * 0.3 / 7)}-${Math.floor(userBudgetMax * 0.3 / 7)}/day`,
+        costEfficiency: budgetNum > 3000 ? "Premium experience within budget" : budgetNum > 1500 ? "Excellent value for money" : "Great budget-friendly option"
+      },
+      engagement: { potential: "High" },
+      creatorDetails: {
+        totalActiveCreators: Math.floor(Math.random() * 100) + 50,
+        topCreators: [
+          { name: `${rec.destination.split(',')[0]}Explorer`, followers: "65K", niche: "Travel", collaboration: "Available" }
+        ],
+        collaborationOpportunities: ["Creator meetups", "Brand partnerships", "Cultural exchanges"]
+      }
+    }));
+  }, []);
 
   const handleSmartQuestionsComplete = useCallback(async (answers: Record<string, any>) => {
     setUserAnswers(answers);
     addMessage("Thanks for answering all the questions! Your answers will help me create perfect recommendations.", false);
     
     console.log('🎯 Smart questions completed with answers:', answers);
-    await generateRecommendations(answers);
+    
+    // Ensure we have a proper format for recommendations API
+    const formattedAnswers = {
+      budget: answers.budget || "1000-2500",
+      duration: answers.duration || "7 days", 
+      style: answers.style || "mid-range",
+      contentFocus: answers.contentFormat || "mixed",
+      climate: answers.climate || ["No preference"]
+    };
+    
+    await generateRecommendations(formattedAnswers);
   }, [generateRecommendations, addMessage]);
-
-  const handleQuestionAnswer = useCallback(async (answer: string) => {
-    if (!questionsLoaded || dynamicQuestions.length === 0) {
-      console.error('Questions not loaded yet');
-      return;
-    }
-    
-    const currentQuestion = dynamicQuestions[currentQuestionIndex];
-    
-    if (currentQuestion.id === "climate" && currentQuestion.multiSelect) {
-      handleClimateSelection(answer);
-      return;
-    }
-    
-    addMessage(answer, false);
-
-    const newAnswers = {
-      ...userAnswers,
-      [currentQuestion.id]: answer,
-    };
-    setUserAnswers(newAnswers);
-
-    // Check if there are more questions
-    if (currentQuestionIndex < dynamicQuestions.length - 1) {
-      // Get next question using dynamic question service
-      const nextQuestion = await dynamicQuestionService.getNextQuestion(
-        dynamicQuestions.slice(currentQuestionIndex + 1),
-        newAnswers
-      );
-      
-      if (nextQuestion) {
-        setCurrentQuestionIndex((prev) => prev + 1);
-        await simulateTyping(() => {
-          addMessage(nextQuestion.text, true, "questions");
-        });
-      } else {
-        // No more relevant questions, generate recommendations
-        await generateRecommendations(newAnswers);
-      }
-    } else {
-      await generateRecommendations(newAnswers);
-    }
-  }, [currentQuestionIndex, userAnswers, addMessage, simulateTyping, handleClimateSelection, generateRecommendations, questionsLoaded, dynamicQuestions]);
-
-  const handleClimateConfirm = useCallback(async () => {
-    if (selectedClimates.length === 0 || !questionsLoaded || dynamicQuestions.length === 0) return;
-    
-    const climateAnswerText = selectedClimates.join(", ");
-    addMessage(climateAnswerText, false);
-    
-    const newAnswers = {
-      ...userAnswers,
-      climate: selectedClimates,
-    };
-    setUserAnswers(newAnswers);
-
-    if (currentQuestionIndex < dynamicQuestions.length - 1) {
-      const nextQuestion = await dynamicQuestionService.getNextQuestion(
-        dynamicQuestions.slice(currentQuestionIndex + 1),
-        newAnswers
-      );
-      
-      if (nextQuestion) {
-        setCurrentQuestionIndex((prev) => prev + 1);
-        await simulateTyping(() => {
-          addMessage(nextQuestion.text, true, "questions");
-        });
-      } else {
-        await generateRecommendations(newAnswers);
-      }
-    } else {
-      await generateRecommendations(newAnswers);
-    }
-  }, [selectedClimates, userAnswers, currentQuestionIndex, addMessage, simulateTyping, generateRecommendations, questionsLoaded, dynamicQuestions]);
 
 
   const handleSendMessage = useCallback(async () => {
@@ -911,10 +826,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
             
             <SidebarContent
               chatState={chatState}
-              currentQuestionIndex={currentQuestionIndex}
-
-              questions={questionsLoaded ? dynamicQuestions : []}
-
+              currentQuestionIndex={0}
+              questions={[]}
               messages={messages}
               websiteData={websiteData}
               tasteProfile={tasteProfile}
@@ -932,10 +845,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
       <div className="hidden lg:flex flex-col w-72 xl:w-80 bg-card/60 backdrop-blur-lg border-r border-border/40 shadow-lg h-full flex-shrink-0">
         <SidebarContent
           chatState={chatState}
-          currentQuestionIndex={currentQuestionIndex}
-
-          questions={questionsLoaded ? dynamicQuestions : []}
-
+          currentQuestionIndex={0}
+          questions={[]}
           messages={messages}
           websiteData={websiteData}
           tasteProfile={tasteProfile}
@@ -998,7 +909,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                       </div>
                     </div>
 
-
                     {!message.isBot && (
                       <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/80 border border-primary/30 flex items-center justify-center shadow-sm">
                         <User className="h-4 w-4 text-white" />
@@ -1021,102 +931,41 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                       />
                     )}
 
-                  {message.component === "smart-questions" && message.isBot && websiteData ? (
+                  {message.component === "smart-questions" && message.isBot && websiteData && chatState === "questions" && index === messages.length - 1 && (
                     <SmartQuestionFlow
                       websiteData={websiteData}
                       onComplete={handleSmartQuestionsComplete}
                     />
-                  ) : message.component === "questions" &&
-                    chatState === "questions" && (
-                      <div>
-                        {questionsLoaded && dynamicQuestions.length > 0 ? (
-                        <div className="mt-6 w-full animate-slide-up">
-                          <div className="flex items-center gap-3 mb-6">
-                            <div className="flex-1 bg-muted/50 rounded-full h-3 overflow-hidden">
-                              <div 
-                                className="bg-gradient-to-r from-primary to-primary/80 h-full rounded-full transition-all duration-500 ease-out relative"
-                                style={{ width: `${((currentQuestionIndex + 1) / dynamicQuestions.length) * 100}%` }}
-                              >
-                                <div className="absolute inset-0 bg-white/20 animate-pulse" />
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full">
-                              <span className="text-sm font-semibold text-primary">
-                                {currentQuestionIndex + 1}
-                              </span>
-                              <span className="text-xs text-primary/70">of</span>
-                              <span className="text-sm font-semibold text-primary">
-                                {dynamicQuestions.length}
-                              </span>
-                            </div>
+                  )}
+
+                  {/* Loading state for recommendations */}
+                  {chatState === "generating" && index === messages.length - 1 && (
+                    <div className="mt-6 w-full animate-fade-in">
+                      <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-6 text-center">
+                        <div className="flex items-center justify-center gap-3 mb-4">
+                          <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                          <div className="text-lg font-semibold text-primary">Generating Recommendations</div>
+                        </div>
+                        <div className="space-y-2 text-sm text-muted-foreground">
+                          <div className="flex items-center justify-center gap-2">
+                            <div className="w-2 h-2 bg-primary/50 rounded-full animate-pulse"></div>
+                            <span>Analyzing your preferences...</span>
                           </div>
-                        
-                          <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-6 mb-6 shadow-sm">
-                            <div className="flex items-center gap-4">
-                              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                                <span className="text-2xl">
-                                  {dynamicQuestions[currentQuestionIndex]?.icon || '❓'}
-                                </span>
-                              </div>
-                              <div className="flex-1">
-                                <h3 className="font-semibold text-lg text-foreground mb-1">
-                                  {dynamicQuestions[currentQuestionIndex]?.text || 'Loading question...'}
-                                </h3>
-                                <p className="text-sm text-muted-foreground">
-                                  {dynamicQuestions[currentQuestionIndex]?.multiSelect 
-                                    ? 'You can choose multiple options'
-                                    : 'Choose the option that best describes your preference'
-                                  }
-                                </p>
-                              </div>
-                            </div>
+                          <div className="flex items-center justify-center gap-2">
+                            <div className="w-2 h-2 bg-primary/50 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                            <span>Finding perfect destinations...</span>
                           </div>
-                        
-                          <div className="grid gap-3">
-                            {dynamicQuestions[currentQuestionIndex]?.options?.map(
-                              (option: string, index: number) => {
-                                const currentQuestion = dynamicQuestions[currentQuestionIndex];
-                                const isMultiSelect = currentQuestion?.multiSelect;
-                                const isSelected = isMultiSelect 
-                                  ? selectedClimates.includes(option)
-                                  : userAnswers[currentQuestion?.id] === option;
-                                
-                                return (
-                                  <Button
-                                    key={index}
-                                    variant={isSelected ? "default" : "outline"}
-                                    className="w-full justify-start text-left"
-                                    onClick={() => handleQuestionAnswer(option)}
-                                  >
-                                    {isMultiSelect && isSelected && "✓ "}
-                                    {option}
-                                  </Button>
-                                );
-                              }
-                            ) || <div className="text-center text-muted-foreground">Loading options...</div>}
-                            
-                            {dynamicQuestions[currentQuestionIndex]?.multiSelect && selectedClimates.length > 0 && (
-                              <div className="mt-4 pt-2 border-t">
-                                <Button
-                                  onClick={handleClimateConfirm}
-                                  className="w-full"
-                                  variant="default"
-                                >
-                                  Continue with {selectedClimates.length} preference{selectedClimates.length > 1 ? 's' : ''}
-                                </Button>
-                              </div>
-                            )}
+                          <div className="flex items-center justify-center gap-2">
+                            <div className="w-2 h-2 bg-primary/50 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                            <span>Checking creator communities...</span>
                           </div>
                         </div>
-                      ) : (
-                        <div className="mt-6 w-full animate-slide-up text-center">
-                          <div className="bg-muted/30 rounded-xl p-6">
-                            <div className="text-muted-foreground mb-2">Loading personalized questions...</div>
-                          </div>
+                        <div className="mt-4 text-xs text-muted-foreground">
+                          This may take a few moments while we create your personalized report
                         </div>
-                      )}
                       </div>
-                    )}
+                    </div>
+                  )}
 
                   {message.component === "recommendations" &&
                     chatState === "recommendations" && recommendations?.recommendations && (
@@ -1172,10 +1021,15 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                                         />
                                       )}
                                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                                      <div className="absolute top-3 right-3">
+                                      <div className="absolute top-3 right-3 flex gap-2">
                                         <span className="bg-white/90 backdrop-blur-sm text-primary text-sm font-bold px-3 py-1 rounded-full shadow-lg">
                                           #{i + 1}
                                         </span>
+                                        {(rec as any).matchScore && (
+                                          <span className="bg-emerald-500/90 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">
+                                            {(rec as any).matchScore}% Match
+                                          </span>
+                                        )}
                                       </div>
                                       <div className="absolute bottom-3 left-3 right-3">
                                         <h4 className="font-bold text-lg xl:text-xl text-white drop-shadow-lg">
@@ -1256,6 +1110,31 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                                               </div>
                                             </div>
                                           )}
+                                        </div>
+                                      )}
+
+                                      {/* Brand Partnership Section */}
+                                      {rec.creatorDetails && (
+                                        <div className="p-3 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg border border-orange-200">
+                                          <div className="flex items-center gap-2 mb-2">
+                                            <span className="text-sm font-bold text-orange-700">
+                                              🤝 Brand Partnerships
+                                            </span>
+                                            <span className="text-xs bg-orange-200 text-orange-700 px-2 py-0.5 rounded-full">
+                                              3+ Available
+                                            </span>
+                                          </div>
+                                          
+                                          <div className="space-y-1">
+                                            <div className="flex items-center justify-between text-xs">
+                                              <span className="text-orange-600">Tourism Board</span>
+                                              <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Active</span>
+                                            </div>
+                                            <div className="flex items-center justify-between text-xs">
+                                              <span className="text-orange-600">Local Hotels</span>
+                                              <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Available</span>
+                                            </div>
+                                          </div>
                                         </div>
                                       )}
                                       
@@ -1373,7 +1252,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                             </p>
                           </div>
                         </div>
-
                         <Button
                           variant="ghost"
                           size="sm"
@@ -1398,7 +1276,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                     chatState === "analyzing" ? "Processing your website..." :
                     chatState === "confirmation" ? "Ask about the extracted information..." :
                     chatState === "profiling" ? "Creating your taste profile..." :
-                    chatState === "questions" ? "Ask about travel preferences..." :
                     chatState === "generating" ? "Generating recommendations..." :
                     reportSent ? "Ask another question..." : "Ask about recommendations..."
                   }

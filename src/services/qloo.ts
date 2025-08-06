@@ -112,7 +112,6 @@ class QlooService {
     }
   ): Promise<QlooRecommendation[]> {
     try {
-
       console.log('🎯 QLOO: Attempting to get dynamic destinations...');
       
       if (!this.apiKey) {
@@ -556,7 +555,6 @@ Return JSON array with format:
     return combinations[key] || combinations[`${secondaryTaste}-${primaryTaste}`] || [
       { name: `${primaryTaste.charAt(0).toUpperCase() + primaryTaste.slice(1)} Destination, Unknown` }
     ];
-
   }
 
   private formatTasteProfile(qlooData: { culturalAffinities?: string[]; personalityTraits?: string[]; tasteVector?: Record<string, number>; confidence?: number }): QlooTasteProfile {
