@@ -8,6 +8,7 @@ TasteJourney is a Next.js-based travel recommendation platform designed specific
 ## 🏗️ Architecture Overview
 
 ### Technology Stack
+
 - **Frontend**: Next.js 15.4.5 (React 19.1.0)
 - **Backend**: Next.js API Routes (Server-side)
 - **UI Library**: Tailwind CSS + Radix UI
@@ -18,6 +19,7 @@ TasteJourney is a Next.js-based travel recommendation platform designed specific
 - **PDF Generation**: PDFKit
 
 ### Project Structure
+
 ```
 src/
 ├── app/                    # Next.js App Router
