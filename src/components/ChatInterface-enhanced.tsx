@@ -536,8 +536,11 @@ const ChatInterfaceEnhanced: React.FC<ChatInterfaceProps> = ({ showMobileSidebar
               messages={messages}
               websiteData={websiteData}
               tasteProfile={tasteProfile}
-              userAnswers={userAnswers}
-              recommendations={recommendations}
+              reportSent={reportSent}
+              email={email}
+              setInputValue={setInputValue}
+              handleSendMessage={handleSendMessage}
+              setShowEmailSection={setShowEmailSection}
             />
           </div>
         </div>
@@ -595,7 +598,7 @@ const ChatInterfaceEnhanced: React.FC<ChatInterfaceProps> = ({ showMobileSidebar
                           >
                             {recommendations.recommendations.map((rec, index) => (
                               <SwiperSlide key={index}>
-                                <DestinationCard recommendation={rec} />
+                                <DestinationCard rec={rec} rank={index + 1} />
                               </SwiperSlide>
                             ))}
                           </Swiper>
