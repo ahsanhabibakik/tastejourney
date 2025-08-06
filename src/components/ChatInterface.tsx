@@ -395,87 +395,29 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
         if (result.success) {
           setTasteProfile(result.data);
           
-          // Load dynamic questions based on user context
-          console.log('🧠 QUESTIONS: Loading dynamic questions for user...');
-          try {
-            const userContext = {
-              themes: websiteData.themes,
-              contentType: websiteData.contentType,
-              hints: websiteData.hints,
-              socialLinks: websiteData.socialLinks,
-              audienceLocation: websiteData.location || 'Global',
-              previousAnswers: {}
-            };
-            
-            const questions = await dynamicQuestionService.generateQuestionsForUser(userContext);
-            setDynamicQuestions(questions);
-            setQuestionsLoaded(true);
-            console.log(`✅ QUESTIONS: Loaded ${questions.length} dynamic questions`);
-            
-            setChatState("questions");
-            setCurrentQuestionIndex(0);
-            await simulateTyping(() => {
-              addMessage(
-                `Perfect! I've created your taste profile based on your ${websiteData.contentType} content. Now I'll ask you smart questions that adapt to your answers:`,
-                true
-              );
-              addMessage("Let's start with your budget-aware travel planning:", true, "questions");
-            }, 2000);
-          } catch (questionError) {
-            console.error("Error loading dynamic questions:", questionError);
-            // Fallback to basic questions
-            const fallbackQuestions = await dynamicQuestionService.generateQuestionsForUser({
-              themes: ['travel'],
-              contentType: 'Mixed',
-              hints: [],
-              socialLinks: [],
-              audienceLocation: 'Global'
-            });
-            setDynamicQuestions(fallbackQuestions);
-            setQuestionsLoaded(true);
-            
-            setChatState("questions");
-            setCurrentQuestionIndex(0);
-            await simulateTyping(() => {
-              addMessage(
-                "Perfect! I've created your taste profile. Now I'll ask you smart questions that adapt to your budget and preferences:",
-                true
-              );
-              addMessage("Let's start with your travel planning:", true, "questions");
-            }, 2000);
-          }
+          setChatState("questions");
+          await simulateTyping(() => {
+            addMessage(
+              `Perfect! I've created your taste profile based on your ${websiteData.contentType} content. Now I'll ask you a few personalized questions to optimize your recommendations. Each question will adapt based on your previous answers:`,
+              true
+            );
+            addMessage("Let's start with your travel preferences:", true, "dynamic-questions");
+          }, 2000);
         } else {
           throw new Error(result.error);
         }
       } catch (error) {
         console.error("Error creating taste profile:", error);
         
-        // Load fallback questions even when taste profiling fails
-        try {
-          const fallbackQuestions = await dynamicQuestionService.generateQuestionsForUser({
-            themes: websiteData?.themes || ['travel'],
-            contentType: websiteData?.contentType || 'Mixed',
-            hints: websiteData?.hints || [],
-            socialLinks: websiteData?.socialLinks || [],
-            audienceLocation: 'Global'
-          });
-          setDynamicQuestions(fallbackQuestions);
-          setQuestionsLoaded(true);
-          
-          setChatState("questions");
-          setCurrentQuestionIndex(0);
-          await simulateTyping(() => {
-            addMessage(
-              "Great! Now let me ask you smart questions that adapt to your preferences:",
-              true
-            );
-            addMessage("Let's start with your travel planning:", true, "questions");
-          }, 1500);
-        } catch (fallbackError) {
-          console.error("Error loading fallback questions:", fallbackError);
-          setChatState("questions");
-          setQuestionsLoaded(false);
-        }
+        // Continue with questions anyway
+        setChatState("questions");
+        await simulateTyping(() => {
+          addMessage(
+            "Great! Now let me ask you a few personalized questions to create the best recommendations:",
+            true
+          );
+          addMessage("Let's start with your travel preferences:", true, "dynamic-questions");
+        }, 1500);
       }
     } else {
       addMessage("The information needs corrections.", false);
@@ -502,6 +444,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
   const handleQuestionChange = useCallback((question: DynamicQuestionV2, questionNumber: number) => {
     setCurrentQuestionIndex(questionNumber - 1); // Convert to 0-based index
     console.log(`Question ${questionNumber}: ${question.text}`);
+  }, []);
+
+  const handleQuestionsComplete = useCallback(async (answers: UserAnswers) => {
+    setUserAnswers(answers);
+    addMessage("Thanks for answering all the questions!", false);
+    
+    await generateRecommendations(answers);
   }, []);
 
   const generateRecommendations = useCallback(async (finalAnswers: UserAnswers) => {
@@ -702,79 +651,18 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     await generateRecommendations(answers);
   }, [generateRecommendations, addMessage]);
 
+  // Simplified handlers for backward compatibility 
   const handleQuestionAnswer = useCallback(async (answer: string) => {
-    if (!questionsLoaded || dynamicQuestions.length === 0) {
-      console.error('Questions not loaded yet');
-      return;
-    }
-    
-    const currentQuestion = dynamicQuestions[currentQuestionIndex];
-    
-    if (currentQuestion.id === "climate" && currentQuestion.multiSelect) {
-      handleClimateSelection(answer);
-      return;
-    }
-    
     addMessage(answer, false);
-
-    const newAnswers = {
-      ...userAnswers,
-      [currentQuestion.id]: answer,
-    };
-    setUserAnswers(newAnswers);
-
-    // Check if there are more questions
-    if (currentQuestionIndex < dynamicQuestions.length - 1) {
-      // Get next question using dynamic question service
-      const nextQuestion = await dynamicQuestionService.getNextQuestion(
-        dynamicQuestions.slice(currentQuestionIndex + 1),
-        newAnswers
-      );
-      
-      if (nextQuestion) {
-        setCurrentQuestionIndex((prev) => prev + 1);
-        await simulateTyping(() => {
-          addMessage(nextQuestion.text, true, "questions");
-        });
-      } else {
-        // No more relevant questions, generate recommendations
-        await generateRecommendations(newAnswers);
-      }
-    } else {
-      await generateRecommendations(newAnswers);
-    }
-  }, [currentQuestionIndex, userAnswers, addMessage, simulateTyping, handleClimateSelection, generateRecommendations, questionsLoaded, dynamicQuestions]);
+    await generateRecommendations({ ...userAnswers, answer });
+  }, [addMessage, generateRecommendations, userAnswers]);
 
   const handleClimateConfirm = useCallback(async () => {
-    if (selectedClimates.length === 0 || !questionsLoaded || dynamicQuestions.length === 0) return;
-    
+    if (selectedClimates.length === 0) return;
     const climateAnswerText = selectedClimates.join(", ");
     addMessage(climateAnswerText, false);
-    
-    const newAnswers = {
-      ...userAnswers,
-      climate: selectedClimates,
-    };
-    setUserAnswers(newAnswers);
-
-    if (currentQuestionIndex < dynamicQuestions.length - 1) {
-      const nextQuestion = await dynamicQuestionService.getNextQuestion(
-        dynamicQuestions.slice(currentQuestionIndex + 1),
-        newAnswers
-      );
-      
-      if (nextQuestion) {
-        setCurrentQuestionIndex((prev) => prev + 1);
-        await simulateTyping(() => {
-          addMessage(nextQuestion.text, true, "questions");
-        });
-      } else {
-        await generateRecommendations(newAnswers);
-      }
-    } else {
-      await generateRecommendations(newAnswers);
-    }
-  }, [selectedClimates, userAnswers, currentQuestionIndex, addMessage, simulateTyping, generateRecommendations, questionsLoaded, dynamicQuestions]);
+    await generateRecommendations({ ...userAnswers, climate: selectedClimates });
+  }, [selectedClimates, addMessage, generateRecommendations, userAnswers]);
 
 
   const handleSendMessage = useCallback(async () => {
@@ -1013,10 +901,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                       />
                     )}
 
-                  {message.component === "smart-questions" && message.isBot && websiteData ? (
-                    <SmartQuestionFlow
+                  {message.component === "dynamic-questions" && message.isBot && websiteData ? (
+                    <DynamicQuestionFlow
                       websiteData={websiteData}
-                      onComplete={handleSmartQuestionsComplete}
+                      onComplete={handleQuestionsComplete}
+                      onQuestionChange={handleQuestionChange}
                     />
                   ) : message.component === "questions" &&
                     chatState === "questions" && (
