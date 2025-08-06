@@ -419,7 +419,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                 `Perfect! I've created your taste profile based on your ${websiteData.contentType} content. Now I'll ask you smart questions that adapt to your answers:`,
                 true
               );
-              addMessage("Let's start with your budget-aware travel planning:", true, "smart-questions");
+              addMessage("Let's start with your budget-aware travel planning:", true, "questions");
             }, 2000);
           } catch (questionError) {
             console.error("Error loading dynamic questions:", questionError);
@@ -441,7 +441,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                 "Perfect! I've created your taste profile. Now I'll ask you smart questions that adapt to your budget and preferences:",
                 true
               );
-              addMessage("Let's start with your travel planning:", true, "smart-questions");
+              addMessage("Let's start with your travel planning:", true, "questions");
             }, 2000);
           }
         } else {
@@ -469,26 +469,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
               "Great! Now let me ask you smart questions that adapt to your preferences:",
               true
             );
-            addMessage("Let's start with your travel planning:", true, "smart-questions");
+            addMessage("Let's start with your travel planning:", true, "questions");
           }, 1500);
         } catch (fallbackError) {
           console.error("Error loading fallback questions:", fallbackError);
           setChatState("questions");
           setQuestionsLoaded(false);
         }
-
-      } catch (error) {
-        console.error("Error creating taste profile:", error);
-        setChatState("questions");
-        setCurrentQuestionIndex(0);
-        await simulateTyping(() => {
-          addMessage(
-            "Great! Now let me ask you a few questions to personalize your recommendations:",
-            true
-          );
-          addMessage(questions[0].text, true, "questions");
-        }, 1500);
-
       }
     } else {
       addMessage("The information needs corrections.", false);
