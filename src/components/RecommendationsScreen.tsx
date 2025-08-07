@@ -289,7 +289,7 @@ const RecommendationsScreen: React.FC = () => {
   const qloo = recommendationsData.qloo || {};
 
   return (
-    <div className="mt-6 space-y-8">
+    <div className="mt-4 sm:mt-6 space-y-6 sm:space-y-8 px-2 sm:px-0">
       {/* Qloo Enrichment Section */}
       {qloo && (
         <div className="mb-6 p-4 bg-primary/10 rounded-lg border border-primary/30">
@@ -312,15 +312,15 @@ const RecommendationsScreen: React.FC = () => {
         </div>
       )}
       <div className="text-center pb-6 border-b border-border">
-        <div className="flex items-center justify-center mb-4">
-          <div className="relative">
-            <Globe className="h-10 w-10 text-primary mr-3" />
+        <div className="flex flex-col sm:flex-row items-center justify-center mb-4 text-center sm:text-left">
+          <div className="relative mb-2 sm:mb-0">
+            <Globe className="h-10 w-10 text-primary sm:mr-3" />
             <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
               <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
             </div>
           </div>
-          <div className="text-left">
-            <h3 className="text-3xl font-bold text-foreground">
+          <div className="text-center sm:text-left">
+            <h3 className="text-2xl sm:text-3xl font-bold text-foreground text-center sm:text-left">
               Your Personalized Travel Recommendations
             </h3>
             <p className="text-sm text-muted-foreground">
@@ -334,7 +334,7 @@ const RecommendationsScreen: React.FC = () => {
         </p>
 
         {/* Stats Bar */}
-        <div className="flex justify-center items-center space-x-8 mt-6 p-4 bg-muted/30 rounded-lg">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 mt-6 p-4 bg-muted/30 rounded-lg">
           <div className="text-center">
             <div className="text-2xl font-bold text-primary">
               {recommendations.length}
@@ -360,7 +360,7 @@ const RecommendationsScreen: React.FC = () => {
       </div>
 
       {/* Filter and Sort Controls */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-4 bg-muted/20 rounded-lg">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-4 bg-muted/20 rounded-lg border border-border/50">
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2">
             <Filter className="h-4 w-4 text-muted-foreground" />
@@ -413,15 +413,15 @@ const RecommendationsScreen: React.FC = () => {
             }`}
             style={{ animationDelay: `${index * 100}ms` }}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-0">
               {/* Enhanced Image Section */}
-              <div className="relative lg:col-span-1 group">
+              <div className="relative xl:col-span-1 group">
                 <Image
                   src={rec.image}
                   alt={rec.destination}
                   width={400}
                   height={300}
-                  className="w-full h-64 lg:h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-64 sm:h-72 xl:h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
 
                 {/* Overlay with actions */}
@@ -499,10 +499,10 @@ const RecommendationsScreen: React.FC = () => {
               </div>
 
               {/* Enhanced Content Section */}
-              <div className="lg:col-span-2 p-6">
+              <div className="xl:col-span-2 p-4 sm:p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <CardTitle className="flex items-center text-2xl mb-1">
+                    <CardTitle className="flex items-center text-xl sm:text-2xl mb-1">
                       <MapPin className="h-6 w-6 text-primary mr-2" />
                       {rec.destination}, {rec.country}
                     </CardTitle>
@@ -519,7 +519,7 @@ const RecommendationsScreen: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6">
                   {/* Left Column - Enhanced */}
                   <div className="space-y-4">
                     <div>
@@ -650,7 +650,7 @@ const RecommendationsScreen: React.FC = () => {
                     <Briefcase className="h-4 w-4 text-primary mr-2" />
                     Top Brand Collaboration Opportunities
                   </h5>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {rec.collaborations.map((collab) => (
                       <Card
                         key={rec.id + '-' + collab.name + '-' + collab.type}
@@ -687,7 +687,7 @@ const RecommendationsScreen: React.FC = () => {
                 {selectedDestination === rec.id && (
                   <div className="mt-6 p-4 bg-muted/20 rounded-lg border-l-4 border-l-primary">
                     <h6 className="font-semibold mb-3">Additional Details</h6>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                       <div>
                         <span className="text-muted-foreground">
                           Safety Rating:
@@ -746,7 +746,7 @@ const RecommendationsScreen: React.FC = () => {
               collaboration contacts, and content creation guides will be sent
               to your email within the next few minutes.
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
               <div className="flex flex-col items-center p-3 bg-background/50 rounded-lg">
                 <div className="w-3 h-3 bg-green-500 rounded-full mb-2"></div>
                 <span className="font-medium">Cost Analysis</span>
@@ -786,7 +786,7 @@ const RecommendationsScreen: React.FC = () => {
           <h4 className="text-2xl font-bold text-foreground mb-6 text-center">
             What would you like to explore next?
           </h4>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {/* 1. Primary Destinations Card */}
             <Card
               className="p-6 flex flex-col justify-between h-full hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50 group"
