@@ -1,641 +1,6 @@
- {
-        "parents": [
-          {
-            "type": "urn:entity:brand"
-          }
-        ],
-        "type": "urn:tag:genre:brand",
-        "id": "urn:tag:genre:brand:fashion:footwear:sneaker:lifestyle",
-        "name": "Lifestyle / Casual",
-        "popularity": 0.97263813,
-        "properties": {},
-        "tags": [
-          {
-            "name": "Canonical",
-            "tag_id": "urn:tag:collection:canonical",
-            "type": "urn:tag:collection",
-            "value": "urn:tag:collection:canonical"
-          }
-        ]
-      },
-      {
-        "parents": [
-          {
-            "type": "urn:entity:person"
-          }
-        ],
-        "type": "urn:tag:occupation:wikidata",
-        "id": "urn:tag:occupation:wikidata:lifestyle_guru",
-        "name": "Lifestyle Guru",
-        "popularity": 0.8248302,
-        "properties": {},
-        "tags": []
-      },
-      {
-        "parents": [
-          {
-            "type": "urn:entity:podcast"
-          }
-        ],
-        "type": "urn:tag:keyword:qloo",
-        "id": "urn:tag:keyword:qloo:lifestyle_design",
-        "name": "Lifestyle Design",
-        "popularity": 0.40445638,
-        "properties": {},
-        "tags": []
-      },
-      {
-        "parents": [
-          {
-            "type": "urn:entity:tv_show"
-          },
-          {
-            "type": "urn:entity:podcast"
-          }
-        ],
-        "type": "urn:tag:audience:qloo",
-        "id": "urn:tag:audience:qloo:lifestyle_enthusiasts",
-        "name": "Lifestyle enthusiasts",
-        "popularity": 0.38794795,
-        "properties": {},
-        "tags": []
-      },
-      {
-        "parents": [
-          {
-            "type": "urn:entity:tv_show"
-          },
-          {
-            "type": "urn:entity:podcast"
-          },
-          {
-            "type": "urn:entity:movie"
-          }
-        ],
-        "type": "urn:tag:keyword:qloo",
-        "id": "urn:tag:keyword:qloo:lifestyle_change",
-        "name": "Lifestyle change",
-        "popularity": 0.37008637,
-        "properties": {},
-        "tags": []
-      },
-      {
-        "parents": [
-          {
-            "type": "urn:entity:tv_show"
-          },
-          {
-            "type": "urn:entity:podcast"
-          }
-        ],
-        "type": "urn:tag:audience:qloo",
-        "id": "urn:tag:audience:qloo:lifestyle_focused",
-        "name": "Lifestyle-focused",
-        "popularity": 0.20130353,
-        "properties": {},
-        "tags": []
-      },
-      {
-        "parents": [
-          {
-            "type": "urn:entity:podcast"
-          }
-        ],
-        "type": "urn:tag:theme:qloo",
-        "id": "urn:tag:theme:qloo:lifestyle_design",
-        "name": "Lifestyle Design",
-        "popularity": 0.20130353,
-        "properties": {},
-        "tags": []
-      },
-      {
-        "parents": [
-          {
-            "type": "urn:entity:podcast"
-          }
-        ],
-        "type": "urn:tag:theme:qloo",
-        "id": "urn:tag:theme:qloo:lifestyle_changes",
-        "name": "Lifestyle Changes",
-        "popularity": 0.16693354,
-        "properties": {},
-        "tags": []
-      },
-      {
-        "parents": [
-          {
-            "type": "urn:entity:person"
-          }
-        ],
-        "type": "urn:tag:occupation:wikidata",
-        "id": "urn:tag:occupation:wikidata:lifestyle",
-        "name": "Lifestyle",
-        "popularity": 0,
-        "properties": {},
-        "tags": []
-      },
-      {
-        "parents": [
-          {
-            "type": "urn:entity:podcast"
-          }
-        ],
-        "type": "urn:tag:theme:qloo",
-        "id": "urn:tag:theme:qloo:healthy_lifestyle",
-        "name": "Healthy lifestyle",
-        "popularity": 0.43557882,
-        "properties": {},
-        "tags": []
-      },
-      {
-        "parents": [
-          {
-            "type": "urn:entity:artist"
-          }
-        ],
-        "type": "urn:tag:theme:qloo",
-        "id": "urn:tag:theme:qloo:party_lifestyle",
-        "name": "Party Lifestyle",
-        "popularity": 0.43557882,
-        "properties": {},
-        "tags": []
-      },
-      {
-        "parents": [
-          {
-            "type": "urn:entity:tv_show"
-          },
-          {
-            "type": "urn:entity:podcast"
-          }
-        ],
-        "type": "urn:tag:audience:qloo",
-        "id": "urn:tag:audience:qloo:lifestyle_oriented",
-        "name": "Lifestyle-oriented",
-        "popularity": 0,
-        "properties": {},
-        "tags": []
-      },
-      {
-        "parents": [
-          {
-            "type": "urn:entity:podcast"
-          }
-        ],
-        "type": "urn:tag:theme:qloo",
-        "id": "urn:tag:theme:qloo:outdoor_lifestyle",
-        "name": "Outdoor Lifestyle",
-        "popularity": 0.30748066,
-        "properties": {},
-        "tags": []
-      }
-    ]
-  }
-}
-No tags found for "lifestyle"
-Retrieved tag IDs: []
-Trying Qloo endpoint: https://hackathon.api.qloo.com/v2/insights (GET, filter.type=urn:entity:destination)
-No tag IDs found, using theme-based signals
-Added signal.interests.tags: travel,photography,lifestyle,adventure
-Success with endpoint /v2/insights (GET, filter.type=urn:entity:destination): {
-  "success": true,
-  "results": {
-    "entities": [
-      {
-        "name": "Coolum Beach",
-        "entity_id": "002D2A67-FB3C-4D23-8C1A-AA5FB3BA72CC",
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Coolum Beach",
-            "admin1_region": "Queensland",
-            "admin2_region": "Sunshine Coast",
-            "country_code": "AU"
-          }
-        },
-        "popularity": 0.27697189483227563,
-        "location": {
-          "lat": -26.527851,
-          "lon": 153.08394,
-          "geohash": "r7kc5db2461u"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:beaches",
-            "name": "Beaches",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Val Thorens",
-        "entity_id": "00411E02-0928-4FED-9A59-D32F6B737D16",
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Val Thorens",
-            "admin1_region": "Rhone-Alpes",
-            "admin2_region": "Departement de la Savoie",
-            "country_code": "FR"
-          }
-        },
-        "popularity": 0.05258386219401632,
-        "location": {
-          "lat": 45.29768,
-          "lon": 6.579789,
-          "geohash": "u0h9twpq05w3"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:snow_ski",
-            "name": "Snow and Ski",
-            "type": "urn:tag:genre:destination"
-          },
-          {
-            "id": "urn:tag:genre:destination:scenic_picturesque",
-            "name": "Scenic & Picturesque",
-            "type": "urn:tag:genre:destination"
-          },
-          {
-            "id": "urn:tag:genre:destination:foodie_destination",
-            "name": "Foodie Destination",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Saugatuck",
-        "entity_id": "00470AED-82CF-457F-B25C-40DE94D2FD5E",
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Douglas",
-            "admin1_region": "Michigan",
-            "admin2_region": "Allegan County",
-            "country_code": "US"
-          }
-        },
-        "popularity": 0.1631912964641886,
-        "location": {
-          "lat": 42.655,
-          "lon": -86.20194,
-          "geohash": "dpddwmjemhhf"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:outdoor_activities",
-            "name": "Outdoor Activities",
-            "type": "urn:tag:genre:destination"
-          },
-          {
-            "id": "urn:tag:genre:destination:beaches",
-            "name": "Beaches",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Katowice",
-        "entity_id": "00538E6E-8317-414E-90B7-5E8EF945837F",
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Katowice",
-            "admin1_region": "Silesian Voivodeship",
-            "admin2_region": "Katowice",
-            "country_code": "PL"
-          }
-        },
-        "popularity": 0.685856754306437,
-        "location": {
-          "lat": 50.2667,
-          "lon": 19.0167,
-          "geohash": "u2vtbwz8c0pv"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:art_culture",
-            "name": "Art & Culture",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Brussels",
-        "entity_id": "005AE488-9712-4637-BB28-E646DCBD0BD8",
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Brussels",
-            "admin1_region": "Brussels Capital",
-            "admin2_region": "Bruxelles-Capitale",
-            "country_code": "BE"
-          }
-        },
-        "popularity": 0.7842248413417952,
-        "location": {
-          "lat": 50.85,
-          "lon": 4.35,
-          "geohash": "u1516bzwdqg0"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:great_shopping",
-            "name": "Great Shopping",
-            "type": "urn:tag:genre:destination"
-          },
-          {
-            "id": "urn:tag:genre:destination:art_culture",
-            "name": "Art & Culture",
-            "type": "urn:tag:genre:destination"
-          },
-          {
-            "id": "urn:tag:genre:destination:great_architecture",
-            "name": "Great Architecture",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Beaujolais",
-        "entity_id": "00739C6E-39EB-4E75-8CE7-8E486D643A7B",
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Charentay",
-            "admin1_region": "Rhone-Alpes",
-            "admin2_region": "Departement du Rhone",
-            "country_code": "FR"
-          }
-        },
-        "popularity": 0.051677243880326386,
-        "location": {
-          "lat": 46.083332,
-          "lon": 4.6666665,
-          "geohash": "u05q4jnnv5wz"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:peace_tranquility",
-            "name": "Peace and Tranquility",
-            "type": "urn:tag:genre:destination"
-          },
-          {
-            "id": "urn:tag:genre:destination:scenic_picturesque",
-            "name": "Scenic & Picturesque",
-            "type": "urn:tag:genre:destination"
-          },
-          {
-            "id": "urn:tag:genre:destination:wine_country",
-            "name": "Wine Country",
-            "type": "urn:tag:genre:destination"
-          },
-          {
-            "id": "urn:tag:genre:destination:outdoor_activities",
-            "name": "Outdoor Activities",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Fajardo",
-        "entity_id": "007A5A1D-FED9-466E-B40D-EA459C9C060B",
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Fajardo",
-            "admin1_region": "Fajardo",
-            "admin2_region": "",
-            "country_code": "PR"
-          }
-        },
-        "popularity": 0.2184950135992747,
-        "location": {
-          "lat": 18.3278,
-          "lon": -65.6528,
-          "geohash": "de32603p4ven"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:outdoor_activities",
-            "name": "Outdoor Activities",
-            "type": "urn:tag:genre:destination"
-          },
-          {
-            "id": "urn:tag:genre:destination:beaches",
-            "name": "Beaches",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Bonita Springs",
-        "entity_id": "00898011-5114-49BB-9CBD-DF5BB713BA8E",
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Bonita Springs",
-            "admin1_region": "Florida",
-            "admin2_region": "Lee County",
-            "country_code": "US"
-          }
-        },
-        "popularity": 0.4605621033544878,
-        "location": {
-          "lat": 26.3396,
-          "lon": -81.779,
-          "geohash": "dhtvg4fr71nr"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:beaches",
-            "name": "Beaches",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Brasília",
-        "entity_id": "00C4AD79-AAA4-4C5B-B9BF-B8FCE806E00E",
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Brasilia",
-            "admin1_region": "Federal District",
-            "admin2_region": "Brasilia",
-            "country_code": "BR"
-          }
-        },
-        "popularity": 0.9084315503173164,
-        "location": {
-          "lat": -15.8,
-          "lon": -47.9,
-          "geohash": "6vjyn58q346p"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:great_architecture",
-            "name": "Great Architecture",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Cappadocia",
-        "entity_id": "00E2CAD2-D330-444D-9881-084FAB4556E7",
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Eminoenue",
-            "admin1_region": "Istanbul",
-            "admin2_region": "",
-            "country_code": "TR"
-          }
-        },
-        "popularity": 0.07479601087941977,
-        "location": {
-          "lat": 41.009056,
-          "lon": 28.978779,
-          "geohash": "sxk973mxn6ps"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:scenic_picturesque",
-            "name": "Scenic & Picturesque",
-            "type": "urn:tag:genre:destination"
-          },
-          {
-            "id": "urn:tag:genre:destination:nature",
-            "name": "Nature",
-            "type": "urn:tag:genre:destination"
-          },
-          {
-            "id": "urn:tag:genre:destination:off_beaten_path",
-            "name": "Off the Beaten Path",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Santarém",
-        "entity_id": "00E3F461-68A7-4715-A90F-31156B17C8CE",
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Santarem",
-            "admin1_region": "Para",
-            "admin2_region": "Santarem",
-            "country_code": "BR"
-          }
-        },
-        "popularity": 0.1541251133272892,
-        "location": {
-          "lat": -2.43333,
-          "lon": -54.7,
-          "geohash": "6z945m08vd7h"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:outdoor_activities",
-            "name": "Outdoor Activities",
-            "type": "urn:tag:genre:destination"
-          },
-          {
-            "id": "urn:tag:genre:destination:beaches",
-            "name": "Beaches",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "San Jose",
-        "entity_id": "00F0ACCB-BBF7-43DC-BFFC-DF0A2B72F807",
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "San Jose",
-            "admin1_region": "California",
-            "admin2_region": "Santa Clara County",
-            "country_code": "US"
-          }
-        },
-        "popularity": 0.8839528558476881,
-        "location": {
-          "lat": 37.3376,
-          "lon": -121.8865,
-          "geohash": "9q9k6mhgqc0p"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:urban_destinations",
-            "name": "Urban Destinations",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
+{
         "name": "Guelph",
-        "entity_id": "0103393C-4175-45FD-B12C-CF3459B58FF8",
+        "entity_id": "0103393C-4175-45FD-B12C-CF3459B58FF8",   
         "type": "urn:entity",
         "subtype": "urn:entity:destination",
         "properties": {
@@ -666,14 +31,14 @@ Success with endpoint /v2/insights (GET, filter.type=urn:entity:destination): {
       },
       {
         "name": "Saint-Bonnet-le-Froid",
-        "entity_id": "011CFB4C-30B0-4EF7-A205-6BB4EE677974",
+        "entity_id": "011CFB4C-30B0-4EF7-A205-6BB4EE677974",   
         "type": "urn:entity",
         "subtype": "urn:entity:destination",
         "properties": {
           "geocode": {
             "name": "Riotord",
             "admin1_region": "Auvergne",
-            "admin2_region": "Departement de la Haute-Loire",
+            "admin2_region": "Departement de la Haute-Loire",  
             "country_code": "FR"
           }
         },
@@ -685,7 +50,7 @@ Success with endpoint /v2/insights (GET, filter.type=urn:entity:destination): {
         },
         "tags": [
           {
-            "id": "urn:tag:genre:destination:off_beaten_path",
+            "id": "urn:tag:genre:destination:off_beaten_path", 
             "name": "Off the Beaten Path",
             "type": "urn:tag:genre:destination"
           },
@@ -702,7 +67,7 @@ Success with endpoint /v2/insights (GET, filter.type=urn:entity:destination): {
       },
       {
         "name": "McMinnville",
-        "entity_id": "01200DA0-D74C-49A9-BDB2-966E05B6DB2C",
+        "entity_id": "01200DA0-D74C-49A9-BDB2-966E05B6DB2C",   
         "type": "urn:entity",
         "subtype": "urn:entity:destination",
         "properties": {
@@ -721,7 +86,7 @@ Success with endpoint /v2/insights (GET, filter.type=urn:entity:destination): {
         },
         "tags": [
           {
-            "id": "urn:tag:genre:destination:wine_country",
+            "id": "urn:tag:genre:destination:wine_country",    
             "name": "Wine Country",
             "type": "urn:tag:genre:destination"
           }
@@ -733,7 +98,7 @@ Success with endpoint /v2/insights (GET, filter.type=urn:entity:destination): {
       },
       {
         "name": "Groningen",
-        "entity_id": "01364A9F-91F7-4E70-9679-E3B5163B7551",
+        "entity_id": "01364A9F-91F7-4E70-9679-E3B5163B7551",   
         "type": "urn:entity",
         "subtype": "urn:entity:destination",
         "properties": {
@@ -764,7 +129,7 @@ Success with endpoint /v2/insights (GET, filter.type=urn:entity:destination): {
       },
       {
         "name": "Alappuzha",
-        "entity_id": "0183BE71-741F-459A-9560-858140760628",
+        "entity_id": "0183BE71-741F-459A-9560-858140760628",   
         "type": "urn:entity",
         "subtype": "urn:entity:destination",
         "properties": {
@@ -795,7 +160,7 @@ Success with endpoint /v2/insights (GET, filter.type=urn:entity:destination): {
       },
       {
         "name": "Glenwood Springs",
-        "entity_id": "019D4BEF-84C0-4611-A30D-0A39F419A0BB",
+        "entity_id": "019D4BEF-84C0-4611-A30D-0A39F419A0BB",   
         "type": "urn:entity",
         "subtype": "urn:entity:destination",
         "properties": {
@@ -826,7 +191,7 @@ Success with endpoint /v2/insights (GET, filter.type=urn:entity:destination): {
       },
       {
         "name": "Kendal",
-        "entity_id": "01FA7B53-19B0-4DF8-9211-2E16C0100A7B",
+        "entity_id": "01FA7B53-19B0-4DF8-9211-2E16C0100A7B",   
         "type": "urn:entity",
         "subtype": "urn:entity:destination",
         "properties": {
@@ -857,7 +222,7 @@ Success with endpoint /v2/insights (GET, filter.type=urn:entity:destination): {
       },
       {
         "name": "Lake Louise",
-        "entity_id": "000B9F41-1B3B-4051-94FC-A7E1BB38550B",
+        "entity_id": "000B9F41-1B3B-4051-94FC-A7E1BB38550B",   
         "type": "urn:entity",
         "subtype": "urn:entity:destination",
         "properties": {
@@ -908,88 +273,881 @@ Success with endpoint /v2/insights (GET, filter.type=urn:entity:destination): {
       }
     ]
   },
-  "duration": 110
+  "duration": 118
 }
 ✅ Successfully received data from Qloo API
 ✅ Generated taste profile with 0.85 confidence
 📊 Recommendations: 10, Cultural Affinities: 8
- POST /api/profile-taste 200 in 6340ms
- ✓ Compiled /api/dynamic-questions in 223ms
- ⨯ ./src/app/api/dynamic-questions/route.ts:3:1
-Export ErrorHandler doesn't exist in target module
-  1 | import { NextRequest, NextResponse } from 'next/server';
-  2 | import { dynamicQuestionServiceV2 } from '@/services/dynamic-questions-v2';
-> 3 | import { ErrorHandler } from '@/services/errorHandler';
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | export async function POST(request: NextRequest) {
-  6 |   const errorHandler = new ErrorHandler('dynamic-questions-api');
+ POST /api/profile-taste 200 in 7437ms
+🚀 PRIMARY ENGINE: Starting integrated recommendation generation...
+✅ PRIMARY ENGINE: Website data received: {
+  url: 'https://delwer.live',
+  themes: [ 'business', 'technology', 'travel', 'writing' ],   
+  contentType: 'Travel'
+}
+✅ PRIMARY ENGINE: User profile prepared: {
+  url: 'https://delwer.live',
+  themes: [ 'business', 'technology', 'travel', 'writing' ],   
+  hints: [
+    'blogger',
+    'traveler',
+    'vlogger',
+    'artist',
+    'entrepreneur',
+    'educator',
+    'reviewer'
+  ],
+  contentType: 'Travel',
+  socialLinks: [
+    {
+      platform: 'LinkedIn',
+      url: 'https://linkedin.com/in/delwer-hossain'
+    }
+  ],
+  title: 'Md. Delwer Hossain – Corporate IT Manager & Full-Stack Developer',
+  description: 'Corporate IT Manager and Full-Stack Developer specializing in scalable web and SaaS solutions using Next.js, React, and MongoDB.',
+  keywords: [
+    'full-stack developer',
+    'next.js',
+    'react',
+    'mongodb',
+    'node.js',
+    'bangladesh',
+    'chittagong'
+  ],
+  audienceLocation: 'Global'
+}
+✅ PRIMARY ENGINE: Taste profile prepared, confidence: 0.8      
+🎯 PRIMARY ENGINE: Calling integratedRecommendationService...  
+🚀 Starting integrated recommendation generation with all services...
+🎯 QLOO: Attempting to get dynamic destinations...
+🔍 QLOO: Trying endpoint /recommendations/destinations...      
+📡 QLOO: Response status for /recommendations/destinations: 401🔍 QLOO: Trying endpoint /recommendations/travel...
+📡 QLOO: Response status for /recommendations/travel: 401
+🔍 QLOO: Trying endpoint /recommendations...
+📡 QLOO: Response status for /recommendations: 401
+🔍 QLOO: Trying endpoint /search/travel...
+📡 QLOO: Response status for /search/travel: 401
+⚠️ QLOO: All endpoints failed, using enhanced dynamic generatio
+n
+🚀 QLOO: Generating TRULY dynamic destinations - no fixed pools, pure AI generation...
+🔍 QLOO: Attempting real-time destination discovery via API... 
+🔍 QLOO: Trying discovery endpoint /discover/destinations...   
+🔍 QLOO: Trying discovery endpoint /search/places...
+🔍 QLOO: Trying discovery endpoint /recommendations/travel/discover...
+🔍 QLOO: Trying discovery endpoint /taste/destinations...
+❌ QLOO: All discovery endpoints failed
+🤖 AI: Generating destinations using AI analysis of taste vectors...
+[MEDIUM] qloo.get-recommendations: Error: Operation timeout
+    at Timeout._onTimeout (src\services\errorHandler.ts:69:34) 
+  67 |         // Set timeout for the operation
+  68 |         const timeoutPromise = new Promise<never>((_, reject) =>
+> 69 |           setTimeout(() => reject(new Error('Operation timeout')), timeout)
+     |                                  ^
+  70 |         );
+  71 |
+  72 |         const result = await Promise.race([
+🎯 QLOO: Attempting to get dynamic destinations...
+🔍 QLOO: Trying endpoint /recommendations/destinations...
+📡 QLOO: Response status for /recommendations/destinations: 401🔍 QLOO: Trying endpoint /recommendations/travel...
+📡 QLOO: Response status for /recommendations/travel: 401
+🔍 QLOO: Trying endpoint /recommendations...
+📡 QLOO: Response status for /recommendations: 401
+🔍 QLOO: Trying endpoint /search/travel...
+📡 QLOO: Response status for /search/travel: 401
+⚠️ QLOO: All endpoints failed, using enhanced dynamic generatio
+n
+🚀 QLOO: Generating TRULY dynamic destinations - no fixed pools, pure AI generation...
+🔍 QLOO: Attempting real-time destination discovery via API... 
+🔍 QLOO: Trying discovery endpoint /discover/destinations...   
+🔍 QLOO: Trying discovery endpoint /search/places...
+🔍 QLOO: Trying discovery endpoint /recommendations/travel/discover...
+🔍 QLOO: Trying discovery endpoint /taste/destinations...
+❌ QLOO: All discovery endpoints failed
+🤖 AI: Generating destinations using AI analysis of taste vectors...
+✅ AI: Generated 12 unique destinations
+✅ AI Generation: Created 12 destinations via AI
+[MEDIUM] recommendations-api.generate-recommendations: Error: Operation timeout
+    at Timeout._onTimeout (src\services\errorHandler.ts:69:34) 
+  67 |         // Set timeout for the operation
+  68 |         const timeoutPromise = new Promise<never>((_, reject) =>
+> 69 |           setTimeout(() => reject(new Error('Operation timeout')), timeout)
+     |                                  ^
+  70 |         );
+  71 |
+  72 |         const result = await Promise.race([
+🚀 PRIMARY ENGINE: Starting integrated recommendation generation...
+✅ PRIMARY ENGINE: Website data received: {
+  url: 'https://delwer.live',
+  themes: [ 'business', 'technology', 'travel', 'writing' ],   
+  contentType: 'Travel'
+}
+✅ PRIMARY ENGINE: User profile prepared: {
+  url: 'https://delwer.live',
+  themes: [ 'business', 'technology', 'travel', 'writing' ],   
+  hints: [
+    'blogger',
+    'traveler',
+    'vlogger',
+    'artist',
+    'entrepreneur',
+    'educator',
+    'reviewer'
+  ],
+  contentType: 'Travel',
+  socialLinks: [
+    {
+      platform: 'LinkedIn',
+      url: 'https://linkedin.com/in/delwer-hossain'
+    }
+  ],
+  title: 'Md. Delwer Hossain – Corporate IT Manager & Full-Stack Developer',
+  description: 'Corporate IT Manager and Full-Stack Developer specializing in scalable web and SaaS solutions using Next.js, React, and MongoDB.',
+  keywords: [
+    'full-stack developer',
+    'next.js',
+    'react',
+    'mongodb',
+    'node.js',
+    'bangladesh',
+    'chittagong'
+  ],
+  audienceLocation: 'Global'
+}
+✅ PRIMARY ENGINE: Taste profile prepared, confidence: 0.8      
+🎯 PRIMARY ENGINE: Calling integratedRecommendationService...  
+🚀 Starting integrated recommendation generation with all services...
+🎯 QLOO: Attempting to get dynamic destinations...
+🔍 QLOO: Trying endpoint /recommendations/destinations...      
+[HIGH] qloo.get-recommendations: Error: Operation timeout
+    at Timeout._onTimeout (src\services\errorHandler.ts:69:34) 
+  67 |         // Set timeout for the operation
+  68 |         const timeoutPromise = new Promise<never>((_, reject) =>
+> 69 |           setTimeout(() => reject(new Error('Operation timeout')), timeout)
+     |                                  ^
+  70 |         );
+  71 |
+  72 |         const result = await Promise.race([
+🚀 INTEGRATED: Generating taste-based destinations with enhanced algorithm...
+✅ INTEGRATED: Generated 10 taste-based destinations
+Using fallback for qloo.get-recommendations
+🎯 INTEGRATED: Generating dynamic base destinations for themes: [ 'business', 'technology', 'travel', 'writing' ]
+🎯 INTEGRATED: Taste vector scores: {
+  adventure: 0.9323,
+  culture: 0.96855,
+  luxury: 0.45099999999999996,
+  food: 0.41799278737012074,
+  nature: 0.929,
+  urban: 0.9815,
+  budget: 0.6000000000000001
+}
+✅ INTEGRATED: Generated dynamic destinations: [
+  'Singapore, Singapore',
+  'Seoul, South Korea',
+  'Shenzhen, China',
+  'Tel Aviv, Israel',
+  'Tallinn, Estonia',
+  'Queenstown, New Zealand',
+  'Patagonia, Chile',
+  'Iceland, Iceland'
+]
+📡 QLOO: Response status for /recommendations/destinations: 401🔍 QLOO: Trying endpoint /recommendations/travel...
+📡 QLOO: Response status for /recommendations/travel: 401
+🔍 QLOO: Trying endpoint /recommendations...
+📡 QLOO: Response status for /recommendations: 401
+🔍 QLOO: Trying endpoint /search/travel...
+✅ AI: Generated 12 unique destinations
+✅ AI Generation: Created 12 destinations via AI
+📡 QLOO: Response status for /search/travel: 401
+⚠️ QLOO: All endpoints failed, using enhanced dynamic generatio
+n
+🚀 QLOO: Generating TRULY dynamic destinations - no fixed pools, pure AI generation...
+🔍 QLOO: Attempting real-time destination discovery via API... 
+🔍 QLOO: Trying discovery endpoint /discover/destinations...   
+🔍 QLOO: Trying discovery endpoint /search/places...
+🔍 QLOO: Trying discovery endpoint /recommendations/travel/discover...
+🔍 QLOO: Trying discovery endpoint /taste/destinations...
+❌ QLOO: All discovery endpoints failed
+🤖 AI: Generating destinations using AI analysis of taste vectors...
+✅ Generated 8 advanced Gemini recommendations
+Enriching destination: Queenstown
+Enriching destination: Singapore
+Enriching destination: Iceland
+Enriching destination: Costa Rica
+Enriching destination: Interlaken
+Instagram access token not found, using fallback creators      
+Instagram access token not found, using fallback creators      
+Instagram access token not found, using fallback creators      
+Instagram access token not found, using fallback creators      
+Instagram access token not found, using fallback creators      
+Error searching YouTube creators: Error: YouTube search failed: 400
+    at CreatorService.searchYouTubeCreators (src\services\creator.ts:99:14)
+    at async CreatorService.findLocalCreators (src\services\creator.ts:53:51)
+    at async IntegratedRecommendationService.getCreatorData (src\services\integrated-recommendation.ts:551:23)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+   97 |
+   98 |       if (!searchResponse.ok) {
+>  99 |         throw new Error(`YouTube search failed: ${searchResponse.status}`);
+      |              ^
+  100 |       }
+  101 |
+  102 |       const searchData = await searchResponse.json();  
+Cached data for key: creator:{"location":"Queenstown","niche":"Travel"}
+Error searching YouTube creators: Error: YouTube search failed: 400
+    at CreatorService.searchYouTubeCreators (src\services\creator.ts:99:14)
+    at async CreatorService.findLocalCreators (src\services\creator.ts:53:51)
+    at async IntegratedRecommendationService.getCreatorData (src\services\integrated-recommendation.ts:551:23)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+   97 |
+   98 |       if (!searchResponse.ok) {
+>  99 |         throw new Error(`YouTube search failed: ${searchResponse.status}`);
+      |              ^
+  100 |       }
+  101 |
+  102 |       const searchData = await searchResponse.json();  
+Cached data for key: creator:{"location":"Iceland","niche":"Travel"}
+Error searching YouTube creators: Error: YouTube search failed: 400
+    at CreatorService.searchYouTubeCreators (src\services\creator.ts:99:14)
+    at async CreatorService.findLocalCreators (src\services\creator.ts:53:51)
+    at async IntegratedRecommendationService.getCreatorData (src\services\integrated-recommendation.ts:551:23)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+   97 |
+   98 |       if (!searchResponse.ok) {
+>  99 |         throw new Error(`YouTube search failed: ${searchResponse.status}`);
+      |              ^
+  100 |       }
+  101 |
+  102 |       const searchData = await searchResponse.json();  
+Cached data for key: creator:{"location":"Costa Rica","niche":"Travel"}
+Error searching YouTube creators: Error: YouTube search failed: 400
+    at CreatorService.searchYouTubeCreators (src\services\creator.ts:99:14)
+    at async CreatorService.findLocalCreators (src\services\creator.ts:53:51)
+    at async IntegratedRecommendationService.getCreatorData (src\services\integrated-recommendation.ts:551:23)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+   97 |
+   98 |       if (!searchResponse.ok) {
+>  99 |         throw new Error(`YouTube search failed: ${searchResponse.status}`);
+      |              ^
+  100 |       }
+  101 |
+  102 |       const searchData = await searchResponse.json();  
+Cached data for key: creator:{"location":"Singapore","niche":"Travel"}
+Error searching places: Error: Places API status: REQUEST_DENIED
+    at PlacesService.searchPlaces (src\services\places.ts:101:14)
+    at async IntegratedRecommendationService.getPlacesData (src\services\integrated-recommendation.ts:606:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+   99 |
+  100 |       if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
+> 101 |         throw new Error(`Places API status: ${data.status}`);
+      |              ^
+  102 |       }
+  103 |
+  104 |       return data.results?.map((place: Record<string, unknown>) => this.formatPlaceDetails(place)) || [];
+Cached data for key: places:{"location":"Iceland"}
+Error searching YouTube creators: Error: YouTube search failed: 400
+    at CreatorService.searchYouTubeCreators (src\services\creator.ts:99:14)
+    at async CreatorService.findLocalCreators (src\services\creator.ts:53:51)
+    at async IntegratedRecommendationService.getCreatorData (src\services\integrated-recommendation.ts:551:23)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+   97 |
+   98 |       if (!searchResponse.ok) {
+>  99 |         throw new Error(`YouTube search failed: ${searchResponse.status}`);
+      |              ^
+  100 |       }
+  101 |
+  102 |       const searchData = await searchResponse.json();  
+Cached data for key: creator:{"location":"Interlaken","niche":"Travel"}
+Error searching places: Error: Places API status: REQUEST_DENIED
+    at PlacesService.searchPlaces (src\services\places.ts:101:14)
+    at async IntegratedRecommendationService.getPlacesData (src\services\integrated-recommendation.ts:606:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+   99 |
+  100 |       if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
+> 101 |         throw new Error(`Places API status: ${data.status}`);
+      |              ^
+  102 |       }
+  103 |
+  104 |       return data.results?.map((place: Record<string, unknown>) => this.formatPlaceDetails(place)) || [];
+Cached data for key: places:{"location":"Interlaken"}
+Error searching places: Error: Places API status: REQUEST_DENIED
+    at PlacesService.searchPlaces (src\services\places.ts:101:14)
+    at async IntegratedRecommendationService.getPlacesData (src\services\integrated-recommendation.ts:606:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+   99 |
+  100 |       if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
+> 101 |         throw new Error(`Places API status: ${data.status}`);
+      |              ^
+  102 |       }
+  103 |
+  104 |       return data.results?.map((place: Record<string, unknown>) => this.formatPlaceDetails(place)) || [];
+Cached data for key: places:{"location":"Singapore"}
+Error searching places: Error: Places API status: REQUEST_DENIED
+    at PlacesService.searchPlaces (src\services\places.ts:101:14)
+    at async IntegratedRecommendationService.getPlacesData (src\services\integrated-recommendation.ts:606:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+   99 |
+  100 |       if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
+> 101 |         throw new Error(`Places API status: ${data.status}`);
+      |              ^
+  102 |       }
+  103 |
+  104 |       return data.results?.map((place: Record<string, unknown>) => this.formatPlaceDetails(place)) || [];
+Cached data for key: places:{"location":"Queenstown"}
+Error searching places: Error: Places API status: REQUEST_DENIED
+    at PlacesService.searchPlaces (src\services\places.ts:101:14)
+    at async IntegratedRecommendationService.getPlacesData (src\services\integrated-recommendation.ts:606:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+   99 |
+  100 |       if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
+> 101 |         throw new Error(`Places API status: ${data.status}`);
+      |              ^
+  102 |       }
+  103 |
+  104 |       return data.results?.map((place: Record<string, unknown>) => this.formatPlaceDetails(place)) || [];
+Cached data for key: places:{"location":"Costa Rica"}
+Error getting Amadeus token: Error: Amadeus auth failed: 401
+    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
+    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
+    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
+    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+  101 |
+  102 |       if (!response.ok) {
+> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
+      |              ^
+  104 |       }
+  105 |
+  106 |       const data = await response.json();
+Error getting flight prices: Error: Amadeus auth failed: 401
+    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
+    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
+    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
+    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+  101 |
+  102 |       if (!response.ok) {
+> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
+      |              ^
+  104 |       }
+  105 |
+  106 |       const data = await response.json();
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Singapore","origin":"New York"}   
+Error getting Amadeus token: Error: Amadeus auth failed: 401   
+    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
+    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
+    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
+    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+  101 |
+  102 |       if (!response.ok) {
+> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
+      |              ^
+  104 |       }
+  105 |
+  106 |       const data = await response.json();
+Error getting flight prices: Error: Amadeus auth failed: 401
+    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
+    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
+    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
+    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+  101 |
+  102 |       if (!response.ok) {
+> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
+      |              ^
+  104 |       }
+  105 |
+  106 |       const data = await response.json();
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Costa Rica","origin":"New York"}  
+Error getting Amadeus token: Error: Amadeus auth failed: 401   
+    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
+    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
+    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
+    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+  101 |
+  102 |       if (!response.ok) {
+> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
+      |              ^
+  104 |       }
+  105 |
+  106 |       const data = await response.json();
+Error getting flight prices: Error: Amadeus auth failed: 401
+    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
+    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
+    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
+    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+  101 |
+  102 |       if (!response.ok) {
+> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
+      |              ^
+  104 |       }
+  105 |
+  106 |       const data = await response.json();
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Iceland","origin":"New York"}     
+Error getting Amadeus token: Error: Amadeus auth failed: 401
+    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
+    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
+    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
+    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+  101 |
+  102 |       if (!response.ok) {
+> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
+      |              ^
+  104 |       }
+  105 |
+  106 |       const data = await response.json();
+Error getting flight prices: Error: Amadeus auth failed: 401
+    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
+    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
+    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
+    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+  101 |
+  102 |       if (!response.ok) {
+> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
+      |              ^
+  104 |       }
+  105 |
+  106 |       const data = await response.json();
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Queenstown","origin":"New York"}  
+Error getting Amadeus token: Error: Amadeus auth failed: 401   
+    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
+    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
+    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
+    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+  101 |
+  102 |       if (!response.ok) {
+> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
+      |              ^
+  104 |       }
+  105 |
+  106 |       const data = await response.json();
+Error getting flight prices: Error: Amadeus auth failed: 401
+    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
+    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
+    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
+    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
+    at async IntegratedRecommendationService.enrichDestination 
+(src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+  101 |
+  102 |       if (!response.ok) {
+> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
+      |              ^
+  104 |       }
+  105 |
+  106 |       const data = await response.json();
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Interlaken","origin":"New York"}  
+Cached data for key: recommendations:{"preferences":{"budget":"2500-5000","duration":"3-5 days (short getaway)","style":"mid-range","contentFocus":"video content (vlogs, reels)","climate":["No preference"]},"themes":["business","technology","travel","writing"]}
+✅ PRIMARY ENGINE SUCCESS: Generated 3 optimized recommendations
+[MEDIUM] qloo.get-recommendations: Error: Operation timeout
+    at Timeout._onTimeout (src\services\errorHandler.ts:69:34) 
+  67 |         // Set timeout for the operation
+  68 |         const timeoutPromise = new Promise<never>((_, reject) =>
+> 69 |           setTimeout(() => reject(new Error('Operation timeout')), timeout)
+     |                                  ^
+  70 |         );
+  71 |
+  72 |         const result = await Promise.race([
+🎯 QLOO: Attempting to get dynamic destinations...
+🔍 QLOO: Trying endpoint /recommendations/destinations...
+📡 QLOO: Response status for /recommendations/destinations: 401🔍 QLOO: Trying endpoint /recommendations/travel...
+📡 QLOO: Response status for /recommendations/travel: 401
+🔍 QLOO: Trying endpoint /recommendations...
+📡 QLOO: Response status for /recommendations: 401
+🔍 QLOO: Trying endpoint /search/travel...
+📡 QLOO: Response status for /search/travel: 401
+⚠️ QLOO: All endpoints failed, using enhanced dynamic generatio
+n
+🚀 QLOO: Generating TRULY dynamic destinations - no fixed pools, pure AI generation...
+🔍 QLOO: Attempting real-time destination discovery via API... 
+🔍 QLOO: Trying discovery endpoint /discover/destinations...   
+🔍 QLOO: Trying discovery endpoint /search/places...
+🔍 QLOO: Trying discovery endpoint /recommendations/travel/discover...
+🔍 QLOO: Trying discovery endpoint /taste/destinations...
+❌ QLOO: All discovery endpoints failed
+🤖 AI: Generating destinations using AI analysis of taste vectors...
+✅ AI: Generated 12 unique destinations
+✅ AI Generation: Created 12 destinations via AI
+🎯 Generated destinations: [ 'Tallinn, Estonia', 'Medellín, Colombia', 'Dundee, Scotland' ]
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this 
+error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerMinutePerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"15"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"53s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
+    at async (src\app\api\recommendations\route.ts:330:15)     
+    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:328:36)
+    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
+    at async POST (src\app\api\recommendations\route.ts:13:9)  
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this 
+error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerMinutePerProjectPerModel-FreeTier","quotaDimensions":{"model":"gemini-1.5-flash","location":"global"},"quotaValue":"15"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"52s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
+    at async (src\app\api\recommendations\route.ts:330:15)     
+    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:328:36)
+    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
+    at async POST (src\app\api\recommendations\route.ts:13:9)  
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error parsing Gemini response: SyntaxError: Unexpected token ']', ..."October)",],
+    "re"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at GeminiService.parseGeminiResponse (src\services\gemini.ts:219:18)
+    at GeminiService.generateDynamicRecommendation (src\services\gemini.ts:104:34)
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28)
+    at async IntegratedRecommendationService.getAIDestinations 
+(src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+  217 |         .trim();
+  218 |
+> 219 |       return JSON.parse(cleanJson);
+      |                  ^
+  220 |     } catch (error) {
+  221 |       console.error('Error parsing Gemini response:', error);
+  222 |       console.log('Raw response:', text);
+Raw response: ```json
+{
+  "matchScore": 95,
+  "summary": "Seoul offers a vibrant blend of cutting-edge technology, rich history, and captivating culture – a perfect backdrop for Delwer.live's audience.  This itinerary focuses on maximizing content creation opportunities while aligning with the brand's business, technology, and travel themes.",
+  "highlights": [
+    "Unique blend of modern and traditional aesthetics for diverse content.",
+    "High-speed internet and tech-forward infrastructure for seamless content creation and sharing.",
+    "Abundant opportunities for brand collaborations with Korean businesses and tech companies.",
+    "Thriving creator community for networking and collaboration."
+  ],
+  "detailedDescription": "Seoul's dynamic energy perfectly complements Delwer.live's content themes. The city's juxtaposition 
+of futuristic skyscrapers and ancient palaces provides diverse 
+backdrops for visually stunning content.  The strong tech infrastructure ensures seamless content creation and upload, while the vibrant entrepreneurial scene offers numerous brand collaboration possibilities.  Furthermore, Seoul's rich history and culture offer compelling storytelling opportunities, attracting Delwer.live's global audience of bloggers, vloggers, and entrepreneurs.",
+  "contentOpportunities": {
+    "videoIdeas": [
+      "A day in the life of a Seoul entrepreneur (interviewing 
+local business owners).",
+      "Exploring Seoul's futuristic technology scene (visiting 
+Samsung 837 or other tech hubs).",
+      "A travel vlog showcasing the contrast between traditional Korean culture and modern Seoul.",
+      "Time-lapse video of Seoul's vibrant nightlife and cityscapes.",
+      "Reviewing Korean street food and highlighting unique culinary experiences."
+    ],
+    "photoSpots": [
+      "N Seoul Tower (iconic views of the city).",
+      "Bukchon Hanok Village (traditional Korean houses).",    
+      "Gangnam District (modern architecture and upscale shops).",
+      "Olympic Park (large green space with sculptures and modern design).",
+      "DMZ (Demilitarized Zone – a powerful historical and geopolitical backdrop)."
+    ],
+    "storytellingAngles": [
+      "The story of Seoul's rapid technological advancement and its impact on culture.",
+      "A personal journey exploring the blend of tradition and 
+modernity in Seoul.",
+      "The challenges and rewards of entrepreneurship in a dynamic city like Seoul."
+    ]
+  },
+  "brandCollaborations": {
+    "suggestedBrands": [
+      "Samsung",
+      "LG",
+      "Kakao (Korean tech company)",
+      "Korean Air",
+      "Korean Tourism Organization"
+    ],
+    "collaborationTypes": [
+      "Sponsored posts/videos featuring brand products or services.",
+      "Affiliate marketing promoting Korean tourism or businesses.",
+      "Experiential partnerships (e.g., attending a tech conference)."
+    ],
+    "monetizationPotential": "Seoul's popularity and Delwer.live's niche audience create significant monetization potential through sponsored content, affiliate marketing, and potential brand ambassadorships.  High-quality content showcasing Seoul's unique blend of technology and culture will attract high-paying sponsors."
+  },
+  "localCreators": {
+    "topCollaborators": [
+      {
+        "name": "[Find relevant Korean travel/tech creators on 
+YouTube/Instagram]",
+        "platform": "YouTube/Instagram",
+        "followers": "[Number of followers]",
+        "collaborationReason": "Collaboration with established 
+creators will enhance reach and audience engagement."
+      }
+    ],
+    "networkingOpportunities": [
+      "Attend local tech events or conferences.",
+      "Connect with creators through Seoul-based co-working spaces.",
+      "Engage with online communities focused on Korean travel 
+and technology."
+    ]
+  },
+  "budgetBreakdown": {
+    "summary": "Budget: $2500-$5000 (3-5 days).  Accommodation, food, and activities can be adjusted based on preference.",   
+    "costEfficiency": "Maximize content value by strategically 
+choosing locations and activities that offer diverse content opportunities.  Affordable food options are readily available, while splurges can be limited to high-impact experiences.",      
+    "savingTips": [
+      "Utilize public transportation (efficient and affordable).",
+      "Explore affordable local eateries instead of high-end restaurants.",
+      "Take advantage of free activities like visiting parks and temples."
+    ],
+    "splurgeRecommendations": [
+      "Stay in a unique hotel with great city views.",
+      "Attend a traditional Korean cultural performance."      
+    ]
+  },
+  "bestTimeToVisit": {
+    "months": ["Spring (April-May) and Autumn (September-October)",],
+    "reasoning": "These months offer pleasant weather, ideal for outdoor filming and photography, while avoiding the extreme heat of summer and cold of winter.",
+    "events": [
+      "Cherry Blossom Festival (Spring)",
+      "Seoul Lantern Festival (Autumn)"
+    ]
+  },
+  "practicalInfo": {
+    "visa": "Check visa requirements based on nationality.",   
+    "language": "Korean",
+    "currency": "South Korean Won (KRW)",
+    "safetyTips": [
+      "Be aware of pickpockets in crowded areas.",
+      "Learn basic Korean phrases for easier communication.",  
+      "Use reputable transportation services."
+    ],
+    "culturalTips": [
+      "Remove your shoes before entering homes and some restaurants.",
+      "Bowing is a common greeting.",
+      "Tipping is not customary."
+    ]
+  },
+  "tags": [
+    "#Seoul",
+    "#SouthKorea",
+    "#TravelVlog",
+    "#TravelBlogger",
+    "#TechTravel",
+    "#KoreanCulture",
+    "#BusinessTravel"
+  ]
+}
+```
 
-The export ErrorHandler was not found in module [project]/src/services/errorHandler.ts [app-route] 
-(ecmascript).
-Did you mean to import errorHandler?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-
-
-./src/services/dynamic-questions-v2.ts:4:1
-Export GeminiService doesn't exist in target module
-  2 | // Generates truly dynamic questions that adapt based on user context and previous answers   
-  3 |
-> 4 | import { GeminiService } from './gemini';
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  5 |
-  6 | interface DynamicQuestionV2 {
-  7 |   id: string;
-
-The export GeminiService was not found in module [project]/src/services/gemini.ts [app-route] (ecmascript).
-Did you mean to import geminiService?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import trace:
-  ./src/services/dynamic-questions-v2.ts
-  ./src/app/api/dynamic-questions/route.ts
-
-
- ⨯ ./src/app/api/dynamic-questions/route.ts:3:1
-Export ErrorHandler doesn't exist in target module
-  1 | import { NextRequest, NextResponse } from 'next/server';
-  2 | import { dynamicQuestionServiceV2 } from '@/services/dynamic-questions-v2';
-> 3 | import { ErrorHandler } from '@/services/errorHandler';
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | export async function POST(request: NextRequest) {
-  6 |   const errorHandler = new ErrorHandler('dynamic-questions-api');
-
-The export ErrorHandler was not found in module [project]/src/services/errorHandler.ts [app-route] 
-(ecmascript).
-Did you mean to import errorHandler?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-
-
-./src/services/dynamic-questions-v2.ts:4:1
-Export GeminiService doesn't exist in target module
-  2 | // Generates truly dynamic questions that adapt based on user context and previous answers   
-  3 |
-> 4 | import { GeminiService } from './gemini';
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  5 |
-  6 | interface DynamicQuestionV2 {
-  7 |   id: string;
-
-The export GeminiService was not found in module [project]/src/services/gemini.ts [app-route] (ecmascript).
-Did you mean to import geminiService?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import trace:
-  ./src/services/dynamic-questions-v2.ts
-  ./src/app/api/dynamic-questions/route.ts
-
-
- ○ Compiling /_error ...
- ✓ Compiled /_error in 3.1s
- POST /api/dynamic-questions 500 in 3929ms
- POST /api/dynamic-questions 500 in 3954ms
- POST /api/recommendations 500 in 652ms
- POST /api/recommendations 500 in 784ms
+Error generating Gemini recommendation: SyntaxError: Unexpected token ']', ..."October)",],
+    "re"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at GeminiService.parseGeminiResponse (src\services\gemini.ts:219:18)
+    at GeminiService.generateDynamicRecommendation (src\services\gemini.ts:104:34)
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28)
+    at async IntegratedRecommendationService.getAIDestinations 
+(src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)       
+    at async (src\app\api\recommendations\route.ts:65:23)      
+  217 |         .trim();
+  218 |
+> 219 |       return JSON.parse(cleanJson);
+      |                  ^
+  220 |     } catch (error) {
+  221 |       console.error('Error parsing Gemini response:', error);
+  222 |       console.log('Raw response:', text);
+✅ Generated 8 advanced Gemini recommendations
+Enriching destination: Queenstown
+Cache hit for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Queenstown","origin":"New York"}    
+Cache hit for key: creator:{"location":"Queenstown","niche":"Travel"}
+Cache hit for key: places:{"location":"Queenstown"}
+Enriching destination: Singapore
+Cache hit for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Singapore","origin":"New York"}     
+Cache hit for key: creator:{"location":"Singapore","niche":"Travel"}
+Cache hit for key: places:{"location":"Singapore"}
+Enriching destination: Iceland
+Cache hit for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Iceland","origin":"New York"}       
+Cache hit for key: creator:{"location":"Iceland","niche":"Travel"}
+Cache hit for key: places:{"location":"Iceland"}
+Enriching destination: Costa Rica
+Cache hit for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Costa Rica","origin":"New York"}    
+Cache hit for key: creator:{"location":"Costa Rica","niche":"Travel"}
+Cache hit for key: places:{"location":"Costa Rica"}
+Enriching destination: Interlaken
+Cache hit for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Interlaken","origin":"New York"}    
+Cache hit for key: creator:{"location":"Interlaken","niche":"Travel"}
+Cache hit for key: places:{"location":"Interlaken"}
+Cached data for key: recommendations:{"preferences":{"budget":"2500-5000","duration":"3-5 days (short getaway)","style":"mid-range","contentFocus":"video content (vlogs, reels)","climate":["No preference"]},"themes":["business","technology","travel","writing"]}
+✅ PRIMARY ENGINE SUCCESS: Generated 3 optimized recommendations
+🔍 PROCESSING: Applying creator and budget filtering to recommendations...
+🎯 CREATOR: Fetching real creator data for Tallinn, Unknown
+🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:person&filter.location=Tallinn&signal.interests.tags=business,technology,travel,writing
+🎯 CREATOR: Fetching real creator data for Medellín, Unknown   
+🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:person&filter.location=Medell%C3%ADn&signal.interests.tags=business,technology,travel,writing
+🎯 CREATOR: Fetching real creator data for Dundee, Unknown     
+🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:person&filter.location=Dundee&signal.interests.tags=business,technology,travel,writing
+🔍 QLOO: Trying creator endpoint /search?term=Dundee%20creators&types=urn:entity:person
+🔍 QLOO: Trying creator endpoint /search?term=Medell%C3%ADn%20creators&types=urn:entity:person
+🔍 QLOO: Trying creator endpoint /search?term=Tallinn%20creators&types=urn:entity:person
+🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:influencer&filter.location=Unknown
+🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:influencer&filter.location=Unknown
+⚠️ QLOO: Creator data fetch failed: All Qloo creator endpoints 
+failed
+❌ CREATOR: Error fetching creator data: Error: All Qloo creator
+ endpoints failed
+    at CreatorDataService.getCreatorsFromQloo (src\services\creator-data.ts:117:12)
+    at async CreatorDataService.getCreatorDataForDestination (src\services\creator-data.ts:34:27)
+    at async (src\app\api\recommendations\route.ts:361:28)     
+    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:355:39)
+    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
+    at async POST (src\app\api\recommendations\route.ts:13:9)  
+  115 |       }
+  116 |
+> 117 |       throw new Error('All Qloo creator endpoints failed');
+      |            ^
+  118 |     } catch (error) {
+  119 |       console.warn('⚠️ QLOO: Creator data fetch failed:
+', error instanceof Error ? error.message : String(error));    
+  120 |       throw error;
+⚠️ QLOO: Creator data fetch failed: All Qloo creator endpoints 
+failed
+❌ CREATOR: Error fetching creator data: Error: All Qloo creator
+ endpoints failed
+    at CreatorDataService.getCreatorsFromQloo (src\services\creator-data.ts:117:12)
+    at async CreatorDataService.getCreatorDataForDestination (src\services\creator-data.ts:34:27)
+    at async (src\app\api\recommendations\route.ts:361:28)     
+    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:355:39)
+    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
+    at async POST (src\app\api\recommendations\route.ts:13:9)  
+  115 |       }
+  116 |
+> 117 |       throw new Error('All Qloo creator endpoints failed');
+      |            ^
+  118 |     } catch (error) {
+  119 |       console.warn('⚠️ QLOO: Creator data fetch failed:
+', error instanceof Error ? error.message : String(error));    
+  120 |       throw error;
+🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:influencer&filter.location=Unknown
+⚠️ QLOO: Creator data fetch failed: All Qloo creator endpoints 
+failed
+❌ CREATOR: Error fetching creator data: Error: All Qloo creator
+ endpoints failed
+    at CreatorDataService.getCreatorsFromQloo (src\services\creator-data.ts:117:12)
+    at async CreatorDataService.getCreatorDataForDestination (src\services\creator-data.ts:34:27)
+    at async (src\app\api\recommendations\route.ts:361:28)     
+    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:355:39)
+    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
+    at async POST (src\app\api\recommendations\route.ts:13:9)  
+  115 |       }
+  116 |
+> 117 |       throw new Error('All Qloo creator endpoints failed');
+      |            ^
+  118 |     } catch (error) {
+  119 |       console.warn('⚠️ QLOO: Creator data fetch failed:
+', error instanceof Error ? error.message : String(error));    
+  120 |       throw error;
+⚠️ CREATOR: Tallinn has limited creator data (0) but keeping fo
+r user experience
+⚠️ CREATOR: Medellín has limited creator data (0) but keeping f
+or user experience
+⚠️ CREATOR: Dundee has limited creator data (0) but keeping for
+ user experience
+💰 BUDGET: Filtering destinations by budget: 2500-5000, duration: 3-5 days (short getaway)
+💰 BUDGET: Parsed constraints: {
+  userBudget: 3750,
+  duration: 3,
+  budgetType: 'total',
+  flexibility: 0.1,
+  currency: 'USD'
+}
+🧮 BUDGET: Calculating costs for Tallinn, Unknown (3 days)      
+✅ BUDGET: Got real budget data for Tallinn
+✅ BUDGET: Tallinn is affordable (0 USD)
+🧮 BUDGET: Calculating costs for Medellín, Unknown (3 days)     
+✅ BUDGET: Got real budget data for Medellín
+✅ BUDGET: Medellín is affordable (0 USD)
+🧮 BUDGET: Calculating costs for Dundee, Unknown (3 days)       
+✅ BUDGET: Got real budget data for Dundee
+✅ BUDGET: Dundee is affordable (0 USD)
+💰 BUDGET: Filtered 3 destinations (3 within budget)
+✅ BUDGET: Applied strict filtering, 3 destinations match budget
+✅ FILTERING: 3 → 3 → 3 (after creator and budget filtering)    
+✅ Generated 3 PRD-compliant recommendations with creator and bu
+dget validation
+Using fallback for recommendations-api.generate-recommendations POST /api/recommendations 200 in 85502ms

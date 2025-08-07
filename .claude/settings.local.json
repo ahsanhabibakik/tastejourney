@@ -32,7 +32,8 @@
       "Bash(cmd /c \"pnpm run build\")",
       "Bash(timeout:*)",
       "Bash(find:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(npm run:*)"
     ],
     "deny": []
   }

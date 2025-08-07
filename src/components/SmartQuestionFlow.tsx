@@ -40,11 +40,6 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
   const [validationError, setValidationError] = useState<string>('');
   const [editingQuestionId, setEditingQuestionId] = useState<string | null>(null);
 
-  // Load the first question
-  useEffect(() => {
-    loadNextQuestion();
-  }, []);
-
   const loadNextQuestion = useCallback(async () => {
     setLoading(true);
     setValidationError('');
@@ -56,6 +51,7 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
       );
 
       if (question) {
+        console.log(`🔄 Initial loading question ${questionNumber}: ${question.text}`);
         setCurrentQuestion(question);
         setSelectedOptions([]);
         setCustomInput('');
@@ -66,16 +62,23 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
         }
       } else {
         // No more questions - complete the flow
-        console.log('Question flow complete');
+        console.log('Initial load: Question flow complete');
         onComplete(context.previousAnswers);
       }
     } catch (error) {
-      console.error('Error loading question:', error);
+      console.error('Error loading initial question:', error);
       onComplete(context.previousAnswers);
     } finally {
       setLoading(false);
     }
   }, [context, questionNumber, onQuestionChange, onComplete]);
+
+  // Load the first question
+  useEffect(() => {
+    if (questionNumber === 1 && !currentQuestion) {
+      loadNextQuestion();
+    }
+  }, [questionNumber, currentQuestion, loadNextQuestion]);
 
   const handleAnswer = useCallback(async (answer: string | string[]) => {
     if (!currentQuestion) return;
@@ -98,33 +101,68 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
       currentQuestion.id,
       answer
     );
-    setContext(newContext);
-
+    
     console.log('📝 Answer recorded:', { 
       question: currentQuestion.id, 
       answer,
       budget: newContext.budget,
-      dailyBudget: newContext.dailyBudget
+      dailyBudget: newContext.dailyBudget,
+      previousAnswers: newContext.previousAnswers
     });
 
     // Check if this was the final question
     if (questionNumber >= 4) {
+      console.log('🎉 All questions completed, finalizing answers');
       onComplete(newContext.previousAnswers);
       return;
     }
 
-    // Load next question
-    setQuestionNumber(questionNumber + 1);
+    // Update context and question number before loading next question
+    setContext(newContext);
+    const nextQuestionNumber = questionNumber + 1;
+    setQuestionNumber(nextQuestionNumber);
     
-    // Small delay for better UX
-    setTimeout(() => {
-      loadNextQuestion();
-    }, 500);
+    // Load next question with updated context
+    setLoading(true);
+    setValidationError('');
+    
+    try {
+      const nextQuestion = await smartDynamicQuestionService.generateNextQuestion(
+        newContext,
+        nextQuestionNumber
+      );
 
-  }, [currentQuestion, context, questionNumber, onComplete, loadNextQuestion]);
+      if (nextQuestion) {
+        console.log(`🔄 Loading question ${nextQuestionNumber}: ${nextQuestion.text}`);
+        setCurrentQuestion(nextQuestion);
+        setSelectedOptions([]);
+        setCustomInput('');
+        setShowCustomInput(false);
+        
+        if (onQuestionChange) {
+          onQuestionChange(nextQuestion, nextQuestionNumber, newContext);
+        }
+      } else {
+        // No more questions - complete the flow
+        console.log('🎉 Question flow complete - no more questions');
+        onComplete(newContext.previousAnswers);
+      }
+    } catch (error) {
+      console.error('Error loading next question:', error);
+      onComplete(newContext.previousAnswers);
+    } finally {
+      setLoading(false);
+    }
+
+  }, [currentQuestion, context, questionNumber, onComplete, onQuestionChange]);
 
   const handleOptionClick = useCallback((option: string) => {
-    if (!currentQuestion) return;
+    if (!currentQuestion) {
+      console.warn('⚠️ handleOptionClick called but no current question');
+      return;
+    }
+
+    console.log(`👆 User clicked option: "${option}" for question: ${currentQuestion.id}`);
 
     if (option === 'Custom amount' || option.toLowerCase().includes('custom')) {
       setShowCustomInput(true);
@@ -139,6 +177,8 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
         return [...prev, option];
       });
     } else {
+      // Clear validation error before processing answer
+      setValidationError('');
       handleAnswer(option);
     }
   }, [currentQuestion, handleAnswer]);
@@ -306,16 +346,20 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
       </div>
       
       {/* Progress indicator */}
-      <div className="flex justify-center mt-4">
-        <div className="flex gap-1">
-          {Array.from({ length: 4 }, (_, i) => (
-            <div
-              key={i}
-              className={`w-2 h-2 rounded-full ${
-                i < questionNumber ? 'bg-primary' : 'bg-muted'
-              }`}
-            />
-          ))}
+      <div className="flex justify-center mt-6">
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-muted-foreground">Progress:</span>
+          <div className="flex gap-1">
+            {Array.from({ length: 4 }, (_, i) => (
+              <div
+                key={i}
+                className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+                  i < questionNumber ? 'bg-primary' : 'bg-muted'
+                }`}
+              />
+            ))}
+          </div>
+          <span className="text-xs text-muted-foreground">({questionNumber}/4)</span>
         </div>
       </div>
     </div>
