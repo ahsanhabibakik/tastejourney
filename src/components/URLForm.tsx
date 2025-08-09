@@ -84,12 +84,10 @@ const URLForm: React.FC<URLFormProps> = ({ onSubmit }) => {
           <label
             htmlFor="website-url"
             className="block text-sm font-medium text-foreground mb-2"
-          >
-            Your Website URL
-          </label>
+          >Your Website URL</label>
           <div className="space-y-2">
             <div className="relative">
-              <Globe className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Globe className="absolute left-3 top-3/4 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 id="website-url"
                 type="text"
