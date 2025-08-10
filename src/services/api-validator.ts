@@ -15,6 +15,80 @@ class ApiValidator {
     this.initializeKeyStatus();
   }
 
+  // PRD-compliant scoring with neutral values for missing signals
+  calculatePRDScore(signals: any): number {
+    const weights = {
+      qlooAffinity: 0.45,
+      communityEngagement: 0.25, 
+      brandCollaboration: 0.15,
+      budgetAlignment: 0.10,
+      localCreator: 0.05
+    };
+
+    // Use neutral values (0.5) for missing signals - DO NOT renormalize weights
+    const normalizedSignals = {
+      qlooAffinity: this.sanitizeScore(signals.qloo?.affinity ?? 0.5),
+      communityEngagement: this.sanitizeScore(this.calculateCommunityEngagement(signals) ?? 0.5),
+      brandCollaboration: this.sanitizeScore(signals.brand?.fit ?? 0.5), 
+      budgetAlignment: this.sanitizeScore(signals.budget?.alignment ?? 0.5),
+      localCreator: this.sanitizeScore(signals.creator?.collaboration ?? 0.5)
+    };
+
+    console.log('🎯 SCORING: Using PRD weights with neutral fallbacks:', {
+      weights,
+      signals: normalizedSignals,
+      missingSignals: this.getMissingSignals(signals)
+    });
+
+    // Calculate weighted score and ensure valid result
+    const totalScore = Object.entries(weights).reduce((score, [key, weight]) => {
+      const signalValue = normalizedSignals[key as keyof typeof normalizedSignals];
+      return score + (signalValue * weight);
+    }, 0);
+
+    return this.sanitizeScore(totalScore);
+  }
+
+  // Sanitize scores to prevent NaN and ensure valid range
+  private sanitizeScore(score: any): number {
+    if (typeof score !== 'number' || isNaN(score) || !isFinite(score)) {
+      console.warn('⚠️ SCORING: Invalid score detected, using neutral value:', score);
+      return 0.5; // Neutral fallback
+    }
+    
+    // Clamp to valid range [0, 1]
+    return Math.max(0, Math.min(1, score));
+  }
+
+  private calculateCommunityEngagement(signals: any): number | null {
+    const platformSignals = [];
+    
+    if (this.isKeyValid('YOUTUBE_API_KEY') && signals.youtube) {
+      platformSignals.push(signals.youtube.engagement || 0.5);
+    }
+    if (this.isKeyValid('INSTAGRAM_ACCESS_TOKEN') && signals.instagram) {
+      platformSignals.push(signals.instagram.engagement || 0.5);
+    }
+    if (this.isKeyValid('TIKTOK_CLIENT_KEY') && signals.tiktok) {
+      platformSignals.push(signals.tiktok.engagement || 0.5);
+    }
+
+    if (platformSignals.length === 0) {
+      console.log('⚠️ ENGAGEMENT: No social platforms available - using neutral');
+      return null; // Will use 0.5 neutral value
+    }
+
+    return platformSignals.reduce((sum, val) => sum + val, 0) / platformSignals.length;
+  }
+
+  private getMissingSignals(signals: any): string[] {
+    const missing = [];
+    if (!signals.qloo || !this.isKeyValid('QLOO_API_KEY')) missing.push('qloo');
+    if (!signals.youtube || !this.isKeyValid('YOUTUBE_API_KEY')) missing.push('youtube');
+    if (!signals.budget || !this.isKeyValid('AMADEUS_API_KEY')) missing.push('budget');
+    return missing;
+  }
+
   private initializeKeyStatus() {
     const apiKeys = [
       { name: 'GEMINI_API_KEY', required: false, fallback: true },

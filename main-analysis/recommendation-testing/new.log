@@ -1,197 +1,6 @@
-{
-        "name": "Guelph",
-        "entity_id": "0103393C-4175-45FD-B12C-CF3459B58FF8",   
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Guelph",
-            "admin1_region": "Ontario",
-            "admin2_region": "Wellington County",
-            "country_code": "CA"
-          }
-        },
-        "popularity": 0.44514959202175886,
-        "location": {
-          "lat": 43.55,
-          "lon": -80.25,
-          "geohash": "dpwzvb59pkqb"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:outdoor_activities",
-            "name": "Outdoor Activities",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Saint-Bonnet-le-Froid",
-        "entity_id": "011CFB4C-30B0-4EF7-A205-6BB4EE677974",   
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Riotord",
-            "admin1_region": "Auvergne",
-            "admin2_region": "Departement de la Haute-Loire",  
-            "country_code": "FR"
-          }
-        },
-        "popularity": 0.03218495013599275,
-        "location": {
-          "lat": 45.143604,
-          "lon": 4.4330196,
-          "geohash": "u050ufhh8cg0"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:off_beaten_path", 
-            "name": "Off the Beaten Path",
-            "type": "urn:tag:genre:destination"
-          },
-          {
-            "id": "urn:tag:genre:destination:foodie_destination",
-            "name": "Foodie Destination",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "McMinnville",
-        "entity_id": "01200DA0-D74C-49A9-BDB2-966E05B6DB2C",   
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "McMinnville",
-            "admin1_region": "Oregon",
-            "admin2_region": "Yamhill County",
-            "country_code": "US"
-          }
-        },
-        "popularity": 0.1600181323662738,
-        "location": {
-          "lat": 45.2099,
-          "lon": -123.1968,
-          "geohash": "c203hw4yf2pt"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:wine_country",    
-            "name": "Wine Country",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Groningen",
-        "entity_id": "01364A9F-91F7-4E70-9679-E3B5163B7551",   
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Groningen",
-            "admin1_region": "Groningen",
-            "admin2_region": "Gemeente Groningen",
-            "country_code": "NL"
-          }
-        },
-        "popularity": 0.39347234814143245,
-        "location": {
-          "lat": 53.217255,
-          "lon": 6.5696826,
-          "geohash": "u1kwtrzuuxq3"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:urban_destinations",
-            "name": "Urban Destinations",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Alappuzha",
-        "entity_id": "0183BE71-741F-459A-9560-858140760628",   
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Alleppey",
-            "admin1_region": "Kerala",
-            "admin2_region": "Alappuzha",
-            "country_code": "IN"
-          }
-        },
-        "popularity": 0.49229374433363554,
-        "location": {
-          "lat": 9.4903,
-          "lon": 76.3294,
-          "geohash": "t9wmbztm5bjj"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:beaches",
-            "name": "Beaches",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
-        "name": "Glenwood Springs",
-        "entity_id": "019D4BEF-84C0-4611-A30D-0A39F419A0BB",   
-        "type": "urn:entity",
-        "subtype": "urn:entity:destination",
-        "properties": {
-          "geocode": {
-            "name": "Glenwood Springs",
-            "admin1_region": "Colorado",
-            "admin2_region": "Garfield County",
-            "country_code": "US"
-          }
-        },
-        "popularity": 0.4528558476881233,
-        "location": {
-          "lat": 39.5396,
-          "lon": -107.329,
-          "geohash": "9x58vtvqugxr"
-        },
-        "tags": [
-          {
-            "id": "urn:tag:genre:destination:outdoor_activities",
-            "name": "Outdoor Activities",
-            "type": "urn:tag:genre:destination"
-          }
-        ],
-        "query": {
-          "affinity": 0.7649962877984056
-        },
-        "disambiguation": ""
-      },
-      {
+ {
         "name": "Kendal",
-        "entity_id": "01FA7B53-19B0-4DF8-9211-2E16C0100A7B",   
+        "entity_id": "01FA7B53-19B0-4DF8-9211-2E16C0100A7B",
         "type": "urn:entity",
         "subtype": "urn:entity:destination",
         "properties": {
@@ -222,7 +31,7 @@
       },
       {
         "name": "Lake Louise",
-        "entity_id": "000B9F41-1B3B-4051-94FC-A7E1BB38550B",   
+        "entity_id": "000B9F41-1B3B-4051-94FC-A7E1BB38550B",
         "type": "urn:entity",
         "subtype": "urn:entity:destination",
         "properties": {
@@ -273,21 +82,53 @@
       }
     ]
   },
-  "duration": 118
+  "duration": 123
 }
 ✅ Successfully received data from Qloo API
 ✅ Generated taste profile with 0.85 confidence
 📊 Recommendations: 10, Cultural Affinities: 8
- POST /api/profile-taste 200 in 7437ms
+ POST /api/profile-taste 200 in 8477ms
+⚠️ SERVICE: amadeus disabled - Missing key(s): AMADEUS_API_KEY, AMADEUS_API_SECRET
+⚠️ SERVICE: numbeo disabled - Missing key(s): NUMBEO_API_KEY
+⚠️ SERVICE: instagram disabled - Missing key(s): INSTAGRAM_ACCESS_TOKEN
+⚠️ SERVICE: tiktok disabled - Missing key(s): TIKTOK_CLIENT_KEY, TIKTOK_CLIENT_SECRET      
+⚠️ SERVICE: places disabled - Missing key(s): GOOGLE_PLACES_API_KEY
+⚠️ SERVICE: ticketmaster disabled - Missing key(s): TICKETMASTER_API_KEY
+⚠️ SERVICE: social_searcher disabled - Missing key(s): SOCIAL_SEARCHER_API_KEY
+⚠️ SERVICE: openai disabled - Missing key(s): OPENAI_API_KEY
+
+🚀 SERVICE CAPABILITY REPORT:
+✅ Enabled Services: [ 'qloo', 'scraperapi', 'youtube', 'gemini', 'sendgrid' ]
+❌ Disabled Services: [
+  'amadeus',
+  'numbeo',
+  'instagram',
+  'tiktok',
+  'places',
+  'ticketmaster',
+  'social_searcher',
+  'openai'
+]
+🔄 Fallbacks Available: [
+  'amadeus->heuristic-pricing',
+  'numbeo->cost-bands',
+  'instagram->omit-signal',
+  'tiktok->omit-signal',
+  'places->osm-nominatim',
+  'ticketmaster->omit-events',
+  'social_searcher->available-platforms',
+  'openai->retrieval-only'
+]
+
 🚀 PRIMARY ENGINE: Starting integrated recommendation generation...
 ✅ PRIMARY ENGINE: Website data received: {
   url: 'https://delwer.live',
-  themes: [ 'business', 'technology', 'travel', 'writing' ],   
+  themes: [ 'business', 'technology', 'travel', 'writing' ],
   contentType: 'Travel'
 }
 ✅ PRIMARY ENGINE: User profile prepared: {
   url: 'https://delwer.live',
-  themes: [ 'business', 'technology', 'travel', 'writing' ],   
+  themes: [ 'business', 'technology', 'travel', 'writing' ],
   hints: [
     'blogger',
     'traveler',
@@ -305,7 +146,8 @@
     }
   ],
   title: 'Md. Delwer Hossain – Corporate IT Manager & Full-Stack Developer',
-  description: 'Corporate IT Manager and Full-Stack Developer specializing in scalable web and SaaS solutions using Next.js, React, and MongoDB.',
+  description: 'Corporate IT Manager and Full-Stack Developer specializing in scalable web 
+and SaaS solutions using Next.js, React, and MongoDB.',
   keywords: [
     'full-stack developer',
     'next.js',
@@ -317,29 +159,29 @@
   ],
   audienceLocation: 'Global'
 }
-✅ PRIMARY ENGINE: Taste profile prepared, confidence: 0.8      
-🎯 PRIMARY ENGINE: Calling integratedRecommendationService...  
+✅ PRIMARY ENGINE: Taste profile prepared, confidence: 0.8
+🎯 PRIMARY ENGINE: Calling integratedRecommendationService...
 🚀 Starting integrated recommendation generation with all services...
 🎯 QLOO: Attempting to get dynamic destinations...
-🔍 QLOO: Trying endpoint /recommendations/destinations...      
-📡 QLOO: Response status for /recommendations/destinations: 401🔍 QLOO: Trying endpoint /recommendations/travel...
+🔍 QLOO: Trying endpoint /recommendations/destinations...
+📡 QLOO: Response status for /recommendations/destinations: 401
+🔍 QLOO: Trying endpoint /recommendations/travel...
 📡 QLOO: Response status for /recommendations/travel: 401
 🔍 QLOO: Trying endpoint /recommendations...
 📡 QLOO: Response status for /recommendations: 401
 🔍 QLOO: Trying endpoint /search/travel...
 📡 QLOO: Response status for /search/travel: 401
-⚠️ QLOO: All endpoints failed, using enhanced dynamic generatio
-n
-🚀 QLOO: Generating TRULY dynamic destinations - no fixed pools, pure AI generation...
-🔍 QLOO: Attempting real-time destination discovery via API... 
-🔍 QLOO: Trying discovery endpoint /discover/destinations...   
+⚠️ QLOO: All endpoints failed, using enhanced dynamic generation
+🚀 QLOO: Generating TRULY dynamic destinations - no fixed pools, pure AI generation...     
+🔍 QLOO: Attempting real-time destination discovery via API...
+🔍 QLOO: Trying discovery endpoint /discover/destinations...
 🔍 QLOO: Trying discovery endpoint /search/places...
 🔍 QLOO: Trying discovery endpoint /recommendations/travel/discover...
 🔍 QLOO: Trying discovery endpoint /taste/destinations...
 ❌ QLOO: All discovery endpoints failed
 🤖 AI: Generating destinations using AI analysis of taste vectors...
 [MEDIUM] qloo.get-recommendations: Error: Operation timeout
-    at Timeout._onTimeout (src\services\errorHandler.ts:69:34) 
+    at Timeout._onTimeout (src\services\errorHandler.ts:69:34)
   67 |         // Set timeout for the operation
   68 |         const timeoutPromise = new Promise<never>((_, reject) =>
 > 69 |           setTimeout(() => reject(new Error('Operation timeout')), timeout)
@@ -349,26 +191,26 @@ n
   72 |         const result = await Promise.race([
 🎯 QLOO: Attempting to get dynamic destinations...
 🔍 QLOO: Trying endpoint /recommendations/destinations...
-📡 QLOO: Response status for /recommendations/destinations: 401🔍 QLOO: Trying endpoint /recommendations/travel...
+📡 QLOO: Response status for /recommendations/destinations: 401
+🔍 QLOO: Trying endpoint /recommendations/travel...
+✅ AI: Generated 12 unique destinations
+✅ AI Generation: Created 12 destinations via AI
 📡 QLOO: Response status for /recommendations/travel: 401
 🔍 QLOO: Trying endpoint /recommendations...
 📡 QLOO: Response status for /recommendations: 401
 🔍 QLOO: Trying endpoint /search/travel...
 📡 QLOO: Response status for /search/travel: 401
-⚠️ QLOO: All endpoints failed, using enhanced dynamic generatio
-n
-🚀 QLOO: Generating TRULY dynamic destinations - no fixed pools, pure AI generation...
-🔍 QLOO: Attempting real-time destination discovery via API... 
-🔍 QLOO: Trying discovery endpoint /discover/destinations...   
+⚠️ QLOO: All endpoints failed, using enhanced dynamic generation
+🚀 QLOO: Generating TRULY dynamic destinations - no fixed pools, pure AI generation...     
+🔍 QLOO: Attempting real-time destination discovery via API...
+🔍 QLOO: Trying discovery endpoint /discover/destinations...
 🔍 QLOO: Trying discovery endpoint /search/places...
 🔍 QLOO: Trying discovery endpoint /recommendations/travel/discover...
 🔍 QLOO: Trying discovery endpoint /taste/destinations...
 ❌ QLOO: All discovery endpoints failed
 🤖 AI: Generating destinations using AI analysis of taste vectors...
-✅ AI: Generated 12 unique destinations
-✅ AI Generation: Created 12 destinations via AI
 [MEDIUM] recommendations-api.generate-recommendations: Error: Operation timeout
-    at Timeout._onTimeout (src\services\errorHandler.ts:69:34) 
+    at Timeout._onTimeout (src\services\errorHandler.ts:69:34)
   67 |         // Set timeout for the operation
   68 |         const timeoutPromise = new Promise<never>((_, reject) =>
 > 69 |           setTimeout(() => reject(new Error('Operation timeout')), timeout)
@@ -379,12 +221,12 @@ n
 🚀 PRIMARY ENGINE: Starting integrated recommendation generation...
 ✅ PRIMARY ENGINE: Website data received: {
   url: 'https://delwer.live',
-  themes: [ 'business', 'technology', 'travel', 'writing' ],   
+  themes: [ 'business', 'technology', 'travel', 'writing' ],
   contentType: 'Travel'
 }
 ✅ PRIMARY ENGINE: User profile prepared: {
   url: 'https://delwer.live',
-  themes: [ 'business', 'technology', 'travel', 'writing' ],   
+  themes: [ 'business', 'technology', 'travel', 'writing' ],
   hints: [
     'blogger',
     'traveler',
@@ -402,7 +244,8 @@ n
     }
   ],
   title: 'Md. Delwer Hossain – Corporate IT Manager & Full-Stack Developer',
-  description: 'Corporate IT Manager and Full-Stack Developer specializing in scalable web and SaaS solutions using Next.js, React, and MongoDB.',
+  description: 'Corporate IT Manager and Full-Stack Developer specializing in scalable web 
+and SaaS solutions using Next.js, React, and MongoDB.',
   keywords: [
     'full-stack developer',
     'next.js',
@@ -414,13 +257,13 @@ n
   ],
   audienceLocation: 'Global'
 }
-✅ PRIMARY ENGINE: Taste profile prepared, confidence: 0.8      
-🎯 PRIMARY ENGINE: Calling integratedRecommendationService...  
+✅ PRIMARY ENGINE: Taste profile prepared, confidence: 0.8
+🎯 PRIMARY ENGINE: Calling integratedRecommendationService...
 🚀 Starting integrated recommendation generation with all services...
 🎯 QLOO: Attempting to get dynamic destinations...
-🔍 QLOO: Trying endpoint /recommendations/destinations...      
+🔍 QLOO: Trying endpoint /recommendations/destinations...
 [HIGH] qloo.get-recommendations: Error: Operation timeout
-    at Timeout._onTimeout (src\services\errorHandler.ts:69:34) 
+    at Timeout._onTimeout (src\services\errorHandler.ts:69:34)
   67 |         // Set timeout for the operation
   68 |         const timeoutPromise = new Promise<never>((_, reject) =>
 > 69 |           setTimeout(() => reject(new Error('Operation timeout')), timeout)
@@ -451,398 +294,244 @@ Using fallback for qloo.get-recommendations
   'Patagonia, Chile',
   'Iceland, Iceland'
 ]
-📡 QLOO: Response status for /recommendations/destinations: 401🔍 QLOO: Trying endpoint /recommendations/travel...
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"16s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)    
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28) 
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:95:23)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"model":"gemini-1.5-flash","location":"global"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"16s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)    
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28) 
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:95:23)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+📡 QLOO: Response status for /recommendations/destinations: 401
+🔍 QLOO: Trying endpoint /recommendations/travel...
+✅ AI: Generated 12 unique destinations
+✅ AI Generation: Created 12 destinations via AI
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"14s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)    
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28) 
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:95:23)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"14s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)    
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28) 
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:95:23)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
 📡 QLOO: Response status for /recommendations/travel: 401
 🔍 QLOO: Trying endpoint /recommendations...
 📡 QLOO: Response status for /recommendations: 401
 🔍 QLOO: Trying endpoint /search/travel...
-✅ AI: Generated 12 unique destinations
-✅ AI Generation: Created 12 destinations via AI
 📡 QLOO: Response status for /search/travel: 401
-⚠️ QLOO: All endpoints failed, using enhanced dynamic generatio
-n
-🚀 QLOO: Generating TRULY dynamic destinations - no fixed pools, pure AI generation...
-🔍 QLOO: Attempting real-time destination discovery via API... 
-🔍 QLOO: Trying discovery endpoint /discover/destinations...   
+⚠️ QLOO: All endpoints failed, using enhanced dynamic generation
+🚀 QLOO: Generating TRULY dynamic destinations - no fixed pools, pure AI generation...     
+🔍 QLOO: Attempting real-time destination discovery via API...
+🔍 QLOO: Trying discovery endpoint /discover/destinations...
 🔍 QLOO: Trying discovery endpoint /search/places...
 🔍 QLOO: Trying discovery endpoint /recommendations/travel/discover...
 🔍 QLOO: Trying discovery endpoint /taste/destinations...
 ❌ QLOO: All discovery endpoints failed
 🤖 AI: Generating destinations using AI analysis of taste vectors...
 ✅ Generated 8 advanced Gemini recommendations
-Enriching destination: Queenstown
 Enriching destination: Singapore
 Enriching destination: Iceland
 Enriching destination: Costa Rica
 Enriching destination: Interlaken
-Instagram access token not found, using fallback creators      
-Instagram access token not found, using fallback creators      
-Instagram access token not found, using fallback creators      
-Instagram access token not found, using fallback creators      
-Instagram access token not found, using fallback creators      
-Error searching YouTube creators: Error: YouTube search failed: 400
-    at CreatorService.searchYouTubeCreators (src\services\creator.ts:99:14)
-    at async CreatorService.findLocalCreators (src\services\creator.ts:53:51)
-    at async IntegratedRecommendationService.getCreatorData (src\services\integrated-recommendation.ts:551:23)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-   97 |
-   98 |       if (!searchResponse.ok) {
->  99 |         throw new Error(`YouTube search failed: ${searchResponse.status}`);
-      |              ^
-  100 |       }
-  101 |
-  102 |       const searchData = await searchResponse.json();  
-Cached data for key: creator:{"location":"Queenstown","niche":"Travel"}
-Error searching YouTube creators: Error: YouTube search failed: 400
-    at CreatorService.searchYouTubeCreators (src\services\creator.ts:99:14)
-    at async CreatorService.findLocalCreators (src\services\creator.ts:53:51)
-    at async IntegratedRecommendationService.getCreatorData (src\services\integrated-recommendation.ts:551:23)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-   97 |
-   98 |       if (!searchResponse.ok) {
->  99 |         throw new Error(`YouTube search failed: ${searchResponse.status}`);
-      |              ^
-  100 |       }
-  101 |
-  102 |       const searchData = await searchResponse.json();  
-Cached data for key: creator:{"location":"Iceland","niche":"Travel"}
-Error searching YouTube creators: Error: YouTube search failed: 400
-    at CreatorService.searchYouTubeCreators (src\services\creator.ts:99:14)
-    at async CreatorService.findLocalCreators (src\services\creator.ts:53:51)
-    at async IntegratedRecommendationService.getCreatorData (src\services\integrated-recommendation.ts:551:23)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-   97 |
-   98 |       if (!searchResponse.ok) {
->  99 |         throw new Error(`YouTube search failed: ${searchResponse.status}`);
-      |              ^
-  100 |       }
-  101 |
-  102 |       const searchData = await searchResponse.json();  
-Cached data for key: creator:{"location":"Costa Rica","niche":"Travel"}
-Error searching YouTube creators: Error: YouTube search failed: 400
-    at CreatorService.searchYouTubeCreators (src\services\creator.ts:99:14)
-    at async CreatorService.findLocalCreators (src\services\creator.ts:53:51)
-    at async IntegratedRecommendationService.getCreatorData (src\services\integrated-recommendation.ts:551:23)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-   97 |
-   98 |       if (!searchResponse.ok) {
->  99 |         throw new Error(`YouTube search failed: ${searchResponse.status}`);
-      |              ^
-  100 |       }
-  101 |
-  102 |       const searchData = await searchResponse.json();  
-Cached data for key: creator:{"location":"Singapore","niche":"Travel"}
-Error searching places: Error: Places API status: REQUEST_DENIED
-    at PlacesService.searchPlaces (src\services\places.ts:101:14)
-    at async IntegratedRecommendationService.getPlacesData (src\services\integrated-recommendation.ts:606:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-   99 |
-  100 |       if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
-> 101 |         throw new Error(`Places API status: ${data.status}`);
-      |              ^
-  102 |       }
-  103 |
-  104 |       return data.results?.map((place: Record<string, unknown>) => this.formatPlaceDetails(place)) || [];
-Cached data for key: places:{"location":"Iceland"}
-Error searching YouTube creators: Error: YouTube search failed: 400
-    at CreatorService.searchYouTubeCreators (src\services\creator.ts:99:14)
-    at async CreatorService.findLocalCreators (src\services\creator.ts:53:51)
-    at async IntegratedRecommendationService.getCreatorData (src\services\integrated-recommendation.ts:551:23)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-   97 |
-   98 |       if (!searchResponse.ok) {
->  99 |         throw new Error(`YouTube search failed: ${searchResponse.status}`);
-      |              ^
-  100 |       }
-  101 |
-  102 |       const searchData = await searchResponse.json();  
-Cached data for key: creator:{"location":"Interlaken","niche":"Travel"}
-Error searching places: Error: Places API status: REQUEST_DENIED
-    at PlacesService.searchPlaces (src\services\places.ts:101:14)
-    at async IntegratedRecommendationService.getPlacesData (src\services\integrated-recommendation.ts:606:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-   99 |
-  100 |       if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
-> 101 |         throw new Error(`Places API status: ${data.status}`);
-      |              ^
-  102 |       }
-  103 |
-  104 |       return data.results?.map((place: Record<string, unknown>) => this.formatPlaceDetails(place)) || [];
-Cached data for key: places:{"location":"Interlaken"}
-Error searching places: Error: Places API status: REQUEST_DENIED
-    at PlacesService.searchPlaces (src\services\places.ts:101:14)
-    at async IntegratedRecommendationService.getPlacesData (src\services\integrated-recommendation.ts:606:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-   99 |
-  100 |       if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
-> 101 |         throw new Error(`Places API status: ${data.status}`);
-      |              ^
-  102 |       }
-  103 |
-  104 |       return data.results?.map((place: Record<string, unknown>) => this.formatPlaceDetails(place)) || [];
+Enriching destination: Kyoto
+Instagram access token not found, using fallback creators
+Google Places API key not found, using fallback places
+Instagram access token not found, using fallback creators
+Google Places API key not found, using fallback places
+Instagram access token not found, using fallback creators
+Google Places API key not found, using fallback places
+Instagram access token not found, using fallback creators
+Google Places API key not found, using fallback places
+Instagram access token not found, using fallback creators
+Google Places API key not found, using fallback places
+Error getting flight prices: Error: Amadeus API credentials not found
+    at BudgetService.getAmadeusToken (src\services\budget.ts:86:12)
+    at BudgetService.getFlightPrices (src\services\budget.ts:123:31)
+    at BudgetService.calculateBudget (src\services\budget.ts:64:13)
+    at IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:41)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:95:23)
+  84 |
+  85 |     if (!this.amadeusApiKey || !this.amadeusApiSecret) {
+> 86 |       throw new Error('Amadeus API credentials not found');
+     |            ^
+  87 |     }
+  88 |
+  89 |     try {
 Cached data for key: places:{"location":"Singapore"}
-Error searching places: Error: Places API status: REQUEST_DENIED
-    at PlacesService.searchPlaces (src\services\places.ts:101:14)
-    at async IntegratedRecommendationService.getPlacesData (src\services\integrated-recommendation.ts:606:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-   99 |
-  100 |       if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
-> 101 |         throw new Error(`Places API status: ${data.status}`);
-      |              ^
-  102 |       }
-  103 |
-  104 |       return data.results?.map((place: Record<string, unknown>) => this.formatPlaceDetails(place)) || [];
-Cached data for key: places:{"location":"Queenstown"}
-Error searching places: Error: Places API status: REQUEST_DENIED
-    at PlacesService.searchPlaces (src\services\places.ts:101:14)
-    at async IntegratedRecommendationService.getPlacesData (src\services\integrated-recommendation.ts:606:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-   99 |
-  100 |       if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
-> 101 |         throw new Error(`Places API status: ${data.status}`);
-      |              ^
-  102 |       }
-  103 |
-  104 |       return data.results?.map((place: Record<string, unknown>) => this.formatPlaceDetails(place)) || [];
+Error getting flight prices: Error: Amadeus API credentials not found
+    at BudgetService.getAmadeusToken (src\services\budget.ts:86:12)
+    at BudgetService.getFlightPrices (src\services\budget.ts:123:31)
+    at BudgetService.calculateBudget (src\services\budget.ts:64:13)
+    at IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:41)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:95:23)
+  84 |
+  85 |     if (!this.amadeusApiKey || !this.amadeusApiSecret) {
+> 86 |       throw new Error('Amadeus API credentials not found');
+     |            ^
+  87 |     }
+  88 |
+  89 |     try {
+Cached data for key: places:{"location":"Iceland"}
+Error getting flight prices: Error: Amadeus API credentials not found
+    at BudgetService.getAmadeusToken (src\services\budget.ts:86:12)
+    at BudgetService.getFlightPrices (src\services\budget.ts:123:31)
+    at BudgetService.calculateBudget (src\services\budget.ts:64:13)
+    at IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:41)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:95:23)
+  84 |
+  85 |     if (!this.amadeusApiKey || !this.amadeusApiSecret) {
+> 86 |       throw new Error('Amadeus API credentials not found');
+     |            ^
+  87 |     }
+  88 |
+  89 |     try {
 Cached data for key: places:{"location":"Costa Rica"}
-Error getting Amadeus token: Error: Amadeus auth failed: 401
-    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
-    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
-    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
-    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-  101 |
-  102 |       if (!response.ok) {
-> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
-      |              ^
-  104 |       }
-  105 |
-  106 |       const data = await response.json();
-Error getting flight prices: Error: Amadeus auth failed: 401
-    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
-    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
-    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
-    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-  101 |
-  102 |       if (!response.ok) {
-> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
-      |              ^
-  104 |       }
-  105 |
-  106 |       const data = await response.json();
-Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Singapore","origin":"New York"}   
-Error getting Amadeus token: Error: Amadeus auth failed: 401   
-    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
-    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
-    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
-    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-  101 |
-  102 |       if (!response.ok) {
-> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
-      |              ^
-  104 |       }
-  105 |
-  106 |       const data = await response.json();
-Error getting flight prices: Error: Amadeus auth failed: 401
-    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
-    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
-    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
-    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-  101 |
-  102 |       if (!response.ok) {
-> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
-      |              ^
-  104 |       }
-  105 |
-  106 |       const data = await response.json();
-Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Costa Rica","origin":"New York"}  
-Error getting Amadeus token: Error: Amadeus auth failed: 401   
-    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
-    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
-    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
-    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-  101 |
-  102 |       if (!response.ok) {
-> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
-      |              ^
-  104 |       }
-  105 |
-  106 |       const data = await response.json();
-Error getting flight prices: Error: Amadeus auth failed: 401
-    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
-    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
-    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
-    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-  101 |
-  102 |       if (!response.ok) {
-> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
-      |              ^
-  104 |       }
-  105 |
-  106 |       const data = await response.json();
-Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Iceland","origin":"New York"}     
-Error getting Amadeus token: Error: Amadeus auth failed: 401
-    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
-    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
-    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
-    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-  101 |
-  102 |       if (!response.ok) {
-> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
-      |              ^
-  104 |       }
-  105 |
-  106 |       const data = await response.json();
-Error getting flight prices: Error: Amadeus auth failed: 401
-    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
-    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
-    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
-    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-  101 |
-  102 |       if (!response.ok) {
-> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
-      |              ^
-  104 |       }
-  105 |
-  106 |       const data = await response.json();
-Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Queenstown","origin":"New York"}  
-Error getting Amadeus token: Error: Amadeus auth failed: 401   
-    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
-    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
-    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
-    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-  101 |
-  102 |       if (!response.ok) {
-> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
-      |              ^
-  104 |       }
-  105 |
-  106 |       const data = await response.json();
-Error getting flight prices: Error: Amadeus auth failed: 401
-    at BudgetService.getAmadeusToken (src\services\budget.ts:103:14)
-    at async BudgetService.getFlightPrices (src\services\budget.ts:123:20)
-    at async BudgetService.calculateBudget (src\services\budget.ts:63:39)
-    at async IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:21)
-    at async IntegratedRecommendationService.enrichDestination 
-(src\services\integrated-recommendation.ts:442:39)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-  101 |
-  102 |       if (!response.ok) {
-> 103 |         throw new Error(`Amadeus auth failed: ${response.status}`);
-      |              ^
-  104 |       }
-  105 |
-  106 |       const data = await response.json();
-Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Interlaken","origin":"New York"}  
-Cached data for key: recommendations:{"preferences":{"budget":"2500-5000","duration":"3-5 days (short getaway)","style":"mid-range","contentFocus":"video content (vlogs, reels)","climate":["No preference"]},"themes":["business","technology","travel","writing"]}
-✅ PRIMARY ENGINE SUCCESS: Generated 3 optimized recommendations
-[MEDIUM] qloo.get-recommendations: Error: Operation timeout
-    at Timeout._onTimeout (src\services\errorHandler.ts:69:34) 
-  67 |         // Set timeout for the operation
-  68 |         const timeoutPromise = new Promise<never>((_, reject) =>
-> 69 |           setTimeout(() => reject(new Error('Operation timeout')), timeout)
-     |                                  ^
-  70 |         );
-  71 |
-  72 |         const result = await Promise.race([
-🎯 QLOO: Attempting to get dynamic destinations...
-🔍 QLOO: Trying endpoint /recommendations/destinations...
-📡 QLOO: Response status for /recommendations/destinations: 401🔍 QLOO: Trying endpoint /recommendations/travel...
-📡 QLOO: Response status for /recommendations/travel: 401
-🔍 QLOO: Trying endpoint /recommendations...
-📡 QLOO: Response status for /recommendations: 401
-🔍 QLOO: Trying endpoint /search/travel...
-📡 QLOO: Response status for /search/travel: 401
-⚠️ QLOO: All endpoints failed, using enhanced dynamic generatio
-n
-🚀 QLOO: Generating TRULY dynamic destinations - no fixed pools, pure AI generation...
-🔍 QLOO: Attempting real-time destination discovery via API... 
-🔍 QLOO: Trying discovery endpoint /discover/destinations...   
-🔍 QLOO: Trying discovery endpoint /search/places...
-🔍 QLOO: Trying discovery endpoint /recommendations/travel/discover...
-🔍 QLOO: Trying discovery endpoint /taste/destinations...
-❌ QLOO: All discovery endpoints failed
-🤖 AI: Generating destinations using AI analysis of taste vectors...
+Error getting flight prices: Error: Amadeus API credentials not found
+    at BudgetService.getAmadeusToken (src\services\budget.ts:86:12)
+    at BudgetService.getFlightPrices (src\services\budget.ts:123:31)
+    at BudgetService.calculateBudget (src\services\budget.ts:64:13)
+    at IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:41)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:95:23)
+  84 |
+  85 |     if (!this.amadeusApiKey || !this.amadeusApiSecret) {
+> 86 |       throw new Error('Amadeus API credentials not found');
+     |            ^
+  87 |     }
+  88 |
+  89 |     try {
+Cached data for key: places:{"location":"Interlaken"}
+Error getting flight prices: Error: Amadeus API credentials not found
+    at BudgetService.getAmadeusToken (src\services\budget.ts:86:12)
+    at BudgetService.getFlightPrices (src\services\budget.ts:123:31)
+    at BudgetService.calculateBudget (src\services\budget.ts:64:13)
+    at IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:41)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:95:23)
+  84 |
+  85 |     if (!this.amadeusApiKey || !this.amadeusApiSecret) {
+> 86 |       throw new Error('Amadeus API credentials not found');
+     |            ^
+  87 |     }
+  88 |
+  89 |     try {
+Cached data for key: places:{"location":"Kyoto"}
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Singapore","origin":"New York"}
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Iceland","origin":"New York"}
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Costa Rica","origin":"New York"}
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Interlaken","origin":"New York"}
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Kyoto","origin":"New York"}
+Cached data for key: creator:{"location":"Singapore","niche":"Travel"}
+Cached data for key: creator:{"location":"Iceland","niche":"Travel"}
+Cached data for key: creator:{"location":"Kyoto","niche":"Travel"}
+Cached data for key: creator:{"location":"Interlaken","niche":"Travel"}
+Cached data for key: creator:{"location":"Costa Rica","niche":"Travel"}
+Cached data for key: recommendations:{"preferences":{"budget":"2500-5000","duration":"3-5 days (short getaway)","style":"mid-range","contentFocus":"mixed content (photo + video)","climate":["Temperate & mild weather"]},"themes":["business","technology","travel","writing"]}✅ PRIMARY ENGINE SUCCESS: Generated 3 optimized recommendations
 ✅ AI: Generated 12 unique destinations
 ✅ AI Generation: Created 12 destinations via AI
-🎯 Generated destinations: [ 'Tallinn, Estonia', 'Medellín, Colombia', 'Dundee, Scotland' ]
-Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this 
-error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerMinutePerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"15"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"53s"}]
+🎯 INTEGRATED: Generating dynamic base destinations for themes: [ 'business', 'technology', 'travel', 'writing' ]
+🎯 INTEGRATED: Taste vector scores: {
+  adventure: 0.9323,
+  culture: 0.96855,
+  luxury: 0.45099999999999996,
+  food: 0.41799278737012074,
+  nature: 0.929,
+  urban: 0.9815,
+  budget: 0.6000000000000001
+}
+✅ INTEGRATED: Generated dynamic destinations: [
+  'Singapore, Singapore',
+  'Seoul, South Korea',
+  'Shenzhen, China',
+  'Tel Aviv, Israel',
+  'Tallinn, Estonia',
+  'Queenstown, New Zealand',
+  'Patagonia, Chile',
+  'Iceland, Iceland'
+]
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"1s"}]
     at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
     at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
     at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
-    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
-    at async (src\app\api\recommendations\route.ts:330:15)     
-    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:328:36)
-    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
-    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
-    at async POST (src\app\api\recommendations\route.ts:13:9)  
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)    
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28) 
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:95:23)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:72:23)
+    at async POST (src\app\api\recommendations\route.ts:43:9)
    97 |       const prompt = this.buildRecommendationPrompt(request);
    98 |
 >  99 |       const result = await this.model.generateContent(prompt);
@@ -854,17 +543,17 @@ error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"ty
   statusText: 'Too Many Requests',
   errorDetails: [Array]
 }
-Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this 
-error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerMinutePerProjectPerModel-FreeTier","quotaDimensions":{"model":"gemini-1.5-flash","location":"global"},"quotaValue":"15"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"52s"}]
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"1s"}]
     at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
     at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
     at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
-    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)
-    at async (src\app\api\recommendations\route.ts:330:15)     
-    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:328:36)
-    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
-    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
-    at async POST (src\app\api\recommendations\route.ts:13:9)  
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)    
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28) 
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:95:23)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:72:23)
+    at async POST (src\app\api\recommendations\route.ts:43:9)
    97 |       const prompt = this.buildRecommendationPrompt(request);
    98 |
 >  99 |       const result = await this.model.generateContent(prompt);
@@ -876,278 +565,253 @@ error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"ty
   statusText: 'Too Many Requests',
   errorDetails: [Array]
 }
-Error parsing Gemini response: SyntaxError: Unexpected token ']', ..."October)",],
-    "re"... is not valid JSON
-    at JSON.parse (<anonymous>)
-    at GeminiService.parseGeminiResponse (src\services\gemini.ts:219:18)
-    at GeminiService.generateDynamicRecommendation (src\services\gemini.ts:104:34)
-    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28)
-    at async IntegratedRecommendationService.getAIDestinations 
-(src\services\integrated-recommendation.ts:330:38)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-  217 |         .trim();
-  218 |
-> 219 |       return JSON.parse(cleanJson);
-      |                  ^
-  220 |     } catch (error) {
-  221 |       console.error('Error parsing Gemini response:', error);
-  222 |       console.log('Raw response:', text);
-Raw response: ```json
-{
-  "matchScore": 95,
-  "summary": "Seoul offers a vibrant blend of cutting-edge technology, rich history, and captivating culture – a perfect backdrop for Delwer.live's audience.  This itinerary focuses on maximizing content creation opportunities while aligning with the brand's business, technology, and travel themes.",
-  "highlights": [
-    "Unique blend of modern and traditional aesthetics for diverse content.",
-    "High-speed internet and tech-forward infrastructure for seamless content creation and sharing.",
-    "Abundant opportunities for brand collaborations with Korean businesses and tech companies.",
-    "Thriving creator community for networking and collaboration."
-  ],
-  "detailedDescription": "Seoul's dynamic energy perfectly complements Delwer.live's content themes. The city's juxtaposition 
-of futuristic skyscrapers and ancient palaces provides diverse 
-backdrops for visually stunning content.  The strong tech infrastructure ensures seamless content creation and upload, while the vibrant entrepreneurial scene offers numerous brand collaboration possibilities.  Furthermore, Seoul's rich history and culture offer compelling storytelling opportunities, attracting Delwer.live's global audience of bloggers, vloggers, and entrepreneurs.",
-  "contentOpportunities": {
-    "videoIdeas": [
-      "A day in the life of a Seoul entrepreneur (interviewing 
-local business owners).",
-      "Exploring Seoul's futuristic technology scene (visiting 
-Samsung 837 or other tech hubs).",
-      "A travel vlog showcasing the contrast between traditional Korean culture and modern Seoul.",
-      "Time-lapse video of Seoul's vibrant nightlife and cityscapes.",
-      "Reviewing Korean street food and highlighting unique culinary experiences."
-    ],
-    "photoSpots": [
-      "N Seoul Tower (iconic views of the city).",
-      "Bukchon Hanok Village (traditional Korean houses).",    
-      "Gangnam District (modern architecture and upscale shops).",
-      "Olympic Park (large green space with sculptures and modern design).",
-      "DMZ (Demilitarized Zone – a powerful historical and geopolitical backdrop)."
-    ],
-    "storytellingAngles": [
-      "The story of Seoul's rapid technological advancement and its impact on culture.",
-      "A personal journey exploring the blend of tradition and 
-modernity in Seoul.",
-      "The challenges and rewards of entrepreneurship in a dynamic city like Seoul."
-    ]
-  },
-  "brandCollaborations": {
-    "suggestedBrands": [
-      "Samsung",
-      "LG",
-      "Kakao (Korean tech company)",
-      "Korean Air",
-      "Korean Tourism Organization"
-    ],
-    "collaborationTypes": [
-      "Sponsored posts/videos featuring brand products or services.",
-      "Affiliate marketing promoting Korean tourism or businesses.",
-      "Experiential partnerships (e.g., attending a tech conference)."
-    ],
-    "monetizationPotential": "Seoul's popularity and Delwer.live's niche audience create significant monetization potential through sponsored content, affiliate marketing, and potential brand ambassadorships.  High-quality content showcasing Seoul's unique blend of technology and culture will attract high-paying sponsors."
-  },
-  "localCreators": {
-    "topCollaborators": [
-      {
-        "name": "[Find relevant Korean travel/tech creators on 
-YouTube/Instagram]",
-        "platform": "YouTube/Instagram",
-        "followers": "[Number of followers]",
-        "collaborationReason": "Collaboration with established 
-creators will enhance reach and audience engagement."
-      }
-    ],
-    "networkingOpportunities": [
-      "Attend local tech events or conferences.",
-      "Connect with creators through Seoul-based co-working spaces.",
-      "Engage with online communities focused on Korean travel 
-and technology."
-    ]
-  },
-  "budgetBreakdown": {
-    "summary": "Budget: $2500-$5000 (3-5 days).  Accommodation, food, and activities can be adjusted based on preference.",   
-    "costEfficiency": "Maximize content value by strategically 
-choosing locations and activities that offer diverse content opportunities.  Affordable food options are readily available, while splurges can be limited to high-impact experiences.",      
-    "savingTips": [
-      "Utilize public transportation (efficient and affordable).",
-      "Explore affordable local eateries instead of high-end restaurants.",
-      "Take advantage of free activities like visiting parks and temples."
-    ],
-    "splurgeRecommendations": [
-      "Stay in a unique hotel with great city views.",
-      "Attend a traditional Korean cultural performance."      
-    ]
-  },
-  "bestTimeToVisit": {
-    "months": ["Spring (April-May) and Autumn (September-October)",],
-    "reasoning": "These months offer pleasant weather, ideal for outdoor filming and photography, while avoiding the extreme heat of summer and cold of winter.",
-    "events": [
-      "Cherry Blossom Festival (Spring)",
-      "Seoul Lantern Festival (Autumn)"
-    ]
-  },
-  "practicalInfo": {
-    "visa": "Check visa requirements based on nationality.",   
-    "language": "Korean",
-    "currency": "South Korean Won (KRW)",
-    "safetyTips": [
-      "Be aware of pickpockets in crowded areas.",
-      "Learn basic Korean phrases for easier communication.",  
-      "Use reputable transportation services."
-    ],
-    "culturalTips": [
-      "Remove your shoes before entering homes and some restaurants.",
-      "Bowing is a common greeting.",
-      "Tipping is not customary."
-    ]
-  },
-  "tags": [
-    "#Seoul",
-    "#SouthKorea",
-    "#TravelVlog",
-    "#TravelBlogger",
-    "#TechTravel",
-    "#KoreanCulture",
-    "#BusinessTravel"
-  ]
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"1s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)    
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28) 
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:95:23)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:72:23)
+    at async POST (src\app\api\recommendations\route.ts:43:9)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
 }
-```
-
-Error generating Gemini recommendation: SyntaxError: Unexpected token ']', ..."October)",],
-    "re"... is not valid JSON
-    at JSON.parse (<anonymous>)
-    at GeminiService.parseGeminiResponse (src\services\gemini.ts:219:18)
-    at GeminiService.generateDynamicRecommendation (src\services\gemini.ts:104:34)
-    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28)
-    at async IntegratedRecommendationService.getAIDestinations 
-(src\services\integrated-recommendation.ts:330:38)
-    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)       
-    at async (src\app\api\recommendations\route.ts:65:23)      
-  217 |         .trim();
-  218 |
-> 219 |       return JSON.parse(cleanJson);
-      |                  ^
-  220 |     } catch (error) {
-  221 |       console.error('Error parsing Gemini response:', error);
-  222 |       console.log('Raw response:', text);
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"1s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)    
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28) 
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:95:23)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:72:23)
+    at async POST (src\app\api\recommendations\route.ts:43:9)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"1s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)    
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28) 
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:95:23)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:72:23)
+    at async POST (src\app\api\recommendations\route.ts:43:9)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"model":"gemini-1.5-flash","location":"global"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"1s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)    
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28) 
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:95:23)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:72:23)
+    at async POST (src\app\api\recommendations\route.ts:43:9)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"1s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)    
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28) 
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:95:23)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:72:23)
+    at async POST (src\app\api\recommendations\route.ts:43:9)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
+Error generating Gemini recommendation: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"model":"gemini-1.5-flash","location":"global"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"1s"}]
+    at handleResponseNotOk (.next\server\chunks\_36cf9647._.js:693:11)
+    at async makeRequest (.next\server\chunks\_36cf9647._.js:665:9)
+    at async generateContent (.next\server\chunks\_36cf9647._.js:1107:22)
+    at async GeminiService.generateDynamicRecommendation (src\services\gemini.ts:99:21)    
+    at async GeminiService.generateMultipleRecommendations (src\services\gemini.ts:347:28) 
+    at async IntegratedRecommendationService.getAIDestinations (src\services\integrated-recommendation.ts:330:38)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:134:29)
+    at async (src\app\api\recommendations\route.ts:95:23)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:72:23)
+    at async POST (src\app\api\recommendations\route.ts:43:9)
+   97 |       const prompt = this.buildRecommendationPrompt(request);
+   98 |
+>  99 |       const result = await this.model.generateContent(prompt);
+      |                     ^
+  100 |       const response = await result.response;
+  101 |       const text = response.text();
+  102 |        {
+  status: 429,
+  statusText: 'Too Many Requests',
+  errorDetails: [Array]
+}
 ✅ Generated 8 advanced Gemini recommendations
-Enriching destination: Queenstown
-Cache hit for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Queenstown","origin":"New York"}    
-Cache hit for key: creator:{"location":"Queenstown","niche":"Travel"}
-Cache hit for key: places:{"location":"Queenstown"}
-Enriching destination: Singapore
-Cache hit for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Singapore","origin":"New York"}     
-Cache hit for key: creator:{"location":"Singapore","niche":"Travel"}
-Cache hit for key: places:{"location":"Singapore"}
-Enriching destination: Iceland
-Cache hit for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Iceland","origin":"New York"}       
-Cache hit for key: creator:{"location":"Iceland","niche":"Travel"}
-Cache hit for key: places:{"location":"Iceland"}
-Enriching destination: Costa Rica
-Cache hit for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Costa Rica","origin":"New York"}    
-Cache hit for key: creator:{"location":"Costa Rica","niche":"Travel"}
-Cache hit for key: places:{"location":"Costa Rica"}
-Enriching destination: Interlaken
-Cache hit for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Interlaken","origin":"New York"}    
-Cache hit for key: creator:{"location":"Interlaken","niche":"Travel"}
-Cache hit for key: places:{"location":"Interlaken"}
-Cached data for key: recommendations:{"preferences":{"budget":"2500-5000","duration":"3-5 days (short getaway)","style":"mid-range","contentFocus":"video content (vlogs, reels)","climate":["No preference"]},"themes":["business","technology","travel","writing"]}
-✅ PRIMARY ENGINE SUCCESS: Generated 3 optimized recommendations
-🔍 PROCESSING: Applying creator and budget filtering to recommendations...
-🎯 CREATOR: Fetching real creator data for Tallinn, Unknown
-🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:person&filter.location=Tallinn&signal.interests.tags=business,technology,travel,writing
-🎯 CREATOR: Fetching real creator data for Medellín, Unknown   
-🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:person&filter.location=Medell%C3%ADn&signal.interests.tags=business,technology,travel,writing
-🎯 CREATOR: Fetching real creator data for Dundee, Unknown     
-🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:person&filter.location=Dundee&signal.interests.tags=business,technology,travel,writing
-🔍 QLOO: Trying creator endpoint /search?term=Dundee%20creators&types=urn:entity:person
-🔍 QLOO: Trying creator endpoint /search?term=Medell%C3%ADn%20creators&types=urn:entity:person
-🔍 QLOO: Trying creator endpoint /search?term=Tallinn%20creators&types=urn:entity:person
-🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:influencer&filter.location=Unknown
-🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:influencer&filter.location=Unknown
-⚠️ QLOO: Creator data fetch failed: All Qloo creator endpoints 
-failed
-❌ CREATOR: Error fetching creator data: Error: All Qloo creator
- endpoints failed
-    at CreatorDataService.getCreatorsFromQloo (src\services\creator-data.ts:117:12)
-    at async CreatorDataService.getCreatorDataForDestination (src\services\creator-data.ts:34:27)
-    at async (src\app\api\recommendations\route.ts:361:28)     
-    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:355:39)
-    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
-    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
-    at async POST (src\app\api\recommendations\route.ts:13:9)  
-  115 |       }
-  116 |
-> 117 |       throw new Error('All Qloo creator endpoints failed');
-      |            ^
-  118 |     } catch (error) {
-  119 |       console.warn('⚠️ QLOO: Creator data fetch failed:
-', error instanceof Error ? error.message : String(error));    
-  120 |       throw error;
-⚠️ QLOO: Creator data fetch failed: All Qloo creator endpoints 
-failed
-❌ CREATOR: Error fetching creator data: Error: All Qloo creator
- endpoints failed
-    at CreatorDataService.getCreatorsFromQloo (src\services\creator-data.ts:117:12)
-    at async CreatorDataService.getCreatorDataForDestination (src\services\creator-data.ts:34:27)
-    at async (src\app\api\recommendations\route.ts:361:28)     
-    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:355:39)
-    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
-    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
-    at async POST (src\app\api\recommendations\route.ts:13:9)  
-  115 |       }
-  116 |
-> 117 |       throw new Error('All Qloo creator endpoints failed');
-      |            ^
-  118 |     } catch (error) {
-  119 |       console.warn('⚠️ QLOO: Creator data fetch failed:
-', error instanceof Error ? error.message : String(error));    
-  120 |       throw error;
-🔍 QLOO: Trying creator endpoint /v2/insights?filter.type=urn:entity:influencer&filter.location=Unknown
-⚠️ QLOO: Creator data fetch failed: All Qloo creator endpoints 
-failed
-❌ CREATOR: Error fetching creator data: Error: All Qloo creator
- endpoints failed
-    at CreatorDataService.getCreatorsFromQloo (src\services\creator-data.ts:117:12)
-    at async CreatorDataService.getCreatorDataForDestination (src\services\creator-data.ts:34:27)
-    at async (src\app\api\recommendations\route.ts:361:28)     
-    at async getDynamicFallbackRecommendations (src\app\api\recommendations\route.ts:355:39)
-    at async POST.__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$errorHandler$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__.errorHandler.withFallback.timeout (src\app\api\recommendations\route.ts:98:29)
-    at async ErrorHandler.withFallback (src\services\errorHandler.ts:94:37)
-    at async POST (src\app\api\recommendations\route.ts:13:9)  
-  115 |       }
-  116 |
-> 117 |       throw new Error('All Qloo creator endpoints failed');
-      |            ^
-  118 |     } catch (error) {
-  119 |       console.warn('⚠️ QLOO: Creator data fetch failed:
-', error instanceof Error ? error.message : String(error));    
-  120 |       throw error;
-⚠️ CREATOR: Tallinn has limited creator data (0) but keeping fo
-r user experience
-⚠️ CREATOR: Medellín has limited creator data (0) but keeping f
-or user experience
-⚠️ CREATOR: Dundee has limited creator data (0) but keeping for
- user experience
-💰 BUDGET: Filtering destinations by budget: 2500-5000, duration: 3-5 days (short getaway)
-💰 BUDGET: Parsed constraints: {
-  userBudget: 3750,
-  duration: 3,
-  budgetType: 'total',
-  flexibility: 0.1,
-  currency: 'USD'
-}
-🧮 BUDGET: Calculating costs for Tallinn, Unknown (3 days)      
-✅ BUDGET: Got real budget data for Tallinn
-✅ BUDGET: Tallinn is affordable (0 USD)
-🧮 BUDGET: Calculating costs for Medellín, Unknown (3 days)     
-✅ BUDGET: Got real budget data for Medellín
-✅ BUDGET: Medellín is affordable (0 USD)
-🧮 BUDGET: Calculating costs for Dundee, Unknown (3 days)       
-✅ BUDGET: Got real budget data for Dundee
-✅ BUDGET: Dundee is affordable (0 USD)
-💰 BUDGET: Filtered 3 destinations (3 within budget)
-✅ BUDGET: Applied strict filtering, 3 destinations match budget
-✅ FILTERING: 3 → 3 → 3 (after creator and budget filtering)    
-✅ Generated 3 PRD-compliant recommendations with creator and bu
-dget validation
-Using fallback for recommendations-api.generate-recommendations POST /api/recommendations 200 in 85502ms
+Enriching destination: Medellín, Colombia
+Enriching destination: Tbilisi, Georgia
+Enriching destination: Valparaíso, Chile
+Enriching destination: Sarajevo, Bosnia and Herzegovina
+Enriching destination: Kathmandu Valley, Nepal
+Instagram access token not found, using fallback creators
+Google Places API key not found, using fallback places
+Instagram access token not found, using fallback creators
+Google Places API key not found, using fallback places
+Instagram access token not found, using fallback creators
+Google Places API key not found, using fallback places
+Instagram access token not found, using fallback creators
+Google Places API key not found, using fallback places
+Instagram access token not found, using fallback creators
+Google Places API key not found, using fallback places
+Error getting flight prices: Error: Amadeus API credentials not found
+    at BudgetService.getAmadeusToken (src\services\budget.ts:86:12)
+    at BudgetService.getFlightPrices (src\services\budget.ts:123:31)
+    at BudgetService.calculateBudget (src\services\budget.ts:64:13)
+    at IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:41)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:95:23)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:72:23)
+    at async POST (src\app\api\recommendations\route.ts:43:9)
+  84 |
+  85 |     if (!this.amadeusApiKey || !this.amadeusApiSecret) {
+> 86 |       throw new Error('Amadeus API credentials not found');
+     |            ^
+  87 |     }
+  88 |
+  89 |     try {
+Cached data for key: places:{"location":"Medellín, Colombia"}
+Error getting flight prices: Error: Amadeus API credentials not found
+    at BudgetService.getAmadeusToken (src\services\budget.ts:86:12)
+    at BudgetService.getFlightPrices (src\services\budget.ts:123:31)
+    at BudgetService.calculateBudget (src\services\budget.ts:64:13)
+    at IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:41)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:95:23)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:72:23)
+    at async POST (src\app\api\recommendations\route.ts:43:9)
+  84 |
+  85 |     if (!this.amadeusApiKey || !this.amadeusApiSecret) {
+> 86 |       throw new Error('Amadeus API credentials not found');
+     |            ^
+  87 |     }
+  88 |
+  89 |     try {
+Cached data for key: places:{"location":"Tbilisi, Georgia"}
+Error getting flight prices: Error: Amadeus API credentials not found
+    at BudgetService.getAmadeusToken (src\services\budget.ts:86:12)
+    at BudgetService.getFlightPrices (src\services\budget.ts:123:31)
+    at BudgetService.calculateBudget (src\services\budget.ts:64:13)
+    at IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:41)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:95:23)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:72:23)
+    at async POST (src\app\api\recommendations\route.ts:43:9)
+  84 |
+  85 |     if (!this.amadeusApiKey || !this.amadeusApiSecret) {
+> 86 |       throw new Error('Amadeus API credentials not found');
+     |            ^
+  87 |     }
+  88 |
+  89 |     try {
+Cached data for key: places:{"location":"Valparaíso, Chile"}
+Error getting flight prices: Error: Amadeus API credentials not found
+    at BudgetService.getAmadeusToken (src\services\budget.ts:86:12)
+    at BudgetService.getFlightPrices (src\services\budget.ts:123:31)
+    at BudgetService.calculateBudget (src\services\budget.ts:64:13)
+    at IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:41)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:95:23)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:72:23)
+    at async POST (src\app\api\recommendations\route.ts:43:9)
+  84 |
+  85 |     if (!this.amadeusApiKey || !this.amadeusApiSecret) {
+> 86 |       throw new Error('Amadeus API credentials not found');
+     |            ^
+  87 |     }
+  88 |
+  89 |     try {
+Cached data for key: places:{"location":"Sarajevo, Bosnia and Herzegovina"}
+Error getting flight prices: Error: Amadeus API credentials not found
+    at BudgetService.getAmadeusToken (src\services\budget.ts:86:12)
+    at BudgetService.getFlightPrices (src\services\budget.ts:123:31)
+    at BudgetService.calculateBudget (src\services\budget.ts:64:13)
+    at IntegratedRecommendationService.getBudgetData (src\services\integrated-recommendation.ts:468:41)
+    at async IntegratedRecommendationService.enrichDestination (src\services\integrated-recommendation.ts:442:39)
+    at async IntegratedRecommendationService.generateRecommendations (src\services\integrated-recommendation.ts:140:35)
+    at async (src\app\api\recommendations\route.ts:95:23)
+    at async ErrorHandler.withFallback (src\services\errorHandler.ts:72:23)
+    at async POST (src\app\api\recommendations\route.ts:43:9)
+  84 |
+  85 |     if (!this.amadeusApiKey || !this.amadeusApiSecret) {
+> 86 |       throw new Error('Amadeus API credentials not found');
+     |            ^
+  87 |     }
+  88 |
+  89 |     try {
+Cached data for key: places:{"location":"Kathmandu Valley, Nepal"}
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Medellín, Colombia","origin":"New York"}
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Tbilisi, Georgia","origin":"New York"}
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Valparaíso, Chile","origin":"New York"}
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Sarajevo, Bosnia and Herzegovina","origin":"New York"}
+Cached data for key: budget:{"dates":{"duration":"3-5 days (short getaway)"},"destination":"Kathmandu Valley, Nepal","origin":"New York"}
+Cached data for key: creator:{"location":"Sarajevo, Bosnia and Herzegovina","niche":"Travel"}
+Cached data for key: creator:{"location":"Medellín, Colombia","niche":"Travel"}
+Cached data for key: creator:{"location":"Valparaíso, Chile","niche":"Travel"}
+Cached data for key: creator:{"location":"Tbilisi, Georgia","niche":"Travel"}
+Cached data for key: creator:{"location":"Kathmandu Valley, Nepal","niche":"Travel"}
+Cached data for key: recommendations:{"preferences":{"budget":"2500-5000","duration":"3-5 days (short getaway)","style":"mid-range","contentFocus":"mixed content (photo + video)","climate":["Temperate & mild weather"]},"themes":["business","technology","travel","writing"]}✅ PRIMARY ENGINE SUCCESS: Generated 3 optimized recommendations
+ POST /api/recommendations 200 in 51849ms

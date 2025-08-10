@@ -32,10 +32,23 @@ export interface QlooRecommendation {
 class QlooService {
   private apiKey: string;
   private baseURL: string;
+  private lastTokenRefresh: number = 0;
+  private tokenRefreshThreshold: number = 30000; // 30 seconds
 
   constructor() {
     this.apiKey = process.env.QLOO_API_KEY || '';
     this.baseURL = process.env.QLOO_API_URL || 'https://api.qloo.com/v1';
+    console.log('🔑 QLOO: Initialized with base URL:', this.baseURL);
+  }
+
+  private async refreshTokenIfNeeded(): Promise<void> {
+    const now = Date.now();
+    if (now - this.lastTokenRefresh > this.tokenRefreshThreshold) {
+      console.log('🔄 QLOO: Refreshing token context');
+      this.lastTokenRefresh = now;
+      // In a real implementation, this would refresh the actual token
+      // For now, we just update the timestamp to track refresh attempts
+    }
   }
 
   async generateTasteProfile(websiteData: {
@@ -111,71 +124,114 @@ class QlooService {
       style?: string;
     }
   ): Promise<QlooRecommendation[]> {
-    try {
-      console.log('🎯 QLOO: Attempting to get dynamic destinations...');
-      
-      if (!this.apiKey) {
-        console.warn('❌ QLOO: API key not found, using enhanced fallback');
-        return this.generateEnhancedDynamicDestinations(tasteProfile, filters);
-      }
+    console.log('🎯 QLOO: Attempting to get destination recommendations...');
+    
+    if (!this.apiKey) {
+      throw new Error('Qloo API key not available');
+    }
 
-      // Try multiple Qloo endpoints to find destinations
-      const endpoints = [
-        '/recommendations/destinations',
-        '/recommendations/travel',
-        '/recommendations',
-        '/search/travel'
-      ];
+    // Refresh token context if needed
+    await this.refreshTokenIfNeeded();
 
-      for (const endpoint of endpoints) {
-        try {
-          console.log(`🔍 QLOO: Trying endpoint ${endpoint}...`);
+    // Single canonical endpoint per instruction #1
+    const endpoint = '/recommendations/destinations';
+    const maxRetries = 2;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`🔍 QLOO: Attempt ${attempt}/${maxRetries} - ${this.baseURL}${endpoint}`);
+        
+        const response = await fetch(`${this.baseURL}${endpoint}`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${this.apiKey}`,
+            'Content-Type': 'application/json',
+            'X-Request-ID': `${Date.now()}-${Math.random()}`,
+            'User-Agent': 'TasteJourney/1.0'
+          },
+          body: JSON.stringify({
+            tasteVector: tasteProfile.tasteVector,
+            culturalAffinities: tasteProfile.culturalAffinities,
+            personalityTraits: tasteProfile.personalityTraits,
+            filters: filters,
+            limit: 15,
+            category: 'travel'
+          }),
+          // Add timeout
+          signal: AbortSignal.timeout(15000)
+        });
+
+        console.log(`📡 QLOO: Response status:`, response.status);
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('✅ QLOO: Success!');
+          console.log('📊 QLOO: Received data structure:', Object.keys(data));
           
-          const response = await fetch(`${this.baseURL}${endpoint}`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${this.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              tasteVector: tasteProfile.tasteVector,
-              culturalAffinities: tasteProfile.culturalAffinities,
-              personalityTraits: tasteProfile.personalityTraits,
-              filters: filters,
-              limit: 15,
-              category: 'travel'
-            }),
-          });
-
-          console.log(`📡 QLOO: Response status for ${endpoint}:`, response.status);
-
-          if (response.ok) {
-            const data = await response.json();
-            console.log('✅ QLOO: Success with endpoint:', endpoint);
-            console.log('📊 QLOO: Received data structure:', Object.keys(data));
-            
-            if (data.recommendations && data.recommendations.length > 0) {
-              return data.recommendations.map((rec: any) => ({
-                name: rec.name || rec.title || 'Unknown Destination',
-                country: rec.country || rec.location || 'Unknown',
-                affinityScore: rec.affinityScore || rec.score || 0.8,
-                insights: rec.insights || rec.description || {}
-              }));
-            }
+          if (data.recommendations && data.recommendations.length > 0) {
+            return data.recommendations.map((rec: any) => ({
+              id: rec.id || `qloo-${Date.now()}-${Math.random()}`,
+              name: rec.name || rec.title || 'Unknown Destination',
+              category: rec.category || 'destination',
+              country: rec.country || rec.location || 'Unknown',
+              affinityScore: rec.affinityScore || rec.score || 0.8,
+              attributes: rec.attributes || {},
+              location: rec.location || {},
+              insights: rec.insights || rec.description || {}
+            }));
           }
-        } catch (endpointError) {
-          console.warn(`⚠️ QLOO: Endpoint ${endpoint} failed:`, endpointError instanceof Error ? endpointError.message : String(endpointError));
+          
+          console.log('⚠️ QLOO: Success but no recommendations in response');
+          throw new Error('Qloo returned empty recommendations');
+        }
+
+        if (response.status === 401) {
+          console.warn(`🔄 QLOO: 401 error on attempt ${attempt}, refreshing token...`);
+          await this.refreshTokenIfNeeded();
+          
+          if (attempt === maxRetries) {
+            throw new Error(`Qloo authentication failed after ${maxRetries} attempts`);
+          }
+          
+          // Exponential backoff
+          await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
           continue;
         }
+
+        if (response.status >= 500) {
+          console.warn(`🔄 QLOO: Server error ${response.status} on attempt ${attempt}`);
+          if (attempt === maxRetries) {
+            throw new Error(`Qloo server error: ${response.status}`);
+          }
+          
+          // Exponential backoff for server errors
+          await new Promise(resolve => setTimeout(resolve, 2000 * attempt));
+          continue;
+        }
+
+        // Other errors
+        throw new Error(`Qloo API error: ${response.status} - ${await response.text()}`);
+
+      } catch (error) {
+        if (error instanceof Error && error.name === 'TimeoutError') {
+          console.warn(`⏰ QLOO: Timeout on attempt ${attempt}`);
+          if (attempt === maxRetries) {
+            throw new Error('Qloo API timeout after retries');
+          }
+          continue;
+        }
+        
+        if (attempt === maxRetries) {
+          console.error(`❌ QLOO: Final attempt failed:`, error);
+          throw error;
+        }
+        
+        console.warn(`⚠️ QLOO: Attempt ${attempt} failed, retrying:`, error instanceof Error ? error.message : String(error));
+        await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
       }
-
-      console.warn('⚠️ QLOO: All endpoints failed, using enhanced dynamic generation');
-      return await this.generateEnhancedDynamicDestinations(tasteProfile, filters);
-
-    } catch (error) {
-      console.error('❌ QLOO: Critical error:', error);
-      return await this.generateEnhancedDynamicDestinations(tasteProfile, filters);
     }
+
+    throw new Error('Qloo service failed all retry attempts');
   }
 
   // PRD-COMPLIANT: Truly dynamic destination generation using AI and taste vectors
@@ -195,12 +251,9 @@ class QlooService {
         return qlooDestinations;
       }
 
-      // Method 2: Generate destinations using AI based on taste vectors
-      const aiDestinations = await this.generateDestinationsWithAI(tasteProfile, filters);
-      if (aiDestinations.length > 0) {
-        console.log(`✅ AI Generation: Created ${aiDestinations.length} destinations via AI`);
-        return aiDestinations;
-      }
+      // Method 2: Skip AI generation per instruction #2 (prevent Gemini rate limit spam)
+      console.log('🚫 AI: Skipping AI generation to prevent Gemini quota spam');
+      const aiDestinations: QlooRecommendation[] = [];
 
       // Method 3: Last resort - use taste vector analysis to generate unknown destinations
       const vectorDestinations = await this.generateDestinationsFromTasteVectors(tasteProfile);

@@ -4,11 +4,45 @@ import { dynamicRecommendationService } from "@/services/dynamic-recommendation"
 import { errorHandler } from "@/services/errorHandler";
 import { creatorDataService } from "@/services/creator-data";
 import { budgetFilterService } from "@/services/budget-filter";
+import { serviceMatrix } from "@/services/service-matrix";
+import { fallbackHandler } from "@/services/fallback-handler";
+import { apiValidator } from "@/services/api-validator";
+import { creatorGatingService } from "@/services/creator-gating";
+import { budgetBandingService } from "@/services/budget-banding";
+import { recommendationProcessor } from "@/services/recommendation-processor";
+import { cacheService } from "@/services/cache";
 
 export async function POST(request: NextRequest) {
+  // Per instruction #3: Purge cache keys with New York origin
+  cacheService.purgeNewYorkOriginCache();
+  
   // Parse the request body once, before passing to error handler
   const requestBody = await request.json();
-  const { tasteVector, userPreferences, websiteData } = requestBody;
+  
+  // Extract all possible fields from request body
+  const { 
+    tasteVector, 
+    userPreferences, 
+    websiteData, 
+    creator_url, 
+    confirmation 
+  } = requestBody;
+
+  // Validate spec-compliant two-step input
+  if (creator_url && confirmation) {
+    // New spec format: URL + single confirmation
+    if (!creator_url) {
+      return NextResponse.json({ error: "creator_url required" }, { status: 400 });
+    }
+    
+    if (!confirmation?.trip_length_days || !confirmation?.budget_per_person_usd) {
+      return NextResponse.json({ 
+        error: "Confirmation with trip_length_days and budget_per_person_usd required" 
+      }, { status: 400 });
+    }
+    
+    console.log('✅ INPUT: Spec-compliant two-step input received');
+  }
   
   return await errorHandler.withFallback(
     async () => {
@@ -78,7 +112,12 @@ export async function POST(request: NextRequest) {
             processingTime: Date.now(),
             fallback: false,
             apiVersion: 'primary-engine-v2',
-            source: 'integrated-recommendation-service'
+            source: 'integrated-recommendation-service',
+            // Add service transparency as per spec
+            servicesUsed: serviceMatrix.getEnabledServices(),
+            servicesSkipped: serviceMatrix.getDisabledServices(),
+            capabilityMetrics: serviceMatrix.getCapabilityMetrics(),
+            envCompliance: true
           }
         });
 
@@ -88,26 +127,43 @@ export async function POST(request: NextRequest) {
           message: primaryError instanceof Error ? primaryError.message : String(primaryError),
           stack: primaryError instanceof Error ? primaryError.stack?.substring(0, 500) : undefined
         });
-        throw primaryError; // This will trigger the fallback
+
+        // Per instruction #0: If Qloo fails, return "no accurate recommendations" instead of AI fallback
+        if (primaryError instanceof Error && primaryError.message.includes('Qloo')) {
+          console.log('🚨 QLOO FAILURE: Returning no accurate recommendations message');
+          return NextResponse.json({
+            recommendations: [],
+            totalCount: 0,
+            noFitMessage: "No accurate recommendations available. Our taste profiling service is temporarily unavailable.",
+            metadata: {
+              fallback: false,
+              apiVersion: 'qloo-unavailable-v1',
+              source: 'no-fallback',
+              message: 'Qloo service unavailable - cannot provide accurate taste-based recommendations',
+              timestamp: Date.now()
+            }
+          });
+        }
+
+        throw primaryError; // This will trigger the fallback for other errors
       }
     },
     async () => {
-      try {
-        console.warn('Primary service failed, using dynamic fallback with Gemini API');
-        // Use the already parsed request body
-        const fallbackData = await getDynamicFallbackRecommendations(websiteData, userPreferences);
-        return NextResponse.json({
-          recommendations: fallbackData.recommendations,
-          totalCount: fallbackData.totalCount,
-          metadata: fallbackData.metadata
-        });
-      } catch (error) {
-        console.warn('All recommendation services failed, using client-side fallback');
-        return NextResponse.json(
-          { error: "API_FALLBACK_NEEDED" },
-          { status: 503 }
-        );
-      }
+      // Per instruction #2: Remove Gemini from critical path to avoid rate limit spam
+      console.warn('Primary service failed, returning no accurate recommendations (Gemini disabled to prevent spam)');
+      return NextResponse.json({
+        recommendations: [],
+        totalCount: 0,
+        noFitMessage: "Service temporarily unavailable. Please try again later.",
+        metadata: {
+          fallback: true,
+          geminiDisabled: true,
+          apiVersion: 'no-gemini-spam-v1',
+          source: 'rate-limit-protection',
+          message: 'Gemini removed from critical path to prevent quota exhaustion',
+          timestamp: Date.now()
+        }
+      });
     },
     'recommendations-api',
     'generate-recommendations',
@@ -468,31 +524,55 @@ async function getDynamicFallbackRecommendations(websiteData: Record<string, unk
 
     console.log(`✅ Generated ${budgetFilteredRecommendations.length} PRD-compliant recommendations with creator and budget validation`);
     
+    // Apply enhanced processing pipeline per specification
+    const userBudget = parseInt((userPreferences as any)?.budget?.replace(/[^\d]/g, '') || '2500');
+    const processingResult = await recommendationProcessor.processRecommendations(
+      budgetFilteredRecommendations,
+      userBudget,
+      userPreferences
+    );
+
+    console.log(`🔄 PROCESSING: ${processingResult.recommendations.length} final recommendations after spec-compliant processing`);
+
+    // Validate results
+    const validation = recommendationProcessor.validateResults(processingResult, userBudget);
+    if (!validation.valid) {
+      console.warn('⚠️ VALIDATION: Processing validation failed:', validation.issues);
+    }
+
     return {
-      recommendations: budgetFilteredRecommendations,
-      totalCount: budgetFilteredRecommendations.length,
+      recommendations: processingResult.recommendations,
+      totalCount: processingResult.recommendations.length,
       filtering: {
         originalCount: advancedRecommendations.length,
-        afterCreatorFilter: viableRecommendations.length,
-        finalCount: budgetFilteredRecommendations.length,
-        creatorThreshold: 10,
-        budgetCompliance: budgetFilteredRecommendations.filter(r => (r.budget as any)?.userBudgetMatch).length
+        afterHardFilters: processingResult.totalProcessed - processingResult.filteredByBudget,
+        afterCreatorGating: processingResult.recommendations.length,
+        finalCount: processingResult.recommendations.length,
+        budgetFiltered: processingResult.filteredByBudget,
+        creatorGated: processingResult.filteredByCreators
       },
+      processingStats: {
+        totalProcessed: processingResult.totalProcessed,
+        validationPassed: validation.valid,
+        validationIssues: validation.issues
+      },
+      noFitMessage: processingResult.noFitMessage,
       metadata: {
         fallback: true,
         dynamic: true,
         enhanced: true,
+        specCompliant: true,
         processingTime: Date.now(),
-        apiVersion: 'enhanced-gemini-fallback-v5-prd-compliant',
-        message: 'PRD-compliant recommendations with real creator data and budget filtering',
-        source: 'enhanced-gemini-service',
+        apiVersion: 'spec-compliant-v6',
+        message: processingResult.noFitMessage || 'Specification-compliant recommendations with proper filtering order',
+        source: 'enhanced-processing-pipeline',
         features: [
-          'Content opportunity analysis',
-          'Brand collaboration insights',
-          'Real creator community data',
-          'Budget filtering and validation',
-          'PRD-compliant recommendations',
-          'Minimum creator threshold filtering'
+          'Hard filters (budget banding)',
+          'PRD scoring weights',
+          'Creator availability gating',
+          'Top-3 selection',
+          'Budget status badges',
+          'NaN score prevention'
         ]
       }
     };

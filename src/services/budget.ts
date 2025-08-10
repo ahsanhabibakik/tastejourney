@@ -123,7 +123,11 @@ class BudgetService {
       const token = await this.getAmadeusToken();
       
       // Get IATA codes for origin and destination
-      const originCode = await this.getIATACode(request.origin?.city || 'New York', token);
+      // Per instruction #3: Origin must come from user input, never default to New York
+      if (!request.origin?.city) {
+        throw new Error('Origin city is required - cannot default to New York');
+      }
+      const originCode = await this.getIATACode(request.origin.city, token);
       const destCode = await this.getIATACode(request.destination.city, token);
 
       if (!originCode || !destCode) {

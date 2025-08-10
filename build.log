@@ -1,0 +1,50 @@
+   ▲ Next.js 15.4.5
+   - Environments: .env
+   - Experiments (use with caution):
+     · optimizePackageImports
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 11.0s
+   Skipping linting
+   Checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/25) ...
+   Generating static pages (6/25) 
+   Generating static pages (12/25) 
+   Generating static pages (18/25) 
+ ✓ Generating static pages (25/25)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    40.4 kB         141 kB
+├ ○ /_not-found                            989 B         101 kB
+├ ƒ /api/analyze                           168 B         100 kB
+├ ƒ /api/bookmarks                         168 B         100 kB
+├ ƒ /api/clear-cache                       168 B         100 kB
+├ ƒ /api/cost-of-living                    168 B         100 kB
+├ ƒ /api/creators/youtube                  168 B         100 kB
+├ ƒ /api/dynamic-questions                 168 B         100 kB
+├ ƒ /api/fact-check                        168 B         100 kB
+├ ƒ /api/flights                           168 B         100 kB
+├ ƒ /api/gemini-chat                       168 B         100 kB
+├ ƒ /api/health-check                      168 B         100 kB
+├ ƒ /api/hotels                            168 B         100 kB
+├ ƒ /api/location-details                  168 B         100 kB
+├ ƒ /api/multi-destinations                168 B         100 kB
+├ ƒ /api/profile-taste                     168 B         100 kB
+├ ƒ /api/recommendations                   168 B         100 kB
+├ ƒ /api/scrape                            168 B         100 kB
+├ ƒ /api/send-report                       168 B         100 kB
+├ ƒ /api/serpapi                           168 B         100 kB
+├ ƒ /api/test-email                        168 B         100 kB
+└ ○ /test-new-flow                       2.47 kB         103 kB
++ First Load JS shared by all             100 kB
+  ├ chunks/0a9a203b-f2c1be3f2885f8a4.js  54.1 kB
+  ├ chunks/742-46deb10bfa4e739f.js       44.2 kB
+  └ other shared chunks (total)          2.01 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

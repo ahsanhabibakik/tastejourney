@@ -64,6 +64,26 @@ class CacheService {
     console.log('Cache cleared');
   }
 
+  // Purge cache keys containing "New York" origin per instruction #3
+  purgeNewYorkOriginCache(): number {
+    let purgedCount = 0;
+    const keysToDelete: string[] = [];
+    
+    for (const key of this.cache.keys()) {
+      if (key.includes('"origin":"New York"') || key.includes('budget:New York')) {
+        keysToDelete.push(key);
+      }
+    }
+    
+    keysToDelete.forEach(key => {
+      this.cache.delete(key);
+      purgedCount++;
+    });
+    
+    console.log(`🧹 CACHE: Purged ${purgedCount} cache entries with New York origin`);
+    return purgedCount;
+  }
+
   // Get cache statistics
   getStats(): {
     size: number;

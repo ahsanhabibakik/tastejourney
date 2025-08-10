@@ -53,12 +53,20 @@ interface Recommendation {
     type: string;
     commission: string;
   }[];
-  creators: number;
+  creators?: {
+    totalActiveCreators: number;
+    topCreators: any[];
+  };
   bestMonths: string[];
   travelTime: string;
   visaRequired: boolean;
   safetyRating: number;
   tags: string[];
+}
+
+interface RecommendationsData {
+  recommendations: Recommendation[];
+  serviceBanner?: string;
 }
 
 const RecommendationsScreen: React.FC = () => {
@@ -83,8 +91,7 @@ const RecommendationsScreen: React.FC = () => {
   // Accept recommendations and Qloo enrichment from props or context
   // For demo, fallback to mock data if not provided
   const recommendationsData = (typeof window !== 'undefined' && (window as typeof window & { 
-    recommendationsResult?: {
-      recommendations?: Recommendation[];
+    recommendationsResult?: RecommendationsData & {
       qloo?: {
         confidence?: number;
         culturalAffinities?: string[];
@@ -125,7 +132,10 @@ const RecommendationsScreen: React.FC = () => {
           commission: "12%",
         },
       ],
-      creators: 142,
+      creators: {
+        totalActiveCreators: 142,
+        topCreators: []
+      },
       bestMonths: ["April-May", "September-October"],
       travelTime: "14-18 hours",
       visaRequired: false,
@@ -164,7 +174,10 @@ const RecommendationsScreen: React.FC = () => {
           commission: "25%",
         },
       ],
-      creators: 85,
+      creators: {
+        totalActiveCreators: 85,
+        topCreators: []
+      },
       bestMonths: ["May-June", "September"],
       travelTime: "10-14 hours",
       visaRequired: false,
@@ -211,7 +224,10 @@ const RecommendationsScreen: React.FC = () => {
           commission: "22%",
         },
       ],
-      creators: 95,
+      creators: {
+        totalActiveCreators: 95,
+        topCreators: []
+      },
       bestMonths: ["March-April", "October-November"],
       travelTime: "12-16 hours",
       visaRequired: false,
@@ -343,7 +359,7 @@ const RecommendationsScreen: React.FC = () => {
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-primary">
-              {recommendations.reduce((sum, rec) => sum + rec.creators, 0)}+
+              {recommendations.reduce((sum, rec) => sum + (rec.creators?.totalActiveCreators || 0), 0)}+
             </div>
             <div className="text-xs text-muted-foreground">Active Creators</div>
           </div>
@@ -403,37 +419,61 @@ const RecommendationsScreen: React.FC = () => {
         </div>
       </div>
 
-      {/* Enhanced Recommendations Grid */}
-      <div className="space-y-8">
+      {/* Service Banner */}
+      {recommendationsData.serviceBanner && (
+        <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-yellow-800 text-sm">
+          {recommendationsData.serviceBanner}
+        </div>
+      )}
+
+      {/* Enhanced Recommendations Grid - Responsive Layout */}
+      <div 
+        className="grid gap-4 sm:gap-6 lg:gap-8"
+        style={{ 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))'
+        }}
+      >
         {filteredRecommendations.map((rec, index) => (
           <Card
             key={rec.id}
-            className={`overflow-hidden hover:shadow-2xl transition-all duration-500 border-l-4 border-l-primary transform hover:-translate-y-1 ${
+            className={`overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 ${
               selectedDestination === rec.id ? "ring-2 ring-primary/50" : ""
             }`}
             style={{ animationDelay: `${index * 100}ms` }}
           >
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-0">
-              {/* Enhanced Image Section */}
-              <div className="relative xl:col-span-1 group">
-                <Image
-                  src={rec.image}
-                  alt={rec.destination}
-                  width={400}
-                  height={300}
-                  className="w-full h-64 sm:h-72 xl:h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
+            {/* Compact Image Section */}
+            <div className="relative group">
+              <Image
+                src={rec.image}
+                alt={rec.destination}
+                width={400}
+                height={200}
+                className="w-full h-48 object-cover"
+              />
 
-                {/* Overlay with actions */}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-3">
+              {/* Overlay Badges */}
+              <div className="absolute top-3 right-3">
+                <Badge className="bg-primary text-primary-foreground font-semibold">
+                  {rec.matchScore}% Match
+                </Badge>
+              </div>
+
+              {/* Budget Badge - per specification */}
+              <div className="absolute top-3 left-3">
+                <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
+                  Aligned
+                </Badge>
+              </div>
+
+              {/* Quick Actions */}
+              <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex space-x-2">
                   <Button
                     size="sm"
                     variant="secondary"
                     onClick={() => handleBookmark(rec.id)}
-                    className={`${
-                      bookmarkedItems.has(rec.id)
-                        ? "bg-primary text-primary-foreground"
-                        : ""
+                    className={`h-8 w-8 p-0 ${
+                      bookmarkedItems.has(rec.id) ? "bg-primary text-primary-foreground" : ""
                     }`}
                   >
                     <Bookmark className="h-4 w-4" />
@@ -442,281 +482,109 @@ const RecommendationsScreen: React.FC = () => {
                     size="sm"
                     variant="secondary"
                     onClick={() => handleShare(rec.destination)}
+                    className="h-8 w-8 p-0"
                   >
                     <Share2 className="h-4 w-4" />
                   </Button>
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    onClick={() =>
-                      setSelectedDestination(
-                        selectedDestination === rec.id ? null : rec.id
-                      )
-                    }
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                  </Button>
-                </div>
-
-                {/* Enhanced Badges */}
-                <div className="absolute top-4 right-4 space-y-2">
-                  <Badge className="bg-primary text-primary-foreground font-bold text-sm px-3 py-1 shadow-lg">
-                    {rec.matchScore}% Match
-                  </Badge>
-                  {rec.visaRequired && (
-                    <Badge
-                      variant="outline"
-                      className="bg-background/90 text-xs"
-                    >
-                      Visa Required
-                    </Badge>
-                  )}
-                </div>
-
-                <div className="absolute bottom-4 left-4 space-y-2">
-                  <div className="flex items-center space-x-1 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1">
-                    <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                    <span className="text-white text-sm font-medium">
-                      {rec.safetyRating}/5
-                    </span>
-                  </div>
-                </div>
-
-                {/* Tags */}
-                <div className="absolute bottom-4 right-4">
-                  <div className="flex flex-wrap gap-1">
-                    {rec.tags.slice(0, 2).map((tag) => (
-                      <Badge
-                        key={rec.id + '-' + tag}
-                        variant="secondary"
-                        className="text-xs bg-background/90"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
                 </div>
               </div>
+            </div>
 
-              {/* Enhanced Content Section */}
-              <div className="xl:col-span-2 p-4 sm:p-6">
-                <div className="flex items-center justify-between mb-4">
+            {/* Compact Content Section - Per Specification */}
+            <div className="p-4">
+              {/* Destination Name */}
+              <h3 className="text-lg font-semibold text-foreground mb-3">
+                {rec.destination}
+              </h3>
+
+              {/* 2-3 Key Highlights - Per Specification */}
+              <div className="mb-4">
+                <ul className="space-y-2">
+                  {rec.highlights.slice(0, 3).map((highlight, idx) => (
+                    <li
+                      key={rec.id + '-highlight-' + idx}
+                      className="text-sm text-muted-foreground flex items-start"
+                    >
+                      <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 mr-2 flex-shrink-0"></div>
+                      {highlight}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Budget Range */}
+              <div className="mb-4">
+                <p className="text-lg font-semibold text-foreground">
+                  {rec.budget.range}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {rec.budget.breakdown}
+                </p>
+              </div>
+
+              {/* Creators Section - Only if gated "true" per specification */}
+              {rec.creators && rec.creators.totalActiveCreators >= 2 && (
+                <div className="mb-4">
+                  <h6 className="text-sm font-medium text-foreground mb-2 flex items-center">
+                    <Users className="h-4 w-4 text-primary mr-1" />
+                    Creator Community
+                  </h6>
+                  <p className="text-sm text-muted-foreground">
+                    {rec.creators.totalActiveCreators}+ active creators
+                  </p>
+                </div>
+              )}
+
+              {/* Mobile Details Toggle */}
+              <div className="block lg:hidden">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() =>
+                    setSelectedDestination(
+                      selectedDestination === rec.id ? null : rec.id
+                    )
+                  }
+                  className="w-full justify-between"
+                >
+                  <span>Details</span>
+                  <ChevronRight className={`h-4 w-4 transition-transform ${
+                    selectedDestination === rec.id ? "rotate-90" : ""
+                  }`} />
+                </Button>
+              </div>
+
+              {/* Collapsible Details - Default Collapsed on Mobile */}
+              {selectedDestination === rec.id && (
+                <div className="mt-4 p-3 bg-muted/20 rounded-lg border space-y-3">
                   <div>
-                    <CardTitle className="flex items-center text-xl sm:text-2xl mb-1">
-                      <MapPin className="h-6 w-6 text-primary mr-2" />
-                      {rec.destination}, {rec.country}
-                    </CardTitle>
-                    <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                      <div className="flex items-center">
-                        <Clock className="h-4 w-4 mr-1" />
-                        {rec.travelTime}
-                      </div>
-                      <div className="flex items-center">
-                        <Calendar className="h-4 w-4 mr-1" />
-                        Best: {rec.bestMonths.join(", ")}
-                      </div>
+                    <h6 className="text-sm font-medium mb-2">Travel Info</h6>
+                    <div className="text-sm text-muted-foreground space-y-1">
+                      <p>Travel time: {rec.travelTime}</p>
+                      <p>Best months: {rec.bestMonths.join(", ")}</p>
+                      <p>Safety rating: {rec.safetyRating}/5</p>
                     </div>
                   </div>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6">
-                  {/* Left Column - Enhanced */}
-                  <div className="space-y-4">
-                    <div>
-                      <h5 className="font-semibold text-foreground mb-3 flex items-center">
-                        <TrendingUp className="h-4 w-4 text-primary mr-2" />
-                        Key Highlights
-                      </h5>
-                      <ul className="space-y-2">
-                    {rec.highlights.map((highlight) => (
-                      <li
-                        key={rec.id + '-' + highlight}
-                        className="text-sm text-muted-foreground flex items-start"
-                      >
-                        <div className="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        {highlight}
-                      </li>
-                    ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h5 className="font-semibold text-foreground mb-3 flex items-center">
-                        <DollarSign className="h-4 w-4 text-primary mr-2" />
-                        Budget Estimate
-                      </h5>
-                      <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-lg p-4 border">
-                        <p className="text-xl font-bold text-foreground">
-                          {rec.budget.range}
-                        </p>
-                        <p className="text-xs text-muted-foreground mb-2">
-                          {rec.budget.breakdown}
-                        </p>
-                        <div className="flex items-center space-x-4 text-xs">
-                          <div className="flex items-center">
-                            <Plane className="h-3 w-3 mr-1" />
-                            Flights: 40%
-                          </div>
-                          <div className="flex items-center">
-                            <Hotel className="h-3 w-3 mr-1" />
-                            Hotels: 35%
-                          </div>
-                          <div className="flex items-center">
-                            <Utensils className="h-3 w-3 mr-1" />
-                            Food: 25%
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  
+                  <div>
+                    <h6 className="text-sm font-medium mb-2">Engagement</h6>
+                    <p className="text-sm text-muted-foreground">
+                      {rec.engagement.reason}
+                    </p>
                   </div>
 
-                  {/* Right Column - Enhanced */}
-                  <div className="space-y-4">
-                    <div>
-                      <h5 className="font-semibold text-foreground mb-3 flex items-center">
-                        <Heart className="h-4 w-4 text-primary mr-2" />
-                        Engagement Potential
-                      </h5>
-                      <div className="space-y-3">
-                        <Badge
-                          variant={
-                            rec.engagement.potential === "Very High"
-                              ? "default"
-                              : "secondary"
-                          }
-                          className="text-sm px-3 py-1"
-                        >
-                          {rec.engagement.potential}
+                  <div>
+                    <h6 className="text-sm font-medium mb-2">Brand Opportunities</h6>
+                    <div className="flex flex-wrap gap-1">
+                      {rec.collaborations.slice(0, 3).map((collab, idx) => (
+                        <Badge key={idx} variant="outline" className="text-xs">
+                          {collab.name}
                         </Badge>
-                        <p className="text-sm text-muted-foreground">
-                          {rec.engagement.reason}
-                        </p>
-                        <div className="flex items-center space-x-4 text-sm">
-                          <div className="flex items-center">
-                            <ThumbsUp className="h-4 w-4 text-blue-500 mr-1" />
-                            <span className="font-medium">
-                              {rec.engagement.avgLikes.toLocaleString()}
-                            </span>
-                            <span className="text-muted-foreground ml-1">
-                              avg likes
-                            </span>
-                          </div>
-                          <div className="flex items-center">
-                            <MessageCircle className="h-4 w-4 text-green-500 mr-1" />
-                            <span className="font-medium">
-                              {rec.engagement.avgComments}
-                            </span>
-                            <span className="text-muted-foreground ml-1">
-                              avg comments
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <h5 className="font-semibold text-foreground mb-3 flex items-center">
-                        <Users className="h-4 w-4 text-primary mr-2" />
-                        Creator Community
-                      </h5>
-                      <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-lg p-4 border">
-                        <p className="text-xl font-bold text-foreground">
-                          {rec.creators}+
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          Active creators in this destination
-                        </p>
-                        <div className="mt-2 flex -space-x-2">
-                          {[1, 2, 3, 4].map((i) => (
-                            <div
-                              key={i}
-                              className="w-6 h-6 bg-primary rounded-full border-2 border-background flex items-center justify-center"
-                            >
-                              <Camera className="h-3 w-3 text-primary-foreground" />
-                            </div>
-                          ))}
-                          <div className="w-6 h-6 bg-muted rounded-full border-2 border-background flex items-center justify-center">
-                            <span className="text-xs font-bold">+</span>
-                          </div>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
                 </div>
-
-                {/* Enhanced Brand Collaborations */}
-                <div className="border-t border-border pt-6">
-                  <h5 className="font-semibold text-foreground mb-4 flex items-center">
-                    <Briefcase className="h-4 w-4 text-primary mr-2" />
-                    Top Brand Collaboration Opportunities
-                  </h5>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {rec.collaborations.map((collab) => (
-                      <Card
-                        key={rec.id + '-' + collab.name + '-' + collab.type}
-                        className="p-4 hover:shadow-md transition-all duration-300 border hover:border-primary/50"
-                      >
-                        <div className="text-center">
-                          <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg mx-auto mb-3 flex items-center justify-center">
-                            <Camera className="h-6 w-6 text-primary" />
-                          </div>
-                          <h6 className="font-medium text-foreground mb-1">
-                            {collab.name}
-                          </h6>
-                          <p className="text-xs text-muted-foreground mb-2">
-                            {collab.type}
-                          </p>
-                          <Badge variant="outline" className="text-xs mb-2">
-                            {collab.commission} commission
-                          </Badge>
-                          <Button
-                            variant="link"
-                            size="sm"
-                            className="text-xs p-0 h-auto"
-                          >
-                            View Details{" "}
-                            <ChevronRight className="h-3 w-3 ml-1" />
-                          </Button>
-                        </div>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Expanded Details */}
-                {selectedDestination === rec.id && (
-                  <div className="mt-6 p-4 bg-muted/20 rounded-lg border-l-4 border-l-primary">
-                    <h6 className="font-semibold mb-3">Additional Details</h6>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-                      <div>
-                        <span className="text-muted-foreground">
-                          Safety Rating:
-                        </span>
-                        <div className="font-medium">
-                          {rec.safetyRating}/5.0
-                        </div>
-                      </div>
-                      <div>
-                        <span className="text-muted-foreground">
-                          Visa Required:
-                        </span>
-                        <div className="font-medium">
-                          {rec.visaRequired ? "Yes" : "No"}
-                        </div>
-                      </div>
-                      <div>
-                        <span className="text-muted-foreground">
-                          Travel Time:
-                        </span>
-                        <div className="font-medium">{rec.travelTime}</div>
-                      </div>
-                      <div>
-                        <span className="text-muted-foreground">Currency:</span>
-                        <div className="font-medium">{rec.budget.currency}</div>
-                      </div>
-                    </div>
-                  </div>
-                )}
+              )}
               </div>
             </div>
           </Card>
