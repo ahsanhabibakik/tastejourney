@@ -151,7 +151,7 @@ class RecommendationProcessor {
       updatedScoring.localCreator = gatingResult.collaborationScore * 0.05;
 
       // Recalculate total score with NaN protection
-      const newTotalScore = Object.values(updatedScoring).reduce((sum, val) => {
+      const newTotalScore = Object.values(updatedScoring).reduce((sum: number, val) => {
         const safeVal = this.sanitizeScore(val);
         return sum + safeVal;
       }, 0);

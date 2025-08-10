@@ -16,12 +16,14 @@ interface SmartQuestionFlowProps {
   };
   onComplete: (answers: Record<string, any>) => void;
   onQuestionChange?: (question: SmartQuestion, questionNumber: number, context: QuestionContext) => void;
+  initialAnswers?: Record<string, any>;
 }
 
 export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
   websiteData,
   onComplete,
-  onQuestionChange
+  onQuestionChange,
+  initialAnswers = {}
 }) => {
   const [currentQuestion, setCurrentQuestion] = useState<SmartQuestion | null>(null);
   const [questionNumber, setQuestionNumber] = useState(1);
@@ -79,6 +81,27 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
       loadNextQuestion();
     }
   }, [questionNumber, currentQuestion, loadNextQuestion]);
+
+  // Reset when initial answers change (editing mode)
+  useEffect(() => {
+    if (Object.keys(initialAnswers).length > 0) {
+      console.log('🔄 SmartQuestionFlow: Entering edit mode with initial answers:', initialAnswers);
+      setQuestionNumber(1);
+      setCurrentQuestion(null);
+      setSelectedOptions([]);
+      setCustomInput('');
+      setShowCustomInput(false);
+      setValidationError('');
+      setContext(prev => ({ 
+        ...prev, 
+        previousAnswers: {} // Start fresh for editing
+      }));
+      // Trigger question loading
+      setTimeout(() => {
+        loadNextQuestion();
+      }, 100);
+    }
+  }, [initialAnswers, loadNextQuestion]);
 
   const handleAnswer = useCallback(async (answer: string | string[]) => {
     if (!currentQuestion) return;
@@ -236,13 +259,26 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Show edit panel if user has answered questions */}
-      {Object.keys(context.previousAnswers).length > 0 && (
+      {/* Show edit panel if user has answered questions and not editing existing answers */}
+      {Object.keys(context.previousAnswers).length > 0 && Object.keys(initialAnswers).length === 0 && (
         <QuestionEditPanel
           answers={context.previousAnswers}
           onEditQuestion={handleEditQuestion}
           className="mb-4"
         />
+      )}
+      
+      {/* Show editing indicator if editing existing answers */}
+      {Object.keys(initialAnswers).length > 0 && (
+        <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg mb-4">
+          <div className="flex items-center gap-2 text-amber-800">
+            <span className="text-lg">📝</span>
+            <span className="text-sm font-medium">Editing Your Preferences</span>
+          </div>
+          <p className="text-xs text-amber-600 mt-1">
+            Answer the questions again to update your travel recommendations
+          </p>
+        </div>
       )}
       
       <div className="flex items-start gap-3">

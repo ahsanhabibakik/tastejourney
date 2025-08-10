@@ -99,7 +99,7 @@ const RecommendationsScreen: React.FC = () => {
       };
     } 
   }).recommendationsResult) || {};
-  const recommendations: Recommendation[] = recommendationsData.recommendations || [
+  const recommendations: Recommendation[] = (recommendationsData as any)?.recommendations || [
     {
       id: 1,
       destination: "Bali",
@@ -302,7 +302,7 @@ const RecommendationsScreen: React.FC = () => {
   });
 
   // Qloo enrichment
-  const qloo = recommendationsData.qloo || {};
+  const qloo = (recommendationsData as any)?.qloo || {};
 
   return (
     <div className="mt-4 sm:mt-6 space-y-6 sm:space-y-8 px-2 sm:px-0">
@@ -420,9 +420,9 @@ const RecommendationsScreen: React.FC = () => {
       </div>
 
       {/* Service Banner */}
-      {recommendationsData.serviceBanner && (
+      {(recommendationsData as any)?.serviceBanner && (
         <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-yellow-800 text-sm">
-          {recommendationsData.serviceBanner}
+          {(recommendationsData as any)?.serviceBanner}
         </div>
       )}
 
@@ -585,7 +585,6 @@ const RecommendationsScreen: React.FC = () => {
                   </div>
                 </div>
               )}
-              </div>
             </div>
           </Card>
         ))}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Bot, CheckCircle2, Circle, ArrowRight, Mail, Sparkles, MessageSquare, Wand2, Globe, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ChatHistory } from "./ChatHistory";
 
 interface SidebarContentProps {
   chatState: string;
@@ -36,6 +37,7 @@ interface SidebarContentProps {
   } | null;
   reportSent: boolean;
   email: string;
+  userAnswers?: Record<string, any>;
   setInputValue: (value: string) => void;
   handleSendMessage: () => void;
   setShowEmailSection: (show: boolean) => void;
@@ -50,6 +52,7 @@ const SidebarContent: React.FC<SidebarContentProps> = React.memo(({
   tasteProfile,
   reportSent,
   email,
+  userAnswers = {},
   setInputValue,
   handleSendMessage,
   setShowEmailSection,
@@ -204,6 +207,15 @@ const SidebarContent: React.FC<SidebarContentProps> = React.memo(({
               )}
             </div>
           </div>
+        )}
+
+        {/* Chat History - Show when there are messages and user has answered questions */}
+        {messages.length > 2 && Object.keys(userAnswers).length > 0 && (
+          <ChatHistory
+            messages={messages}
+            userAnswers={userAnswers}
+            className="mb-4"
+          />
         )}
 
         {/* Report Status */}

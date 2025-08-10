@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { Send, Bot, User, Wand2, X, CheckCircle2, Mail } from "lucide-react";
+import { Send, Bot, User, Wand2, X, CheckCircle2, Mail, Edit2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -13,6 +13,7 @@ import ConfirmationScreen from "./ConfirmationScreen";
 import DestinationCard from "./DestinationCard";
 import SidebarContent from "./SidebarContent";
 import { SmartQuestionFlow } from "./SmartQuestionFlow";
+import { QuestionHistory } from "./QuestionHistory";
 
 interface Message {
   id: string;
@@ -184,6 +185,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     personalityTraits?: string[];
   } | null>(null);
   const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
+  const [showQuestionHistory, setShowQuestionHistory] = useState(false);
+  const [isEditingQuestions, setIsEditingQuestions] = useState(false);
   const [recommendations, setRecommendations] = useState<
     | {
         recommendations: Recommendation[];
@@ -683,7 +686,14 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
 
   const handleSmartQuestionsComplete = useCallback(async (answers: Record<string, any>) => {
     setUserAnswers(answers);
-    addMessage("Thanks for answering all the questions! Your answers will help me create perfect recommendations.", false);
+    setShowQuestionHistory(true);
+    setIsEditingQuestions(false); // Exit editing mode
+    
+    const message = isEditingQuestions 
+      ? "Thanks for updating your preferences! Let me generate new recommendations based on your changes."
+      : "Thanks for answering all the questions! Your answers will help me create perfect recommendations.";
+    
+    addMessage(message, true);
     
     console.log('🎯 Smart questions completed with answers:', answers);
     
@@ -697,7 +707,31 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     };
     
     await generateRecommendations(formattedAnswers);
-  }, [generateRecommendations, addMessage]);
+  }, [generateRecommendations, addMessage, isEditingQuestions]);
+
+  const handleEditQuestion = useCallback((questionId: string) => {
+    console.log('Editing question:', questionId);
+    setIsEditingQuestions(true);
+    setShowQuestionHistory(true);
+    setChatState("questions");
+    addMessage("Let me help you update your preferences. I'll show you the questions again.", true);
+    
+    setTimeout(() => {
+      addMessage("", true, "smart-questions");
+    }, 500);
+  }, [addMessage]);
+
+  const handleRestartQuestions = useCallback(() => {
+    setUserAnswers({});
+    setShowQuestionHistory(false);
+    setIsEditingQuestions(false);
+    setChatState("questions");
+    addMessage("Let's start fresh! I'll ask you some questions to understand your preferences better.", true);
+    
+    setTimeout(() => {
+      addMessage("", true, "smart-questions");
+    }, 500);
+  }, [addMessage]);
 
 
   const handleSendMessage = useCallback(async () => {
@@ -833,6 +867,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
               tasteProfile={tasteProfile}
               reportSent={reportSent}
               email={email}
+              userAnswers={userAnswers}
               setInputValue={setInputValue}
               handleSendMessage={handleSendMessage}
               setShowEmailSection={setShowEmailSection}
@@ -852,6 +887,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
           tasteProfile={tasteProfile}
           reportSent={reportSent}
           email={email}
+          userAnswers={userAnswers}
           setInputValue={setInputValue}
           handleSendMessage={handleSendMessage}
           setShowEmailSection={setShowEmailSection}
@@ -932,10 +968,24 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                     )}
 
                   {message.component === "smart-questions" && message.isBot && websiteData && chatState === "questions" && index === messages.length - 1 && (
-                    <SmartQuestionFlow
-                      websiteData={websiteData}
-                      onComplete={handleSmartQuestionsComplete}
-                    />
+                    <div className="space-y-4">
+                      {/* Show history if editing */}
+                      {isEditingQuestions && Object.keys(userAnswers).length > 0 && (
+                        <QuestionHistory
+                          answers={userAnswers}
+                          isExpanded={false}
+                          onEditQuestion={handleEditQuestion}
+                          onRestart={handleRestartQuestions}
+                          className="mb-4"
+                        />
+                      )}
+                      <SmartQuestionFlow
+                        key={isEditingQuestions ? 'editing' : 'initial'}
+                        websiteData={websiteData}
+                        onComplete={handleSmartQuestionsComplete}
+                        initialAnswers={isEditingQuestions ? userAnswers : {}}
+                      />
+                    </div>
                   )}
 
                   {/* Loading state for recommendations */}
@@ -970,15 +1020,40 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                   {message.component === "recommendations" &&
                     chatState === "recommendations" && recommendations?.recommendations && (
                       <div className="mt-3 sm:mt-4 w-full">
+                        {/* Show Question History when recommendations are displayed */}
+                        {showQuestionHistory && Object.keys(userAnswers).length > 0 && (
+                          <QuestionHistory
+                            answers={userAnswers}
+                            onEditQuestion={handleEditQuestion}
+                            onRestart={handleRestartQuestions}
+                            showInChat={true}
+                            className="mb-4"
+                          />
+                        )}
+                        
                         {recommendations?.recommendations?.length > 0 && (
                           <>
-                            <div className="flex flex-col gap-1 sm:gap-2 mb-3 sm:mb-4">
-                              <h3 className="text-base sm:text-lg font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                                Your Travel Recommendations
-                              </h3>
-                              <p className="text-xs text-muted-foreground">
-                                Swipe to explore • {recommendations.recommendations.length} destinations curated for you
-                              </p>
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2 mb-3 sm:mb-4">
+                              <div>
+                                <h3 className="text-base sm:text-lg font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                                  Your Travel Recommendations
+                                </h3>
+                                <p className="text-xs text-muted-foreground">
+                                  Swipe to explore • {recommendations.recommendations.length} destinations curated for you
+                                </p>
+                              </div>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                  setShowQuestionHistory(true);
+                                  handleEditQuestion('duration');
+                                }}
+                                className="mt-2 sm:mt-0"
+                              >
+                                <Edit2 className="h-3 w-3 mr-1.5" />
+                                Modify Preferences
+                              </Button>
                             </div>
                             
                             {/* Mobile/Tablet Cards */}
