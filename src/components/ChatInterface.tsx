@@ -375,6 +375,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
 
 
   const generateRecommendations = useCallback(async (finalAnswers: UserAnswers) => {
+    // Prevent multiple simultaneous generations
+    if (chatState === "generating") {
+      console.log("⚠️ Already generating recommendations, skipping...");
+      return;
+    }
+    
     setChatState("generating");
     await simulateTyping(() => {
       addMessage(
@@ -385,21 +391,31 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
 
     // Show loading progress messages
     setTimeout(() => {
-      if (chatState === "generating") {
-        addMessage("🔍 Analyzing your taste profile and content preferences...", true);
-      }
+      // Check if still generating by using a callback that captures current state
+      setChatState((currentState) => {
+        if (currentState === "generating") {
+          addMessage("🔍 Analyzing your taste profile and content preferences...", true);
+        }
+        return currentState;
+      });
     }, 2000);
 
     setTimeout(() => {
-      if (chatState === "generating") {
-        addMessage("🌍 Finding destinations that match your budget and style...", true);
-      }
+      setChatState((currentState) => {
+        if (currentState === "generating") {
+          addMessage("🌍 Finding destinations that match your budget and style...", true);
+        }
+        return currentState;
+      });
     }, 4000);
 
     setTimeout(() => {
-      if (chatState === "generating") {
-        addMessage("👥 Checking creator communities and collaboration opportunities...", true);
-      }
+      setChatState((currentState) => {
+        if (currentState === "generating") {
+          addMessage("👥 Checking creator communities and collaboration opportunities...", true);
+        }
+        return currentState;
+      });
     }, 6000);
 
     try {
@@ -687,13 +703,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
   const handleSmartQuestionsComplete = useCallback(async (answers: Record<string, any>) => {
     setUserAnswers(answers);
     setShowQuestionHistory(true);
-    setIsEditingQuestions(false); // Exit editing mode
     
     const message = isEditingQuestions 
       ? "Thanks for updating your preferences! Let me generate new recommendations based on your changes."
       : "Thanks for answering all the questions! Your answers will help me create perfect recommendations.";
     
     addMessage(message, true);
+    setIsEditingQuestions(false); // Exit editing mode after using the flag
     
     console.log('🎯 Smart questions completed with answers:', answers);
     
@@ -714,6 +730,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     setIsEditingQuestions(true);
     setShowQuestionHistory(true);
     setChatState("questions");
+    
+    // Clear any existing recommendations to avoid confusion
+    setRecommendations(null);
+    
     addMessage("Let me help you update your preferences. I'll show you the questions again.", true);
     
     setTimeout(() => {
@@ -725,6 +745,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
     setUserAnswers({});
     setShowQuestionHistory(false);
     setIsEditingQuestions(false);
+    setRecommendations(null); // Clear any existing recommendations
     setChatState("questions");
     addMessage("Let's start fresh! I'll ask you some questions to understand your preferences better.", true);
     
@@ -980,7 +1001,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ showMobileSidebar, setSho
                         />
                       )}
                       <SmartQuestionFlow
-                        key={isEditingQuestions ? 'editing' : 'initial'}
+                        key={`${isEditingQuestions ? 'editing' : 'initial'}-${message.id}`}
                         websiteData={websiteData}
                         onComplete={handleSmartQuestionsComplete}
                         initialAnswers={isEditingQuestions ? userAnswers : {}}

@@ -94,14 +94,27 @@ export const SmartQuestionFlow: React.FC<SmartQuestionFlowProps> = ({
       setValidationError('');
       setContext(prev => ({ 
         ...prev, 
-        previousAnswers: {} // Start fresh for editing
+        previousAnswers: {} // Start fresh but keep website data
       }));
-      // Trigger question loading
+      // Trigger question loading after a short delay
       setTimeout(() => {
         loadNextQuestion();
-      }, 100);
+      }, 200);
     }
   }, [initialAnswers, loadNextQuestion]);
+
+  // Reset component when not in editing mode
+  useEffect(() => {
+    if (Object.keys(initialAnswers).length === 0) {
+      console.log('🔄 SmartQuestionFlow: Normal mode - resetting component');
+      setQuestionNumber(1);
+      setCurrentQuestion(null);
+      setSelectedOptions([]);
+      setCustomInput('');
+      setShowCustomInput(false);
+      setValidationError('');
+    }
+  }, [initialAnswers]);
 
   const handleAnswer = useCallback(async (answer: string | string[]) => {
     if (!currentQuestion) return;
